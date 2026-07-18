@@ -1,0 +1,54 @@
+{
+  "screenId": "WRKPTFGRP",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=fixes-groups",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — Fix groups",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=fixes-groups",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i Group PTFs with level",
+      "url": "https://www.ibm.com/support/pages/node/7025229",
+      "type": "ibm-support"
+    },
+    {
+      "title": "IBM i Support — Recommended fixes",
+      "url": "https://www.ibm.com/support/pages/ibm-i-support-recommended-fixes",
+      "type": "ibm-support"
+    },
+    {
+      "title": "Guide to fixes — FAQs (WRKPTFGRP cumulative)",
+      "url": "https://www.ibm.com/support/pages/guide-fixes-faqs",
+      "type": "ibm-support"
+    },
+    {
+      "title": "IBM i 7.4 — Maintaining and managing software (rzam8 PDF)",
+      "url": "https://www.ibm.com/docs/en/ssw_ibm_i_74/pdf/rzam8pdf.pdf",
+      "type": "ibm-documentation"
+    }
+  ],
+  "requiredText": [
+    "Work with PTF Groups",
+    "Type options, press Enter.",
+    "5=Display group",
+    "Group",
+    "Status",
+    "Level",
+    "SF99740",
+    "SF99739",
+    "SF99704",
+    "8=Display special handling PTFs",
+    "Parameters or command",
+    "HIPER"
+  ],
+  "notes": "Synthetic CLAIMS400 partition shows cumulative, HIPER, and database PTF groups at realistic levels.",
+  "asciiPanel": " WRKPTFGRP                        Work with PTF Groups                    CLAIMS400\n\nType options, press Enter.\n  5=Display group   8=Display special handling PTFs\n\nOpt  Group     Status      Level   Target      Description\n     SF99740   Installed   25      V7R4M0      Cumulative PTF package\n     SF99739   Installed   12      V7R4M0      HIPER group\n     SF99704   Installed   8       V7R4M0      Database group\n\nParameters or command\n===>\nF3=Exit  F5=Refresh  F7=Page up  F8=Page down  F12=Cancel",
+  "auditNotes": "ITGC change management: auditors expect current cumulative (SF99740), HIPER (SF99739), and database (SF99704) group levels. Compare level to PSP/Fix Central; MFPTF = missing fix from a group.",
+  "grcMapping": [
+    "SOC2 CC8.1",
+    "COSO CC8 — change management",
+    "ISO 27001 A.12.6 — technical vulnerability management"
+  ],
+  "qmgtoolsRelation": "QMGTOOLS PTF menu runs CMPGRPPTF/CMPHIPER for support cases; COLESADTA prints DSPPTF. Lab trains on WRKPTFGRP interactively."
+}

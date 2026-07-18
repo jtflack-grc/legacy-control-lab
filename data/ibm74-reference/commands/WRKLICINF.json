@@ -1,0 +1,17 @@
+{
+  "name": "WRKLICINF",
+  "displayName": "Work with License Information",
+  "category": "ptf_license",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrklicinf",
+  "parameters": [],
+  "examples": [
+    "WRKLICINF"
+  ],
+  "helpText": "Work with licensed program information installed on the lab partition.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDPTF",
+  "wrkOptions": {
+    "5": "DSPLICKEY"
+  }
+}

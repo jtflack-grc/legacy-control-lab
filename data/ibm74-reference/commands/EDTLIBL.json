@@ -1,0 +1,14 @@
+{
+  "name": "EDTLIBL",
+  "displayName": "Edit Library List",
+  "category": "library_object",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-edtlibl",
+  "parameters": [],
+  "examples": [
+    "EDTLIBL"
+  ],
+  "helpText": "Opens the library list editor subfile to add or remove user libraries interactively.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLIB"
+}

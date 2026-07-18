@@ -1,0 +1,346 @@
+{
+  "generatedAt": "2026-06-14T00:47:14.726Z",
+  "packs": [
+    {
+      "packId": "blue-team",
+      "auditedAt": "2026-06-14T00:47:14.504Z",
+      "steps": [
+        {
+          "stepId": "wrkactjob",
+          "command": "WRKACTJOB",
+          "screenHint": "WRKACTJOB",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspaudjrne",
+          "command": "DSPAUDJRNE JRN(QSYS/QAUDJRN) ENTTYP(AF PW)",
+          "screenHint": "DSPAUDJRNE",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspjoblog",
+          "command": "DSPJOBLOG",
+          "screenHint": "DSPJOBLOG",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        }
+      ],
+      "articleOnlyRefs": [],
+      "blockingGaps": [],
+      "fullStepCount": 3,
+      "totalStepCount": 3
+    },
+    {
+      "packId": "offboarding",
+      "auditedAt": "2026-06-14T00:47:14.529Z",
+      "steps": [
+        {
+          "stepId": "wrkusrprf",
+          "command": "WRKUSRPRF",
+          "screenHint": "WRKUSRPRF",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dsp-oldvendor",
+          "command": "DSPUSRPRF USRPRF(OLDVENDOR)",
+          "screenHint": "DSPUSRPRF",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "anzprfact",
+          "command": "ANZPRFACT INACT(90)",
+          "screenHint": "ANZPRFACT",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "outfile-export",
+          "command": "DSPUSRPRF USRPRF(*ALL) TYPE(*BASIC) OUTPUT(*OUTFILE) OUTFILE(QGPL/USERS)",
+          "screenHint": "DSPUSRPRF",
+          "commandCoverage": "full",
+          "screenCoverage": "partial",
+          "gapNotes": "OUTFILE export returns message confirmation, not an interactive screen"
+        }
+      ],
+      "articleOnlyRefs": [],
+      "blockingGaps": [],
+      "fullStepCount": 4,
+      "totalStepCount": 4
+    },
+    {
+      "packId": "ibm-i-audit-operations",
+      "auditedAt": "2026-06-14T00:47:14.604Z",
+      "steps": [
+        {
+          "stepId": "wrkptfgrp",
+          "command": "WRKPTFGRP",
+          "screenHint": "WRKPTFGRP",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspptf",
+          "command": "DSPPTF PTF(SI76195)",
+          "screenHint": "DSPPTF",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspjrn",
+          "command": "DSPJRN JRN(QSYS/QAUDJRN)",
+          "screenHint": "DSPJRN",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "chgjrn",
+          "command": "CHGJRN JRN(QSYS/QAUDJRN)",
+          "screenHint": "CHGJRN",
+          "commandCoverage": "full",
+          "screenCoverage": "partial",
+          "gapNotes": "Missing field TITLE"
+        },
+        {
+          "stepId": "wrkautl",
+          "command": "WRKAUTL",
+          "screenHint": "WRKAUTL",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspautl",
+          "command": "DSPAUTL AUTL(PAYROLL)",
+          "screenHint": "DSPAUTL",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "wrkobjown",
+          "command": "WRKOBJOWN USRPRF(PAYADMIN)",
+          "screenHint": "WRKOBJOWN",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "edtobjaut",
+          "command": "EDTOBJAUT OBJ(PAYROLL/PAYMST)",
+          "screenHint": "EDTOBJAUT",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspaudjrne",
+          "command": "DSPAUDJRNE JRN(QSYS/QAUDJRN) ENTTYP(AF PW)",
+          "screenHint": "DSPAUDJRNE",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "wrkfinding",
+          "command": "WRKFINDING",
+          "screenHint": "WRKFINDING",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        }
+      ],
+      "articleOnlyRefs": [
+        {
+          "kind": "screen",
+          "ref": "DSPSECAUD",
+          "coverage": "partial"
+        },
+        {
+          "kind": "command",
+          "ref": "CHGJRN",
+          "coverage": "full"
+        }
+      ],
+      "blockingGaps": [],
+      "fullStepCount": 10,
+      "totalStepCount": 10
+    },
+    {
+      "packId": "clause-6",
+      "auditedAt": "2026-06-14T00:47:14.623Z",
+      "steps": [
+        {
+          "stepId": "wrkautl",
+          "command": "WRKAUTL AUTL(PAYROLL)",
+          "screenHint": "WRKAUTL",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspaut",
+          "command": "DSPAUT USRPRF(PAYADMIN)",
+          "screenHint": "DSPAUT",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspsecaud",
+          "command": "DSPSECAUD",
+          "screenHint": "DSPSECAUD",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        }
+      ],
+      "articleOnlyRefs": [],
+      "blockingGaps": [],
+      "fullStepCount": 3,
+      "totalStepCount": 3
+    },
+    {
+      "packId": "clause-8",
+      "auditedAt": "2026-06-14T00:47:14.672Z",
+      "steps": [
+        {
+          "stepId": "dspobjaut",
+          "command": "DSPOBJAUT OBJ(PAYROLL/PAYMST) OBJTYPE(*FILE)",
+          "screenHint": "DSPOBJAUT",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspfd",
+          "command": "DSPFD FILE(PAYROLL/PAYMST)",
+          "screenHint": "DSPFD",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspffd",
+          "command": "DSPFFD FILE(PAYROLL/PAYMST)",
+          "screenHint": "DSPFFD",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "wrkjobscde",
+          "command": "WRKJOBSCDE",
+          "screenHint": "WRKJOBSCDE",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "wrklnk",
+          "command": "WRKLNK OBJ('/payroll')",
+          "screenHint": "WRKLNK",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspjrn",
+          "command": "DSPJRN JRN(QSYS/QAUDJRN)",
+          "screenHint": "DSPJRN",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        }
+      ],
+      "articleOnlyRefs": [
+        {
+          "kind": "command",
+          "ref": "DSPFFD",
+          "coverage": "full"
+        }
+      ],
+      "blockingGaps": [],
+      "fullStepCount": 6,
+      "totalStepCount": 6
+    },
+    {
+      "packId": "red-team",
+      "auditedAt": "2026-06-14T00:47:14.711Z",
+      "steps": [
+        {
+          "stepId": "dsp-profile",
+          "command": "DSPUSRPRF USRPRF(APCLERK)",
+          "screenHint": "DSPUSRPRF",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspobjaut",
+          "command": "DSPOBJAUT OBJ(PAYROLL/PAYMST)",
+          "screenHint": "DSPOBJAUT",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "edtobjaut",
+          "command": "EDTOBJAUT OBJ(PAYROLL/PAYMST)",
+          "screenHint": "EDTOBJAUT",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "grtobjaut",
+          "command": "GRTOBJAUT OBJ(PAYROLL/PAYMST) USER(APCLERK) AUT(*ALL)",
+          "screenHint": "GRTOBJAUT",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspneta",
+          "command": "DSPNETA",
+          "screenHint": "DSPNETA",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        }
+      ],
+      "articleOnlyRefs": [],
+      "blockingGaps": [],
+      "fullStepCount": 5,
+      "totalStepCount": 5
+    },
+    {
+      "packId": "soc2",
+      "auditedAt": "2026-06-14T00:47:14.726Z",
+      "steps": [
+        {
+          "stepId": "wrkusrprf",
+          "command": "WRKUSRPRF",
+          "screenHint": "WRKUSRPRF",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "wrkptfgrp",
+          "command": "WRKPTFGRP",
+          "screenHint": "WRKPTFGRP",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "dspjrn",
+          "command": "DSPJRN JRN(QSYS/QAUDJRN)",
+          "screenHint": "DSPJRN",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "audit-operations-pack",
+          "command": "WRKPTFGRP",
+          "screenHint": "WRKPTFGRP",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        },
+        {
+          "stepId": "wrkfinding",
+          "command": "WRKFINDING",
+          "screenHint": "WRKFINDING",
+          "commandCoverage": "full",
+          "screenCoverage": "full"
+        }
+      ],
+      "articleOnlyRefs": [],
+      "blockingGaps": [],
+      "fullStepCount": 5,
+      "totalStepCount": 5
+    }
+  ]
+}

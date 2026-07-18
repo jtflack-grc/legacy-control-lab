@@ -1,0 +1,21 @@
+{
+  "screenId": "WRKSYSSTS",
+  "tier": "B",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/wrksyssts.html",
+  "goldenFile": "wrksyssts.golden.json",
+  "requiredText": [
+    "WRKSYSSTS",
+    "Work with System Status",
+    "% CPU used",
+    "% DB capability",
+    "% system ASP used",
+    "Elapsed time",
+    "Jobs in system",
+    "F5=Refresh",
+    "F10=Restart",
+    "F12=Cancel"
+  ],
+  "render": { "type": "command", "command": "WRKSYSSTS", "user": "QSECOFR" }
+}

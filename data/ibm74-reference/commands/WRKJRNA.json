@@ -1,0 +1,17 @@
+{
+  "name": "WRKJRNA",
+  "displayName": "Work with Journal Attributes",
+  "category": "journal_audit",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkjrna",
+  "parameters": [],
+  "examples": [
+    "WRKJRNA"
+  ],
+  "helpText": "Work with journal attributes and receivers for audit journals.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJRN",
+  "wrkOptions": {
+    "5": "DSPJRNRCVA"
+  }
+}

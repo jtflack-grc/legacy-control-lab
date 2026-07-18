@@ -1,0 +1,14 @@
+{
+  "name": "DSPCMDHST",
+  "displayName": "Display Command History",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspcmdhst",
+  "parameters": [],
+  "examples": [
+    "DSPCMDHST"
+  ],
+  "helpText": "Displays recent commands entered during the current interactive session.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "SAVCFG",
+  "displayName": "Save Configure",
+  "category": "backup_restore",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-savcfg",
+  "parameters": [
+    {
+      "name": "LIB",
+      "label": "Library",
+      "required": true,
+      "type": "libraryName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB",
+        "*USRLIBL"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "SAVCFG. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

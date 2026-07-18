@@ -1,0 +1,17 @@
+[
+  {
+    "controlSetId": "lcl-control-set",
+    "title": "Custom IBM i Governance Control Set",
+    "path": "data/control-mapping/controls.json"
+  },
+  {
+    "controlSetId": "nist-csf-lite",
+    "title": "NIST CSF 2.0 (lite)",
+    "path": "data/controls/nist-csf-lite.json"
+  },
+  {
+    "controlSetId": "iso27001-lite",
+    "title": "ISO 27001 (lite)",
+    "path": "data/controls/iso27001-lite.json"
+  }
+]

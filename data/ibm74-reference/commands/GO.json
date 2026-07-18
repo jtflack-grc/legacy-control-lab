@@ -1,0 +1,26 @@
+{
+  "name": "GO",
+  "displayName": "Go To Menu",
+  "category": "security",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-go",
+  "parameters": [
+    {
+      "name": "MENU",
+      "label": "Menu or command group",
+      "required": false,
+      "type": "menuName",
+      "supportsSpecialValues": []
+    }
+  ],
+  "examples": [
+    "GO AUDIT",
+    "GO CMDSEC",
+    "GO CMDJOB",
+    "GO RANGE",
+    "GO WORKSHOP"
+  ],
+  "helpText": "Navigate to a menu or command group. Use GO CMDSEC, GO CMDJOB, GO RANGE, GO WORKSHOP, or GO AUDIT.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

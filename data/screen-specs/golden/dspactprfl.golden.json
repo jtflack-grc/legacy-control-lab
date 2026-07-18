@@ -1,0 +1,32 @@
+{
+  "screenId": "DSPACTPRFL",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-activity-profile-list-dspactprfl",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — DSPACTPRFL command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-activity-profile-list-dspactprfl",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "B",
+      "title": "SecureMyi — activity profile exemption list",
+      "url": "https://www.securemyi.com/nl/articles/usertools.html",
+      "type": "community-panel"
+    }
+  ],
+  "asciiPanel": " DSPACTPRFL                       Display Activity Profile List           CLAIMS400\n\n      Profile      Activity list status\n      BACKUPADM    *ACTIVE\n\nF3=Exit   F12=Cancel",
+  "requiredText": [
+    "Display Activity Profile List",
+    "Activity list status",
+    "BACKUPADM",
+    "F3=Exit"
+  ],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "notes": "Pairs with ANZPRFACT/CHGACTPRFL for offboarding audit evidence. Lab reads activityProfileExempt flags — not QSECIDL1 API.",
+  "auditNotes": "Activity list exempt profiles — pair with ANZPRFACT/CHGACTPRFL for offboarding and dormant-privilege evidence.",
+  "grcMapping": [
+    "SOC2 CC6.2",
+    "Offboarding hygiene"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "screenId": "CHGPWD",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.6.0?topic=auditors-password-control",
+  "sources": [
+    { "tier": "A", "title": "IBM i 7.6 — Password control", "url": "https://www.ibm.com/docs/en/i/7.6.0?topic=auditors-password-control", "type": "ibm-cl-reference" },
+    { "tier": "A", "title": "IBM Support — QDSIGNON2 display file", "url": "https://www.ibm.com/support/pages/node/638499", "type": "ibm-support" },
+    { "tier": "B", "title": "SecureMyi — GO SECURITY user class visibility", "url": "https://www.securemyi.com/nl/articles/userclass2.html", "type": "community-panel" },
+    { "tier": "A", "title": "IBM i Security reference — password rules (SC41-5302)", "url": "https://www.ibm.com/docs/it/ssw_ibm_i_73/pdf/sc415302.pdf", "type": "redbook-figure" }
+  ],
+  "asciiPanel": " CHGPWD                           Change Password                         CLAIMS400\n\n      User profile . . . . . . . . . . . . . . . . . : AUDIT01\n      Current password . . . . . . . . . . . . . . . :\n      New password . . . . . . . . . . . . . . . . . . :\n      Verify new password . . . . . . . . . . . . . . :\n\n      Press Enter to change password. F3 or F12 cancels without changing.\n\nF3=Exit   F12=Cancel",
+  "requiredText": [
+    "CHGPWD",
+    "Change Password",
+    "User profile",
+    "Current password",
+    "New password",
+    "Verify new password",
+    "Press Enter to change password",
+    "F3=Exit",
+    "F12=Cancel"
+  ],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "notes": "Interactive CHGPWD panel from GO SECURITY option 1. Password fields are non-display (DSPATR ND) at intermediate assistance. IBM auditors doc cites CHGPWD and GO SECURITY as self-service password change paths."
+}

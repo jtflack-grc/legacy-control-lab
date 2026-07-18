@@ -1,0 +1,26 @@
+{
+  "name": "DSPSBSD",
+  "displayName": "Display Subsystem Description",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspsbsd",
+  "parameters": [
+    {
+      "name": "SBS",
+      "label": "Subsystem",
+      "required": true,
+      "type": "name",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*ACTIVE",
+        "*ENDED"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPSBSD SBS(QINTER)"
+  ],
+  "helpText": "Displays subsystem description and status.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJOB"
+}

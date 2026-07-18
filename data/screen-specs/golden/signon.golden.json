@@ -1,0 +1,35 @@
+{
+  "screenId": "SIGNON",
+  "primarySource": "https://www.ibm.com/support/pages/node/638499",
+  "sources": [
+    { "tier": "A", "title": "IBM Support — QDSIGNON2 Display File DDS", "url": "https://www.ibm.com/support/pages/node/638499", "type": "ibm-support" },
+    { "tier": "A", "title": "IBM i 7.5 — Changing the sign-on display", "url": "https://www.ibm.com/docs/en/i/7.5.0?topic=description-changing-sign-display", "type": "ibm-cl-reference" },
+    { "tier": "B", "title": "setgetweb — QDSIGNON panel", "url": "http://www.setgetweb.com/p/iSeries/v5r3/qdsignon.htm", "type": "community-panel" }
+  ],
+  "asciiPanel": "             Sign On\n\n  User  . . . . . . . . . . . . . .          ________\n  Password  . . . . . . . . . . . .          ________\n\n  Program/procedure . . . . . . . .          ________\n  Menu  . . . . . . . . . . . . . .          ________\n  Current library . . . . . . . . .          ________\n\n                          System  . . . . . . . . . . . . . . . . . . . . . . . CLAIMS400\n                          Subsystem . . . . . . . . . . . . . . . . . . . . . . QINTER\n                          Display . . . . . . . . . . . . . . . . . . . . . . . QPADEV0001\n\n                                    (C) COPYRIGHT LCL IONGRC. 1974, 2026.",
+  "ddsRows": {
+    "title": { "row": 1, "labelCol": 23, "text": "Sign On", "color": "white", "attribute": "0x22" },
+    "systemLabel": { "row": 2, "col": 48, "text": "System  . . . . . :" },
+    "subsystemLabel": { "row": 3, "col": 48, "text": "Subsystem . . . . :" },
+    "displayLabel": { "row": 4, "col": 48, "text": "Display . . . . . :" },
+    "userLabel": { "row": 6, "col": 17, "inputCol": 53, "length": 10 },
+    "passwordLabel": { "row": 7, "col": 17, "inputCol": 53 },
+    "programLabel": { "row": 10, "col": 17 },
+    "menuLabel": { "row": 11, "col": 17, "inputCol": 53 },
+    "curlibLabel": { "row": 12, "col": 17, "inputCol": 53 }
+  },
+  "requiredText": [
+    "Sign On",
+    "System",
+    "Subsystem",
+    "Display",
+    "User",
+    "Password",
+    "Program/procedure",
+    "Menu",
+    "Current library",
+    "COPYRIGHT LCL",
+    "IONGRC"
+  ],
+  "notes": "Stock QDSIGNON panel: Sign On title and right-aligned copyright are white (0x22); labels are green (0x20). System block values right-align to column 80. Password shows label but non-display input (no green underline)."
+}

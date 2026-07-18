@@ -1,0 +1,46 @@
+{
+  "screenId": "NETSTAT",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/netstat.html",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — Work with TCP/IP Network Sts (NETSTAT)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/netstat.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — TCP/IP troubleshooting (rzaku)",
+      "url": "https://www.ibm.com/docs/en/ssw_ibm_i_73/pdf/rzakupdf.pdf",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "NETSTAT menu panel (community capture)",
+      "url": "https://www.amkevin.com/85.html",
+      "type": "panel-capture"
+    }
+  ],
+  "asciiPanel": "                    Work with TCP/IP Network Status\n                                                         System:   SYS1\n\nSelect one of the following:\n\n  1. Work with TCP/IP interface status\n  2. Display TCP/IP route information\n  3. Work with TCP/IP connection status\n\nSelection or command ===>\nF3=Exit F4=Prompt F9=Retrieve F12=Cancel",
+  "requiredText": [
+    "Work with TCP/IP Network Status",
+    "NETSTAT",
+    "Select one of the following:",
+    "1. Work with TCP/IP interface status",
+    "2. Display TCP/IP route information",
+    "3. Work with TCP/IP connection status",
+    "Selection or command"
+  ],
+  "connectionPanel": {
+    "title": "Work with TCP/IP Connection Status",
+    "requiredText": [
+      "Work with TCP/IP Connection Status",
+      "Type options, press Enter.",
+      "3=Enable debug",
+      "4=End",
+      "5=Display details",
+      "8=Display jobs",
+      "Remote",
+      "Local",
+      "State"
+    ]
+  },
+  "notes": "NETSTAT OPTION(*SELECT) shows the menu; OPTION(*CNN) or menu option 3 opens connection status. IPv6 variants use *IFC6/*CNN6 per IBM 7.4 command reference."
+}

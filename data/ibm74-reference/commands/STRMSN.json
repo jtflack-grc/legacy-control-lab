@@ -1,0 +1,22 @@
+{
+  "name": "STRMSN",
+  "displayName": "Start Mission",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-strmsn",
+  "parameters": [
+    {
+      "name": "MISSION",
+      "label": "Mission id",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": []
+    }
+  ],
+  "examples": [
+    "STRMSN MISSION(CLAIMS-001)"
+  ],
+  "helpText": "Starts a mission attempt for the specified mission id on the active system.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

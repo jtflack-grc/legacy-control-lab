@@ -1,0 +1,16 @@
+{
+  "name": "CHGSECA",
+  "displayName": "Change Security Attributes",
+  "category": "security",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgseca",
+  "parameters": [],
+  "examples": [
+    "CHGSECA"
+  ],
+  "helpText": "Security attribute guidance — use WRKSYSVAL/CHGSYSVAL for value changes in the lab.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDSEC"
+}

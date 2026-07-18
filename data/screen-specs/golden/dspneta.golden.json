@@ -1,0 +1,32 @@
+{
+  "screenId": "DSPNETA",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-network-attributes-dspneta",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — DSPNETA command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-network-attributes-dspneta",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — TCP/IP setup",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=setup-tcpip",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — DSPNETA command reference",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/dspneta.html",
+      "type": "ibm-documentation"
+    }
+  ],
+  "requiredText": [
+    "Display Network Attributes",
+    "Host name",
+    "Domain",
+    "TCP/IP status",
+    "Interface status",
+    "Default router",
+    "F3=Exit"
+  ],
+  "notes": "Red-team boundary screen — network posture evidence after escape attempts.",
+  "asciiPanel": " DSPNETA                          Display Network Attributes                CLAIMS400\n\nHost name . . . . . . . . . . . . . . . : CLAIMS400\nDomain . . . . . . . . . . . . . . . . . : LAB.LOCAL\nTCP/IP status . . . . . . . . . . . . . : *ACTIVE\nInterface status . . . . . . . . . . . . : *RUNNING\nDefault domain . . . . . . . . . . . . . : LAB.LOCAL\nDefault router . . . . . . . . . . . . . : 10.10.10.1\n\nF3=Exit   F1=Help   F12=Cancel"
+}

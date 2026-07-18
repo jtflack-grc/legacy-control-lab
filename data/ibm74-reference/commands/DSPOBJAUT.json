@@ -1,0 +1,38 @@
+{
+  "name": "DSPOBJAUT",
+  "displayName": "Display Object Authority",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspobjaut",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Object",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    },
+    {
+      "name": "USER",
+      "label": "User",
+      "required": false,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*PUBLIC",
+        "*CURRENT"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPOBJAUT OBJ(PAYROLL/PAYMST)",
+    "DSPOBJAUT OBJ(PAYROLL/PAYMST) USER(BACKUPADM)"
+  ],
+  "helpText": "Displays public and private authority for an object. Key evidence for excessive authority findings.",
+  "requiresAuthority": [
+    "*OBJEXIST"
+  ],
+  "mutatesState": false,
+  "groupMenu": "CMDAUT"
+}

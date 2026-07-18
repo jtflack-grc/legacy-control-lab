@@ -1,0 +1,265 @@
+[
+  {
+    "name": "CHGOUTQ",
+    "displayName": "Change Output Queue",
+    "category": "spool_print",
+    "groupMenu": "CMDSPL",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CHGOUTQ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CHGOUTQ",
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGSPLFA",
+    "displayName": "Change Spooled File Attributes",
+    "category": "spool_print",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Change Spooled File Attributes. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "changeSpooledFileAttributes",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true
+  },
+  {
+    "name": "CRTOUTQ",
+    "displayName": "Create Output Queue",
+    "category": "spool_print",
+    "groupMenu": "CMDSPL",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CRTOUTQ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CRTOUTQ",
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTOUTQ",
+    "displayName": "Delete Output Queue",
+    "category": "spool_print",
+    "groupMenu": "CMDSPL",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DLTOUTQ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DLTOUTQ",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTSPLF",
+    "displayName": "Delete Spooled File",
+    "category": "spool_print",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "deleteSpooledFile",
+    "parameters": [
+      {
+        "name": "FILE",
+        "type": "genericName",
+        "required": false,
+        "label": "Spooled file"
+      }
+    ],
+    "helpText": "Deletes a spooled file from the output queue in the lab runtime.",
+    "examples": [
+      "DLTSPLF FILE(QAUDRPT)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDSPL",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPOUTQ",
+    "displayName": "Display Output Queue",
+    "category": "spool_print",
+    "groupMenu": "CMDSPL",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayOutputQueue",
+    "helpText": "Display Output Queue. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "DSPOUTQ OUTQ(QPRINT)"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPSPLF",
+    "displayName": "Display Spooled File",
+    "category": "spool_print",
+    "status": "implemented",
+    "handler": "displaySpooledFile",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "missionUse": [
+      "spool_output"
+    ],
+    "helpText": "Displays attributes of a spooled file such as user, create date, and output queue.",
+    "examples": [
+      "DSPSPLF FILE(QAUDRPT)"
+    ],
+    "groupMenu": "CMDSPL",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "ENDWTR",
+    "displayName": "End WTR",
+    "category": "spool_print",
+    "groupMenu": "CMDSPL",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "ENDWTR. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "ENDWTR",
+    "handler": "catalogControl",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "HLDSPLE",
+    "displayName": "Hold Spooled File",
+    "category": "spool_print",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "holdSpooledFile",
+    "parameters": [
+      {
+        "name": "FILE",
+        "type": "genericName",
+        "required": false,
+        "label": "Spooled file"
+      }
+    ],
+    "helpText": "Places a spooled file on hold so it will not print until released.",
+    "examples": [
+      "HLDSPLE FILE(QAUDRPT)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDSPL",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "OVRPRTF",
+    "displayName": "Override Printer File",
+    "category": "spool_print",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Override Printer File. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RLSSPLF",
+    "displayName": "Release Spooled File",
+    "category": "spool_print",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "releaseSpooledFile",
+    "parameters": [
+      {
+        "name": "FILE",
+        "type": "genericName",
+        "required": false,
+        "label": "Spooled file"
+      }
+    ],
+    "helpText": "Release Spooled File. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "RLSSPLF FILE(QAUDRPT)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDSPL",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "STRPRTWTR",
+    "displayName": "Start PRTWTR",
+    "category": "spool_print",
+    "groupMenu": "CMDSPL",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "STRPRTWTR. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "STRPRTWTR",
+    "handler": "catalogControl",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKOUTQ",
+    "displayName": "Work with Output Queue",
+    "category": "spool_print",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workOutputQueue",
+    "helpText": "Work with Output Queue. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "WRKOUTQ"
+    ],
+    "groupMenu": "CMDSPL",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKSPLF",
+    "displayName": "Work with Spooled Files",
+    "category": "spool_print",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workSpooledFiles",
+    "helpText": "Work with spooled files owned by scenario users. Option 4 displays spool file detail.",
+    "examples": [
+      "WRKSPLF"
+    ],
+    "groupMenu": "CMDSPL",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKWTR",
+    "displayName": "Work with WTR",
+    "category": "spool_print",
+    "groupMenu": "CMDSPL",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "WRKWTR. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "WRKWTR",
+    "handler": "workWriters",
+    "implementationLevel": "display_implemented"
+  }
+]

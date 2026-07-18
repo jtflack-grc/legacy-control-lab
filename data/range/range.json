@@ -1,0 +1,15 @@
+{
+  "rangeId": "legacy-control-lab",
+  "title": "IBM i Control Lab",
+  "description": "A local IBM i-style governance, security, and audit simulation range.",
+  "version": "0.5.0",
+  "defaultSystem": "CLAIMS400",
+  "defaultCampaign": "IBM-I-ACCESS-GOVERNANCE",
+  "defaultMode": "coach",
+  "supportedModes": ["coach", "assessment", "expert", "workshop"],
+  "systemsPath": "data/scenarios",
+  "campaignsPath": "data/campaigns",
+  "reportsPath": "data/reports",
+  "evidencePacketsPath": "data/evidence-packets",
+  "scorebookPath": "data/scorebook"
+}

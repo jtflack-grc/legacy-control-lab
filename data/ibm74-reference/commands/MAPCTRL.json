@@ -1,0 +1,29 @@
+{
+  "name": "MAPCTRL",
+  "displayName": "Map Control to Finding",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-mapctrl",
+  "parameters": [
+    {
+      "name": "FINDING",
+      "label": "Finding number",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": []
+    },
+    {
+      "name": "CTRL",
+      "label": "Control id",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": []
+    }
+  ],
+  "examples": [
+    "MAPCTRL FINDING(1) CTRL(LCL-AC-02)"
+  ],
+  "helpText": "Maps a governance control identifier to a finding recorded in the current mission attempt.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

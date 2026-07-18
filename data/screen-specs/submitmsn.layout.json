@@ -1,0 +1,14 @@
+{
+  "screenId": "SUBMITMSN",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "lab-native mission scoring",
+  "requiredText": [
+    "Mission Score",
+    "Mission score:",
+    "Evidence coverage:",
+    "Report exported:"
+  ],
+  "forbiddenText": ["Welcome!", "Type options, press Enter."],
+  "render": { "type": "sample", "sample": "SUBMITMSN_SCORE" }
+}

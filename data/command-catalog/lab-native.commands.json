@@ -1,0 +1,853 @@
+[
+  {
+    "name": "CHGMODE",
+    "displayName": "Change Guidance Mode",
+    "category": "range",
+    "status": "implemented",
+    "handler": "changeGuidanceMode",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "MODE",
+        "type": "genericName",
+        "required": true,
+        "label": "Guidance mode"
+      }
+    ],
+    "helpText": "Changes guidance mode between COACH (hints enabled) and EXAM (hints suppressed) for the active mission.",
+    "examples": [
+      "CHGMODE MODE(COACH)",
+      "CHGMODE MODE(EXAM)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGPERS",
+    "displayName": "Change Persona",
+    "category": "range",
+    "status": "implemented",
+    "handler": "changePersona",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "PERSONA",
+        "type": "genericName",
+        "required": true,
+        "label": "Persona"
+      }
+    ],
+    "helpText": "Changes the active persona (AUDITOR, OPERATOR, ADMIN) which adjusts briefing tone and scoring emphasis.",
+    "examples": [
+      "CHGPERS PERSONA(AUDITOR)",
+      "CHGPERS PERSONA(ADMIN)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGVARIANT",
+    "displayName": "Change Variant",
+    "category": "range",
+    "status": "implemented",
+    "handler": "changeVariant",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "VARIANT",
+        "type": "genericName",
+        "required": true,
+        "label": "Variant id"
+      }
+    ],
+    "helpText": "Switches the active mission variant (A/B/C) for the current scenario without restarting the range.",
+    "examples": [
+      "CHGVARIANT VARIANT(CLAIMS-001-A)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPBLD",
+    "displayName": "Display Build Instructions",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayBuildInstructions",
+    "helpText": "Displays build instructions for the current mission including objectives and acceptance criteria.",
+    "examples": [
+      "DSPBLD"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPCMDCOV",
+    "displayName": "Display Command Coverage",
+    "category": "mission_lab",
+    "groupMenu": "CMDLAB",
+    "status": "implemented",
+    "handler": "displayCommandCoverage",
+    "promptable": false,
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Displays command catalog coverage by category, tier, and implementation status.",
+    "examples": [
+      "DSPCMDCOV"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPCMDHLP",
+    "displayName": "Display Command Help",
+    "category": "mission_lab",
+    "groupMenu": "CMDLAB",
+    "status": "implemented",
+    "handler": "displayCommandHelp",
+    "promptable": true,
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "CMD",
+        "type": "genericName",
+        "required": true,
+        "label": "Command name"
+      }
+    ],
+    "helpText": "Displays command help from the catalog including purpose, parameters, examples, and realism limits.",
+    "examples": [
+      "DSPCMDHLP CMD(DSPOBJAUT)",
+      "DSPCMDHLP CMD(CHGUSRPRF)"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPCMDHST",
+    "displayName": "Display Command History",
+    "category": "mission_lab",
+    "groupMenu": "CMDLAB",
+    "status": "implemented",
+    "handler": "displayCommandHistory",
+    "promptable": false,
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Displays recent commands entered during the current interactive session.",
+    "examples": [
+      "DSPCMDHST"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPCTRL",
+    "displayName": "Display Control",
+    "category": "range",
+    "status": "implemented",
+    "handler": "displayControl",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "CTRL",
+        "type": "genericName",
+        "required": true,
+        "label": "Control id"
+      }
+    ],
+    "helpText": "Displays a governance control definition from the control mapping catalog.",
+    "examples": [
+      "DSPCTRL CTRL(LCL-AC-01)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPEVDDIFF",
+    "displayName": "Display Evidence Diff",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayEvidenceDiff",
+    "aliases": [
+      "DSPDIFF",
+      "DSPLABDIFF"
+    ],
+    "parameters": [
+      {
+        "name": "TYPE",
+        "type": "genericName",
+        "required": false,
+        "defaultValue": "*ALL"
+      }
+    ],
+    "helpText": "Displays state changes made during the current attempt across profiles, authorities, and system values.",
+    "examples": [
+      "DSPEVDDIFF TYPE(*ALL)",
+      "DSPEVDDIFF TYPE(*USRPRF)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPEVID",
+    "displayName": "Display Evidence Coverage",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayEvidence",
+    "helpText": "Displays evidence coverage for the current mission attempt against required evidence types.",
+    "examples": [
+      "DSPEVID"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPHLP",
+    "displayName": "Display Help",
+    "category": "mission_lab",
+    "groupMenu": "CMDLAB",
+    "status": "implemented",
+    "handler": "displayTopicHelp",
+    "promptable": true,
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "TOPIC",
+        "type": "genericName",
+        "required": false,
+        "label": "Help topic"
+      }
+    ],
+    "helpText": "Displays contextual help for the current screen, function keys, and related commands in the lab.",
+    "examples": [
+      "DSPHLP",
+      "DSPHLP TOPIC(SPECIAL_AUTHORITY)"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPMISSION",
+    "displayName": "Display Mission",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayMission",
+    "helpText": "Displays the active mission brief including systems, objectives, and scoring rubric.",
+    "examples": [
+      "DSPMISSION"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPMODE",
+    "displayName": "Display Guidance Mode",
+    "category": "range",
+    "status": "implemented",
+    "handler": "displayGuidanceMode",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Displays the current guidance mode (COACH or EXAM) for the session.",
+    "examples": [
+      "DSPMODE"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPMSGHLP",
+    "displayName": "Display Message Help",
+    "category": "mission_lab",
+    "groupMenu": "CMDLAB",
+    "status": "implemented",
+    "handler": "displayMessageHelp",
+    "promptable": true,
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "MSGID",
+        "type": "genericName",
+        "required": true,
+        "label": "Message identifier"
+      }
+    ],
+    "helpText": "Displays second-level help for CPF, CPI, and LCL messages returned by the lab runtime.",
+    "examples": [
+      "DSPMSGHLP MSGID(LCL0901)",
+      "DSPMSGHLP MSGID(CPF0001)"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPPERS",
+    "displayName": "Display Persona",
+    "category": "range",
+    "status": "implemented",
+    "handler": "displayPersona",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Displays the active persona and how it affects briefing and scoring.",
+    "examples": [
+      "DSPPERS"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPSCN",
+    "displayName": "Display Scenario Package",
+    "category": "range",
+    "status": "implemented",
+    "handler": "displayScenarioPackage",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "PACKAGE",
+        "type": "genericName",
+        "required": false
+      }
+    ],
+    "helpText": "Displays metadata for the active scenario pack (libraries, missions, controls).",
+    "examples": [
+      "DSPSCN SCENARIO(CLAIMS400)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPVARIANT",
+    "displayName": "Display Variant",
+    "category": "range",
+    "status": "implemented",
+    "handler": "displayVariant",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Displays the active mission variant and its difficulty modifiers.",
+    "examples": [
+      "DSPVARIANT"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "GENRPT",
+    "displayName": "Generate Report",
+    "category": "range",
+    "status": "implemented",
+    "handler": "generateReport",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "TYPE",
+        "type": "genericName",
+        "required": false,
+        "label": "Report type"
+      }
+    ],
+    "helpText": "Generates campaign or executive summary reports to data/reports/.",
+    "examples": [
+      "GENRPT TYPE(*CAMPAIGN)",
+      "GENRPT TYPE(*EXEC)",
+      "GENRPT TYPE(*PRIV)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "HELP",
+    "displayName": "Display Help",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayHelp",
+    "helpText": "Alias for DSPHLP. Shows screen-level help and lab navigation tips for the active session.",
+    "examples": [
+      "HELP"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "MAPCTRL",
+    "displayName": "Map Control to Finding",
+    "category": "range",
+    "status": "implemented",
+    "handler": "mapControlToFinding",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "FINDING",
+        "type": "genericName",
+        "required": true,
+        "label": "Finding number"
+      },
+      {
+        "name": "CTRL",
+        "type": "genericName",
+        "required": true,
+        "label": "Control id"
+      }
+    ],
+    "helpText": "Maps a governance control identifier to a finding recorded in the current mission attempt.",
+    "examples": [
+      "MAPCTRL FINDING(1) CTRL(LCL-AC-02)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RESETLAB",
+    "displayName": "Reset Lab Attempt",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "resetLab",
+    "aliases": [
+      "RSTSCNARIO",
+      "RSTMISSION"
+    ],
+    "parameters": [
+      {
+        "name": "MISSION",
+        "type": "genericName",
+        "required": false
+      },
+      {
+        "name": "CONFIRM",
+        "type": "genericName",
+        "required": false
+      }
+    ],
+    "helpText": "Resets the current mission attempt and restores scenario baseline state for the active system.",
+    "examples": [
+      "RESETLAB CONFIRM(*YES)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RSTCFG",
+    "displayName": "Restore Configure",
+    "category": "backup_restore",
+    "groupMenu": "CMDLAB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "RSTCFG. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "RSTCFG",
+    "handler": "catalogBackup",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RSTLABPKG",
+    "displayName": "Restore Lab Package",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "restoreLabPackage",
+    "helpText": "Restores a previously saved lab package snapshot for the current attempt.",
+    "examples": [
+      "RSTLABPKG"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RSTLIB",
+    "displayName": "Restore Library",
+    "category": "backup_restore",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SAVSYS"
+    ],
+    "handler": "restoreLibrary",
+    "parameters": [
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": true,
+        "label": "Library"
+      }
+    ],
+    "helpText": "Restores a library from a prior SAVLIB save in the current attempt.",
+    "examples": [
+      "RSTLIB LIB(PAYROLL)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RSTOBJ",
+    "displayName": "Restore Object",
+    "category": "backup_restore",
+    "groupMenu": "CMDLAB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "RSTOBJ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "RSTOBJ",
+    "handler": "catalogBackup",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RSTSCNPKG",
+    "displayName": "Restore Scenario Package",
+    "category": "range",
+    "status": "implemented",
+    "handler": "restoreScenarioPackage",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "PACKAGE",
+        "type": "genericName",
+        "required": true,
+        "label": "Package file"
+      },
+      {
+        "name": "FORCE",
+        "type": "genericName",
+        "required": false
+      }
+    ],
+    "helpText": "Restores scenario pack files from a .lclpack archive into data/scenarios/.",
+    "examples": [
+      "RSTSCNPKG PACKAGE(claims400.lclpack)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RUNBUILD",
+    "displayName": "Run Build Instructions",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "runBuild",
+    "helpText": "Executes scripted build steps for workshop authoring. Used by scenario forge workflows.",
+    "examples": [
+      "RUNBUILD"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "SAVCFG",
+    "displayName": "Save Configure",
+    "category": "backup_restore",
+    "groupMenu": "CMDLAB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "SAVCFG. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "SAVCFG",
+    "handler": "catalogBackup",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "SAVLIB",
+    "displayName": "Save Library",
+    "category": "backup_restore",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SAVSYS"
+    ],
+    "handler": "saveLibrary",
+    "parameters": [
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": true,
+        "label": "Library"
+      }
+    ],
+    "helpText": "Saves a library to a synthetic save file in the lab. Creates backup evidence for restore exercises.",
+    "examples": [
+      "SAVLIB LIB(PAYROLL)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "SAVOBJ",
+    "displayName": "Save Object",
+    "category": "backup_restore",
+    "groupMenu": "CMDLAB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "SAVOBJ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "SAVOBJ",
+    "handler": "catalogBackup",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "SAVSCNPKG",
+    "displayName": "Save Scenario Package",
+    "category": "range",
+    "status": "implemented",
+    "handler": "saveScenarioPackage",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "SCENARIO",
+        "type": "genericName",
+        "required": false,
+        "label": "Scenario id"
+      },
+      {
+        "name": "TOSTMF",
+        "type": "genericName",
+        "required": false
+      }
+    ],
+    "helpText": "Packages the active scenario directory into a portable .lclpack file under data/exports/.",
+    "examples": [
+      "SAVSCNPKG SCENARIO(CLAIMS400)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "STRMSN",
+    "displayName": "Start Mission",
+    "category": "range",
+    "status": "implemented",
+    "handler": "startCampaignMission",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameters": [
+      {
+        "name": "MISSION",
+        "type": "genericName",
+        "required": true,
+        "label": "Mission id"
+      }
+    ],
+    "helpText": "Starts a mission attempt for the specified mission id on the active system.",
+    "examples": [
+      "STRMSN MISSION(CLAIMS-001)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "SUBMITMSN",
+    "displayName": "Submit Mission",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "submitMission",
+    "helpText": "Submits the current mission attempt for scoring and exports Markdown/JSON reports plus evidence packet.",
+    "examples": [
+      "SUBMITMSN"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKCMPGN",
+    "displayName": "Work with Campaigns",
+    "category": "range",
+    "status": "implemented",
+    "handler": "workCampaigns",
+    "aliases": [
+      "WRKCAMPAIGN"
+    ],
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Work with governance campaigns and track mission completion across systems.",
+    "examples": [
+      "WRKCMPGN"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKCMPMSN",
+    "displayName": "Work with Campaign Missions",
+    "category": "range",
+    "status": "implemented",
+    "handler": "workCampaignMissions",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Work with missions in a campaign. Select a mission to start or review completion status.",
+    "examples": [
+      "WRKCMPMSN CAMPAIGN(IBM-I-ACCESS-GOVERNANCE)"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKCTRL",
+    "displayName": "Work with Controls",
+    "category": "range",
+    "status": "implemented",
+    "handler": "workControls",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Work with governance controls and map them to findings in the scorebook.",
+    "examples": [
+      "WRKCTRL"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKFINDING",
+    "displayName": "Work with Findings",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithFindings",
+    "helpText": "Work with recorded findings for the current mission attempt. Option 2 edits narrative.",
+    "examples": [
+      "WRKFINDING"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKRANGE",
+    "displayName": "Work with Range",
+    "category": "range",
+    "status": "implemented",
+    "handler": "workRange",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Work with systems in the Legacy Control Lab range. Select CLAIMS400, COUNTY400, or HOSPITAL400.",
+    "examples": [
+      "WRKRANGE",
+      "GO RANGE"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKSCN",
+    "displayName": "Work with Scenario Packs",
+    "category": "range",
+    "status": "implemented",
+    "handler": "workScenarioPacks",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Work with scenario packs in the range. Import, validate, or switch active scenario.",
+    "examples": [
+      "WRKSCN"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKSCORE",
+    "displayName": "Work with Scorebook",
+    "category": "range",
+    "status": "implemented",
+    "handler": "workScorebook",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Work with the campaign scorebook showing points, controls, and mission completion.",
+    "examples": [
+      "WRKSCORE"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKVARIANT",
+    "displayName": "Work with Variants",
+    "category": "range",
+    "status": "implemented",
+    "handler": "workVariants",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Work with mission variants defined for the active scenario pack.",
+    "examples": [
+      "WRKVARIANT"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

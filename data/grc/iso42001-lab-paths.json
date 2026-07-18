@@ -1,0 +1,38 @@
+{
+  "seriesHub": "https://ibmireference.blogspot.com/2025/12/ibm-ai-on-grc-iso-42001.html",
+  "harvestStatus": "index-only",
+  "harvestedAt": "2026-06-09",
+  "notes": "ISO/IEC 42001 AI governance on IBM i — bridge via RUNSQL, QSYS2 services, job logs, and audit evidence. Full clause missions are backlog.",
+  "labPaths": [
+    {
+      "clause": "4",
+      "title": "Context of the Organization",
+      "status": "backlog",
+      "proposedCommands": ["RUNSQL", "DSPFD", "WRKOBJ"]
+    },
+    {
+      "clause": "6",
+      "title": "Operations — governance in motion",
+      "status": "backlog",
+      "proposedCommands": ["WRKACTJOB", "DSPJRN", "RUNSQL"],
+      "relatedMission": "CLAIMS-005"
+    },
+    {
+      "clause": "5",
+      "title": "Performance evaluation",
+      "status": "backlog",
+      "proposedCommands": ["SUBMITMSN", "GENRPT", "DSPEVID"],
+      "relatedMission": "CLAIMS-001"
+    },
+    {
+      "clause": "AI workload audit",
+      "title": "QSYS2 service catalog review",
+      "status": "backlog",
+      "proposedCommands": [
+        "RUNSQL SELECT * FROM QSYS2.SERVICE_INFO",
+        "RUNSQL SELECT * FROM QSYS2.USER_INFO"
+      ],
+      "scenarioNote": "Extend RUNSQL seed patterns for AI service rows"
+    }
+  ]
+}

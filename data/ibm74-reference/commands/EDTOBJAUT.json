@@ -1,0 +1,27 @@
+{
+  "name": "EDTOBJAUT",
+  "displayName": "Edit Object Authority",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-edtobjaut",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Object",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [
+    "EDTOBJAUT OBJ(PAYROLL/PAYMST)"
+  ],
+  "helpText": "Opens the object authority editor for a library object. Grants or revokes *USE/*CHANGE/*ALL style authority.",
+  "requiresAuthority": [
+    "*OBJMGT"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDAUT"
+}

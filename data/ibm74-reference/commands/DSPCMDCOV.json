@@ -1,0 +1,14 @@
+{
+  "name": "DSPCMDCOV",
+  "displayName": "Display Command Coverage",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspcmdcov",
+  "parameters": [],
+  "examples": [
+    "DSPCMDCOV"
+  ],
+  "helpText": "Displays command catalog coverage by category, tier, and implementation status.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

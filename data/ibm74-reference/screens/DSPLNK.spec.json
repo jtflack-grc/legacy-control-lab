@@ -1,0 +1,12 @@
+{
+  "screenId": "DSPLNK",
+  "category": "ifs",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

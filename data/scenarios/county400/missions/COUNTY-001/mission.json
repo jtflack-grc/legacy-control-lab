@@ -1,0 +1,10 @@
+{
+  "missionId": "COUNTY-001",
+  "title": "Public Records Access Review",
+  "persona": "IT auditor / GRC analyst",
+  "systemName": "COUNTY400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "mode": "investigate_and_remediate",
+  "allowedMutation": true
+}

@@ -1,0 +1,44 @@
+{
+  "screenId": "WRKSYSVAL",
+  "primarySource": "https://www.mcpressonline.com/it-infrastructure/it-infrastructure-other/working-with-system-values",
+  "sources": [
+    {
+      "title": "MC Press — Working with System Values (subset by type)",
+      "url": "https://www.mcpressonline.com/it-infrastructure/it-infrastructure-other/working-with-system-values",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM SY44-5902 — WRKSYSVAL",
+      "url": "https://manualsdump.com/en/manuals/ibm-sy44-5902-05/116964/312",
+      "type": "ibm-manual"
+    },
+    {
+      "title": "IBM i 7.4 — System values",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-system-values",
+      "type": "ibm-documentation"
+    }
+  ],
+  "requiredText": [
+    "Work with System Values",
+    "Type options, press Enter.",
+    "2=Change",
+    "5=Display",
+    "Opt  System value",
+    "Category",
+    "Parameters or command",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "subsetCategories": [
+    "*ALC",
+    "*DATTIM",
+    "*EDT",
+    "*LIBL",
+    "*MSG",
+    "*SEC",
+    "*STG",
+    "*SYSCTL"
+  ],
+  "notes": "WRKSYSVAL may show 'Subset by type' prompt on entry; subfile lists Opt, System value, Value, Category. SYSVAL(*SEC) filters security values.",
+  "asciiPanel": " WRKSYSVAL                        Work with System Values                 CLAIMS400\n\nType options, press Enter.\n  2=Change   5=Display\n\nOpt  System value    Value                     Category\n     QSECURITY       40                        Security\n     QAUDCTL         *NONE                     Security\n     QMAXSIGN        5                         Security\n     QINACTITV       30                        Security\n                                            More...\n\nParameters or command\n===>\nF3=Exit  F5=Refresh  F7=Page up  F8=Page down  F12=Cancel"
+}

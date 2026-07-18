@@ -1,0 +1,14 @@
+{
+  "missionId": "CLAIMS-005",
+  "title": "Can You Blue Team IBM i?",
+  "persona": "IT auditor / SOC analyst",
+  "systemName": "CLAIMS400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "objective": "Determine whether security events on CLAIMS400 are detectable and reviewable through jobs, journals, and job logs.",
+  "mode": "investigation_only",
+  "allowedMutation": false,
+  "resetOnStart": true,
+  "sourceArticle": "Can You Blue Team an IBM i?",
+  "frameworks": ["SOC 2 CC7.2", "Detect and respond", "IBM i monitoring"]
+}

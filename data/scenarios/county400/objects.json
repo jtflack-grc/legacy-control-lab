@@ -1,0 +1,26 @@
+[
+  {
+    "library": "PUBREC",
+    "name": "RECMST",
+    "objectType": "*FILE",
+    "owner": "RECORDS1",
+    "textDescription": "Public records master file",
+    "publicAuthority": "*CHANGE"
+  },
+  {
+    "library": "TAXROLL",
+    "name": "TAXMST",
+    "objectType": "*FILE",
+    "owner": "TAXBATCH",
+    "textDescription": "Tax roll master",
+    "publicAuthority": "*USE"
+  },
+  {
+    "library": "PERMITS",
+    "name": "PRMIDX",
+    "objectType": "*FILE",
+    "owner": "RECORDS1",
+    "textDescription": "Permit index",
+    "publicAuthority": "*EXCLUDE"
+  }
+]

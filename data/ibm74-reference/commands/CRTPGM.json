@@ -1,0 +1,12 @@
+{
+  "name": "CRTPGM",
+  "displayName": "Create Program",
+  "category": "source_pdm",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-crtpgm",
+  "parameters": [],
+  "examples": [],
+  "helpText": "CRTPGM. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDSRC"
+}

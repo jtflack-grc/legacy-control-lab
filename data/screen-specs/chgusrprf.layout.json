@@ -1,0 +1,18 @@
+{
+  "screenId": "CHGUSRPRF",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-user-profile-chgusrprf",
+  "requiredText": [
+    "Change User Profile (CHGUSRPRF)",
+    "Type choices, press Enter.",
+    "User profile",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "forbiddenText": ["Evidence note", "mission menu", "Welcome!"],
+  "fieldRules": [
+    { "id": "P0", "valueContains": "OLDVENDOR" }
+  ],
+  "render": { "type": "sample", "sample": "CHGUSRPRF_PROMPT" }
+}

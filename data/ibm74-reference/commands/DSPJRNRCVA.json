@@ -1,0 +1,22 @@
+{
+  "name": "DSPJRNRCVA",
+  "displayName": "Display Journal Receiver Attributes",
+  "category": "journal_audit",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspjrnrcva",
+  "parameters": [
+    {
+      "name": "JRN",
+      "label": "Journal",
+      "required": false,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "Display Journal Receiver Attributes — stubbed in Legacy Control Lab.",
+  "requiresAuthority": [],
+  "mutatesState": false
+}

@@ -1,0 +1,25 @@
+{
+  "name": "RLSSPLF",
+  "displayName": "Release Spooled File",
+  "category": "spool_print",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-rlssplf",
+  "parameters": [
+    {
+      "name": "FILE",
+      "label": "Spooled file",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*FIRST"
+      ]
+    }
+  ],
+  "examples": [
+    "RLSSPLF FILE(QAUDRPT)"
+  ],
+  "helpText": "Releases a held spooled file back to the ready-to-print state.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDSPL"
+}

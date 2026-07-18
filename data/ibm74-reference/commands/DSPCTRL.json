@@ -1,0 +1,22 @@
+{
+  "name": "DSPCTRL",
+  "displayName": "Display Control",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspctrl",
+  "parameters": [
+    {
+      "name": "CTRL",
+      "label": "Control id",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": []
+    }
+  ],
+  "examples": [
+    "DSPCTRL CTRL(LCL-AC-01)"
+  ],
+  "helpText": "Displays a governance control definition from the control mapping catalog.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

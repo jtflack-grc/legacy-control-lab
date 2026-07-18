@@ -1,0 +1,14 @@
+{
+  "name": "STRSQL",
+  "displayName": "Start SQL",
+  "category": "sql_services",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-strsql",
+  "parameters": [],
+  "examples": [
+    "STRSQL"
+  ],
+  "helpText": "Starts the interactive SQL session screen. Equivalent entry point to RUNSQL for ad hoc queries.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDSQL"
+}

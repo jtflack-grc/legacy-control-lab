@@ -1,0 +1,24 @@
+{
+  "screenId": "CHGAUTL",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-authorization-list-chgautl",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — CHGAUTL command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-authorization-list-chgautl",
+      "type": "ibm-cl-reference"
+    }
+  ],
+  "asciiPanel": "              Change Authorization List (CHGAUTL)\n\nType choices, press Enter.\n\nAuthorization list . . . . . . . . . . . . . . > PAYROLL\nText description . . . . . . . . . . . . . . . > Payroll object authority list\nAuthority  . . . . . . . . . . . . . . . . . . > *EXCLUDE\n\nBottom\nF3=Exit   F4=Prompt   F12=Cancel   F24=More keys",
+  "requiredText": [
+    "Change Authorization List",
+    "Authorization list",
+    "PAYROLL",
+    "F4=Prompt"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F12=Cancel   F24=More keys",
+  "auditNotes": "Modify authorization list metadata — WRKAUTL maintenance path.",
+  "grcMapping": [
+    "SOC2 CC6.1"
+  ]
+}

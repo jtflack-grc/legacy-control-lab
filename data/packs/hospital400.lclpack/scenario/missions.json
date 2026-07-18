@@ -1,0 +1,162 @@
+{
+  "missions": [
+    {
+      "id": "HOSPITAL-001",
+      "title": "Sensitive Object Authority Review",
+      "briefing": "Determine whether sensitive operational files have excessive authority exposure.",
+      "persona": "IT auditor / GRC analyst"
+    },
+    {
+      "id": "HOSPITAL-002",
+      "title": "Can You Prove Hospital Privacy Operations?",
+      "briefing": "The control owner claims PHI on HOSPITAL400 is governed through object authority, file layout, payroll batch jobs, and IFS integration paths. Sign on as AUDIT and follow the ISO 27701 Clause 8 evidence chain on this system.",
+      "persona": "IT auditor / GRC analyst"
+    },
+    {
+      "id": "HOSPITAL-003",
+      "title": "Operational Evidence and PTF Currency",
+      "briefing": "Review job logs, spool output, and PTF group status for operational resilience evidence.",
+      "persona": "IT auditor / operator"
+    }
+  ],
+  "missionEvidenceRequirements": [
+    {
+      "missionId": "HOSPITAL-001",
+      "key": "user_profiles",
+      "description": "Review user profiles (WRKUSRPRF or DSPUSRPRF)",
+      "commandPattern": "WRKUSRPRF|DSPUSRPRF",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-001",
+      "key": "object_authority",
+      "description": "Review sensitive object authority",
+      "commandPattern": "DSPOBJAUT|WRKOBJ",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-001",
+      "key": "audit_journal",
+      "description": "Review audit journal entries",
+      "commandPattern": "DSPJRN|DSPAUDJRNE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "key": "paymst_authority",
+      "description": "Review PAYROLL/PAYMST object authority",
+      "commandPattern": "DSPOBJAUT:PAYROLL/PAYMST",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "key": "paymst_file_desc",
+      "description": "Display file description for PAYROLL/PAYMST (DSPFD)",
+      "commandPattern": "DSPFD:PAYROLL/PAYMST",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "key": "payroll_batch",
+      "description": "Review job schedule entries (WRKJOBSCDE)",
+      "commandPattern": "WRKJOBSCDE|DSPJOBSCDE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "key": "ifs_payroll_path",
+      "description": "Review IFS payroll path (WRKLNK)",
+      "commandPattern": "WRKLNK",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "key": "audit_journal",
+      "description": "Review QAUDJRN for sensitive object access",
+      "commandPattern": "DSPJRN|DSPAUDJRNE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "key": "privacy_finding",
+      "description": "WRKFINDING with decision impact",
+      "commandPattern": "WRKFINDING",
+      "optional": false,
+      "weight": 1
+    }
+  ],
+  "missionExpectedFindings": [
+    {
+      "missionId": "HOSPITAL-001",
+      "key": "excessive_public_authority",
+      "description": "Sensitive object has excessive public authority.",
+      "matchPatterns": [
+        "public",
+        "authority",
+        "change",
+        "excessive"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-001",
+      "key": "stale_vendor",
+      "description": "Dormant vendor or interface account remains enabled.",
+      "matchPatterns": [
+        "vendor",
+        "old",
+        "stale",
+        "enabled",
+        "interface"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "key": "phi_public_auth",
+      "description": "Payroll/PHI file has excessive public authority.",
+      "matchPatterns": [
+        "paymst",
+        "payroll",
+        "public",
+        "phi",
+        "authority"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "key": "batch_export_path",
+      "description": "Batch or IFS path exports PHI without documented approval.",
+      "matchPatterns": [
+        "payifsexp",
+        "ifs",
+        "batch",
+        "export",
+        "symlink"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "by when"
+      ],
+      "weight": 1
+    }
+  ]
+}

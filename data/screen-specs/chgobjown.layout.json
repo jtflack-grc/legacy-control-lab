@@ -1,0 +1,20 @@
+{
+  "screenId": "CHGOBJOWN",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-object-owner-chgobjown",
+  "goldenFile": "chgobjown.golden.json",
+  "requiredText": [
+    "Change Object Owner (CHGOBJOWN)",
+    "Type choices, press Enter.",
+    "Object",
+    "PAYROLL/PAYMST",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "forbiddenText": ["Evidence note", "mission menu"],
+  "fieldRules": [
+    { "id": "P0", "valueContains": "PAYROLL/PAYMST" }
+  ],
+  "render": { "type": "command", "command": "CHGOBJOWN OBJ(PAYROLL/PAYMST) NEWOWN(PAYADMIN)", "user": "QSECOFR" }
+}

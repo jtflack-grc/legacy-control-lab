@@ -1,0 +1,136 @@
+{
+  "id": "ibm-i-audit-operations",
+  "sourceFile": "sources/ibm-i-audit-operations.excerpt.md",
+  "articleKey": "CLAIMS-008",
+  "menuLabel": "IBM i Audit Operations",
+  "quotes": [
+    "Audit operations on the green screen span change management (PTF), journal retention, and authority ownership — the evidence SOC 2 CC6/CC8 and ISO 27001 auditors expect on IBM i partitions.",
+    "Findings need severity plus decision impact — cite WRKPTFGRP, DSPJRN, and authority screens as command/screen evidence."
+  ],
+  "articleRefs": [
+    { "kind": "screen", "ref": "DSPSECAUD" },
+    { "kind": "command", "ref": "CHGJRN" }
+  ],
+  "steps": [
+    {
+      "id": "wrkptfgrp",
+      "title": "Change management — PTF groups",
+      "command": "WRKPTFGRP",
+      "commandMatch": "^WRKPTFGRP",
+      "screenHint": "WRKPTFGRP",
+      "excerptRefs": [
+        "WRKPTFGRP cumulative and HIPER group levels are partition evidence for CC8.1 change management — not spreadsheet assertions."
+      ],
+      "watchFor": ["SF99740 cumulative", "SF99739 HIPER", "Installed status"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "dspptf",
+      "title": "PTF cover letter detail",
+      "command": "DSPPTF PTF(SI76195)",
+      "commandMatch": "^DSPPTF",
+      "screenHint": "DSPPTF",
+      "excerptRefs": [
+        "WRKPTFGRP cumulative and HIPER group levels are partition evidence for CC8.1 change management — not spreadsheet assertions."
+      ],
+      "watchFor": ["PTF identifier", "Cover letter text"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "dspjrn",
+      "title": "Audit journal baseline",
+      "command": "DSPJRN JRN(QSYS/QAUDJRN)",
+      "commandMatch": "DSPJRN",
+      "screenHint": "DSPJRN",
+      "excerptRefs": [
+        "DSPJRN JRN(QSYS/QAUDJRN) proves detect/respond: password, authority failure, and profile-change ENTTYP rows timestamp who did what."
+      ],
+      "watchFor": ["Journal entries with timestamps", "ENTTYP PW/AF/CP"],
+      "exitHint": "Press F3 to exit."
+    },
+    {
+      "id": "chgjrn",
+      "title": "Journal retention policy",
+      "command": "CHGJRN JRN(QSYS/QAUDJRN)",
+      "commandMatch": "^CHGJRN",
+      "screenHint": "CHGJRN",
+      "excerptRefs": [
+        "CHGJRN receiver attributes and retention thresholds belong in the audit baseline; pair journal policy with QAUDCTL/QAUDLVL from DSPSECAUD."
+      ],
+      "watchFor": ["Journal attributes", "Receiver threshold"],
+      "exitHint": "Press F12 to cancel without saving."
+    },
+    {
+      "id": "wrkautl",
+      "title": "Authorization lists",
+      "command": "WRKAUTL",
+      "commandMatch": "^WRKAUTL",
+      "screenHint": "WRKAUTL",
+      "excerptRefs": [
+        "WRKAUTL and DSPAUTL expose authorization-list membership — Clause 6 privacy and CC6.1 least-privilege review on IBM i."
+      ],
+      "watchFor": ["PAYROLL AUTL", "Option 5 display"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "dspautl",
+      "title": "AUTL membership detail",
+      "command": "DSPAUTL AUTL(PAYROLL)",
+      "commandMatch": "^DSPAUTL",
+      "screenHint": "DSPAUTL",
+      "excerptRefs": [
+        "WRKAUTL and DSPAUTL expose authorization-list membership — Clause 6 privacy and CC6.1 least-privilege review on IBM i."
+      ],
+      "watchFor": ["User/profile rows", "*PUBLIC authority"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "wrkobjown",
+      "title": "Object ownership review",
+      "command": "WRKOBJOWN USRPRF(PAYADMIN)",
+      "commandMatch": "^WRKOBJOWN",
+      "screenHint": "WRKOBJOWN",
+      "excerptRefs": [
+        "WRKOBJOWN surfaces ownership drift before CHGOBJOWN or EDTOBJAUT remediation — COSO control activity on the green screen."
+      ],
+      "watchFor": ["Objects by owner", "Option 2/8 authority paths"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "edtobjaut",
+      "title": "Remediate object authority",
+      "command": "EDTOBJAUT OBJ(PAYROLL/PAYMST)",
+      "commandMatch": "^EDTOBJAUT",
+      "screenHint": "EDTOBJAUT",
+      "excerptRefs": [
+        "WRKOBJOWN surfaces ownership drift before CHGOBJOWN or EDTOBJAUT remediation — COSO control activity on the green screen."
+      ],
+      "watchFor": ["Private authority grid", "User authority rows"],
+      "exitHint": "Press F12 to cancel without saving."
+    },
+    {
+      "id": "dspaudjrne",
+      "title": "Filtered audit journal entries",
+      "command": "DSPAUDJRNE JRN(QSYS/QAUDJRN) ENTTYP(AF PW)",
+      "commandMatch": "DSPAUDJRNE",
+      "screenHint": "DSPAUDJRNE",
+      "excerptRefs": [
+        "DSPJRN JRN(QSYS/QAUDJRN) proves detect/respond: password, authority failure, and profile-change ENTTYP rows timestamp who did what."
+      ],
+      "watchFor": ["ENTTYP AF/PW filters", "Journal entry list"],
+      "exitHint": "Press F3 to exit."
+    },
+    {
+      "id": "wrkfinding",
+      "title": "Document audit finding",
+      "command": "WRKFINDING",
+      "commandMatch": "^WRKFINDING",
+      "screenHint": "WRKFINDING",
+      "excerptRefs": [
+        "Findings need severity plus decision impact — cite WRKPTFGRP, DSPJRN, and authority screens as command/screen evidence."
+      ],
+      "watchFor": ["Finding editor fields", "Decision impact"],
+      "exitHint": "Press F3 to cancel without saving."
+    }
+  ]
+}

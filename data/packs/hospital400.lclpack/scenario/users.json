@@ -1,0 +1,84 @@
+[
+  {
+    "userName": "QSECOFR",
+    "status": "*ENABLED",
+    "userClass": "*SECOFR",
+    "text": "System security officer",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*ALLOBJ *SECADM",
+    "initialMenu": "AUDIT",
+    "lastSignon": "05/12/26"
+  },
+  {
+    "userName": "AUDIT",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Hospital auditor training profile",
+    "groupProfile": "AUDITGRP",
+    "specialAuthorities": "*AUDIT",
+    "initialMenu": "AUDIT",
+    "password": "TRAIN",
+    "lastSignon": "06/02/26"
+  },
+  {
+    "userName": "HOSPADM",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Hospital IT administrator",
+    "groupProfile": "ITOPS",
+    "specialAuthorities": "*ALLOBJ",
+    "initialMenu": "AUDIT",
+    "lastSignon": "04/15/26"
+  },
+  {
+    "userName": "BILLMGR",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Billing manager",
+    "groupProfile": "BILLGRP",
+    "specialAuthorities": "*SECADM",
+    "initialMenu": "AUDIT",
+    "lastSignon": "05/20/26"
+  },
+  {
+    "userName": "RXBATCH",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Pharmacy batch account",
+    "groupProfile": "BATCHGRP",
+    "specialAuthorities": "*JOBCTL",
+    "initialMenu": "AUDIT",
+    "lastSignon": "05/29/26"
+  },
+  {
+    "userName": "OLDINTF",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Legacy interface account",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*JOBCTL",
+    "initialMenu": "AUDIT",
+    "lastSignon": "01/09/23"
+  },
+  {
+    "userName": "PAYADMIN",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Payroll administrator — no documented data owner",
+    "groupProfile": "PAYGRP",
+    "specialAuthorities": "*SECADM",
+    "initialMenu": "AUDIT",
+    "lastSignon": "04/18/26",
+    "businessOwner": "*NONE"
+  },
+  {
+    "userName": "QPGMR",
+    "status": "*DISABLED",
+    "userClass": "*USER",
+    "text": "Disabled programmer profile",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*JOBCTL",
+    "initialMenu": "AUDIT",
+    "lastSignon": "08/14/22"
+  }
+]

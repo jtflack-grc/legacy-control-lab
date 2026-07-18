@@ -1,0 +1,28 @@
+{
+  "name": "SAVSECDTA",
+  "displayName": "Save Security Data",
+  "category": "security",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-savsecdta",
+  "parameters": [
+    {
+      "name": "LIB",
+      "label": "Library",
+      "required": true,
+      "type": "libraryName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB",
+        "*USRLIBL"
+      ]
+    }
+  ],
+  "examples": [
+    "SAVSECDTA"
+  ],
+  "helpText": "Saves synthetic security data in the lab partition.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDSEC"
+}

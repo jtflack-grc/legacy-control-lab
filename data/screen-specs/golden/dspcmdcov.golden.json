@@ -1,0 +1,29 @@
+{
+  "screenId": "DSPCMDCOV",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-command-coverage-dspcmdcov",
+  "sources": [
+    {
+      "tier": "B",
+      "type": "lab-runtime",
+      "title": "Legacy Control Lab command catalog coverage report",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-command-coverage-dspcmdcov"
+    },
+    {
+      "tier": "A",
+      "type": "ibm-documentation",
+      "title": "IBM i 7.4 — DSPCMDCOV command reference",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-command-coverage-dspcmdcov"
+    }
+  ],
+  "asciiPanel": " DSPCMDCOV                    Display Command Coverage                  CLAIMS400\n\nTotal cataloged: 315   Promptable: 142\n\nCategory             Cataloged  Promptable  Implemented  Stateful\nSecurity                  24         18           22        8\nUser profile              18         12           16        6\n...\n\nSelection or command ===>\nF3=Exit   F5=Refresh   F12=Cancel",
+  "requiredText": [
+    "DSPCMDCOV",
+    "Display Command Coverage",
+    "Category",
+    "Cataloged",
+    "Promptable",
+    "Selection or command",
+    "F3=Exit"
+  ],
+  "notes": "Lab-native coverage grid for stakeholder demos — maps catalog categories to implementation depth."
+}

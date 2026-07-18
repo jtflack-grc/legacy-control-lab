@@ -1,0 +1,122 @@
+{
+  "seriesHub": "https://ibmireference.blogspot.com/search/label/IBM%20%22%28A%29i%20on%20GRC%20-%20ISO%2027001%22",
+  "hubPost": "https://ibmireference.blogspot.com/2025/10/ibm-i-on-grc-iso-27001.html",
+  "harvestStatus": "partial",
+  "harvestedAt": "2026-06-09",
+  "notes": "Clause posts on the blog index use image-based links. Lab paths below map shipped missions to ISO 27001:2022 clauses and Annex A controls.",
+  "labPaths": [
+    {
+      "clause": "A.5.15",
+      "annexA": "Access control",
+      "title": "Privileged access review",
+      "status": "shipped",
+      "missionId": "CLAIMS-001",
+      "systemName": "CLAIMS400",
+      "commands": ["WRKUSRPRF", "DSPUSRPRF", "DSPOBJAUT", "DSPSYSVAL", "DSPJRN"],
+      "trainingDoc": "docs/training-claims-001.md"
+    },
+    {
+      "clause": "A.9.2.5",
+      "annexA": "Review of user access rights",
+      "title": "Privileged access recertification",
+      "status": "shipped",
+      "missionId": "CLAIMS-001",
+      "systemName": "CLAIMS400",
+      "commands": ["WRKUSRPRF", "DSPUSRPRF BACKUPADM"]
+    },
+    {
+      "clause": "A.9.2.6",
+      "annexA": "Removal of access rights",
+      "title": "Offboarding and dormant profiles",
+      "status": "shipped",
+      "missionId": "CLAIMS-002",
+      "systemName": "CLAIMS400",
+      "commands": ["WRKUSRPRF", "DSPUSRPRF OLDVENDOR", "ANZPRFACT", "CHGUSRPRF", "DSPJRN"],
+      "trainingDoc": "docs/training-claims-002.md"
+    },
+    {
+      "clause": "A.8.15",
+      "annexA": "Logging",
+      "title": "Detect and respond on the partition",
+      "status": "shipped",
+      "missionId": "CLAIMS-005",
+      "systemName": "CLAIMS400",
+      "commands": ["WRKACTJOB", "DSPAUDJRNE", "DSPSECAUD", "DSPJOBLOG", "DSPJRN"],
+      "trainingDoc": "docs/training-claims-005.md"
+    },
+    {
+      "clause": "A.17.1",
+      "annexA": "Availability planning",
+      "title": "Batch tail risk and operator visibility",
+      "status": "shipped",
+      "missionId": "CLAIMS-009",
+      "systemName": "CLAIMS400",
+      "commands": ["WRKSBMJOB", "DSPJOB", "WRKACTJOB", "WRKSYSSTS", "DSPMSG", "DSPJOBLOG"],
+      "trainingDoc": "docs/training-claims-009.md"
+    },
+    {
+      "clause": "A.12.4",
+      "annexA": "Logging and monitoring",
+      "title": "SOC 2 CC7-style monitoring evidence",
+      "status": "shipped",
+      "missionId": "CLAIMS-008",
+      "systemName": "CLAIMS400",
+      "commands": ["DSPSECAUD", "DSPJRN", "WRKACTJOB", "WRKFINDING"],
+      "trainingDoc": "docs/training-claims-008.md"
+    },
+    {
+      "clause": "8",
+      "title": "Operation — privacy on IBM i",
+      "status": "shipped",
+      "missionId": "CLAIMS-003",
+      "systemName": "CLAIMS400",
+      "framework": "ISO 27701",
+      "commands": ["DSPOBJAUT", "DSPFD", "WRKJOBSCDE", "WRKLNK", "DSPJRN"]
+    },
+    {
+      "clause": "8",
+      "title": "Hospital privacy operations",
+      "status": "shipped",
+      "missionId": "HOSPITAL-002",
+      "systemName": "HOSPITAL400",
+      "framework": "ISO 27701",
+      "commands": ["DSPOBJAUT", "DSPFD", "WRKJOBSCDE", "WRKLNK", "DSPJRN"],
+      "trainingDoc": "docs/training-hospital-002.md"
+    },
+    {
+      "clause": "5",
+      "title": "Leadership — profile data ownership",
+      "status": "shipped",
+      "missionId": "CLAIMS-006",
+      "systemName": "CLAIMS400",
+      "framework": "ISO 27701",
+      "commands": ["WRKUSRPRF", "DSPUSRPRF PAYADMIN", "RUNSQL"]
+    },
+    {
+      "clause": "4",
+      "title": "Context of the organization",
+      "status": "backlog",
+      "proposedMission": "RANGE workshop — scope and interested parties"
+    },
+    {
+      "clause": "6",
+      "title": "Planning — risk treatment",
+      "status": "backlog",
+      "relatedMission": "CLAIMS-004",
+      "note": "Privacy risk planning shipped under ISO 27701 Clause 6"
+    },
+    {
+      "clause": "9",
+      "title": "Performance evaluation",
+      "status": "backlog",
+      "proposedCommands": ["SUBMITMSN", "GENRPT", "DSPEVID"]
+    },
+    {
+      "clause": "10",
+      "title": "Improvement — decision-ready findings",
+      "status": "shipped",
+      "missionId": "CLAIMS-001",
+      "note": "Decision impact required on SUBMITMSN across scored missions"
+    }
+  ]
+}

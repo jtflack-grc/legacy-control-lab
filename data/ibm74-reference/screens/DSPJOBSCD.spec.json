@@ -1,0 +1,12 @@
+{
+  "screenId": "DSPJOBSCD",
+  "category": "job_batch",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

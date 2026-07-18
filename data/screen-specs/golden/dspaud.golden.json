@@ -1,0 +1,34 @@
+{
+  "screenId": "DSPAUD",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-audit-values-dspaud",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — DSPAUD command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-audit-values-dspaud",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Security auditing reference",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=reference-security-auditing",
+      "type": "ibm-cl-reference"
+    }
+  ],
+  "asciiPanel": " DSPAUD                           Display Audit Values                    CLAIMS400\n\n      Auditing control . . . . . . . . . . . . . . . : *AUDLVL *OBJAUD\n      Auditing level . . . . . . . . . . . . . . . . : *AUTFAIL *PGMFAIL\n      Force auditing level . . . . . . . . . . . . . : *NONE\n      End action . . . . . . . . . . . . . . . . . : *NOTIFY\n\nF3=Exit   F12=Cancel",
+  "requiredText": [
+    "Display Audit Values",
+    "Auditing control",
+    "Auditing level",
+    "Force auditing level",
+    "End action",
+    "F3=Exit"
+  ],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "notes": "Evidence of logging baseline — pair with DSPSECAUD and DSPJRN for audit operations pack.",
+  "auditNotes": "Effective audit policy display — pair with DSPSECAUD and QAUDJRN review for logging baseline evidence.",
+  "grcMapping": [
+    "SOC2 CC6.1",
+    "COSO CC7 — monitoring baseline"
+  ]
+}

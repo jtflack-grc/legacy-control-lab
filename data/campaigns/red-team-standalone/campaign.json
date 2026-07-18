@@ -1,0 +1,23 @@
+{
+  "campaignId": "RED-TEAM-STANDALONE",
+  "title": "Red Team — Boundary Testing",
+  "description": "Standalone adversarial boundary mission (CLAIMS-007) for the Red Team skill path — no Blue Team prerequisite.",
+  "systems": ["claims400"],
+  "personaModes": ["red_team_adversarial", "grc_analyst"],
+  "missions": [
+    {
+      "missionId": "CLAIMS-007",
+      "systemId": "claims400",
+      "order": 1,
+      "required": true,
+      "unlockRule": "always",
+      "personaHint": "red_team_adversarial",
+      "laneHint": "APCLERK"
+    }
+  ],
+  "completionCriteria": {
+    "requiredMissionsComplete": true,
+    "minimumAverageScore": 70,
+    "requiredArtifacts": ["finding_report", "evidence_packet"]
+  }
+}

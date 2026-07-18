@@ -1,0 +1,31 @@
+{
+  "screenId": "WRKTCPIP",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=setup-tcpip",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — TCP/IP setup",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=setup-tcpip",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "System i Networking TCP/IP setup — CFGTCP menu (rzai2)",
+      "url": "https://public.dhe.ibm.com/systems/power/docs/systemi/v5r4/en_US/rzai2.pdf",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM Support — TCP/IP Fastpath Setup (CFGTCP panel)",
+      "url": "https://www.ibm.com/support/pages/tcpip-fastpath-setup",
+      "type": "ibm-support"
+    }
+  ],
+  "asciiPanel": "                        Configure TCP/IP\n\nSelect one of the following:\n  1. Work with TCP/IP interfaces\n  2. Work with TCP/IP routes\n  3. Change TCP/IP attributes\n 10. Work with TCP/IP host table entries\n 12. Change TCP/IP domain information\n 13. Change remote name server\n 20. Configure TCP/IP applications\n\nSelection or command ===>",
+  "requiredText": [
+    "Work with TCP/IP",
+    "WRKTCPIP",
+    "Type options, press Enter.",
+    "Service",
+    "Status",
+    "Description"
+  ],
+  "notes": "IBM stock administration uses CFGTCP (Configure TCP/IP) for interfaces/routes/host table. Lab WRKTCPIP maps to a work-with-TCP/IP-services subfile (telnet, FTP, HTTP) for stakeholder drills; golden CFGTCP menu retained as primary IBM reference."
+}

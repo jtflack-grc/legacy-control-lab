@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "featured": ["offboarding", "blue-team", "clause-8"],
+  "paths": [
+    {
+      "id": "getting-started",
+      "label": "Getting started",
+      "description": "Identity lifecycle and decision-ready findings — start with Offboarding on WRKUSRPRF.",
+      "articleIds": ["offboarding", "decision-ready", "coso"]
+    },
+    {
+      "id": "iso27701",
+      "label": "ISO 27701 privacy",
+      "description": "Clauses 5–10 — full lab, guided paths (9–10), or mission-only where posts are thin.",
+      "articleIds": ["clause-5", "clause-6", "clause-7", "clause-8", "clause-9", "clause-10"]
+    },
+    {
+      "id": "detect-respond",
+      "label": "Detect & respond",
+      "description": "Blue team monitoring, red team boundaries, SOC 2 trust criteria, and IBM i audit operations pack — all full lab.",
+      "articleIds": ["blue-team", "red-team", "soc2"]
+    },
+    {
+      "id": "governance-essays",
+      "label": "Governance essays",
+      "description": "Framework essays and tail-risk pieces — read on LinkedIn; black swan has a scored mission.",
+      "articleIds": ["alignment", "black-swan", "ot-dont-blink"]
+    },
+    {
+      "id": "iso27001-series",
+      "label": "ISO 27001 series",
+      "description": "Blog index — lab mission CLAIMS-001 mirrors the access-review story.",
+      "articleIds": ["iso27001-series"]
+    }
+  ]
+}

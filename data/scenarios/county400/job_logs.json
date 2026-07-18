@@ -1,0 +1,36 @@
+[
+  {
+    "jobNumber": "123456",
+    "userName": "AUDIT",
+    "jobName": "QPADEV0001",
+    "lines": [
+      "CPF1122 - Job started on subsystem QINTER.",
+      "CPF9898 - User profile AUDIT used for sign-on.",
+      "CPI1126 - Library list retrieved.",
+      "CPI0999 - AUDIT menu displayed.",
+      "CPI1127 - Command WRKUSRPRF entered.",
+      "CPI1127 - Command DSPOBJAUT OBJ(PAYROLL/PAYMST) entered."
+    ]
+  },
+  {
+    "jobNumber": "230145",
+    "userName": "BACKUPADM",
+    "jobName": "BACKUPJOB",
+    "lines": [
+      "CPF1122 - Job BACKUPJOB started on subsystem QBATCH.",
+      "CPI1127 - Command SAVLIB LIB(CLAIMS400) entered.",
+      "CPI2201 - Save operation completed.",
+      "CPI0999 - Spooled file QAUDRPT created on output queue QPRINT."
+    ]
+  },
+  {
+    "jobNumber": "230201",
+    "userName": "QUSER",
+    "jobName": "QZDASOINIT",
+    "lines": [
+      "CPF1122 - Database server job started.",
+      "CPI0999 - Remote SQL connection accepted.",
+      "CPF2204 - Authority failure for OLDVENDOR on PAYROLL/PAYMST."
+    ]
+  }
+]

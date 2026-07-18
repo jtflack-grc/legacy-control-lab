@@ -1,0 +1,37 @@
+{
+  "screenId": "CHGUSRPRF",
+  "primarySource": "http://www.setgetweb.com/p/i5/chgusrprf.htm",
+  "sources": [
+    {
+      "title": "Change User Profile (CHGUSRPRF) — setgetweb",
+      "url": "http://www.setgetweb.com/p/i5/chgusrprf.htm",
+      "type": "command-reference"
+    },
+    {
+      "title": "IBM i 7.4 — CHGUSRPRF command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-user-profile-chgusrprf",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — User profile parameter fields",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=profiles-user-profile-parameter-fields",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i — Using the command prompt display (F4)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-using-command-prompt-display",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": "              Change User Profile (CHGUSRPRF)\n\nType choices, press Enter.\n\nUser profile . . . . . . . . . . . . . . . . . > OLDVENDOR\nUser class . . . . . . . . . . . . . . . . . . > *USER\nStatus . . . . . . . . . . . . . . . . . . . . > *ENABLED\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Change User Profile (CHGUSRPRF)",
+    "Type choices, press Enter.",
+    "User profile",
+    "User class",
+    "Status",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "notes": "F4 command prompt for CHGUSRPRF — requires *SECADM. Full parameter set includes USRCLS, SPCAUT, LMTCPB, GRPPRF per Security Reference; lab implements subset for governance training."
+}

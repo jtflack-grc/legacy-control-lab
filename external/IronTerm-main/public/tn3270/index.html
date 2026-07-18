@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TN3270 · IronTerm</title>
+    <meta name="description"
+          content="IronTerm TN3270 / TN3270E client - browser-side IBM 3270 terminal emulator. Connect to z/OS, Hercules MVS, TSO, CICS via a WebSocket bridge.">
+    <meta name="author" content="Alexandre Bencz">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000">
+    <link rel="canonical" href="https://ironterm.bencz.cc/tn3270/">
+
+    <link rel="icon" type="image/svg+xml"
+          href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23050a05'/><text x='32' y='46' font-family='monospace' font-size='38' font-weight='bold' fill='%2333ff33' text-anchor='middle'>IT</text></svg>">
+
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="IronTerm">
+    <meta property="og:title"       content="TN3270 Client - IronTerm">
+    <meta property="og:description" content="Browser-side IBM 3270 terminal emulator. Connect to z/OS, Hercules MVS, TSO, CICS via a WebSocket bridge.">
+    <meta property="og:url"         content="https://ironterm.bencz.cc/tn3270/">
+    <meta property="og:image"       content="https://github.com/user-attachments/assets/f5d7d630-b739-4a8e-8a0e-f2e2e8c9944b">
+
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<div id="toolbar">
+    <a class="back-link" href="../" title="Back">← Home</a>
+    <select id="profiles" class="profiles-select"
+            title="Saved connection profiles"></select>
+    <button id="profileSave"   class="profile-btn" title="Save current settings as profile">＋</button>
+    <button id="profileDelete" class="profile-btn" title="Delete selected profile">−</button>
+    <input id="bridge" type="text" placeholder="wss://bridge.example/tcp?port={port}"
+           value="ws://localhost:6080/" autocomplete="off"
+           title="WebSocket bridge URL (ws:// or wss://). The {port} placeholder is substituted with the port field. For wss with self-signed certs, accept the cert via https://host:port first.">
+    <input id="port" type="number" placeholder="port" value="23" min="1" max="65535"
+           title="Mainframe TCP port (substituted into the bridge URL via {port})">
+    <select id="model">
+        <option value="2">3278-2-E (24x80)</option>
+        <option value="3">3278-3-E (32x80)</option>
+        <option value="4">3278-4-E (43x80)</option>
+        <option value="5">3278-5-E (27x132)</option>
+    </select>
+    <select id="codePage" title="EBCDIC code page (changes glyph mapping)">
+        <option value="CP037" selected>CP037 - US English</option>
+        <option value="CP1047">CP1047 - Latin-1 / USS</option>
+    </select>
+    <button id="connect">Connect</button>
+    <button id="disconnect" disabled>Disconnect</button>
+
+    <div class="aid-bar">
+        <button data-aid="Enter">Enter</button>
+        <button data-aid="Clear">Clear</button>
+        <button data-aid="PA1">PA1</button>
+        <button data-aid="PA2">PA2</button>
+        <button data-aid="PA3">PA3</button>
+        <button data-aid="PF1">PF1</button>
+        <button data-aid="PF2">PF2</button>
+        <button data-aid="PF3">PF3</button>
+        <button data-aid="PF4">PF4</button>
+        <button data-aid="PF5">PF5</button>
+        <button data-aid="PF6">PF6</button>
+        <button data-aid="PF7">PF7</button>
+        <button data-aid="PF8">PF8</button>
+        <button data-aid="PF9">PF9</button>
+        <button data-aid="PF10">PF10</button>
+        <button data-aid="PF11">PF11</button>
+        <button data-aid="PF12">PF12</button>
+    </div>
+
+    <button id="downloadBtn" class="toggle"
+            title="Type IND$FILE GET 'dataset' on the current screen and press Enter">Download…</button>
+    <button id="uploadBtn" class="toggle"
+            title="Pick a local file for upload, then run IND$FILE PUT dataset on TSO">Upload…</button>
+    <button id="ruleToggle" class="toggle"
+            title="Show horizontal/vertical guide lines (rule) at the cursor">Rule</button>
+    <span class="hint" title="⌘/Ctrl+C copy, ⌘/Ctrl+V paste, ⌘/Ctrl+A select all, Esc clear, Insert toggles insert/overwrite">⌘C/⌘V/⌘A · Ins</span>
+    <span id="status">disconnected</span>
+</div>
+
+<div class="terminal-stage">
+    <canvas id="terminal"></canvas>
+    <div id="nvt" class="nvt-overlay hidden" tabindex="0"
+         aria-label="NVT (telnet/ASCII) banner"></div>
+</div>
+
+<!-- Operator Information Area: the strip the real 3270 puts at the bottom
+     of the screen. Each cell is a one-glyph indicator so the user can see,
+     at a glance, the connection / keyboard / insert / alarm status. -->
+<div id="oia" class="oia" role="status" aria-live="polite">
+    <span id="oiaConn"   class="oia-cell oia-conn"   title="Connection state">●</span>
+    <span id="oiaSys"    class="oia-cell oia-sys"    title="System / 3270 state">SYS</span>
+    <span id="oiaLock"   class="oia-cell oia-lock"   title="Keyboard">▢</span>
+    <span id="oiaInsert" class="oia-cell oia-insert" title="Insert mode (Insert key)">·</span>
+    <span id="oiaAlarm"  class="oia-cell oia-alarm"  title="Alarm">·</span>
+    <span id="oiaXfer"   class="oia-cell oia-xfer"   title="IND$FILE transfer">·</span>
+    <span class="oia-spacer"></span>
+    <span id="oiaModel"  class="oia-cell oia-model"  title="Negotiated terminal type">-</span>
+    <span id="oiaCursor" class="oia-cell oia-cursor" title="Cursor (row, column)">-</span>
+</div>
+
+<script>
+    // Mobile warning - fires on every page load.
+    (function () {
+        var ua = navigator.userAgent || '';
+        var isMobile =
+            window.matchMedia('(max-width: 768px)').matches ||
+            /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+
+        if (isMobile) {
+            alert(
+                '⚠  NOT OPTIMIZED FOR MOBILE\n\n' +
+                'IronTerm and the TN3270 terminal are NOT optimized or designed ' +
+                'for mobile devices.\n\n' +
+                'The terminal needs a physical keyboard to work properly: ' +
+                'keyboard input, AID keys (Enter, PF, PA, Clear), copy/paste, ' +
+                'and IND$FILE transfers all assume a hardware keyboard.\n\n' +
+                'For the full experience, please open this page on a desktop ' +
+                'browser.'
+            );
+        }
+    })();
+
+    // Pre-fill bridge URL / port from query params (used by the
+    // "PUBLIC SERVERS" links on the landing page). Runs on `load` so it
+    // wins against profile auto-load in main.js, then strips the query
+    // string from the address bar.
+    window.addEventListener('load', function () {
+        var qs = new URLSearchParams(location.search);
+        var bridge = qs.get('bridge');
+        var port   = qs.get('port');
+        var changed = false;
+
+        function setField (id, value) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.value = value;
+            el.dispatchEvent(new Event('input',  { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+            changed = true;
+        }
+
+        if (bridge) setField('bridge', bridge);
+        if (port)   setField('port',   port);
+
+        if (changed && window.history && window.history.replaceState) {
+            window.history.replaceState({}, '', location.pathname);
+        }
+    });
+
+    // Dynamic <title> - reflects the bridge host and connection state.
+    // Format:  [state] host:port · TN3270 · IronTerm
+    window.addEventListener('load', function () {
+        var FALLBACK = 'TN3270 · IronTerm';
+
+        function hostFromBridge () {
+            var b = document.getElementById('bridge');
+            if (!b || !b.value) return '';
+            var v = b.value.trim().replace(/\{port\}/g, '0');
+            try {
+                return new URL(v).host || '';
+            } catch (e) {
+                return v.replace(/^\w+:\/\//, '').split('/')[0];
+            }
+        }
+
+        function statePrefix () {
+            var s = document.getElementById('status');
+            if (!s) return '';
+            if (s.classList.contains('connected'))  return '● ';
+            if (s.classList.contains('connecting')) return '◌ ';
+            if (s.classList.contains('error'))      return '⚠ ';
+            return '';
+        }
+
+        function updateTitle () {
+            var host = hostFromBridge();
+            document.title = host
+                ? (statePrefix() + host + ' · TN3270 · IronTerm')
+                : FALLBACK;
+        }
+
+        updateTitle();
+
+        var bridge = document.getElementById('bridge');
+        if (bridge) {
+            bridge.addEventListener('input',  updateTitle);
+            bridge.addEventListener('change', updateTitle);
+        }
+
+        var status = document.getElementById('status');
+        if (status && window.MutationObserver) {
+            new MutationObserver(updateTitle).observe(status, {
+                attributes: true,
+                attributeFilter: ['class'],
+                childList: true,
+                characterData: true,
+                subtree: true
+            });
+        }
+    });
+</script>
+
+<script type="module" src="src/main.js"></script>
+
+</body>
+</html>

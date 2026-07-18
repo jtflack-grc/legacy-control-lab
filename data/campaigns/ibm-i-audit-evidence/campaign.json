@@ -1,0 +1,42 @@
+{
+  "campaignId": "IBM-I-AUDIT-EVIDENCE",
+  "title": "IBM i Audit Evidence",
+  "description": "Audit journal, job log, and operational evidence review across synthetic IBM i systems.",
+  "systems": ["claims400", "county400", "hospital400"],
+  "personaModes": ["auditor", "operator", "grc_analyst"],
+  "missions": [
+    {
+      "missionId": "CLAIMS-003",
+      "systemId": "claims400",
+      "order": 1,
+      "required": true,
+      "unlockRule": "always"
+    },
+    {
+      "missionId": "COUNTY-003",
+      "systemId": "county400",
+      "order": 2,
+      "required": true,
+      "unlockRule": "previous_complete"
+    },
+    {
+      "missionId": "HOSPITAL-003",
+      "systemId": "hospital400",
+      "order": 3,
+      "required": true,
+      "unlockRule": "previous_complete"
+    },
+    {
+      "missionId": "HOSPITAL-002",
+      "systemId": "hospital400",
+      "order": 4,
+      "required": false,
+      "unlockRule": "previous_complete"
+    }
+  ],
+  "completionCriteria": {
+    "requiredMissionsComplete": true,
+    "minimumAverageScore": 65,
+    "requiredArtifacts": ["evidence_packet"]
+  }
+}

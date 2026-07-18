@@ -1,0 +1,18 @@
+{
+  "screenId": "NETSTAT",
+  "tier": "B",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/netstat.html",
+  "goldenFile": "netstat.golden.json",
+  "requiredText": [
+    "NETSTAT",
+    "Work with TCP/IP Network Status",
+    "Select one of the following:",
+    "1. Work with TCP/IP interface status",
+    "2. Display TCP/IP route information",
+    "3. Work with TCP/IP connection status",
+    "Selection or command"
+  ],
+  "render": { "type": "command", "command": "NETSTAT", "user": "AUDIT" }
+}

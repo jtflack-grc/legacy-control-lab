@@ -1,0 +1,41 @@
+{
+  "screenId": "CHGJRN",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-journal-chgjrn",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — CHGJRN command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-journal-chgjrn",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Journal management",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-journal",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "B",
+      "title": "SecureMyi — journal receiver hygiene",
+      "url": "https://www.securemyi.com/",
+      "type": "community-panel"
+    }
+  ],
+  "asciiPanel": "              Change Journal (CHGJRN)\n\nType choices, press Enter.\n\nJournal . . . . . . . . . . . . . . . . . . . > QSYS/QAUDJRN\nManage receivers . . . . . . . . . . . . . . . > *SYSDFT\nImage size . . . . . . . . . . . . . . . . . . > 256000\nDelete receivers . . . . . . . . . . . . . . . > *NO\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Change Journal (CHGJRN)",
+    "Journal",
+    "Manage receivers",
+    "Image size",
+    "Type choices",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel   F24=More keys",
+  "notes": "Lab limit: interactive receiver-threshold and DLTRCV(*YES) side effects not modeled. Document rotation narrative with CRTJRNRCV/DSPJRNRCV panels.",
+  "auditNotes": "Journal management attributes — manage receivers, image size, DLTRCV policy. Save receivers before delete on production LPAR.",
+  "grcMapping": [
+    "SOC2 CC7.2",
+    "PCI — audit log retention"
+  ]
+}

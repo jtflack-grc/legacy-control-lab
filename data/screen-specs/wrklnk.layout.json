@@ -1,0 +1,33 @@
+{
+  "screenId": "WRKLNK",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/wrklnk.html",
+  "goldenFile": "wrklnk.golden.json",
+  "requiredText": [
+    "WRKLNK",
+    "Work with Object Links",
+    "Directory",
+    "Type options, press Enter.",
+    "2=Edit",
+    "4=Remove",
+    "5=Display",
+    "8=Display attributes",
+    "11=Change current directory",
+    "Opt   Object link",
+    "Type",
+    "Attribute",
+    "Text",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 7,
+    "lastDataRow": 13,
+    "commandLineRow": 22,
+    "optionIdPattern": "^LOPT\\d+$"
+  },
+  "render": { "type": "command", "command": "WRKLNK OBJ('/')", "user": "AUDIT" }
+}

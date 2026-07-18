@@ -1,0 +1,47 @@
+{
+  "screenId": "EDTAUTL",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-edit-authorization-list-edtautl",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — EDTAUTL command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-edit-authorization-list-edtautl",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.5 — Authority lists commands",
+      "url": "https://www.ibm.com/docs/en/i/7.5.0?topic=commands-authority-lists",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "EDTAUTL (Edit Authorization List) — setgetweb v5r3",
+      "url": "http://www.setgetweb.com/p/iSeries/v5r3/edtautl.htm",
+      "type": "command-reference"
+    },
+    {
+      "title": "ADDAUTLE — setgetweb v5r3 (F6 add path)",
+      "url": "http://www.setgetweb.com/p/iSeries/v5r3/addautle.htm",
+      "type": "command-reference"
+    },
+    {
+      "title": "IBM Support — Creating and assigning an authorization list",
+      "url": "https://www.ibm.com/support/pages/creating-and-assigning-authorization-list",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": " EDTAUTL                          Edit Authorization List                 CLAIMS400\n\nAuthorization list . . . . . . . . . . . . . . : PAYROLL\n\nType options, press Enter.\n  4=Remove\n\nOpt  User profile          Authority   List Mgt\n     PAYADMIN              *ALL        *YES\n     APCLERK               *USE        *NO\n\nF3=Exit   F6=Add   F12=Cancel",
+  "requiredText": [
+    "Edit Authorization List",
+    "Authorization list",
+    "Type options, press Enter.",
+    "4=Remove",
+    "User profile",
+    "F6=Add",
+    "F3=Exit"
+  ],
+  "columnHeaders": [
+    "User profile",
+    "Authority"
+  ],
+  "commandLineLabel": "Parameters or command",
+  "notes": "Requires *AUTLMGT or ownership. F6 adds users (ADDAUTLE); option 4 removes entries. *AUTLMGT in member list controls who can manage the AUTL itself."
+}

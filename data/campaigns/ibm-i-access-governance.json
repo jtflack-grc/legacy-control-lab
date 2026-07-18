@@ -1,0 +1,6 @@
+{
+  "campaignId": "IBM-I-ACCESS-GOVERNANCE",
+  "title": "IBM i Access Governance",
+  "description": "A multi-mission arc covering privileged access, object authority, audit logging, remediation, and evidence reporting.",
+  "missions": ["CLAIMS-001", "CLAIMS-002", "CLAIMS-003", "CLAIMS-004"]
+}

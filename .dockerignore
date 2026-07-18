@@ -1,0 +1,25 @@
+node_modules
+dist
+coverage
+.git
+.github
+.cursor
+terminals
+.vitest
+*.log
+npm-debug.log*
+.env
+.env.*
+tests
+# Keep scripts/copyRuntimeAssets.mjs available for the image build.
+scripts/*
+!scripts/copyRuntimeAssets.mjs
+# Generated runtime artifacts (preserve scenario seed JSON)
+data/reports
+data/evidence-packets
+data/scorebook
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/qopensys
+data/security-saves

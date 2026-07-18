@@ -1,0 +1,32 @@
+{
+  "campaignId": "RED-BLUE-DETECT-RESPOND",
+  "title": "Red Team / Blue Team — Detect & Respond",
+  "description": "Pair adversarial boundary testing (CLAIMS-007) with detect-and-respond monitoring (CLAIMS-005). Read-only AUDIT lane vs APCLERK limited user.",
+  "systems": ["claims400"],
+  "personaModes": ["auditor", "blue_team", "red_team_adversarial", "grc_analyst"],
+  "missions": [
+    {
+      "missionId": "CLAIMS-005",
+      "systemId": "claims400",
+      "order": 1,
+      "required": true,
+      "unlockRule": "always",
+      "personaHint": "blue_team",
+      "laneHint": "AUDIT"
+    },
+    {
+      "missionId": "CLAIMS-007",
+      "systemId": "claims400",
+      "order": 2,
+      "required": true,
+      "unlockRule": "previous_complete",
+      "personaHint": "red_team_adversarial",
+      "laneHint": "APCLERK"
+    }
+  ],
+  "completionCriteria": {
+    "requiredMissionsComplete": true,
+    "minimumAverageScore": 70,
+    "requiredArtifacts": ["finding_report", "evidence_packet"]
+  }
+}

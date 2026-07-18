@@ -1,0 +1,16 @@
+{
+  "name": "DSPSECA",
+  "displayName": "Display Security Attributes",
+  "category": "security",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspseca",
+  "parameters": [],
+  "examples": [
+    "DSPSECA"
+  ],
+  "helpText": "Displays system security attributes including QSECURITY level and audit settings summary.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": false,
+  "groupMenu": "CMDSEC"
+}

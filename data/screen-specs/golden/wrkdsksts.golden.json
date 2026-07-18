@@ -1,0 +1,33 @@
+{
+  "screenId": "WRKDSKSTS",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-disk",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — Disk management",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-disk",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — Work with Disk Status (WRKDSKSTS)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/wrkdsksts.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM Redbooks — Performance Tools / WRKDSKSTS Figure 6-16",
+      "url": "https://public.dhe.ibm.com/systems/power/docs/systemi/v5r4/en_US/sg245674.pdf",
+      "type": "redbook"
+    }
+  ],
+  "asciiPanel": "                        Work with Disk Status\n\nCTCDBMOD 09/02/09 10:43:09\n\nUnit Type   Size (M)  % Used  ... I/O statistics ...\n  1 4328     123488    9.8   ...\n  2 4328     123488    9.8   ...\n\nElapsed time: 00:05:00\n\nCommand\n===>\nF3=Exit F5=Refresh F10=Restart statistics F11=Display storage use F12=Cancel F16=Work with system status F24=More keys",
+  "requiredText": [
+    "Work with Disk Status",
+    "WRKDSKSTS",
+    "Type options, press Enter.",
+    "5=Display disk unit detail",
+    "Elapsed time",
+    "F5=Refresh",
+    "F10=Restart",
+    "F12=Cancel"
+  ],
+  "notes": "Production WRKDSKSTS shows per-unit I/O workload columns (Size, % Used, Read/Write Rqs, % Busy). Lab uses a simplified ASP/unit subfile for training; F11/F16 documented for full IBM panel."
+}

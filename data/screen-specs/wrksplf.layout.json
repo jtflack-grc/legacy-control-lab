@@ -1,0 +1,66 @@
+{
+
+  "screenId": "WRKSPLF",
+
+  "tier": "A",
+
+  "verificationStatus": "layout-audited",
+
+  "enforceInCi": true,
+
+  "referenceSource": "https://www.as400andsqltricks.com/2021/12/work-with-spooled-files-wrksplf-in-as400.html",
+
+  "goldenFile": "wrksplf.golden.json",
+
+  "requiredText": [
+
+    "WRKSPLF",
+
+    "Work with All Spooled Files",
+
+    "Type options, press Enter.",
+
+    "1=Send",
+
+    "2=Change",
+
+    "5=Display",
+
+    "8=Attributes",
+
+    "Device or",
+
+    "Total",
+
+    "Cur",
+
+    "Opt  File",
+
+    "Queue",
+
+    "Pages",
+
+    "F7=Page up",
+
+    "F8=Page down"
+
+  ],
+
+  "subfile": {
+
+    "maxVisibleRows": 7,
+
+    "firstDataRow": 8,
+
+    "lastDataRow": 14,
+
+    "commandLineRow": 22,
+
+    "optionIdPattern": "^SPLT\\d+$"
+
+  },
+
+  "render": { "type": "command", "command": "WRKSPLF" }
+
+}
+

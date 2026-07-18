@@ -1,0 +1,30 @@
+{
+  "screenId": "DSPOBJAUT",
+  "primarySource": "http://www.setgetweb.com/p/i5/dspobjaut.htm",
+  "sources": [
+    {
+      "title": "Display Object Authority (DSPOBJAUT) — command reference",
+      "url": "http://www.setgetweb.com/p/i5/dspobjaut.htm",
+      "type": "command-reference"
+    },
+    {
+      "title": "Display Object Authority (DSPOBJAUT) — setgetweb",
+      "url": "https://setgetweb.com/p/i5/dspobjaut.htm",
+      "type": "panel-capture"
+    }
+  ],
+  "requiredText": [
+    "Display Object Authority",
+    "Object",
+    "Library",
+    "Type",
+    "Public authority",
+    "Owner",
+    "User profile",
+    "Object authority",
+    "*PUBLIC",
+    "F3=Exit"
+  ],
+  "notes": "Shows object header fields then user/private authority list with column headers.",
+  "asciiPanel": " DSPOBJAUT                        Display Object Authority                CLAIMS400\n\nObject . . . . . . . . . . . . . : PAYMST\nLibrary  . . . . . . . . . . . . : PAYROLL\nType . . . . . . . . . . . . . . : *FILE\nPublic authority . . . . . . . . : *EXCLUDE\nOwner  . . . . . . . . . . . . . : PAYADMIN\n\nUser profile          Object authority\n-------------------- ----------------\n*PUBLIC               *EXCLUDE\nPAYADMIN              *ALL\nAPCLERK               *USE\n\nF3=Exit   F12=Cancel"
+}

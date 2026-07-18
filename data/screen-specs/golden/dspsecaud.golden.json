@@ -1,0 +1,67 @@
+{
+  "screenId": "DSPSECAUD",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-security-audit-dspsecaud",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — DSPSECAUD command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-security-audit-dspsecaud",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Security auditing reference",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=reference-security-auditing",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM Support — Setting up security auditing",
+      "url": "https://www.ibm.com/support/pages/setting-security-auditing",
+      "type": "ibm-support"
+    },
+    {
+      "tier": "B",
+      "title": "IT Jungle — Debugging Authority Failures, Part 3",
+      "url": "https://www.itjungle.com/2011/11/02/fhg110211-story01/",
+      "type": "community-panel"
+    },
+    {
+      "tier": "B",
+      "title": "SecureMyi — Security audit journal review",
+      "url": "https://www.securemyi.com/nl/articles/usertools.html",
+      "type": "community-panel"
+    }
+  ],
+  "asciiPanel": " DSPSECAUD                        Display Security Audit                  CLAIMS400\n\n      Security audit journal . . . . . . . . . . . . : QAUDJRN\n      Journal library  . . . . . . . . . . . . . . . : QSYS\n      Auditing control . . . . . . . . . . . . . . . : *OBJAUD\n      Auditing level . . . . . . . . . . . . . . . . : *AUDLVL1\n\n      Type options, press Enter.\n        5=Display entry details\n\n      Opt  Date      Time      Type  User        Job        Message\n           06/13/26  14:22:01  AF    APCLERK     QINTER     Authority failure\n\n      Parameters or command\n      ===>\nF3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "requiredText": [
+    "DSPSECAUD",
+    "Display Security Audit",
+    "Security audit journal",
+    "QAUDJRN",
+    "Auditing control",
+    "Authority failures",
+    "Type options, press Enter.",
+    "5=Display entry details",
+    "Opt  Date      Time      Type  User        Job        Message",
+    "F3=Exit",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "columnHeaders": [
+    "Opt",
+    "Date",
+    "Time",
+    "Type",
+    "User",
+    "Job",
+    "Message"
+  ],
+  "notes": "Stock IBM DSPSECAUD is a read-only summary of QAUDCTL/QAUDLVL. Lab DSPSECAUD_AF adds an AF entry subfile with option 5=Display entry details — training extension not on stock panel. GO SECTOOLS option 11 also invokes DSPSECAUD.",
+  "auditNotes": "Shows QAUDCTL/QAUDLVL effective policy plus recent AF summary. CHGSECAUD consolidates setup steps from IBM security auditing guide.",
+  "grcMapping": [
+    "SOC2 CC6.1",
+    "Clause 6 — logical access monitoring baseline"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "WRKOBJ",
+  "displayName": "Work with Objects",
+  "category": "library_object",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkobj",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Object",
+      "required": false,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    },
+    {
+      "name": "OBJTYPE",
+      "label": "OBJTYPE",
+      "required": false,
+      "type": "objectType",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*FILE",
+        "*PGM",
+        "*DTAARA",
+        "*LIB",
+        "*JRN",
+        "*OUTQ",
+        "*MSGQ",
+        "*JOBD",
+        "*SBSD"
+      ]
+    }
+  ],
+  "examples": [
+    "WRKOBJ OBJ(PAYROLL/*ALL)",
+    "WRKOBJ OBJ(QSYS/*ALL)"
+  ],
+  "helpText": "Work with objects in a library. Option 5 displays object description; option 8 shows authority.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDOBJ",
+  "wrkOptions": {
+    "2": "GRTOBJAUT",
+    "5": "DSPOBJD",
+    "8": "DSPOBJAUT"
+  }
+}

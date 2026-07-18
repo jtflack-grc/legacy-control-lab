@@ -1,0 +1,25 @@
+{
+  "screenId": "CHGSYSVAL",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-system-value-chgsysval",
+  "sources": [
+    { "tier": "A", "title": "IBM i 7.4 — CHGSYSVAL command", "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-system-value-chgsysval", "type": "ibm-cl-reference" },
+    { "tier": "A", "title": "IBM i 7.4 — System values", "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-system-values", "type": "ibm-cl-reference" },
+    { "tier": "B", "title": "MC Press — Working with System Values", "url": "https://www.mcpressonline.com/it-infrastructure/it-infrastructure-other/working-with-system-values", "type": "community-panel" }
+  ],
+  "requiredText": [
+    "CHGSYSVAL",
+    "Change System Value (CHGSYSVAL)",
+    "Type choices, press Enter.",
+    "System value",
+    "Value",
+    "QSECURITY",
+    "Bottom",
+    "F3=Exit",
+    "F4=Prompt",
+    "F9=",
+    "F24=More keys"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel   F24=More keys",
+  "notes": "Reached from WRKSYSVAL option 2 or command line. QSECURITY is common audit baseline.",
+  "asciiPanel": "              Change System Value (CHGSYSVAL)\n\nType choices, press Enter.\n\nSystem value . . . . . . . . . . . . . . . . . > QSECURITY\nValue . . . . . . . . . . . . . . . . . . . . . > 40\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys"
+}

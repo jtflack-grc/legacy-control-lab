@@ -1,0 +1,22 @@
+[
+  {
+    "controlId": "NIST-PR.AC-1",
+    "title": "Identities and credentials are managed.",
+    "family": "Protect",
+    "framework": "NIST CSF Lite",
+    "description": "Synthetic mapping for identity and access management evidence.",
+    "evidenceTypes": ["user_profile"],
+    "relatedCommands": ["WRKUSRPRF"],
+    "relatedFindings": ["identity_management_gap"]
+  },
+  {
+    "controlId": "NIST-DE.AE-1",
+    "title": "Anomalous activity is detected.",
+    "family": "Detect",
+    "framework": "NIST CSF Lite",
+    "description": "Synthetic mapping for audit and monitoring evidence.",
+    "evidenceTypes": ["audit_journal_entry"],
+    "relatedCommands": ["DSPJRN"],
+    "relatedFindings": ["monitoring_gap"]
+  }
+]

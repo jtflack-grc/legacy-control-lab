@@ -1,0 +1,15 @@
+{
+  "screenId": "DSPAUTL",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-authorization-list-dspautl",
+  "requiredText": [
+    "DSPAUTL",
+    "Display Authorization List",
+    "Authorization list",
+    "PAYADMIN",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "DSPAUTL_PAYROLL" }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "DSPVARIANT",
+  "displayName": "Display Variant",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspvariant",
+  "parameters": [],
+  "examples": [
+    "DSPVARIANT"
+  ],
+  "helpText": "Displays the active mission variant and its difficulty modifiers.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "DSPJOBATTR",
+  "displayName": "Display Job Attributes",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspjobattr",
+  "parameters": [
+    {
+      "name": "JOB",
+      "label": "Job",
+      "required": false,
+      "type": "jobName",
+      "supportsSpecialValues": [
+        "*ACTIVE",
+        "*JOB"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPJOBATTR JOB(230145/BACKUPADM/BACKUPJOB)"
+  ],
+  "helpText": "Displays extended job attributes for the current or specified job.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJOB"
+}

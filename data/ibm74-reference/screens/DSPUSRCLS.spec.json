@@ -1,0 +1,12 @@
+{
+  "screenId": "DSPUSRCLS",
+  "category": "user_profile",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

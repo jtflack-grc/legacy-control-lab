@@ -1,0 +1,49 @@
+{
+  "campaignId": "IBM-I-ACCESS-GOVERNANCE",
+  "title": "IBM i Access Governance",
+  "description": "A multi-mission campaign covering privileged access, object authority, audit evidence, remediation, and executive reporting.",
+  "systems": ["claims400", "county400", "hospital400"],
+  "personaModes": ["auditor", "grc_analyst", "blue_team", "executive_reviewer"],
+  "missions": [
+    {
+      "missionId": "CLAIMS-001",
+      "systemId": "claims400",
+      "order": 1,
+      "required": true,
+      "unlockRule": "always"
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "systemId": "claims400",
+      "order": 2,
+      "required": true,
+      "unlockRule": "previous_complete"
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "systemId": "claims400",
+      "order": 3,
+      "required": true,
+      "unlockRule": "previous_complete"
+    },
+    {
+      "missionId": "COUNTY-001",
+      "systemId": "county400",
+      "order": 4,
+      "required": true,
+      "unlockRule": "previous_complete"
+    },
+    {
+      "missionId": "HOSPITAL-001",
+      "systemId": "hospital400",
+      "order": 5,
+      "required": true,
+      "unlockRule": "previous_complete"
+    }
+  ],
+  "completionCriteria": {
+    "requiredMissionsComplete": true,
+    "minimumAverageScore": 70,
+    "requiredArtifacts": ["finding_report", "evidence_packet", "campaign_summary"]
+  }
+}

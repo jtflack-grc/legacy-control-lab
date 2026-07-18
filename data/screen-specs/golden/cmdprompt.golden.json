@@ -1,0 +1,25 @@
+{
+  "screenId": "CMDPROMPT",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-using-command-prompt-display",
+  "sources": [
+    { "tier": "A", "title": "IBM i — Command prompting (F4)", "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-using-command-prompt-display", "type": "ibm-cl-reference" },
+    { "tier": "A", "title": "Mastering IBM i — CRTLIB command prompt Figures 1.6–1.9", "url": "https://public.dhe.ibm.com/systems/power/docs/systemi/v5r4/en_US/5505_EXP.pdf", "type": "redbook" },
+    { "tier": "B", "title": "setgetweb — CRTLIB prompt panel", "url": "http://www.setgetweb.com/p/iSeries/v5r3/crtlib.htm", "type": "community-panel" }
+  ],
+  "asciiPanel": "              Create Library (CRTLIB)\n\nType choices, press Enter.\n\nLibrary . . . . . . . . . . . . . . . . . . . . > ________\n\n  *CURLIB      Current library\n  *LIBL        Library list\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=Add program   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Create Library (CRTLIB)",
+    "Type choices, press Enter.",
+    "Library",
+    "*CURLIB",
+    "Bottom",
+    "F3=Exit",
+    "F4=Prompt",
+    "F5=Refresh",
+    "F9=",
+    "F12=Cancel",
+    "F24=More keys"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=Add program   F12=Cancel   F24=More keys",
+  "notes": "Generic command prompt pattern: English description + (COMMAND) heading, parameter list with choice columns, no Selection line (differs from menus). F4 on command line or over a parameter opens prompt via QCAPCMD. F11 toggles keywords vs choices; F9 shows all parameters."
+}

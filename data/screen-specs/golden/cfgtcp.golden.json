@@ -1,0 +1,35 @@
+{
+  "screenId": "CFGTCP",
+  "primarySource": "https://public.dhe.ibm.com/systems/power/docs/systemi/v5r4/en_US/rzai2.pdf",
+  "sources": [
+    {
+      "tier": "A",
+      "type": "ibm-documentation",
+      "title": "System i Networking TCP/IP setup — CFGTCP menu (rzai2)",
+      "url": "https://public.dhe.ibm.com/systems/power/docs/systemi/v5r4/en_US/rzai2.pdf"
+    },
+    {
+      "tier": "A",
+      "type": "ibm-support",
+      "title": "IBM Support — TCP/IP Fastpath Setup (CFGTCP panel)",
+      "url": "https://www.ibm.com/support/pages/tcpip-fastpath-setup"
+    },
+    {
+      "tier": "A",
+      "type": "ibm-documentation",
+      "title": "IBM i 7.4 — TCP/IP setup",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=setup-tcpip"
+    }
+  ],
+  "asciiPanel": "                        Configure TCP/IP\n\nSelect one of the following:\n\n  1. Work with TCP/IP interfaces\n  2. Work with TCP/IP routes\n  3. Change TCP/IP attributes\n 10. Work with TCP/IP host table entries\n 12. Change TCP/IP domain information\n 13. Change remote name server\n 20. Configure TCP/IP applications\n\nSelection or command ===>\nF3=Exit   F4=Prompt   F9=Retrieve   F12=Cancel",
+  "requiredText": [
+    "Configure TCP/IP",
+    "CFGTCP",
+    "Work with TCP/IP interfaces",
+    "Work with TCP/IP routes",
+    "Change TCP/IP attributes",
+    "Selection or command",
+    "F3=Exit"
+  ],
+  "notes": "Stock IBM i administration menu for TCP/IP — lab routes options to NETSTAT, CHGNETA, and WRKTCPIP."
+}

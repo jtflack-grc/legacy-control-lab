@@ -1,0 +1,33 @@
+{
+  "screenId": "CHGOBJOWN",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-object-owner-chgobjown",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — CHGOBJOWN command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-object-owner-chgobjown",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i Security reference — object ownership (SC41-5302)",
+      "url": "https://www.ibm.com/docs/it/ssw_ibm_i_73/pdf/sc415302.pdf",
+      "type": "redbook"
+    }
+  ],
+  "asciiPanel": "              Change Object Owner (CHGOBJOWN)\n\nType choices, press Enter.\n\nObject . . . . . . . . . . . . . . . . . . . . > PAYROLL/PAYMST\nObject type . . . . . . . . . . . . . . . . . > *FILE\nNew owner . . . . . . . . . . . . . . . . . . > PAYADMIN\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Change Object Owner",
+    "Object",
+    "New owner",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel   F24=More keys",
+  "auditNotes": "Ownership remediation from WRKOBJOWN opt 9 — requires *OBJEXIST. Lab records AF journal on change.",
+  "grcMapping": [
+    "SOC2 CC6.1",
+    "SoD / privilege escalation review"
+  ],
+  "qmgtoolsRelation": "SCTMNU RTVOBJLST complements WRKOBJOWN for support ownership reports."
+}

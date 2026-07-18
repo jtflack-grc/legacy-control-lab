@@ -1,0 +1,18 @@
+{
+  "name": "WRKJRN",
+  "displayName": "Work with Journal Attributes",
+  "category": "journal_audit",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkjrn",
+  "parameters": [],
+  "examples": [
+    "WRKJRN"
+  ],
+  "helpText": "Work with journals attached to libraries or objects in the scenario.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJRN",
+  "wrkOptions": {
+    "2": "CHGJRN",
+    "5": "DSPJRN"
+  }
+}

@@ -1,0 +1,478 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #f5f5f7;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.47;
+    letter-spacing: -0.011em;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Legacy Control Lab embed (/lab/ iframe) — slim PF bar; help lives in lab coach rail */
+body.lab-embed .back-link,
+body.lab-embed .profiles-select,
+body.lab-embed #profileSave,
+body.lab-embed #profileDelete,
+body.lab-embed #bridge,
+body.lab-embed #port,
+body.lab-embed #model,
+body.lab-embed #codePage,
+body.lab-embed #devname,
+body.lab-embed #user,
+body.lab-embed #password,
+body.lab-embed .hint,
+body.lab-embed #status {
+    display: none;
+}
+
+body.lab-embed #toolbar {
+    padding: 4px 6px;
+    gap: 5px;
+    flex-wrap: wrap;
+    background: #000;
+    border-bottom-color: #1a2e1a;
+}
+
+body.lab-embed #toolbar button {
+    background: #000;
+    color: #34c759;
+    border: 1px solid #248a3d;
+    border-radius: 10px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+body.lab-embed #toolbar button:hover:not(:disabled) {
+    background: #071407;
+    border-color: #34c759;
+    color: #5cd671;
+}
+
+body.lab-embed #toolbar #connect {
+    color: #34c759;
+}
+
+body.lab-embed #toolbar #disconnect {
+    color: #ff6b6b;
+}
+
+body.lab-embed .aid-bar {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+    flex: 1 1 auto;
+    gap: 5px;
+}
+
+body.lab-embed .aid-bar button {
+    min-width: 40px;
+    padding: 4px 8px;
+}
+
+body.lab-embed #oia {
+    padding: 2px 8px;
+    font-size: 11px;
+}
+
+body.lab-embed .terminal-stage {
+    padding: 0 4px;
+    box-sizing: border-box;
+}
+
+body {
+    /* column flex so the canvas can take exactly what's left after the
+       toolbar - even when the toolbar wraps onto multiple lines. */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 10px;
+    background: #1c1c1c;
+    border-bottom: 1px solid #333;
+    font-size: 12px;
+    flex: 0 0 auto;
+}
+
+#toolbar input,
+#toolbar select,
+#toolbar button {
+    background: #0e0e0e;
+    color: #ddd;
+    border: 1px solid #333;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font: inherit;
+}
+
+#toolbar button:hover:not(:disabled) {
+    background: #232323;
+    border-color: #555;
+    cursor: pointer;
+}
+
+#toolbar button:disabled { opacity: 0.45; }
+
+#toolbar #connect    { color: #6cf; }
+#toolbar #disconnect { color: #f88; }
+
+.aid-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-left: 8px;
+    padding-left: 8px;
+    border-left: 1px solid #333;
+}
+
+.aid-bar button {
+    min-width: 38px;
+    padding: 3px 6px;
+    font-size: 11px;
+}
+
+.cursor-pos {
+    margin-left: auto;
+    font-family: monospace;
+    font-size: 11px;
+    color: #6cf;
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    padding: 3px 8px;
+    border-radius: 3px;
+    min-width: 70px;
+    text-align: center;
+}
+
+#toolbar button.toggle.active {
+    background: #2a3550;
+    border-color: #4a78c8;
+    color: #6cf;
+}
+
+.hint {
+    font-family: monospace;
+    font-size: 11px;
+    color: #555;
+    border: 1px dashed #333;
+    padding: 2px 6px;
+    border-radius: 3px;
+    cursor: help;
+}
+
+#status {
+    font-family: monospace;
+    color: #888;
+}
+
+#status.connected    { color: #6c6; }
+#status.connecting   { color: #cc6; }
+#status.disconnected { color: #888; }
+#status.error        { color: #f66; }
+
+.terminal-stage {
+    /* Wraps the canvas so the NVT overlay can absolute-position over it
+       without escaping the flex layout. */
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    background: #000;
+}
+canvas#terminal {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: black;
+    cursor: text;
+}
+
+body.lab-embed canvas#terminal:focus,
+body.lab-embed canvas#terminal:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+/* ---- OIA (Operator Information Area) -------------------------------- */
+.oia {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 10px;
+    background: #0a0a0a;
+    border-top: 1px solid #1f3a1f;
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: 12px;
+    color: #888;
+    user-select: none;
+}
+.oia-cell {
+    padding: 2px 6px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    min-width: 14px;
+    text-align: center;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+.oia-spacer { flex: 1 1 auto; }
+/* Connection LED */
+.oia-conn.disconnected { color: #555; }
+.oia-conn.connecting   { color: #cc6; animation: oia-pulse 1.2s linear infinite; }
+.oia-conn.connected    { color: #5cf65c; }
+.oia-conn.error        { color: #f66; }
+/* SYS / keyboard lock */
+.oia-sys      { color: #5cf65c; letter-spacing: 1px; }
+.oia-sys.locked { color: #f88; }
+.oia-lock     { color: #555; }
+.oia-lock.locked   { color: #f88; }     /* X-f */
+.oia-lock.unlocked { color: #5cf65c; }
+/* Insert mode */
+.oia-insert.on  { color: #6cf; background: #122036; border-color: #2a4a78; }
+/* Alarm flash */
+.oia-alarm.flash {
+    color: #ffae42;
+    background: #2a1a05;
+    border-color: #5a3010;
+    animation: oia-flash 0.6s ease-out;
+}
+.oia-cursor { color: #6cf; }
+.oia-model  { color: #888; }
+.oia-xfer            { color: #555; }
+.oia-xfer.queued     { color: #cc6; }
+.oia-xfer.active     { color: #6cf; background: #122036; border-color: #2a4a78;
+                       animation: oia-pulse 1.0s linear infinite; }
+.oia-xfer.done       { color: #5cf65c; }
+@keyframes oia-pulse {
+    0%, 100% { opacity: 1.0; }
+    50%      { opacity: 0.35; }
+}
+@keyframes oia-flash {
+    0%   { transform: scale(1.0); }
+    30%  { transform: scale(1.18); }
+    100% { transform: scale(1.0); }
+}
+
+/* ---- NVT scrollback overlay (banner / connection-broker prompts) ---- */
+.nvt-overlay {
+    position: absolute;
+    inset: 0;
+    background: #061010;
+    color: #c8e6c8;
+    padding: 12px 16px;
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 13px;
+    overflow: auto;
+    white-space: pre-wrap;
+    z-index: 5;
+    box-shadow: inset 0 0 0 1px #0d3010;
+}
+.nvt-overlay.hidden { display: none; }
+.nvt-overlay::before {
+    content: "NVT mode (telnet/ASCII) - switches to 3270 once host negotiates BINARY";
+    display: block;
+    color: #5a8a5a;
+    font-size: 10px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #1a3a1a;
+    padding-bottom: 4px;
+}
+
+/* ---- Connection profiles ---------------------------------------------- */
+.profiles-select {
+    min-width: 130px;
+    color: #cfcfcf;
+}
+.profile-btn {
+    min-width: 26px;
+    padding: 3px 6px;
+    font-family: monospace;
+    line-height: 1;
+}
+
+/* ---- Back link to protocol picker ------------------------------------- */
+#toolbar .back-link {
+    color: #6cf;
+    text-decoration: none;
+    font-size: 11px;
+    padding: 4px 8px;
+    border: 1px solid #2a3550;
+    border-radius: 3px;
+}
+#toolbar .back-link:hover {
+    background: #2a3550;
+    border-color: #4a78c8;
+}
+
+/* ---- 5250 env collapsible (RFC 4777 NEW-ENVIRONMENT) ------------------ */
+.env-options {
+    background: #0e0e0e;
+    border: 1px solid #333;
+    border-radius: 3px;
+    font-size: 11px;
+}
+.env-options > summary {
+    padding: 4px 8px;
+    cursor: pointer;
+    color: #cc6;
+    list-style: none;
+}
+.env-options > summary::-webkit-details-marker { display: none; }
+.env-options > summary::before { content: '▸ '; opacity: 0.7; }
+.env-options[open] > summary::before { content: '▾ '; }
+.env-options[open] {
+    /* When open, push the details panel below the rest of the toolbar so
+       it doesn't shift other controls horizontally. The grid is laid out
+       inside the summary's flow. */
+    flex-basis: 100%;
+}
+.env-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 4px;
+    padding: 6px 8px;
+    border-top: 1px solid #2a2a2a;
+}
+.env-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    color: #888;
+}
+.env-grid input {
+    background: #060606;
+    color: #ddd;
+    border: 1px solid #2a2a2a;
+    padding: 3px 6px;
+    border-radius: 2px;
+    font: inherit;
+}
+
+/* ---- Subtle protocol tint --------------------------------------------- */
+body.protocol-5250 #toolbar { border-bottom-color: #2a4a2a; }
+body.protocol-5250 #toolbar #connect { color: #6cf6c; color: #6f6; }
+
+/* ---- Protocol picker landing ------------------------------------------ */
+body.picker-body {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px;
+    background: radial-gradient(ellipse at top, #14202d 0%, #000 70%);
+    color: #d6d6d6;
+    height: auto;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.picker-header {
+    text-align: center;
+    margin-bottom: 32px;
+    max-width: 720px;
+}
+.picker-header h1 {
+    font-family: monospace;
+    font-size: 38px;
+    margin: 0 0 8px;
+    color: #6cf;
+    letter-spacing: 2px;
+}
+.picker-header p {
+    margin: 0;
+    color: #888;
+    font-size: 14px;
+}
+
+.picker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    width: 100%;
+    max-width: 920px;
+}
+
+.picker-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    padding: 20px 22px 18px;
+    transition: border-color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+}
+.picker-card:hover {
+    border-color: #4a78c8;
+    background: #161a22;
+    transform: translateY(-2px);
+}
+.picker-card h2 {
+    margin: 6px 0 8px;
+    font-family: monospace;
+    font-size: 22px;
+    color: #6cf;
+    letter-spacing: 1px;
+}
+.picker-3270 h2 { color: #6cf; }
+.picker-5250 h2 { color: #6f6; }
+.picker-card p {
+    margin: 0 0 12px;
+    color: #aaa;
+    font-size: 13px;
+    line-height: 1.45;
+}
+.picker-card ul {
+    margin: 0 0 14px;
+    padding-left: 18px;
+    color: #888;
+    font-size: 12px;
+    line-height: 1.7;
+}
+.picker-tag {
+    display: inline-block;
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #888;
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    padding: 2px 6px;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+.picker-cta {
+    display: inline-block;
+    font-family: monospace;
+    font-size: 12px;
+    color: #6cf;
+}
+.picker-5250 .picker-cta { color: #6f6; }
+
+.picker-footer {
+    margin-top: 28px;
+    color: #555;
+    font-size: 11px;
+    max-width: 920px;
+    text-align: center;
+}
+.picker-footer code {
+    color: #888;
+    background: #0a0a0a;
+    padding: 1px 4px;
+    border: 1px solid #2a2a2a;
+    border-radius: 2px;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "DSPCMDHLP",
+  "displayName": "Display Command Help",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspcmdhlp",
+  "parameters": [
+    {
+      "name": "CMD",
+      "label": "Command name",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "CALL PGM(QCMD)"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPCMDHLP CMD(DSPOBJAUT)",
+    "DSPCMDHLP CMD(CHGUSRPRF)"
+  ],
+  "helpText": "Displays command help from the catalog including purpose, parameters, examples, and realism limits.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

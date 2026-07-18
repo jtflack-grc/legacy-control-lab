@@ -1,0 +1,9 @@
+[
+  { "name": "QINTER", "status": "ACTIVE", "description": "Interactive subsystem" },
+  { "name": "QBATCH", "status": "ACTIVE", "description": "Batch subsystem" },
+  { "name": "QCTL", "status": "ACTIVE", "description": "Control subsystem" },
+  { "name": "QSPL", "status": "ACTIVE", "description": "Spool subsystem" },
+  { "name": "QSERVER", "status": "ACTIVE", "description": "Server subsystem" },
+  { "name": "QHTTPSVR", "status": "ACTIVE", "description": "HTTP server subsystem" },
+  { "name": "QSYSWRK", "status": "ACTIVE", "description": "System work subsystem" }
+]

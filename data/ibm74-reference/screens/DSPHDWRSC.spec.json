@@ -1,0 +1,17 @@
+{
+  "screenId": "DSPHDWRSC",
+  "category": "network_tcpip",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "TITLE",
+    "SRV",
+    "STAT",
+    "PORT"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

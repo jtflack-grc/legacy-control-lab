@@ -1,0 +1,20 @@
+{
+  "name": "WRKAUTL",
+  "displayName": "Work with Authorization Lists",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkautl",
+  "parameters": [],
+  "examples": [
+    "WRKAUTL"
+  ],
+  "helpText": "Work with authorization lists in the lab catalog.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": false,
+  "groupMenu": "CMDAUT",
+  "wrkOptions": {
+    "2": "CHGAUTL",
+    "5": "DSPAUTL"
+  }
+}

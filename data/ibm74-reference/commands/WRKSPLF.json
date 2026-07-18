@@ -1,0 +1,20 @@
+{
+  "name": "WRKSPLF",
+  "displayName": "Work with Spooled Files",
+  "category": "spool_print",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrksplf",
+  "parameters": [],
+  "examples": [
+    "WRKSPLF"
+  ],
+  "helpText": "Work with spooled files owned by scenario users. Option 4 displays spool file detail.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSPL",
+  "wrkOptions": {
+    "2": "CHGSPLFA",
+    "4": "DLTSPLF",
+    "5": "DSPSPLF",
+    "6": "RLSSPLF"
+  }
+}

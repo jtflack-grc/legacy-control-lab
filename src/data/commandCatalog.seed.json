@@ -1,0 +1,674 @@
+[
+  {
+    "name": "HELP",
+    "displayName": "Display Help",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayHelp"
+  },
+  {
+    "name": "SIGNOFF",
+    "displayName": "Sign Off",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "signOff"
+  },
+  {
+    "name": "DSPPRVSSN",
+    "displayName": "Display Sign-on Information",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayPrivilegedSession"
+  },
+  {
+    "name": "DSPSTCONC",
+    "displayName": "Display Service Tools Concept",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayServiceToolsConcept"
+  },
+  {
+    "name": "GO",
+    "displayName": "Go To Menu",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "goMenu",
+    "parameters": [{ "name": "MENU", "type": "menuName", "required": false }]
+  },
+  {
+    "name": "WRKUSRPRF",
+    "displayName": "Work with User Profiles",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM", "*AUDITVIEW"],
+    "handler": "workWithUserProfiles",
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "default": "*ALL",
+        "required": false,
+        "supportsSpecialValues": ["*ALL"]
+      }
+    ]
+  },
+  {
+    "name": "DSPUSRPRF",
+    "displayName": "Display User Profile",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayUserProfile",
+    "parameters": [{ "name": "USRPRF", "type": "profileName", "required": true }]
+  },
+  {
+    "name": "DSPSYSVAL",
+    "displayName": "Display System Value",
+    "category": "system_value",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displaySystemValues",
+    "parameters": [{ "name": "SYSVAL", "type": "systemValueName", "required": false }]
+  },
+  {
+    "name": "WRKOBJ",
+    "displayName": "Work with Objects",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithObjects",
+    "parameters": [
+      { "name": "OBJ", "type": "qualifiedName", "required": false },
+      { "name": "OBJTYPE", "type": "objectType", "required": false, "supportsSpecialValues": ["*ALL"] }
+    ]
+  },
+  {
+    "name": "DSPJRN",
+    "displayName": "Display Journal",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayJournal"
+  },
+  {
+    "name": "DSPJOB",
+    "displayName": "Display Job",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayJob"
+  },
+  {
+    "name": "WRKACTJOB",
+    "displayName": "Work with Active Jobs",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workActiveJobs"
+  },
+  {
+    "name": "WRKSPLF",
+    "displayName": "Work with Spooled Files",
+    "category": "spool_print",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workSpooledFiles"
+  },
+  {
+    "name": "DSPJOBLOG",
+    "displayName": "Display Job Log",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayJobLog"
+  },
+  {
+    "name": "RSTLABPKG",
+    "displayName": "Restore Lab Package",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "restoreLabPackage"
+  },
+  {
+    "name": "RUNBUILD",
+    "displayName": "Run Build Instructions",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "runBuild"
+  },
+  {
+    "name": "DSPBLD",
+    "displayName": "Display Build Instructions",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayBuildInstructions"
+  },
+  {
+    "name": "DSPLIBL",
+    "displayName": "Display Library List",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayLibraryList"
+  },
+  {
+    "name": "ADDLIBLE",
+    "displayName": "Add Library List Entry",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "addLibraryEntry",
+    "parameters": [{ "name": "LIB", "type": "libraryName", "required": true }]
+  },
+  {
+    "name": "RMVLIBLE",
+    "displayName": "Remove Library List Entry",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "removeLibraryEntry",
+    "parameters": [{ "name": "LIB", "type": "libraryName", "required": true }]
+  },
+  {
+    "name": "EDTLIBL",
+    "displayName": "Edit Library List",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "editLibraryList"
+  },
+  {
+    "name": "DSPOBJD",
+    "displayName": "Display Object Description",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayObjectDescription",
+    "parameters": [{ "name": "OBJ", "type": "qualifiedName", "required": true }]
+  },
+  {
+    "name": "DSPOBJAUT",
+    "displayName": "Display Object Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*OBJEXIST"],
+    "handler": "displayObjectAuthority",
+    "parameters": [
+      { "name": "OBJ", "type": "qualifiedName", "required": true },
+      { "name": "USER", "type": "profileName", "required": false }
+    ]
+  },
+  {
+    "name": "GRTOBJAUT",
+    "displayName": "Grant Object Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*OBJMGT"],
+    "handler": "grantObjectAuthority",
+    "parameters": [
+      { "name": "OBJ", "type": "qualifiedName", "required": true },
+      { "name": "USER", "type": "profileName", "required": true },
+      { "name": "AUT", "type": "authorityValue", "required": true }
+    ]
+  },
+  {
+    "name": "RVKOBJAUT",
+    "displayName": "Revoke Object Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*OBJMGT"],
+    "handler": "revokeObjectAuthority",
+    "parameters": [
+      { "name": "OBJ", "type": "qualifiedName", "required": true },
+      { "name": "USER", "type": "profileName", "required": true }
+    ]
+  },
+  {
+    "name": "EDTOBJAUT",
+    "displayName": "Edit Object Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*OBJMGT"],
+    "handler": "editObjectAuthority",
+    "parameters": [{ "name": "OBJ", "type": "qualifiedName", "required": true }]
+  },
+  {
+    "name": "DSPAUT",
+    "displayName": "Display Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*AUDITVIEW"],
+    "handler": "displayAuthority",
+    "parameters": [{ "name": "USER", "type": "profileName", "required": false }]
+  },
+  {
+    "name": "WRKAUT",
+    "displayName": "Work with Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"],
+    "handler": "workWithAuthority"
+  },
+  {
+    "name": "WRKSYSVAL",
+    "displayName": "Work with System Values",
+    "category": "system_value",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM", "*AUDIT"],
+    "handler": "workWithSystemValues"
+  },
+  {
+    "name": "CHGPWD",
+    "displayName": "Change Password",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "changePassword"
+  },
+  {
+    "name": "CHGSYSVAL",
+    "displayName": "Change System Value",
+    "category": "system_value",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"],
+    "handler": "changeSystemValue",
+    "parameters": [
+      { "name": "SYSVAL", "type": "systemValueName", "required": true },
+      { "name": "VALUE", "type": "systemValueValue", "required": true }
+    ]
+  },
+  {
+    "name": "CHGUSRPRF",
+    "displayName": "Change User Profile",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"],
+    "handler": "changeUserProfile",
+    "parameters": [
+      { "name": "USRPRF", "type": "profileName", "required": true },
+      { "name": "STATUS", "type": "profileStatus", "required": false },
+      { "name": "PASSWORD", "type": "password", "required": false }
+    ]
+  },
+  {
+    "name": "CRTUSRPRF",
+    "displayName": "Create User Profile",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"],
+    "handler": "createUserProfileHandler",
+    "parameters": [
+      { "name": "USRPRF", "type": "profileName", "required": true },
+      { "name": "PASSWORD", "type": "password", "required": false }
+    ]
+  },
+  {
+    "name": "DLTUSRPRF",
+    "displayName": "Delete User Profile",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"],
+    "handler": "deleteUserProfileHandler",
+    "parameters": [{ "name": "USRPRF", "type": "profileName", "required": true }]
+  },
+  {
+    "name": "ANZDFTPWD",
+    "displayName": "Analyze Default Passwords",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"],
+    "handler": "analyzeDefaultPasswords"
+  },
+  {
+    "name": "ANZPRFACT",
+    "displayName": "Analyze Profile Attributes",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"],
+    "handler": "analyzeProfileAttributes"
+  },
+  {
+    "name": "DSPSECA",
+    "displayName": "Display Security Attributes",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"],
+    "handler": "displaySecurityAttributes"
+  },
+  {
+    "name": "DSPSECAUD",
+    "displayName": "Display Security Audit",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*AUDITVIEW"],
+    "handler": "displaySecurityAudit"
+  },
+  {
+    "name": "DSPAUDJRNE",
+    "displayName": "Display Audit Journal Entries",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayAuditJournalEntries",
+    "parameters": [
+      { "name": "ENTTYP", "type": "auditEntryType", "required": false },
+      { "name": "USER", "type": "profileName", "required": false, "supportsSpecialValues": ["*ALL"] }
+    ]
+  },
+  {
+    "name": "WRKJRN",
+    "displayName": "Work with Journal Attributes",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithJournal"
+  },
+  {
+    "name": "WRKJRNA",
+    "displayName": "Work with Journal Attributes",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithJournalAttributes"
+  },
+  {
+    "name": "DSPMSG",
+    "displayName": "Display Messages",
+    "category": "message_queue",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayMessages",
+    "parameters": [{ "name": "MSGQ", "type": "messageQueueName", "required": false, "default": "QSYSOPR" }]
+  },
+  {
+    "name": "DSPLOG",
+    "displayName": "Display Log",
+    "category": "message_queue",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayLog"
+  },
+  {
+    "name": "WRKSBMJOB",
+    "displayName": "Work with Submitted Jobs",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workSubmittedJobs"
+  },
+  {
+    "name": "WRKJOBQ",
+    "displayName": "Work with Job Queue",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workJobQueue"
+  },
+  {
+    "name": "WRKOUTQ",
+    "displayName": "Work with Output Queue",
+    "category": "spool_print",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workOutputQueue"
+  },
+  {
+    "name": "DSPPTF",
+    "displayName": "Display Program Temporary Fix",
+    "category": "ptf_license",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayPtf"
+  },
+  {
+    "name": "WRKPTFGRP",
+    "displayName": "Work with PTF Groups",
+    "category": "ptf_license",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workPtfGroups"
+  },
+  {
+    "name": "DSPFD",
+    "displayName": "Display File Description",
+    "category": "database_file",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayFileDescription",
+    "parameters": [{ "name": "FILE", "type": "qualifiedName", "required": true }]
+  },
+  {
+    "name": "DSPFFD",
+    "displayName": "Display File Field Description",
+    "category": "database_file",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayFileFieldDescription",
+    "parameters": [{ "name": "FILE", "type": "qualifiedName", "required": true }]
+  },
+  {
+    "name": "WRKLNK",
+    "displayName": "Work with Object Links",
+    "category": "ifs",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithObjectLinks",
+    "parameters": [{ "name": "OBJ", "type": "ifsPath", "required": false, "default": "/" }]
+  },
+  {
+    "name": "DSPLNK",
+    "displayName": "Display Object Link",
+    "category": "ifs",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayObjectLink",
+    "parameters": [{ "name": "OBJ", "type": "ifsPath", "required": true }]
+  },
+  {
+    "name": "SAVLIB",
+    "displayName": "Save Library",
+    "category": "backup_restore",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SAVSYS"],
+    "handler": "saveLibrary",
+    "parameters": [{ "name": "LIB", "type": "libraryName", "required": true }]
+  },
+  {
+    "name": "RSTLIB",
+    "displayName": "Restore Library",
+    "category": "backup_restore",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SAVSYS"],
+    "handler": "restoreLibrary",
+    "parameters": [{ "name": "LIB", "type": "libraryName", "required": true }]
+  },
+  {
+    "name": "WRKPRD",
+    "displayName": "Work with Products",
+    "category": "ptf_license",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workProducts"
+  },
+  {
+    "name": "DSPMISSION",
+    "displayName": "Display Mission",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayMission"
+  },
+  {
+    "name": "DSPEVID",
+    "displayName": "Display Evidence Coverage",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayEvidence"
+  },
+  {
+    "name": "SUBMITMSN",
+    "displayName": "Submit Mission",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "submitMission"
+  },
+  {
+    "name": "WRKFINDING",
+    "displayName": "Work with Findings",
+    "category": "mission_lab",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithFindings"
+  },
+  {
+    "name": "STRSQL",
+    "displayName": "Start SQL",
+    "category": "sql_services",
+    "status": "out_of_scope",
+    "allowLimitedUser": false,
+    "requiresAuthority": []
+  },
+  {
+    "name": "RUNSQL",
+    "displayName": "Run SQL Statement",
+    "category": "sql_services",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "runSql",
+    "parameters": [{ "name": "SQL", "type": "sqlStatement", "required": true }]
+  },
+  {
+    "name": "CPYF",
+    "displayName": "Copy File",
+    "category": "database_file",
+    "status": "cataloged",
+    "allowLimitedUser": false,
+    "requiresAuthority": []
+  },
+  {
+    "name": "OPNQRYF",
+    "displayName": "Open Query File",
+    "category": "database_file",
+    "status": "cataloged",
+    "allowLimitedUser": false,
+    "requiresAuthority": []
+  },
+  {
+    "name": "OVRDBF",
+    "displayName": "Override Database File",
+    "category": "database_file",
+    "status": "cataloged",
+    "allowLimitedUser": false,
+    "requiresAuthority": []
+  },
+  {
+    "name": "OVRPRTF",
+    "displayName": "Override Printer File",
+    "category": "spool_print",
+    "status": "cataloged",
+    "allowLimitedUser": false,
+    "requiresAuthority": []
+  },
+  {
+    "name": "CHGAUT",
+    "displayName": "Change Authority",
+    "category": "authority",
+    "status": "cataloged",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"]
+  },
+  {
+    "name": "CHGSECAUD",
+    "displayName": "Change Security Audit",
+    "category": "journal_audit",
+    "status": "cataloged",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"]
+  },
+  {
+    "name": "STRTCP",
+    "displayName": "Start TCP/IP",
+    "category": "network_tcpip",
+    "status": "out_of_scope",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*IOSYSCFG"]
+  },
+  {
+    "name": "ENDTCP",
+    "displayName": "End TCP/IP",
+    "category": "network_tcpip",
+    "status": "out_of_scope",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*IOSYSCFG"]
+  }
+]

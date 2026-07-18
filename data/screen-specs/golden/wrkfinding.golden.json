@@ -1,0 +1,33 @@
+{
+  "screenId": "WRKFINDING",
+  "primarySource": "lab-native audit finding editor",
+  "sources": [
+    {
+      "title": "Audit-Ready Is Not Decision-Ready",
+      "url": "https://www.linkedin.com/pulse/audit-ready-decision-ready-john-flack-cpgfe",
+      "type": "i-on-grc-article"
+    },
+    {
+      "title": "Legacy Control Lab — demo script Path A",
+      "url": "docs/demo-script.md",
+      "type": "lab-spec"
+    }
+  ],
+  "requiredText": [
+    "Work with Findings",
+    "coach panel",
+    "Title",
+    "Severity",
+    "Decision impact",
+    "SUBMITMSN",
+    "F6"
+  ],
+  "notes": "Lab-native finding list + coach composer (F6) — not a stock IBM panel. Decision impact ≥15 chars required before SUBMITMSN scores mission (audit-ready vs decision-ready narrative).",
+  "asciiPanel": " WRKFINDING                       Work with Findings                      CLAIMS400\n\n      Saved findings listed below — compose new findings in the coach panel →\n      #     Title                            Severity   Decision impact\n       1    Sample layout finding            MODERATE   Ready\n\n      AUDIT: F6=Open coach composer. SUBMITMSN when evidence and findings are complete.\n\nF1=Help   F3=Exit   F4=Prompt   F9=Retrieve   F12=Cancel",
+  "columnHeaders": [
+    "#",
+    "Title",
+    "Severity",
+    "Decision impact"
+  ]
+}

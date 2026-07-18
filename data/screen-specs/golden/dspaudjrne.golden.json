@@ -1,0 +1,75 @@
+{
+  "screenId": "DSPAUDJRNE",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-audit-journal-entries-dspaudjrne",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — DSPAUDJRNE command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-audit-journal-entries-dspaudjrne",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Displaying journal entries",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=information-displaying-printing-journal-entries",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Security auditing reference",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=reference-security-auditing",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "B",
+      "title": "IT Jungle — QAUDJRN authority failure triage",
+      "url": "https://www.itjungle.com/2011/11/02/fhg110211-story01/",
+      "type": "community-panel"
+    },
+    {
+      "title": "IBM i 7.4 — CPYAUDJRNE command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-copy-audit-journal-entries-cpyaudjrne",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": " DSPAUDJRNE                       Display Audit Journal Entries           CLAIMS400\n\n      Journal . . . . . . . . . . . :   QAUDJRN\n      Entry type . . . . . . . . . . :   AF\n\n      Type options, press Enter.\n        5=Display entry details\n\n      Opt  Date      Time      Type  User        Job        Message\n           06/13/26  14:22:01  AF    APCLERK     QINTER     Authority failure\n\n      Parameters or command\n      ===>\nF1=Help   F3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "requiredText": [
+    "DSPAUDJRNE",
+    "Display Audit Journal Entries",
+    "Journal",
+    "QAUDJRN",
+    "Entry type",
+    "Type options, press Enter.",
+    "5=Display entry details",
+    "Opt  Date      Time      Type  User        Job        Message",
+    "Authority failure",
+    "Parameters or command",
+    "F7=Page up",
+    "F8=Page down",
+    "F3=Exit"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "columnHeaders": [
+    "Opt",
+    "Date",
+    "Time",
+    "Type",
+    "User",
+    "Job",
+    "Message"
+  ],
+  "notes": "Blue-team / COSO monitoring — ENTTYP(AF PW) with CPYAUDJRNE OUTFILE for analytics. Lab journal rows are synthetic but follow QAUDJRN column layout.",
+  "auditNotes": "Filtered view of QAUDJRN by ENTTYP — primary Blue Team triage before CPYAUDJRNE export or SIEM forward. Pair ENTTYP(AF PW) with WRKACTJOB for live correlation.",
+  "grcMapping": [
+    "SOC2 CC7.2",
+    "Blue Team detect/respond",
+    "COSO monitoring"
+  ],
+  "qmgtoolsRelation": "QMGTOOLS COLESADTA dumps QAS9AUDLOG (ESA), not QAUDJRN — do not confuse service agent log with security audit journal.",
+  "entryTypes": {
+    "AF": "Authority failure",
+    "PW": "Password event",
+    "CP": "Profile change",
+    "DL": "Directory (IFS) access when *DIRAUD configured"
+  }
+}

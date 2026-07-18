@@ -1,0 +1,14 @@
+{
+  "missionId": "CLAIMS-008",
+  "title": "Can You Map SOC 2 to the Green Screen?",
+  "persona": "IT auditor / GRC analyst",
+  "systemName": "CLAIMS400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "objective": "Determine whether SOC 2 CC6 logical access and CC7 monitoring controls are supported by reviewable IBM i evidence.",
+  "mode": "investigation_only",
+  "allowedMutation": false,
+  "resetOnStart": true,
+  "sourceArticle": "SOC 2 & the IBM i",
+  "frameworks": ["SOC 2 CC6.1", "SOC 2 CC7.2", "Trust Services Criteria"]
+}

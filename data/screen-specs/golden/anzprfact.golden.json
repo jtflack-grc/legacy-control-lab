@@ -1,0 +1,62 @@
+{
+  "screenId": "ANZPRFACT",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-analyze-profile-attributes-anzprfact",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — ANZPRFACT command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-analyze-profile-attributes-anzprfact",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "B",
+      "title": "SecureMyi — ANZPRFACT / CHGACTPRFL toolbox",
+      "url": "https://www.securemyi.com/articles/arttoolbox.html",
+      "type": "community-panel"
+    },
+    {
+      "tier": "B",
+      "title": "IT Jungle — Automatically disabling inactive profiles",
+      "url": "https://www.itjungle.com/2005/04/13/fhg041305-story03/",
+      "type": "community-panel"
+    },
+    {
+      "tier": "B",
+      "title": "MC Press — Clean Up Those Unused User Profiles",
+      "url": "https://www.mcpressonline.com/security/general/techtip-clean-up-those-unused-user-profiles",
+      "type": "community-panel"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — ADDJOBSCDE command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-add-job-schedule-entry-addjobscde",
+      "type": "ibm-cl-reference"
+    }
+  ],
+  "requiredText": [
+    "ANZPRFACT",
+    "Analyze Profile Attributes",
+    "Review inactive profiles",
+    "INACT threshold",
+    "Candidates for disable",
+    "Profile      Last sign-on  Days idle  Finding",
+    "Bottom",
+    "F3=Exit",
+    "F5=Refresh",
+    "F12=Cancel"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "columnHeaders": [
+    "Profile",
+    "Last sign-on",
+    "Days idle",
+    "Finding"
+  ],
+  "notes": "Stock IBM: ANZPRFACT INACDAYS(n) schedules QSECIDL1 at 1:00 AM via ADDJOBSCDE. Lab panel is a pre-disable analysis subfile (INACT threshold) before QSECIDL1 runs — not the CL command prompt. Exempt profiles via CHGACTPRFL first (SecureMyi / IT Jungle).",
+  "asciiPanel": " ANZPRFACT                        Analyze Profile Attributes — Inactive Accounts  CLAIMS400\n\n      Review inactive profiles before automated disable or vendor offboarding.\n      INACT threshold . . . . . . . : 90 days\n      Candidates for disable . . . . : 2\n\n      Profile      Last sign-on  Days idle  Finding\n      OLDVENDOR    03/01/26            104 Former vendor account still enabled\n      APCLERK      06/10/26              3 No sign-on recorded — review before disable\n\n      Bottom\nF3=Exit   F5=Refresh   F12=Cancel",
+  "auditNotes": "Inactive profile analysis — schedules QSECIDL1 via ADDJOBSCDE when operator confirms. Exempt list via CHGACTPRFL for justified dormant privileged IDs.",
+  "grcMapping": [
+    "Offboarding hygiene",
+    "SOC2 CC6.2 — termination access removal"
+  ]
+}

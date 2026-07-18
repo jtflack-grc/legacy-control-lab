@@ -1,0 +1,23 @@
+{
+  "screenId": "SECURITY",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/it/ssw_ibm_i_73/pdf/sc415302.pdf",
+  "goldenFile": "security.golden.json",
+  "requiredText": [
+    "Security",
+    "Select one of the following:",
+    "1. Work with user profiles",
+    "Work with system values",
+    "Service tools menu",
+    "20. IBM i security paths",
+    "90. Sign off",
+    "Selection or command"
+  ],
+  "fieldRules": [
+    { "id": "OPT90", "row": 18, "col": 6, "valueContains": "90. Sign off" }
+  ],
+  "notes": "Expanded two-column SECURITY training hub (19 options + left-aligned sign-off). Stock IBM GO SECURITY is documented in golden reference; lab menu prioritizes operator training paths.",
+  "render": { "type": "sample", "sample": "SECURITY" }
+}

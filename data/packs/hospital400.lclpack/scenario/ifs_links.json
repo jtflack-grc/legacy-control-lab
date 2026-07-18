@@ -1,0 +1,56 @@
+[
+  {
+    "directory": "/",
+    "name": "billing",
+    "linkType": "*DIR",
+    "target": "/billing",
+    "owner": "HOSPADM",
+    "dataAuthority": "*RWX",
+    "textDescription": "Hospital billing integration root"
+  },
+  {
+    "directory": "/",
+    "name": "payroll",
+    "linkType": "*DIR",
+    "target": "/payroll",
+    "owner": "PAYADMIN",
+    "dataAuthority": "*RWX",
+    "textDescription": "Payroll integration directory"
+  },
+  {
+    "directory": "/billing",
+    "name": "billmst.sym",
+    "linkType": "*SYMLNK",
+    "target": "/QSYS.LIB/BILLING.LIB/BILLMST.FILE",
+    "owner": "BILLMGR",
+    "dataAuthority": "*RW",
+    "textDescription": "Symlink to billing master file"
+  },
+  {
+    "directory": "/billing",
+    "name": "export",
+    "linkType": "*DIR",
+    "target": "/billing/export",
+    "owner": "BILLMGR",
+    "dataAuthority": "*RWX",
+    "textDescription": "Billing export folder"
+  },
+  {
+    "directory": "/payroll",
+    "name": "paymst.sym",
+    "linkType": "*SYMLNK",
+    "target": "/QSYS.LIB/PAYROLL.LIB/PAYMST.FILE",
+    "owner": "PAYADMIN",
+    "dataAuthority": "*RW",
+    "textDescription": "Symlink to payroll master"
+  },
+  {
+    "directory": "/payroll",
+    "name": "export",
+    "linkType": "*DIR",
+    "target": "/payroll/export",
+    "owner": "PAYADMIN",
+    "dataAuthority": "*RWX",
+    "textDescription": "Payroll IFS export directory"
+  }
+]

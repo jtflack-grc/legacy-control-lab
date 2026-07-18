@@ -1,0 +1,13 @@
+{
+  "scenarioId": "hospital400",
+  "systemName": "HOSPITAL400",
+  "name": "HOSPITAL400",
+  "title": "Hospital Operations IBM i Evidence Runtime",
+  "industry": "Healthcare operations",
+  "description": "Hospital operations IBM i environment for billing, scheduling, and synthetic operational governance.",
+  "defaultMissionId": "HOSPITAL-001",
+  "defaultUser": "AUDIT",
+  "defaultPassword": "TRAIN",
+  "defaultMenu": "AUDIT",
+  "version": "0.5.0"
+}

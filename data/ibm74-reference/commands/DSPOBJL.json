@@ -1,0 +1,23 @@
+{
+  "name": "DSPOBJL",
+  "displayName": "Display Object L",
+  "category": "library_object",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspobjl",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Object",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "DSPOBJL. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDOBJ"
+}

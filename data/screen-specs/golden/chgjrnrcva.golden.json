@@ -1,0 +1,32 @@
+{
+  "screenId": "CHGJRNRCVA",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-journal-receiver-attributes-chgjrnrcva",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — CHGJRNRCVA command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-journal-receiver-attributes-chgjrnrcva",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "B",
+      "title": "MC Press — journal receiver capacity",
+      "url": "https://www.mcpressonline.com/",
+      "type": "community-panel"
+    }
+  ],
+  "asciiPanel": " CHGJRNRCVA                       Change Journal Receiver Attributes     CLAIMS400\n\n      Journal . . . . . . . . . . . . . . . . . . . : QSYS/QAUDJRN\n      Receiver . . . . . . . . . . . . . . . . . . . : QAUDJRN\n      Receiver threshold . . . . . . . . . . . . . . : 1000000\n      Manage receivers . . . . . . . . . . . . . . . : *SYSDFT\n\nF3=Exit   F12=Cancel",
+  "requiredText": [
+    "Change Journal Receiver Attributes",
+    "Journal",
+    "Receiver",
+    "Receiver threshold",
+    "F3=Exit"
+  ],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "notes": "Lab limit: threshold alert messages and automatic receiver rotation not simulated.",
+  "auditNotes": "Receiver threshold and management attributes — document threshold alerts in audit evidence when receivers fill.",
+  "grcMapping": [
+    "SOC2 CC7.2"
+  ]
+}

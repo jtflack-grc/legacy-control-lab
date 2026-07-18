@@ -1,0 +1,17 @@
+{
+  "name": "WRKSQLSVC",
+  "displayName": "Work with SQL Services",
+  "category": "sql_services",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrksqlsvc",
+  "parameters": [],
+  "examples": [
+    "WRKSQLSVC"
+  ],
+  "helpText": "Browse QSYS2-style SQL service views available in the lab and launch sample RUNSQL queries.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSQL",
+  "wrkOptions": {
+    "2": "RUNSQL"
+  }
+}

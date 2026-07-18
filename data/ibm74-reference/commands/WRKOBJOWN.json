@@ -1,0 +1,36 @@
+{
+  "name": "WRKOBJOWN",
+  "displayName": "Work with Objects by Owner",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkobjown",
+  "parameters": [
+    {
+      "name": "USRPRF",
+      "label": "User profile",
+      "required": false,
+      "type": "profileName",
+      "supportsSpecialValues": ["*CURRENT"]
+    },
+    {
+      "name": "OBJTYPE",
+      "label": "Object type",
+      "required": false,
+      "type": "objectType",
+      "supportsSpecialValues": ["*ALL"]
+    }
+  ],
+  "examples": [
+    "WRKOBJOWN USRPRF(PAYADMIN)",
+    "WRKOBJOWN USRPRF(QPGMR) OBJTYPE(*FILE)"
+  ],
+  "helpText": "Work with objects owned by a user profile.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDAUT",
+  "wrkOptions": {
+    "2": "EDTOBJAUT",
+    "5": "DSPOBJAUT",
+    "8": "DSPOBJD",
+    "9": "CHGOWN"
+  }
+}

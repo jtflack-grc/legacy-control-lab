@@ -1,0 +1,44 @@
+{
+  "name": "CHGUSRPRF",
+  "displayName": "Change User Profile",
+  "category": "user_profile",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgusrprf",
+  "parameters": [
+    {
+      "name": "USRPRF",
+      "label": "User profile",
+      "required": true,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*CURRENT"
+      ]
+    },
+    {
+      "name": "STATUS",
+      "label": "Status",
+      "required": false,
+      "type": "profileStatus",
+      "supportsSpecialValues": [
+        "*ENABLED",
+        "*DISABLED"
+      ]
+    },
+    {
+      "name": "PASSWORD",
+      "label": "Password",
+      "required": false,
+      "type": "password",
+      "supportsSpecialValues": []
+    }
+  ],
+  "examples": [
+    "CHGUSRPRF USRPRF(OLDVENDOR) STATUS(*DISABLED)",
+    "CHGUSRPRF USRPRF(BACKUPADM) LMTCPB(*YES)"
+  ],
+  "helpText": "Changes selected attributes of a user profile in the lab runtime. Use to enable/disable accounts or review privileged profile posture during missions.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDUSR"
+}

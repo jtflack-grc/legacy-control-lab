@@ -1,0 +1,14 @@
+{
+  "name": "STRPDM",
+  "displayName": "Start PDM",
+  "category": "source_pdm",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-strpdm",
+  "parameters": [],
+  "examples": [
+    "STRPDM LIB(PAYROLL)"
+  ],
+  "helpText": "Starts Programming Development Manager for a library. Entry to member and object PDM screens.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDPDM"
+}

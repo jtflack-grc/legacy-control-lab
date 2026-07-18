@@ -1,0 +1,70 @@
+{
+  "id": "soc2",
+  "sourceFile": "sources/soc2.excerpt.md",
+  "articleKey": "CLAIMS-008",
+  "menuLabel": "SOC 2 & the IBM i",
+  "quotes": [
+    "Map CC6/CC7 Trust Services criteria to profiles, object authority, journal, and detect/respond on the green screen.",
+    "Findings need severity plus decision impact — who must act and by when."
+  ],
+  "articleRefs": [],
+  "steps": [
+    {
+      "id": "wrkusrprf",
+      "title": "Privileged access — profiles",
+      "command": "WRKUSRPRF",
+      "commandMatch": "^WRKUSRPRF",
+      "screenHint": "WRKUSRPRF",
+      "excerptRefs": ["Map CC6/CC7 Trust Services criteria to profiles, object authority, journal, and detect/respond on the green screen."],
+      "watchFor": ["Profile list with status"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "wrkptfgrp",
+      "title": "Change management — PTF groups",
+      "command": "WRKPTFGRP",
+      "commandMatch": "^WRKPTFGRP",
+      "screenHint": "WRKPTFGRP",
+      "excerptRefs": [
+        "SOC 2 CC8.1: patch and change management — WRKPTFGRP cumulative/HIPER levels and DSPPTF cover letters are partition evidence, not spreadsheet assertions."
+      ],
+      "watchFor": ["SF99740 cumulative", "SF99739 HIPER", "Installed status and Level"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "dspjrn",
+      "title": "Detect/respond — audit journal",
+      "command": "DSPJRN JRN(QSYS/QAUDJRN)",
+      "commandMatch": "DSPJRN",
+      "screenHint": "DSPJRN",
+      "excerptRefs": ["SOC 2 CC6.1 / CC7.2: privileged access and detect/respond on the green screen, not in a slide deck."],
+      "watchFor": ["Journal entries with timestamps"],
+      "exitHint": "Press F3 to exit."
+    },
+    {
+      "id": "audit-operations-pack",
+      "title": "Full audit operations desk",
+      "command": "WRKPTFGRP",
+      "commandMatch": "^WRKPTFGRP",
+      "screenHint": "WRKPTFGRP",
+      "excerptRefs": [
+        "Audit operations on the green screen span change management (PTF), journal retention, and authority ownership — use the IBM i Audit Operations pack for the full spine."
+      ],
+      "watchFor": ["SF99740 cumulative", "DSPJRN", "WRKAUTL"],
+      "exitHint": "Open i on GRC → IBM i Audit Operations pack for PTF + journal + AUTL steps."
+    },
+    {
+      "id": "wrkfinding",
+      "title": "Document a finding",
+      "command": "WRKFINDING",
+      "commandMatch": "^WRKFINDING",
+      "screenHint": "WRKFINDING",
+      "excerptRefs": [
+        "A finding should cite the command/screen evidence (profile, object authority, journal) and state impact in plain language stakeholders understand.",
+        "Findings need severity plus decision impact — who must act and by when."
+      ],
+      "watchFor": ["Finding editor fields", "Decision impact"],
+      "exitHint": "Press F3 to cancel without saving."
+    }
+  ]
+}

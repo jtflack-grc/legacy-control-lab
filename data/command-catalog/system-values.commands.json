@@ -1,0 +1,122 @@
+[
+  {
+    "name": "CHGSYSVAL",
+    "displayName": "Change System Value",
+    "category": "system_value",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "changeSystemValue",
+    "parameters": [
+      {
+        "name": "SYSVAL",
+        "type": "systemValueName",
+        "required": true,
+        "label": "System value"
+      },
+      {
+        "name": "VALUE",
+        "type": "systemValueValue",
+        "required": true,
+        "label": "Value"
+      }
+    ],
+    "helpText": "Changes a system value in the synthetic runtime. Generates audit and state-diff evidence.",
+    "examples": [
+      "CHGSYSVAL SYSVAL(QMAXSIGN) VALUE(5)",
+      "CHGSYSVAL SYSVAL(QSECURITY) VALUE(40)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDSYS",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPSYSVAL",
+    "displayName": "Display System Value",
+    "category": "system_value",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displaySystemValues",
+    "parameters": [
+      {
+        "name": "SYSVAL",
+        "type": "systemValueName",
+        "required": false,
+        "label": "System value"
+      }
+    ],
+    "helpText": "Displays a system value such as QSECURITY or QMAXSIGN. Configuration evidence, not a control conclusion.",
+    "examples": [
+      "DSPSYSVAL SYSVAL(QSECURITY)",
+      "DSPSYSVAL SYSVAL(QAUDCTL)"
+    ],
+    "groupMenu": "CMDSYS",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "ENDSYS",
+    "displayName": "End System",
+    "category": "system_value",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "End System. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogControl",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "PWRDWN",
+    "displayName": "Power Down System",
+    "category": "system_value",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Power Down System. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "PWRDWNSYS",
+    "displayName": "Power Down System",
+    "category": "system_value",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Power Down System. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKSYSVAL",
+    "displayName": "Work with System Values",
+    "category": "system_value",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM",
+      "*AUDIT"
+    ],
+    "handler": "workWithSystemValues",
+    "helpText": "Work with system values. Option 5 displays detail for a selected value.",
+    "examples": [
+      "WRKSYSVAL"
+    ],
+    "groupMenu": "CMDSYS",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

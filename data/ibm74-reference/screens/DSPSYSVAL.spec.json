@@ -1,0 +1,12 @@
+{
+  "screenId": "DSPSYSVAL",
+  "category": "system_value",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

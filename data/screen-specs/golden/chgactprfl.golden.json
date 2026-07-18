@@ -1,0 +1,25 @@
+{
+  "screenId": "CHGACTPRFL",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-activity-profile-list-chgactprfl",
+  "sources": [
+    { "tier": "A", "title": "IBM i 7.4 — CHGACTPRFL command", "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-activity-profile-list-chgactprfl", "type": "ibm-cl-reference" },
+    { "tier": "B", "title": "SecureMyi — Active profile exemption list", "url": "https://www.securemyi.com/nl/articles/usertools.html", "type": "community-panel" },
+    { "tier": "B", "title": "IT Jungle — Feeding the Auditor: Problem User Profiles", "url": "https://www.itjungle.com/2010/09/29/fhg092910-story03/", "type": "community-panel" }
+  ],
+  "requiredText": [
+    "CHGACTPRFL",
+    "Change Activity Profile List",
+    "Profiles on the activity list",
+    "Activity list status",
+    "Profile      Activity list status",
+    "*ACTIVE",
+    "Changed profile",
+    "BACKUPADM",
+    "F3=Exit",
+    "F12=Cancel"
+  ],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "columnHeaders": ["Profile", "Activity list status"],
+  "notes": "IBM CHGACTPRFL is a CL command (USRPRF + ACTION *ADD/*REMOVE). Lab shows post-change confirmation subfile plus Changed profile detail. Pair with DSPACTPRFL for audit evidence. Communications/FTP-only profiles must be on the list (SecureMyi 2014).",
+  "asciiPanel": " CHGACTPRFL                       Change Activity Profile List            CLAIMS400\n\n      Profiles on the activity list are exempt from inactive-profile disable.\n\n      Profile      Activity list status\n      BACKUPADM    *ACTIVE\n\n      Changed profile . . . . . . . . . . . . . . . : BACKUPADM\n\nF3=Exit   F12=Cancel"
+}

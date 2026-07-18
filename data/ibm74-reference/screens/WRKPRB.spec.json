@@ -1,0 +1,15 @@
+{
+  "screenId": "WRKPRB",
+  "category": "message_queue",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "OPT",
+    "LIST"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "controlId": "SOC2-CC6.1",
+    "title": "Logical access security",
+    "family": "Common Criteria",
+    "framework": "SOC 2 Lite",
+    "description": "Lightweight reference mapping for logical access controls.",
+    "evidenceTypes": ["user_profile", "special_authority"],
+    "relatedCommands": ["DSPUSRPRF", "DSPAUT"],
+    "relatedFindings": ["logical_access_gap"]
+  }
+]

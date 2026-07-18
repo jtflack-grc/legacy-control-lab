@@ -1,0 +1,27 @@
+{
+  "name": "RLSJOB",
+  "displayName": "Release Job",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-rlsjob",
+  "parameters": [
+    {
+      "name": "JOB",
+      "label": "Job",
+      "required": true,
+      "type": "jobName",
+      "supportsSpecialValues": [
+        "*ACTIVE",
+        "*JOB"
+      ]
+    }
+  ],
+  "examples": [
+    "RLSJOB JOB(230145/BATCH/BACKUPADM)"
+  ],
+  "helpText": "Releases a held job so it can continue processing.",
+  "requiresAuthority": [
+    "*JOBCTL"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDJOB"
+}

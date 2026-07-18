@@ -1,0 +1,27 @@
+{
+  "screenId": "WRKOBJ",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/wrkobj.html",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — WRKOBJ command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/wrkobj.html",
+      "type": "ibm-documentation"
+    }
+  ],
+  "requiredText": [
+    "Work with Objects",
+    "Type options, press Enter.",
+    "5=Display description",
+    "8=Display authority",
+    "Opt  Library",
+    "Public authority",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "notes": "Standard work-with-objects subfile; option 8 routes to DSPOBJAUT.",
+  "asciiPanel": " WRKOBJ                           Work with Objects                       CLAIMS400\n\nType options, press Enter.\n  5=Display description   8=Display authority\n\nOpt  Library     Object      Type     Public authority\n     PAYROLL     PAYMST      *FILE    *EXCLUDE\n     PAYROLL     PAYHDR      *FILE    *USE\n     QSYS        QAUDJRN     *JRN     *EXCLUDE\n                                            More...\n\nParameters or command\n===>\nF3=Exit  F5=Refresh  F7=Page up  F8=Page down  F12=Cancel",
+  "auditNotes": "Object inventory — option 8 DSPOBJAUT for authority matrix; option 5 DSPOBJD for ownership and public authority.",
+  "grcMapping": [
+    "Clause 8 — data classification at object level"
+  ]
+}

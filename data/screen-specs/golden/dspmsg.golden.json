@@ -1,0 +1,28 @@
+{
+  "screenId": "DSPMSG",
+  "primarySource": "https://setgetweb.com/p/iSeries/v5r3/wrkmsg.htm",
+  "sources": [
+    {
+      "title": "WRKMSG — Work with Messages",
+      "url": "https://setgetweb.com/p/iSeries/v5r3/wrkmsg.htm",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "DSPMSG ASTLVL *BASIC",
+      "url": "https://setgetweb.com/p/iSeries/v5r3/dspmsg.htm",
+      "type": "ibm-documentation"
+    }
+  ],
+  "requiredText": [
+    "Work with Messages",
+    "Messages in:",
+    "Type options below, then press Enter.",
+    "4=Remove   5=Display details and reply",
+    "Messages needing a reply",
+    "Messages not needing a reply",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "notes": "Default DSPMSG QSYSOPR uses Work with Messages layout: Opt column with option 5 for display/reply, split inquiry and informational sections.",
+  "asciiPanel": "                         Work with Messages\n\nMessages in:   QSYSOPR\nType options below, then press Enter.\n  4=Remove   5=Display details and reply\n\nOpt  Message\n                 Messages needing a reply\n 5   CPF2204 - Object PAYMST not found.\n                 Messages not needing a reply\n     CPI0000 - Command WRKPTFGRP submitted by QSECOFR.\n                                            More...\n\nF3=Exit   F7=Page up   F8=Page down   F22=Advanced view"
+}

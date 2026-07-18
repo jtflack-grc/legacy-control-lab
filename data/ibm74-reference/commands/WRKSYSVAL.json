@@ -1,0 +1,21 @@
+{
+  "name": "WRKSYSVAL",
+  "displayName": "Work with System Values",
+  "category": "system_value",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrksysval",
+  "parameters": [],
+  "examples": [
+    "WRKSYSVAL"
+  ],
+  "helpText": "Work with system values. Option 5 displays detail for a selected value.",
+  "requiresAuthority": [
+    "*SECADM",
+    "*AUDIT"
+  ],
+  "mutatesState": false,
+  "groupMenu": "CMDSYS",
+  "wrkOptions": {
+    "2": "CHGSYSVAL",
+    "5": "DSPSYSVAL"
+  }
+}

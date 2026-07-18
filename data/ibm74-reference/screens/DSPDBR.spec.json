@@ -1,0 +1,17 @@
+{
+  "screenId": "DSPDBR",
+  "category": "database_file",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "TITLE",
+    "OBJ",
+    "TYPE",
+    "PUBAUT"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

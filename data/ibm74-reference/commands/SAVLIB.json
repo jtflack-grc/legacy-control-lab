@@ -1,0 +1,28 @@
+{
+  "name": "SAVLIB",
+  "displayName": "Save Library",
+  "category": "backup_restore",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-savlib",
+  "parameters": [
+    {
+      "name": "LIB",
+      "label": "Library",
+      "required": true,
+      "type": "libraryName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB",
+        "*USRLIBL"
+      ]
+    }
+  ],
+  "examples": [
+    "SAVLIB LIB(PAYROLL)"
+  ],
+  "helpText": "Saves a library to a synthetic save file in the lab. Creates backup evidence for restore exercises.",
+  "requiresAuthority": [
+    "*SAVSYS"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

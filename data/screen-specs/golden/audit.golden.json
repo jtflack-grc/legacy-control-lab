@@ -1,0 +1,28 @@
+{
+  "screenId": "AUDIT",
+  "primarySource": "src/screen-runtime/screens/auditMenu.ts",
+  "sources": [
+    {
+      "title": "CLAIMS400 lab — GO AUDIT mission menu (synthetic)",
+      "url": "src/screen-runtime/screens/auditMenu.ts",
+      "type": "lab-spec"
+    },
+    {
+      "title": "Mastering IBM i — menu screen format (Figure 1.2)",
+      "url": "https://public.dhe.ibm.com/systems/power/docs/systemi/v5r4/en_US/5505_EXP.pdf",
+      "type": "redbook"
+    }
+  ],
+  "asciiPanel": "                              AUDIT\n                                                     System:\nSelect one of the following:\n\n 1. Review system security values\n 2. Work with user profiles\n 3. Review object authorities\n 4. Display audit journal entries\n 5. Work with active jobs\n 6. Work with spooled files\n 7. Display job log\n 8. Write audit finding\n 9. Display mission briefing\n10. Display evidence coverage\n11. Submit mission for scoring\n60. Restore lab package\n71. Display build instructions\n72. Run build instructions\n\n90. Sign off\nSelection or command\n===>",
+  "requiredText": [
+    "AUDIT",
+    "Select one of the following:",
+    "Review system security values",
+    "Work with user profiles",
+    "Display audit journal entries",
+    "Write audit finding",
+    "Submit mission for scoring",
+    "Selection or command"
+  ],
+  "notes": "No IBM stock GO AUDIT menu — this is the CLAIMS400 training mission hub. Follows standard IBM menu layout (menu ID upper-left, system name upper-right, numbered options, ===> command line). Options 1–7 map to IBM commands; 8–11 are mission workflow."
+}

@@ -1,0 +1,29 @@
+{
+  "screenId": "CHGPWD",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.6.0?topic=auditors-password-control",
+  "goldenFile": "chgpwd.golden.json",
+  "requiredText": [
+    "CHGPWD",
+    "Change Password",
+    "User profile",
+    "Current password",
+    "New password",
+    "Verify new password",
+    "Press Enter to change password",
+    "F3=Exit",
+    "F12=Cancel"
+  ],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "promptVariant": "detail",
+  "fieldRules": [
+    { "id": "HEADER", "row": 1, "valueContains": "Change Password" },
+    { "id": "USER", "row": 4, "col": 47 },
+    { "id": "CURPWD", "row": 6, "col": 47 },
+    { "id": "NEWPWD", "row": 8, "col": 47 },
+    { "id": "VERPWD", "row": 10, "col": 47 }
+  ],
+  "render": { "type": "command", "command": "CHGPWD", "user": "QSECOFR" }
+}

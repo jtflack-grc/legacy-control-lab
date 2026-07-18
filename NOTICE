@@ -1,0 +1,12 @@
+Legacy Control Lab
+
+Copyright (c) contributors to this project. See LICENSE.
+
+IBM, IBM i, AS/400, OS/400, DB2 for i, and related marks are trademarks of International Business Machines Corporation. This project is not affiliated with, endorsed by, or sponsored by IBM.
+
+This software is a clean-room, synthetic training environment inspired by IBM i administration concepts. It does not include IBM proprietary code.
+
+Terminal emulation in the browser uses **IronTerm** (GPL-3.0), vendored under
+`external/IronTerm-main/` and served as static assets. IronTerm is not compiled
+into the Node host runtime. See `external/IronTerm-main/LICENSE` (or the
+upstream IronTerm license file in that tree) for GPL terms.

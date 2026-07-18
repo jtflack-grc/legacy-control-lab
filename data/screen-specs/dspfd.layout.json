@@ -1,0 +1,16 @@
+{
+  "screenId": "DSPFD",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-file-description-dspfd",
+  "requiredText": [
+    "DSPFD",
+    "Display File Description",
+    "Record format",
+    "Field list",
+    "SSN",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu", "Evidence note"],
+  "render": { "type": "sample", "sample": "DSPFD_PAYMST" }
+}

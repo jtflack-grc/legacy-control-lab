@@ -1,0 +1,14 @@
+{
+  "missionId": "CLAIMS-010",
+  "title": "Can You Map COSO to the Control Atlas?",
+  "persona": "IT auditor / GRC analyst",
+  "systemName": "CLAIMS400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "objective": "Determine whether COSO control environment claims on CLAIMS400 are supported by mapped controls, workshop materials, and green-screen evidence — not only policy PDFs.",
+  "mode": "investigation_only",
+  "allowedMutation": false,
+  "resetOnStart": true,
+  "sourceArticle": "Frameworks: COSO & the IBM i",
+  "frameworks": ["COSO", "Control environment", "Control mapping", "LCL control atlas"]
+}

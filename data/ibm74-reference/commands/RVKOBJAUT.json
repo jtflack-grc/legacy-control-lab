@@ -1,0 +1,37 @@
+{
+  "name": "RVKOBJAUT",
+  "displayName": "Revoke Object Authority",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-rvkobjaut",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "OBJ",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    },
+    {
+      "name": "USER",
+      "label": "USER",
+      "required": true,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*PUBLIC",
+        "*CURRENT"
+      ]
+    }
+  ],
+  "examples": [
+    "RVKOBJAUT OBJ(PAYROLL/PAYMST) USER(APCLERK) AUT(*USE)"
+  ],
+  "helpText": "Revokes object authority from a user in the lab runtime.",
+  "requiresAuthority": [
+    "*OBJMGT"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDAUT"
+}

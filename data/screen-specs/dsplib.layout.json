@@ -1,0 +1,32 @@
+{
+  "screenId": "DSPLIB",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.3.0?topic=libraries-displaying-library-names-contents",
+  "goldenFile": "dsplib.golden.json",
+  "requiredText": [
+    "DSPLIB",
+    "Display Library",
+    "Library",
+    "Number of objects",
+    "Type options, press Enter.",
+    "5=Display full attributes",
+    "8=Display service attributes",
+    "Opt  Object",
+    "Type",
+    "Attribute",
+    "Size",
+    "Text",
+    "F17=Top",
+    "F18=Bottom"
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 12,
+    "lastDataRow": 18,
+    "commandLineRow": 22,
+    "optionIdPattern": "^OOPT\\d+$"
+  },
+  "render": { "type": "command", "command": "DSPLIB LIB(CLAIMS400)", "user": "AUDIT" }
+}

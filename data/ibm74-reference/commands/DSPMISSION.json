@@ -1,0 +1,14 @@
+{
+  "name": "DSPMISSION",
+  "displayName": "Display Mission",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspmission",
+  "parameters": [],
+  "examples": [
+    "DSPMISSION"
+  ],
+  "helpText": "Displays the active mission brief including systems, objectives, and scoring rubric.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

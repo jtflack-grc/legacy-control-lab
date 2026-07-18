@@ -1,0 +1,14 @@
+{
+  "name": "DSPBLD",
+  "displayName": "Display Build Instructions",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspbld",
+  "parameters": [],
+  "examples": [
+    "DSPBLD"
+  ],
+  "helpText": "Displays build instructions for the current mission including objectives and acceptance criteria.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

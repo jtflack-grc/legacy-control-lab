@@ -1,0 +1,32 @@
+{
+  "screenId": "DSPJOBLOG",
+  "primarySource": "https://www.as400andsqltricks.com/2021/12/dspjoblog-in-as400.html",
+  "sources": [
+    {
+      "title": "Display Job Log (DSPJOBLOG) panel",
+      "url": "https://www.as400andsqltricks.com/2021/12/dspjoblog-in-as400.html",
+      "type": "panel-capture"
+    },
+    {
+      "title": "IBM i 7.4 — Display Job Log (DSPJOBLOG)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/dspjoblog.html",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": "                              Display Job Log                        \n                                                            System:  \nJob . . :   QPAD161845    User . . :   EASYCLASS     Number . . . :  \n                                                                     \n3>> DSPJOBLOG                                                        \n                                                                     \n3 > DSPJOBLOG                                                       \n    Job 313447/EASYCLASS/QPAD161845 changed by JOBMANAGER.           \n3>> DSPJOBLOG                                                       ",
+  "requiredText": [
+    "Display Job Log",
+    "Job . . :",
+    "User . . :",
+    "Number . . . :",
+    ">>",
+    "F10=Display all messages",
+    "System:"
+  ],
+  "notes": "Running commands show with >> prefix; completed commands with >. F10=Display all messages; Shift+F6=Display detail. Also reachable via WRKJOB/DSPJOB option 10.",
+  "auditNotes": "Command-level trace: running commands prefixed >>, completed with >. F10=Display all messages. Align timestamps with QAUDJRN entries for incident timeline.",
+  "grcMapping": [
+    "Blue Team — respond",
+    "SOC2 CC7.3 — incident evidence"
+  ]
+}

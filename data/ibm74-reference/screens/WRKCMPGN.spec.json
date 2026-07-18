@@ -1,0 +1,12 @@
+{
+  "screenId": "WRKCMPGN",
+  "category": "range",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

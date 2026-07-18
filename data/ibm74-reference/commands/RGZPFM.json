@@ -1,0 +1,12 @@
+{
+  "name": "RGZPFM",
+  "displayName": "Reorganize Physical File M",
+  "category": "database_file",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-rgzpfm",
+  "parameters": [],
+  "examples": [],
+  "helpText": "RGZPFM. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDFILE"
+}

@@ -1,0 +1,17 @@
+{
+  "screenId": "GRTOBJAUT",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-grant-object-authority-grtobjaut",
+  "requiredText": [
+    "Grant Object Authority (GRTOBJAUT)",
+    "Type choices, press Enter.",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "forbiddenText": ["Evidence note", "mission menu"],
+  "fieldRules": [
+    { "id": "P0", "valueContains": "PAYROLL/PAYMST" }
+  ],
+  "render": { "type": "sample", "sample": "GRTOBJAUT_PROMPT" }
+}

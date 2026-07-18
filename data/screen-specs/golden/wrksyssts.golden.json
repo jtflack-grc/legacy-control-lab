@@ -1,0 +1,35 @@
+{
+  "screenId": "WRKSYSSTS",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/wrksyssts.html",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — Work with System Status (WRKSYSSTS)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/wrksyssts.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM Redbooks — Performance Tools Figure 6-15",
+      "url": "https://public.dhe.ibm.com/systems/power/docs/systemi/v5r4/en_US/sg245674.pdf",
+      "type": "redbook"
+    },
+    {
+      "title": "IBM i 7.4 — System values (related QPFRADJ pools)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-system-values",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": "                        Work with System Status\n\n% CPU used . . . . . . . : 43.4     Auxiliary storage:\n% DB capability . . . . : 36.1     System ASP . . . . . . : 1411 G\nElapsed time . . . . . . : 00:11:20 % system ASP used . . : 9.8320\nJobs in system . . . . . : 776      Total . . . . . . . . : 1411 G\n\nType changes (if allowed), press Enter.\nSystem Pool ... storage pool table ...\n\nCommand\n===>\nF3=Exit F5=Refresh F10=Restart F12=Cancel F19=Extended system status F24=More keys",
+  "requiredText": [
+    "Work with System Status",
+    "WRKSYSSTS",
+    "% CPU used",
+    "% DB capability",
+    "% system ASP used",
+    "Elapsed time",
+    "Jobs",
+    "F5=Refresh",
+    "F10=Restart",
+    "F12=Cancel"
+  ],
+  "notes": "Full IBM panel includes storage pool subfile and F19 extended status. Lab shows summary job/storage metrics suitable for incident triage drills."
+}

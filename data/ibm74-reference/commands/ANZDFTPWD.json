@@ -1,0 +1,16 @@
+{
+  "name": "ANZDFTPWD",
+  "displayName": "Analyze Default Passwords",
+  "category": "security",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-anzdftpwd",
+  "parameters": [],
+  "examples": [
+    "ANZDFTPWD"
+  ],
+  "helpText": "Analyzes user profiles that still use default passwords. Security hygiene evidence command.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": false,
+  "groupMenu": "CMDSEC"
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "library": "PAYROLL",
+    "object": "PAYMST",
+    "userName": "BACKUPADM",
+    "authority": "*ALL"
+  },
+  {
+    "library": "CLAIMS400",
+    "object": "QCLSRC",
+    "userName": "OLDVENDOR",
+    "authority": "*CHANGE"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "name": "DSPMSG",
+  "displayName": "Display Messages",
+  "category": "message_queue",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspmsg",
+  "parameters": [
+    {
+      "name": "MSGQ",
+      "label": "Message queue",
+      "required": false,
+      "type": "messageQueueName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPMSG MSGQ(QSYSOPR)",
+    "DSPMSG MSGQ(QSYS/QSYSOPR)"
+  ],
+  "helpText": "Displays messages in a message queue. Use for operator and batch diagnostic review.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDMSG"
+}

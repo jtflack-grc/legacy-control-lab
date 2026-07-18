@@ -1,0 +1,25 @@
+{
+  "name": "CHGVARIANT",
+  "displayName": "Change Variant",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgvariant",
+  "parameters": [
+    {
+      "name": "VARIANT",
+      "label": "Variant id",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "CLAIMS-001-A",
+        "CLAIMS-001-B"
+      ]
+    }
+  ],
+  "examples": [
+    "CHGVARIANT VARIANT(CLAIMS-001-A)"
+  ],
+  "helpText": "Switches the active mission variant (A/B/C) for the current scenario without restarting the range.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

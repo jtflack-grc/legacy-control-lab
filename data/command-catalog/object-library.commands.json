@@ -1,0 +1,418 @@
+[
+  {
+    "name": "ADDLIBLE",
+    "displayName": "Add Library List Entry",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "addLibraryEntry",
+    "parameters": [
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": true,
+        "label": "Library"
+      }
+    ],
+    "helpText": "Adds a library to the user portion of the library list for the current session.",
+    "examples": [
+      "ADDLIBLE LIB(CLAIMS400)",
+      "ADDLIBLE LIB(PAYROLL) POSITION(*LAST)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDLIB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGCURLIB",
+    "displayName": "Change Current Library",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Change Current Library. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "changeCurrentLibrary",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true
+  },
+  {
+    "name": "CHGLIB",
+    "displayName": "Change Library",
+    "category": "library_object",
+    "groupMenu": "CMDOBJ",
+    "status": "implemented",
+    "promptable": true,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CHGLIB. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CHGLIB",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      },
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": true
+      }
+    ],
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGOBJOWN",
+    "displayName": "Change Object OWN",
+    "category": "library_object",
+    "groupMenu": "CMDOBJ",
+    "status": "implemented",
+    "promptable": true,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CHGOBJOWN. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CHGOBJOWN",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      },
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": false
+      }
+    ],
+    "handler": "changeObjectOwner",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Requires *OBJEXIST + ownership. Lab records AF journal on remediation."
+  },
+  {
+    "name": "CRTDUPOBJ",
+    "displayName": "Create Duplicate Object",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Create Duplicate Object. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CRTLIB",
+    "displayName": "Create Library",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Create Library. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "createLibrary",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true
+  },
+  {
+    "name": "CRTOBJ",
+    "displayName": "Create Object",
+    "category": "library_object",
+    "groupMenu": "CMDOBJ",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CRTOBJ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CRTOBJ",
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTDTAARA",
+    "displayName": "Delete Data Area",
+    "category": "library_object",
+    "groupMenu": "CMDOBJ",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DLTDTAARA. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DLTDTAARA",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTLIB",
+    "displayName": "Delete Library",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Delete Library. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTOBJ",
+    "displayName": "Delete Object",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Delete Object. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPLIB",
+    "displayName": "Display Library",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Display Library. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "displayLibrary",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "DSPLIBD",
+    "displayName": "Display Library Description",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Display Library Description. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "displayLibraryDescription",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "DSPLIBL",
+    "displayName": "Display Library List",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayLibraryList",
+    "helpText": "Displays the current library list including system, product, and user libraries.",
+    "examples": [
+      "DSPLIBL"
+    ],
+    "groupMenu": "CMDLIB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPOBJD",
+    "displayName": "Display Object Description",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayObjectDescription",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true,
+        "label": "Object"
+      }
+    ],
+    "helpText": "Displays object description including type, attribute, owner, and create date.",
+    "examples": [
+      "DSPOBJD OBJ(PAYROLL/PAYMST)",
+      "DSPOBJD OBJ(QSYS/QAUDJRN)"
+    ],
+    "groupMenu": "CMDOBJ",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPOBJL",
+    "displayName": "Display Object L",
+    "category": "library_object",
+    "groupMenu": "CMDOBJ",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPOBJL. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPOBJL",
+    "handler": "displayObjectList",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "EDTLIBL",
+    "displayName": "Edit Library List",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "editLibraryList",
+    "helpText": "Opens the library list editor subfile to add or remove user libraries interactively.",
+    "examples": [
+      "EDTLIBL"
+    ],
+    "groupMenu": "CMDLIB",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "MOVOBJ",
+    "displayName": "Move Object",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Move Object. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RMVLIBLE",
+    "displayName": "Remove Library List Entry",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "removeLibraryEntry",
+    "parameters": [
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": true,
+        "label": "Library"
+      }
+    ],
+    "helpText": "Remove Library List Entry. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "RMVLIBLE LIB(CLAIMS400)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDLIB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RNMOBJ",
+    "displayName": "Rename Object",
+    "category": "library_object",
+    "groupMenu": "CMDOBJ",
+    "status": "implemented",
+    "promptable": true,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "RNMOBJ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "RNMOBJ",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      },
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": false
+      }
+    ],
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKLIB",
+    "displayName": "Work with Libraries",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Work with Libraries. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "workLibraries",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "WRKLIBL",
+    "displayName": "Work with Library L",
+    "category": "library_object",
+    "groupMenu": "CMDOBJ",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "WRKLIBL. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "WRKLIBL",
+    "handler": "workLibraryList",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "WRKOBJ",
+    "displayName": "Work with Objects",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithObjects",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": false,
+        "label": "Object"
+      },
+      {
+        "name": "OBJTYPE",
+        "type": "objectType",
+        "required": false,
+        "supportsSpecialValues": [
+          "*ALL"
+        ]
+      }
+    ],
+    "helpText": "Work with objects in a library. Option 5 displays object description; option 8 shows authority.",
+    "examples": [
+      "WRKOBJ OBJ(PAYROLL/*ALL)",
+      "WRKOBJ OBJ(QSYS/*ALL)"
+    ],
+    "groupMenu": "CMDOBJ",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKOBJLCK",
+    "displayName": "Work with Object Locks",
+    "category": "library_object",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Work with Object Locks. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "workObjectLocks",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "variantId": "CLAIMS-001-A",
+    "missionId": "CLAIMS-001",
+    "title": "Stale Backup Admin + Public Authority",
+    "seed": 1001,
+    "riskPattern": "stale_privileged_account_and_public_authority"
+  },
+  {
+    "variantId": "CLAIMS-001-B",
+    "missionId": "CLAIMS-001",
+    "title": "Audit Configured, Review Evidence Missing",
+    "seed": 1002,
+    "riskPattern": "audit_configured_review_missing"
+  },
+  {
+    "variantId": "CLAIMS-001-C",
+    "missionId": "CLAIMS-001",
+    "title": "Vendor Account + Source Change Exposure",
+    "seed": 1003,
+    "riskPattern": "vendor_account_source_exposure"
+  }
+]

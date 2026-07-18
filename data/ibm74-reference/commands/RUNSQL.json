@@ -1,0 +1,25 @@
+{
+  "name": "RUNSQL",
+  "displayName": "Run SQL Statement",
+  "category": "sql_services",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-runsql",
+  "parameters": [
+    {
+      "name": "SQL",
+      "label": "SQL statement",
+      "required": true,
+      "type": "sqlStatement",
+      "supportsSpecialValues": [
+        "select user_name, status from qsys2.user_info"
+      ]
+    }
+  ],
+  "examples": [
+    "RUNSQL SQL('select user_name, status from qsys2.user_info')",
+    "RUNSQL SQL('select name, current_value from qsys2.system_value_info')"
+  ],
+  "helpText": "Runs a read-only SQL statement against QSYS2-style views mapped to the scenario database. Primary path for tabular evidence export.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDSQL"
+}

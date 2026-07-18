@@ -1,0 +1,19 @@
+{
+  "screenId": "QSH",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=utilities-qshell",
+  "requiredText": [
+    "STRQSH",
+    "Qshell — PASE Interactive",
+    "Directory  . . . . . . . . . . :",
+    "Synthetic QSH",
+    "PASE catalog:",
+    "F3=Exit   F7=Scroll up   F8=Scroll down   F12=Cancel"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "fieldRules": [
+    { "id": "QSH_CMD", "row": 19, "col": 8 }
+  ],
+  "render": { "type": "sample", "sample": "QSH" }
+}

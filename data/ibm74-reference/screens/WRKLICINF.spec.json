@@ -1,0 +1,12 @@
+{
+  "screenId": "WRKLICINF",
+  "category": "ptf_license",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "screenId": "CFGTCP",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=setup-tcpip",
+  "goldenFile": "cfgtcp.golden.json",
+  "promptVariant": "menu",
+  "functionKeys": "F3=Exit   F4=Prompt   F9=Retrieve   F12=Cancel",
+  "requiredText": [
+    "CFGTCP",
+    "Configure TCP/IP",
+    "Work with TCP/IP interfaces",
+    "Selection or command",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu", "Evidence note"],
+  "render": { "type": "sample", "sample": "CFGTCP_MENU" }
+}

@@ -1,0 +1,11 @@
+{
+  "screenId": "DSPAUD",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-audit-values-dspaud",
+  "goldenFile": "dspaud.golden.json",
+  "requiredText": ["DSPAUD", "Display Audit Values", "Auditing control", "Auditing level"],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "promptVariant": "detail",
+  "render": { "type": "command", "command": "DSPAUD", "user": "AUDIT" }
+}

@@ -1,0 +1,456 @@
+{
+  "version": "1.0.0",
+  "author": "John Flack",
+  "articles": [
+    {
+      "id": "offboarding",
+      "title": "IBM i Offboarding: Profiles You Didn't Revoke",
+      "url": "https://www.linkedin.com/pulse/ibm-i-offboarding-profiles-you-didnt-revoke-john-flack-oplie",
+      "published": "2025-09-03",
+      "sourceType": "pulse",
+      "sourceFile": "sources/offboarding.excerpt.md",
+      "commands": [
+        "WRKUSRPRF",
+        "DSPUSRPRF",
+        "ANZPRFACT",
+        "CHGACTPRFL",
+        "CHGUSRPRF",
+        "DSPJRN"
+      ],
+      "screens": [
+        "WRKUSRPRF",
+        "DSPUSRPRF",
+        "ANZPRFACT",
+        "CHGACTPRFL"
+      ],
+      "frameworkRefs": [
+        "ISO 27001 A.9.2.5",
+        "ISO 27001 A.9.2.6",
+        "NIST AC-2(3)",
+        "COBIT BAI09.02"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "blue-team",
+      "title": "Can You Blue Team an IBM i?",
+      "url": "https://www.linkedin.com/pulse/can-you-blue-team-ibm-i-john-flack-w5bse",
+      "published": "2026-06-03",
+      "sourceType": "pulse",
+      "sourceFile": "sources/blue-team.excerpt.md",
+      "commands": [
+        "WRKACTJOB",
+        "DSPJRN",
+        "DSPAUDJRNE",
+        "DSPSECAUD",
+        "DSPJOBLOG"
+      ],
+      "screens": [
+        "WRKACTJOB",
+        "DSPJRN",
+        "DSPAUDJRNE",
+        "DSPSECAUD",
+        "DSPJOBLOG"
+      ],
+      "frameworkRefs": [
+        "SOC 2 CC7.2",
+        "Detect / respond"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "red-team",
+      "title": "Can You Red Team an IBM i?",
+      "url": "https://www.linkedin.com/pulse/can-you-red-team-ibm-i-john-flack-pabze",
+      "published": "2026-05-28",
+      "sourceType": "pulse",
+      "sourceFile": "sources/red-team.md",
+      "commands": [
+        "DSPUSRPRF",
+        "DSPOBJAUT",
+        "EDTOBJAUT",
+        "GRTOBJAUT",
+        "RVKOBJAUT",
+        "DSPNETA"
+      ],
+      "screens": [
+        "DSPUSRPRF",
+        "DSPOBJAUT",
+        "EDTOBJAUT",
+        "DSPNETA"
+      ],
+      "frameworkRefs": [
+        "Red team",
+        "LMTCPB"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "soc2",
+      "title": "SOC 2 & the IBM i",
+      "url": "https://www.linkedin.com/pulse/soc-2-ibm-i-john-flack-0bj8e",
+      "published": "2026-05-24",
+      "sourceType": "pulse",
+      "sourceFile": "sources/soc2.excerpt.md",
+      "commands": [
+        "WRKUSRPRF",
+        "DSPUSRPRF",
+        "DSPOBJAUT",
+        "DSPAUT",
+        "WRKOBJOWN",
+        "GRTOBJAUT",
+        "RVKOBJAUT",
+        "DSPJRN",
+        "WRKACTJOB",
+        "WRKJOBSCDE",
+        "RUNSQL"
+      ],
+      "screens": [
+        "WRKUSRPRF",
+        "DSPOBJAUT",
+        "WRKOBJOWN",
+        "DSPJRN",
+        "WRKJOBSCDE"
+      ],
+      "frameworkRefs": [
+        "SOC 2 CC6.1",
+        "SOC 2 CC7.2"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "coso",
+      "title": "Frameworks: COSO & the IBM i",
+      "url": "https://www.linkedin.com/pulse/frameworks-coso-ibm-i-john-flack-dcrne",
+      "published": "2026-05-18",
+      "sourceType": "pulse",
+      "sourceFile": "sources/coso.md",
+      "commands": [
+        "WRKCTRL",
+        "MAPCTRL",
+        "WRKFINDING",
+        "DSPUSRPRF",
+        "DSPAUT",
+        "WRKOBJOWN",
+        "DSPJRN",
+        "DSPAUDJRNE",
+        "CPYAUDJRNE",
+        "WRKJOBSCDE",
+        "DSPSYSVAL",
+        "DSPPGMREF",
+        "CHGOBJAUD",
+        "RUNSQL"
+      ],
+      "screens": [
+        "WRKCTRL",
+        "MAPCTRL",
+        "WRKFINDING",
+        "DSPUSRPRF",
+        "DSPAUT",
+        "DSPJRN",
+        "WRKJOBSCDE"
+      ],
+      "frameworkRefs": [
+        "COSO",
+        "Control environment"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "decision-ready",
+      "title": "Audit-Ready Is Not Decision-Ready",
+      "url": "https://www.linkedin.com/pulse/audit-ready-decision-ready-john-flack-cpgfe",
+      "published": "2026-05-13",
+      "sourceType": "pulse",
+      "sourceFile": "sources/decision-ready.md",
+      "commands": [
+        "WRKFINDING",
+        "RUNSQL",
+        "WRKSQLSVC"
+      ],
+      "screens": [
+        "WRKFINDING",
+        "WRKSQLSVC",
+        "RUNSQL"
+      ],
+      "frameworkRefs": [
+        "Decision support",
+        "Finding quality"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "alignment",
+      "title": "Alignment Is Continuous Reconciliation",
+      "url": "https://www.linkedin.com/pulse/alignment-continuous-reconciliation-john-flack-v4ele",
+      "category": "governance",
+      "tags": [
+        "framework-mapping",
+        "alignment"
+      ],
+      "published": "2026-05-12",
+      "sourceType": "pulse",
+      "sourceFile": "sources/alignment.md",
+      "commands": [],
+      "screens": [],
+      "frameworkRefs": [
+        "Framework mapping"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "black-swan",
+      "title": "Black Swan, Green Screen",
+      "url": "https://www.linkedin.com/pulse/black-swan-green-screen-john-flack-doyce",
+      "category": "availability",
+      "tags": [
+        "tail-risk",
+        "batch",
+        "operator"
+      ],
+      "published": "2026-06-05",
+      "sourceType": "pulse",
+      "sourceFile": "sources/black-swan.md",
+      "commands": [
+        "WRKSBMJOB",
+        "DSPMSG",
+        "DSPJOB",
+        "WRKSYSSTS"
+      ],
+      "screens": [
+        "WRKSBMJOB",
+        "DSPMSG",
+        "DSPJOB",
+        "WRKSYSSTS"
+      ],
+      "frameworkRefs": [
+        "ISO 27001 A.17",
+        "Availability"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "ot-dont-blink",
+      "title": "Don't Blink. OT Security and Enterprise IT's Eyes Wide Shut",
+      "url": "https://www.linkedin.com/pulse/dont-blink-john-flack-otnoe",
+      "category": "ot",
+      "tags": [
+        "ics",
+        "enterprise-it"
+      ],
+      "published": "2026-06-12",
+      "sourceType": "pulse",
+      "sourceFile": "sources/ot-dont-blink.md",
+      "commands": [],
+      "screens": [],
+      "frameworkRefs": [
+        "OT/ICS",
+        "Enterprise IT"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "clause-5",
+      "title": "i on GRC: ISO 27701, Clause 5 & the IBM i",
+      "url": "https://www.linkedin.com/posts/john-flack_i-on-grc-iso-27701-clause-5-the-ibm-i-activity-7434104511952187392-ITqt",
+      "published": "2026-04-01",
+      "sourceType": "linkedin-post",
+      "sourceFile": "sources/clause-5.excerpt.md",
+      "commands": [
+        "WRKUSRPRF",
+        "DSPUSRPRF",
+        "RUNSQL"
+      ],
+      "screens": [
+        "WRKUSRPRF",
+        "DSPUSRPRF"
+      ],
+      "frameworkRefs": [
+        "ISO 27701 Clause 5"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "clause-6",
+      "title": "i on GRC: ISO 27701, Clause 6 & the IBM i",
+      "url": "https://www.linkedin.com/posts/john-flack_i-on-grc-iso-27701-clause-6-the-ibm-i-activity-7438270345012248576-TDQI",
+      "published": "2026-04-01",
+      "sourceType": "linkedin-post",
+      "sourceFile": "sources/clause-6.excerpt.md",
+      "commands": [
+        "WRKAUTL",
+        "DSPAUTL",
+        "DSPAUT",
+        "DSPSECAUD",
+        "DSPJRN"
+      ],
+      "screens": [
+        "WRKAUTL",
+        "DSPAUTL",
+        "DSPSECAUD",
+        "DSPJRN"
+      ],
+      "frameworkRefs": [
+        "ISO 27701 Clause 6"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "clause-7",
+      "title": "i on GRC: ISO 27701, Clause 7 & the IBM i",
+      "url": "https://www.linkedin.com/posts/john-flack_i-on-grc-iso-27701-clause-7-the-ibm-i-activity-7439292748014297088-gQTW",
+      "published": "2026-04-01",
+      "sourceType": "linkedin-post",
+      "sourceFile": "sources/clause-7.excerpt.md",
+      "commands": [
+        "DSPFD",
+        "DSPOBJAUT",
+        "DSPJRN"
+      ],
+      "screens": [
+        "DSPFD",
+        "DSPOBJAUT",
+        "DSPJRN"
+      ],
+      "frameworkRefs": [
+        "ISO 27701 Clause 7"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "clause-8",
+      "title": "i on GRC: ISO 27701, Clause 8 & the IBM i",
+      "url": "https://www.linkedin.com/posts/john-flack_i-on-grc-iso-27701-clause-8-the-ibm-i-activity-7441139584916180992-Tfia",
+      "published": "2026-04-01",
+      "sourceType": "linkedin-post",
+      "sourceFile": "sources/clause-8.excerpt.md",
+      "commands": [
+        "DSPOBJAUT",
+        "DSPFD",
+        "DSPFFD",
+        "WRKJOBSCDE",
+        "WRKLNK",
+        "DSPJRN"
+      ],
+      "screens": [
+        "DSPOBJAUT",
+        "DSPFD",
+        "DSPFFD",
+        "WRKJOBSCDE",
+        "WRKLNK",
+        "DSPJRN"
+      ],
+      "frameworkRefs": [
+        "ISO 27701 Clause 8"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "clause-9",
+      "title": "i on GRC: ISO 27701, Clause 9 & the IBM i",
+      "url": "https://www.linkedin.com/pulse/i-grc-is0-27701-clause-9-ibm-john-flack-n5jwe",
+      "category": "iso27701",
+      "tags": [
+        "clause-9",
+        "program-evaluation"
+      ],
+      "published": "2026-05-01",
+      "sourceType": "pulse",
+      "sourceFile": "sources/clause-9.md",
+      "commands": [
+        "DSPUSRPRF",
+        "DSPAUT",
+        "WRKOBJOWN",
+        "WRKAUTL",
+        "EDTAUTL",
+        "DSPAUDJRNE",
+        "DSPJRN",
+        "DSPSYSVAL",
+        "WRKACTJOB"
+      ],
+      "screens": [
+        "DSPUSRPRF",
+        "DSPAUT",
+        "WRKOBJOWN",
+        "WRKAUTL",
+        "EDTAUTL",
+        "DSPAUDJRNE",
+        "DSPJRN"
+      ],
+      "frameworkRefs": [
+        "ISO 27701 Clause 9"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "clause-10",
+      "title": "i on GRC: ISO 27701, Clause 10 & the IBM i",
+      "url": "https://www.linkedin.com/pulse/i-grc-is0-27701-clause-10-ibm-john-flack-6nz1e",
+      "category": "iso27701",
+      "tags": [
+        "clause-10",
+        "continuous-improvement"
+      ],
+      "published": "2026-05-05",
+      "sourceType": "pulse",
+      "sourceFile": "sources/clause-10.md",
+      "commands": [
+        "DSPUSRPRF",
+        "DSPAUT",
+        "WRKOBJOWN",
+        "CRTAUTL",
+        "EDTAUTL",
+        "WRKAUTL",
+        "DSPPGM",
+        "DSPPGMREF",
+        "CHGOBJAUD",
+        "CHGAUT",
+        "GRTOBJAUT",
+        "RVKOBJAUT",
+        "DSPAUDJRNE",
+        "DSPJRN",
+        "WRKACTJOB",
+        "WRKJOBSCDE"
+      ],
+      "screens": [
+        "DSPUSRPRF",
+        "DSPAUT",
+        "WRKOBJOWN",
+        "WRKAUTL",
+        "EDTAUTL",
+        "DSPPGMREF",
+        "DSPAUDJRNE",
+        "DSPJRN",
+        "WRKACTJOB"
+      ],
+      "frameworkRefs": [
+        "ISO 27701 Clause 10"
+      ],
+      "indexed": true
+    },
+    {
+      "id": "iso27001-series",
+      "title": "ISO 27001 & the IBM i (series)",
+      "url": "https://ibmireference.blogspot.com/search/label/IBM%20%22%28A%29i%20on%20GRC%20-%20ISO%2027001%22",
+      "published": "2025-10-01",
+      "sourceType": "blog-index",
+      "sourceFile": null,
+      "commands": [
+        "WRKUSRPRF",
+        "DSPOBJAUT",
+        "DSPSYSVAL",
+        "DSPJRN"
+      ],
+      "screens": [
+        "WRKUSRPRF",
+        "DSPOBJAUT",
+        "DSPSYSVAL",
+        "DSPJRN"
+      ],
+      "frameworkRefs": [
+        "ISO 27001"
+      ],
+      "indexed": false
+    }
+  ]
+}

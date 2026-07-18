@@ -1,0 +1,37 @@
+{
+  "screenId": "WRKJOBSCDE",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-job-schedule-entries-wrkjobscde",
+  "goldenFile": "wrkjobscde.golden.json",
+  "requiredText": [
+    "WRKJOBSCDE",
+    "Work with Job Schedule Entries",
+    "Type options, press Enter.",
+    "2=Change",
+    "5=Display",
+    "6=Display job log",
+    "PAYROLLNGT",
+    "PAYIFSEXP",
+    "Parameters or command",
+    "F3=Exit",
+    "F5=Refresh"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "optionLine": { "row": 4, "col": 6, "valueContains": "2=Change" },
+  "promptVariant": "subfile",
+  "fieldRules": [
+    { "id": "COLHDR", "row": 6, "valueContains": "Job" },
+    { "id": "WOPT0", "row": 7, "col": 6 }
+  ],
+  "subfile": {
+    "maxVisibleRows": 10,
+    "firstDataRow": 7,
+    "lastDataRow": 16,
+    "commandLineRow": 22,
+    "optionIdPattern": "^WOPT\\d+$"
+  },
+  "commandLine": { "row": 22, "label": "Parameters or command" },
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "WRKJOBSCDE_PAYROLL" }
+}

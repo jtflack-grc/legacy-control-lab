@@ -1,0 +1,26 @@
+{
+  "name": "RSTLABPKG",
+  "displayName": "Restore Lab Package",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-rstlabpkg",
+  "parameters": [
+    {
+      "name": "LIB",
+      "label": "Library",
+      "required": true,
+      "type": "libraryName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB",
+        "*USRLIBL"
+      ]
+    }
+  ],
+  "examples": [
+    "RSTLABPKG"
+  ],
+  "helpText": "Restores a previously saved lab package snapshot for the current attempt.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

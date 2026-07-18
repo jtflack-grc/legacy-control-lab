@@ -1,0 +1,17 @@
+{
+  "name": "WRKSCORE",
+  "displayName": "Work with Scorebook",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkscore",
+  "parameters": [],
+  "examples": [
+    "WRKSCORE"
+  ],
+  "helpText": "Work with the campaign scorebook showing points, controls, and mission completion.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB",
+  "wrkOptions": {
+    "2": "GENRPT"
+  }
+}

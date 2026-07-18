@@ -1,0 +1,23 @@
+{
+  "name": "DSPMSGQ",
+  "displayName": "Display Message Q",
+  "category": "message_queue",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspmsgq",
+  "parameters": [
+    {
+      "name": "MSGQ",
+      "label": "Message queue",
+      "required": false,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "DSPMSGQ. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDMSG"
+}

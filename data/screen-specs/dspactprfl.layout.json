@@ -1,0 +1,11 @@
+{
+  "screenId": "DSPACTPRFL",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-activity-profile-list-dspactprfl",
+  "goldenFile": "dspactprfl.golden.json",
+  "requiredText": ["DSPACTPRFL", "Display Activity Profile List", "Activity list status"],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "promptVariant": "detail",
+  "render": { "type": "command", "command": "DSPACTPRFL", "user": "AUDIT" }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "WRKOUTQ",
+  "displayName": "Work with Output Queue",
+  "category": "spool_print",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkoutq",
+  "parameters": [],
+  "examples": [
+    "WRKOUTQ"
+  ],
+  "helpText": "Work with output queues and spooled files waiting to print.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSPL",
+  "wrkOptions": {
+    "2": "CHGOUTQ",
+    "5": "DSPOUTQ"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "screenId": "DSPNETA",
+  "category": "network_tcpip",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

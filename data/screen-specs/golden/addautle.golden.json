@@ -1,0 +1,26 @@
+{
+  "screenId": "ADDAUTLE",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-add-authorization-list-entry-addautle",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — ADDAUTLE command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-add-authorization-list-entry-addautle",
+      "type": "ibm-cl-reference"
+    }
+  ],
+  "asciiPanel": "              Add Authorization List Entry (ADDAUTLE)\n\nType choices, press Enter.\n\nAuthorization list . . . . . . . . . . . . . . > PAYROLL\nUser profile . . . . . . . . . . . . . . . . . > APCLERK\nAuthority  . . . . . . . . . . . . . . . . . . > *USE\n\nBottom\nF3=Exit   F4=Prompt   F12=Cancel   F24=More keys",
+  "requiredText": [
+    "Add Authorization List Entry",
+    "Authorization list",
+    "User profile",
+    "Authority",
+    "F4=Prompt"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F12=Cancel   F24=More keys",
+  "auditNotes": "Add user to authorization list — EDTAUTL F6 path. Verify least privilege on PAYROLL entries.",
+  "grcMapping": [
+    "SOC2 CC6.1",
+    "Clause 6 — access enforcement"
+  ]
+}

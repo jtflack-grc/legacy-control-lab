@@ -1,0 +1,29 @@
+{
+  "name": "WRKLNK",
+  "displayName": "Work with Object Links",
+  "category": "ifs",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrklnk",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Directory path",
+      "required": false,
+      "type": "ifsPath",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [
+    "WRKLNK OBJ('/claims')"
+  ],
+  "helpText": "Work with object links under an IFS path. Option 5 displays link detail.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDIFS",
+  "wrkOptions": {
+    "2": "CHGAUT",
+    "5": "DSPLNK"
+  }
+}

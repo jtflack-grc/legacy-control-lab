@@ -1,0 +1,16 @@
+{
+  "screenId": "DSPNETA",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-network-attributes-dspneta",
+  "requiredText": [
+    "DSPNETA",
+    "Display Network Attributes",
+    "Host name",
+    "CLAIMS400",
+    "TCP/IP status",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu", "Evidence note"],
+  "render": { "type": "command", "command": "DSPNETA", "user": "AUDIT" }
+}

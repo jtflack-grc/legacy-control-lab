@@ -1,0 +1,17 @@
+{
+  "name": "WRKSBSJOB",
+  "displayName": "Work with Subsystem Jobs",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrksbsjob",
+  "parameters": [],
+  "examples": [
+    "WRKSBSJOB SBS(QINTER)"
+  ],
+  "helpText": "Work with jobs in a subsystem. Option 5 displays job detail.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJOB",
+  "wrkOptions": {
+    "5": "DSPJOB"
+  }
+}

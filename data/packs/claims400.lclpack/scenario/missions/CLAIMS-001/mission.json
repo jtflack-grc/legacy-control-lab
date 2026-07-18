@@ -1,0 +1,16 @@
+{
+  "missionId": "CLAIMS-001",
+  "title": "Can You Prove IBM i Security?",
+  "persona": "IT auditor / GRC analyst",
+  "systemName": "CLAIMS400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "objective": "Determine whether privileged access is reviewed, restricted, and monitored.",
+  "mode": "investigate_and_remediate",
+  "allowedMutation": true,
+  "resetOnStart": true,
+  "evidenceRequirementsFile": "evidence_requirements.json",
+  "expectedFindingsFile": "expected_findings.json",
+  "scoringFile": "scoring.json",
+  "reportTemplate": "report_template.md"
+}

@@ -1,0 +1,41 @@
+{
+  "screenId": "DSPAUTL",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-authorization-list-dspautl",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — DSPAUTL command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-authorization-list-dspautl",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.5 — Authority lists commands",
+      "url": "https://www.ibm.com/docs/en/i/7.5.0?topic=commands-authority-lists",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "DSPAUTL (Display Authorization List) — setgetweb v5r3",
+      "url": "http://www.setgetweb.com/p/iSeries/v5r3/dspautl.htm",
+      "type": "command-reference"
+    },
+    {
+      "title": "IBM Support — Creating and assigning an authorization list",
+      "url": "https://www.ibm.com/support/pages/creating-and-assigning-authorization-list",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": " DSPAUTL                          Display Authorization List              CLAIMS400\n\nAuthorization list . . . . . . . . . . . . . . : PAYROLL\nDescription . . . . . . . . . . . . . . . . . . : Payroll data access list\nPublic authority . . . . . . . . . . . . . . . : *EXCLUDE\n\nUser profile          Authority\n-------------------- ----------------\nPAYADMIN              *ALL\nAPCLERK               *USE\n\nF3=Exit   F12=Cancel",
+  "requiredText": [
+    "Display Authorization List",
+    "Authorization list",
+    "Public authority",
+    "User profile",
+    "Authority",
+    "PAYADMIN",
+    "F3=Exit"
+  ],
+  "columnHeaders": [
+    "User profile",
+    "Authority"
+  ],
+  "notes": "Read-only view of AUTL members and public authority — WRKAUTL option 5. USROPT in profile controls detail level of authority values shown."
+}

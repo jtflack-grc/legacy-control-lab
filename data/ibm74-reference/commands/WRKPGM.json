@@ -1,0 +1,18 @@
+{
+  "name": "WRKPGM",
+  "displayName": "Work with Program",
+  "category": "source_pdm",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkpgm",
+  "parameters": [],
+  "examples": [
+    "WRKPGM"
+  ],
+  "helpText": "WRKPGM. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSRC",
+  "wrkOptions": {
+    "2": "CHGPGM",
+    "5": "DSPPGM"
+  }
+}

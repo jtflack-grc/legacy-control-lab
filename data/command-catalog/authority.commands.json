@@ -1,0 +1,454 @@
+[
+  {
+    "name": "ADDAUTLE",
+    "displayName": "Add Authority LE",
+    "category": "authority",
+    "groupMenu": "CMDAUT",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "ADDAUTLE. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "ADDAUTLE",
+    "handler": "addAuthorizationListEntry",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGAUT",
+    "displayName": "Change Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "changeIfsAuthority",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "pathName",
+        "required": true,
+        "label": "Object path"
+      },
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": false
+      },
+      {
+        "name": "DTAAUT",
+        "type": "authorityName",
+        "required": false,
+        "label": "Data authority"
+      }
+    ],
+    "helpText": "Changes data authority for an IFS object path in the lab runtime.",
+    "examples": [
+      "CHGAUT OBJ('/claims/claimmst.sym') DTAAUT(*RX)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDIFS",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGAUTL",
+    "displayName": "Change Authority L",
+    "category": "authority",
+    "groupMenu": "CMDAUT",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CHGAUTL. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CHGAUTL",
+    "handler": "changeAuthorizationList",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGOWN",
+    "displayName": "Change Object Owner",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Change Object Owner. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CRTAUTL",
+    "displayName": "Create Authority L",
+    "category": "authority",
+    "groupMenu": "CMDAUT",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CRTAUTL. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CRTAUTL",
+    "handler": "createAuthorizationList",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTAUTL",
+    "displayName": "Delete Authority L",
+    "category": "authority",
+    "groupMenu": "CMDAUT",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DLTAUTL. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DLTAUTL",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTOBJAUT",
+    "displayName": "Delete Object Authority",
+    "category": "authority",
+    "groupMenu": "CMDAUT",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DLTOBJAUT. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DLTOBJAUT",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPAUT",
+    "displayName": "Display Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*AUDITVIEW"
+    ],
+    "handler": "displayAuthority",
+    "parameters": [
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": false,
+        "label": "User profile"
+      }
+    ],
+    "helpText": "Display Authority. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "DSPAUT USER(BACKUPADM)"
+    ],
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPAUTL",
+    "displayName": "Display Authorization List",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayAuthorizationList",
+    "helpText": "Display Authorization List. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "DSPAUTL AUTL(PAYROLL)"
+    ],
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPAUTUSR",
+    "displayName": "Display Authorized Users",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Display Authorized Users. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "DSPOBJAUT",
+    "displayName": "Display Object Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*OBJEXIST"
+    ],
+    "handler": "displayObjectAuthority",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true,
+        "label": "Object"
+      },
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": false,
+        "label": "User"
+      }
+    ],
+    "helpText": "Displays public and private authority for an object. Key evidence for excessive authority findings.",
+    "examples": [
+      "DSPOBJAUT OBJ(PAYROLL/PAYMST)",
+      "DSPOBJAUT OBJ(PAYROLL/PAYMST) USER(BACKUPADM)"
+    ],
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPPGMADP",
+    "displayName": "Display Program Adopted Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Display Program Adopted Authority — cataloged in Legacy Control Lab.",
+    "handler": "displayProgramAdopt",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "EDTAUT",
+    "displayName": "Edit Authority",
+    "category": "authority",
+    "groupMenu": "CMDAUT",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "EDTAUT. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "EDTAUT",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "EDTOBJAUT",
+    "displayName": "Edit Object Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*OBJMGT"
+    ],
+    "handler": "editObjectAuthority",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true,
+        "label": "Object"
+      }
+    ],
+    "helpText": "Opens the object authority editor for a library object. Grants or revokes *USE/*CHANGE/*ALL style authority.",
+    "examples": [
+      "EDTOBJAUT OBJ(PAYROLL/PAYMST)"
+    ],
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "GRTOBJAUT",
+    "displayName": "Grant Object Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*OBJMGT"
+    ],
+    "handler": "grantObjectAuthority",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      },
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": true
+      },
+      {
+        "name": "AUT",
+        "type": "authorityValue",
+        "required": true
+      }
+    ],
+    "helpText": "Grant Object Authority. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "GRTOBJAUT OBJ(PAYROLL/PAYMST) USER(APCLERK) AUT(*USE)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RMVAUTLE",
+    "displayName": "Remove Authority LE",
+    "category": "authority",
+    "groupMenu": "CMDAUT",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "RMVAUTLE. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "RMVAUTLE",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RVKOBJAUT",
+    "displayName": "Revoke Object Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*OBJMGT"
+    ],
+    "handler": "revokeObjectAuthority",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      },
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": true
+      }
+    ],
+    "helpText": "Revoke Object Authority. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "RVKOBJAUT OBJ(PAYROLL/PAYMST) USER(APCLERK) AUT(*USE)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKAUT",
+    "displayName": "Work with Authority",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "workWithAuthority",
+    "helpText": "Work with special authorities assigned to user profiles in the scenario.",
+    "examples": [
+      "WRKAUT"
+    ],
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKAUTL",
+    "displayName": "Work with Authorization Lists",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "workAuthorizationLists",
+    "helpText": "Work with Authorization Lists. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "WRKAUTL"
+    ],
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKOBJOWN",
+    "displayName": "Work with Objects by Owner",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "workWithObjectOwner",
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": false,
+        "label": "User profile",
+        "supportsSpecialValues": ["*CURRENT"]
+      },
+      {
+        "name": "OBJTYPE",
+        "type": "objectType",
+        "required": false,
+        "label": "Object type",
+        "supportsSpecialValues": ["*ALL"]
+      }
+    ],
+    "helpText": "Lists objects owned by a user profile. Option 9 with NEWOWN() changes ownership; option 5 displays object authority.",
+    "examples": [
+      "WRKOBJOWN USRPRF(PAYADMIN)",
+      "WRKOBJOWN USRPRF(QPGMR) OBJTYPE(*FILE)"
+    ],
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "EDTAUTL",
+    "displayName": "Edit Authorization List",
+    "category": "authority",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "editAuthorizationList",
+    "parameters": [
+      {
+        "name": "AUTL",
+        "type": "name",
+        "required": true,
+        "label": "Authorization list"
+      }
+    ],
+    "helpText": "Edit users and authorities on an authorization list. Option 4 removes a user; F6 adds via ADDAUTLE.",
+    "examples": [
+      "EDTAUTL AUTL(PAYROLL)"
+    ],
+    "groupMenu": "CMDAUT",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

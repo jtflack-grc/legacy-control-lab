@@ -1,0 +1,13 @@
+{
+  "name": "CHGSECAUD",
+  "displayName": "Change Security Audit",
+  "category": "journal_audit",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgsecaud",
+  "parameters": [],
+  "examples": [],
+  "helpText": "Change Security Audit. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": true
+}

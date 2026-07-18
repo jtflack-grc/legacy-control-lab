@@ -1,0 +1,14 @@
+{
+  "name": "DSPSPLF",
+  "displayName": "Display Spooled File",
+  "category": "spool_print",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspsplf",
+  "parameters": [],
+  "examples": [
+    "DSPSPLF FILE(QAUDRPT)"
+  ],
+  "helpText": "Displays attributes of a spooled file such as user, create date, and output queue.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSPL"
+}

@@ -1,0 +1,15 @@
+{
+  "screenId": "MONJOB",
+  "category": "job_batch",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "TITLE",
+    "BODY"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

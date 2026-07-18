@@ -1,0 +1,14 @@
+{
+  "missionId": "CLAIMS-007",
+  "title": "Can You Red Team IBM i Boundaries?",
+  "persona": "Adversarial simulation / internal audit",
+  "systemName": "CLAIMS400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "objective": "Simulate a limited insider (APCLERK) attempting privilege escalation and document boundary controls as findings — not exploits.",
+  "mode": "investigation_only",
+  "allowedMutation": false,
+  "resetOnStart": true,
+  "sourceArticle": "Red Team an IBM i",
+  "frameworks": ["Red team", "LMTCPB", "Privilege boundary"]
+}

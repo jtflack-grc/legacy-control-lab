@@ -1,0 +1,14 @@
+{
+  "name": "DSPSTCONC",
+  "displayName": "Display Service Tools Concept",
+  "category": "security",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspstconc",
+  "parameters": [],
+  "examples": [
+    "DSPSTCONC"
+  ],
+  "helpText": "Explains QSECOFR profile vs service tools user ID (synthetic lab).",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSEC"
+}

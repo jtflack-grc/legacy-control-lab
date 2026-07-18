@@ -1,0 +1,14 @@
+{
+  "missionId": "CLAIMS-009",
+  "title": "Can You See Tail Risk on the Green Screen?",
+  "persona": "IT auditor / resilience analyst",
+  "systemName": "CLAIMS400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "objective": "Determine whether batch failures, held jobs, and operator signals on CLAIMS400 are visible before they become availability incidents — not hidden behind uptime dashboards.",
+  "mode": "investigation_only",
+  "allowedMutation": false,
+  "resetOnStart": true,
+  "sourceArticle": "Black Swan, Green Screen",
+  "frameworks": ["ISO 27001 A.17.1", "Availability", "Tail risk", "Operator response"]
+}

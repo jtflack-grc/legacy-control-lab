@@ -1,0 +1,18 @@
+{
+  "name": "WRKRANGE",
+  "displayName": "Work with Range",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkrange",
+  "parameters": [],
+  "examples": [
+    "WRKRANGE",
+    "GO RANGE"
+  ],
+  "helpText": "Work with systems in the Legacy Control Lab range. Select CLAIMS400, COUNTY400, or HOSPITAL400.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB",
+  "wrkOptions": {
+    "2": "GO"
+  }
+}

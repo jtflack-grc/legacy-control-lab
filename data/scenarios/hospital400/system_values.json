@@ -1,0 +1,122 @@
+[
+  {
+    "name": "QSECURITY",
+    "value": "40",
+    "category": "Security",
+    "description": "System security level"
+  },
+  {
+    "name": "QAUDCTL",
+    "value": "*AUDLVL *OBJAUD",
+    "category": "Audit",
+    "description": "Audit control"
+  },
+  {
+    "name": "QAUDLVL",
+    "value": "*AUTFAIL *PGMFAIL *SECURITY",
+    "category": "Audit",
+    "description": "Audit level"
+  },
+  {
+    "name": "QCRTAUT",
+    "value": "*CHANGE",
+    "category": "Authority",
+    "description": "Create authority"
+  },
+  {
+    "name": "QMAXSIGN",
+    "value": "3",
+    "category": "Security",
+    "description": "Maximum sign-on attempts"
+  },
+  {
+    "name": "QPWDEXPITV",
+    "value": "90",
+    "category": "Security",
+    "description": "Password expiration interval"
+  },
+  {
+    "name": "QLMTSECOFR",
+    "value": "0",
+    "category": "Security",
+    "description": "Limit security officer access"
+  },
+  {
+    "name": "QALWOBJRST",
+    "value": "*ALL",
+    "category": "Security",
+    "description": "Allow object restore"
+  },
+  {
+    "name": "QRMTSIGN",
+    "value": "*VERIFY",
+    "category": "Security",
+    "description": "Remote sign-on control"
+  },
+  {
+    "name": "QAUDLVL2",
+    "value": "*NONE",
+    "category": "Audit",
+    "description": "Secondary audit level"
+  },
+  {
+    "name": "QVFYOBJRST",
+    "value": "*ALL",
+    "category": "Security",
+    "description": "Verify object on restore"
+  },
+  {
+    "name": "QPWDRULES",
+    "value": "*REQANY3",
+    "category": "Security",
+    "description": "Password rules"
+  },
+  {
+    "name": "QUSEADPAUT",
+    "value": "*NO",
+    "category": "Security",
+    "description": "Use adopted authority"
+  },
+  {
+    "name": "QRETSVRSEC",
+    "value": "*YES",
+    "category": "Security",
+    "description": "Retain server security"
+  },
+  {
+    "name": "QAUTOCFG",
+    "value": "*YES",
+    "category": "Network",
+    "description": "Autoconfigure devices"
+  },
+  {
+    "name": "QIPLDATTIM",
+    "value": "*NONE",
+    "category": "Network",
+    "description": "IPL date and time"
+  },
+  {
+    "name": "QSTRUPPGM",
+    "value": "QSTRUP",
+    "category": "System",
+    "description": "Startup program"
+  },
+  {
+    "name": "QINACTITV",
+    "value": "30",
+    "category": "System",
+    "description": "Inactivity interval (minutes)"
+  },
+  {
+    "name": "QINACTMSGQ",
+    "value": "*DSCJOB",
+    "category": "System",
+    "description": "Inactivity message queue action"
+  },
+  {
+    "name": "QDSCJOBITV",
+    "value": "30",
+    "category": "System",
+    "description": "Disconnect job interval"
+  }
+]

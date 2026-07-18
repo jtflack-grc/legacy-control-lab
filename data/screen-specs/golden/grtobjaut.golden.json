@@ -1,0 +1,43 @@
+{
+  "screenId": "GRTOBJAUT",
+  "primarySource": "http://www.setgetweb.com/p/i5/grtobjaut.htm",
+  "sources": [
+    {
+      "title": "Grant Object Authority (GRTOBJAUT) — setgetweb",
+      "url": "http://www.setgetweb.com/p/i5/grtobjaut.htm",
+      "type": "command-reference"
+    },
+    {
+      "title": "IBM i 7.4 — GRTOBJAUT command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-grant-object-authority-grtobjaut",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i — Using the command prompt display (F4)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-using-command-prompt-display",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM Support — Creating and assigning an authorization list",
+      "url": "https://www.ibm.com/support/pages/creating-and-assigning-authorization-list",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": "              Grant Object Authority (GRTOBJAUT)\n\nType choices, press Enter.\n\nObject . . . . . . . . . . . . . . . . . . . . > PAYROLL/PAYMST\nObject type . . . . . . . . . . . . . . . . . . > *FILE\nUsers . . . . . . . . . . . . . . . . . . . . . > APCLERK\nAuthority . . . . . . . . . . . . . . . . . . . > *USE\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Grant Object Authority (GRTOBJAUT)",
+    "Type choices, press Enter.",
+    "Object",
+    "Object type",
+    "Users",
+    "Authority",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "notes": "F4 prompt panel for GRTOBJAUT — OBJ, OBJTYPE, USER, AUT, AUTL parameters per Security Reference. F9 expands to all parameters; F24 shows additional PF keys.",
+  "auditNotes": "Grant path — auditors verify least privilege; denied GRTOBJAUT should produce QAUDJRN ENTTYP(AF). Lab scenario: APCLERK denied on PAYMST.",
+  "grcMapping": [
+    "Red Team boundary test",
+    "Clause 6 — access enforcement"
+  ]
+}

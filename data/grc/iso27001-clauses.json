@@ -1,0 +1,23 @@
+{
+  "seriesHub": "https://ibmireference.blogspot.com/search/label/IBM%20%22%28A%29i%20on%20GRC%20-%20ISO%2027001%22",
+  "hubPost": "https://ibmireference.blogspot.com/2025/10/ibm-i-on-grc-iso-27001.html",
+  "labPathsFile": "data/grc/iso27001-lab-paths.json",
+  "harvestStatus": "partial",
+  "harvestedAt": "2026-06-09",
+  "notes": "Shipped lab paths are in iso27001-lab-paths.json. Individual clause blog URLs still require manual harvest from the image-based index.",
+  "clauses": [
+    { "clause": "4", "title": "Context of the Organization", "labTheme": "Scope and interested parties", "status": "backlog" },
+    { "clause": "5", "title": "Leadership", "labTheme": "Profile ownership, policy alignment", "status": "backlog", "relatedMission": "CLAIMS-006" },
+    { "clause": "6", "title": "Planning", "labTheme": "Risk treatment on the partition", "status": "backlog", "relatedMission": "CLAIMS-004" },
+    { "clause": "7", "title": "Support", "labTheme": "Competence, awareness, documentation", "status": "backlog" },
+    { "clause": "8", "title": "Operation", "labTheme": "Operational controls on IBM i", "status": "backlog", "relatedMission": "CLAIMS-003" },
+    { "clause": "9", "title": "Performance evaluation", "labTheme": "Evidence coverage, audit of the audit", "status": "backlog" },
+    { "clause": "10", "title": "Improvement", "labTheme": "Findings with decision impact", "status": "shipped", "relatedMission": "CLAIMS-001" },
+    { "clause": "A.5.15", "title": "Access control", "labTheme": "WRKUSRPRF, DSPOBJAUT, privileged access", "status": "shipped", "relatedMission": "CLAIMS-001" },
+    { "clause": "A.8.15", "title": "Logging", "labTheme": "Detect and respond", "status": "shipped", "relatedMission": "CLAIMS-005" },
+    { "clause": "A.9.2.5", "title": "Review of user access rights", "labTheme": "Privileged access review", "status": "shipped", "relatedMission": "CLAIMS-001" },
+    { "clause": "A.9.2.6", "title": "Removal of access rights", "labTheme": "Offboarding hygiene", "status": "shipped", "relatedMission": "CLAIMS-002" },
+    { "clause": "A.12.4", "title": "Logging and monitoring", "labTheme": "SOC 2 CC7-style evidence", "status": "shipped", "relatedMission": "CLAIMS-008" },
+    { "clause": "A.17.1", "title": "Availability planning", "labTheme": "Batch tail risk, operator queue", "status": "shipped", "relatedMission": "CLAIMS-009" }
+  ]
+}

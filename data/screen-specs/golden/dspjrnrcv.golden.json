@@ -1,0 +1,34 @@
+{
+  "screenId": "DSPJRNRCV",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-journal-receiver-dspjrnrcv",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — DSPJRNRCV command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-journal-receiver-dspjrnrcv",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Journal management",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-journal",
+      "type": "ibm-cl-reference"
+    }
+  ],
+  "asciiPanel": " DSPJRNRCV                        Display Journal Receiver                CLAIMS400\n\n      Journal . . . . . . . . . . . . . . . . . . . : QSYS/QAUDJRN\n      Receiver . . . . . . . . . . . . . . . . . . . : QAUDJRN\n      Library  . . . . . . . . . . . . . . . . . . . : QSYS\n      Status . . . . . . . . . . . . . . . . . . . : *ACTIVE\n      First entry  . . . . . . . . . . . . . . . . : 1\n      Last entry . . . . . . . . . . . . . . . . . . : 1842\n      Receiver threshold . . . . . . . . . . . . . . : 1000000\n\nF3=Exit   F12=Cancel",
+  "requiredText": [
+    "Display Journal Receiver",
+    "Journal",
+    "Receiver",
+    "First entry",
+    "Last entry",
+    "F3=Exit"
+  ],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "notes": "Synthetic entry counts for training — receiver chain proof requires saved receivers on production.",
+  "auditNotes": "Receiver chain proof — first/last entry range and threshold. Save receivers before DLTRCV on production.",
+  "grcMapping": [
+    "SOC2 CC7.2",
+    "COSO monitoring"
+  ]
+}

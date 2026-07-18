@@ -1,0 +1,22 @@
+{
+  "name": "DSPLNKSVR",
+  "displayName": "Display Link Server",
+  "category": "network_tcpip",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dsplnksvr",
+  "parameters": [
+    {
+      "name": "SERVER",
+      "label": "Server",
+      "required": true,
+      "type": "name",
+      "supportsSpecialValues": [
+        "*ALL"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "Display Link Server shows TCP/IP link server configuration for a selected service.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDTCP"
+}

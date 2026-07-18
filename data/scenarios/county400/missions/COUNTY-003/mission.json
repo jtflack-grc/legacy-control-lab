@@ -1,0 +1,10 @@
+{
+  "missionId": "COUNTY-003",
+  "title": "Batch Job Evidence Gap",
+  "persona": "IT auditor / operator",
+  "systemName": "COUNTY400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "mode": "investigate_and_remediate",
+  "allowedMutation": true
+}

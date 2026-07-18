@@ -1,0 +1,584 @@
+[
+  {
+    "name": "ADDJOBSCDE",
+    "displayName": "Add Job Schedule Entry",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Add Job Schedule Entry. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGJOB",
+    "displayName": "Change Job",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Change Job. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGJOBQ",
+    "displayName": "Change Job Q",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CHGJOBQ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CHGJOBQ",
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGJOBSCDE",
+    "displayName": "Change Job Schedule Entry",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Change Job Schedule Entry. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGSBSD",
+    "displayName": "Change Subsystem D",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CHGSBSD. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CHGSBSD",
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CRTJOBQ",
+    "displayName": "Create Job Q",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CRTJOBQ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CRTJOBQ",
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CRTSBSD",
+    "displayName": "Create Subsystem D",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CRTSBSD. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CRTSBSD",
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPJOB",
+    "displayName": "Display Job",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayJob",
+    "helpText": "Displays job attributes for the current job or a specified job name.",
+    "examples": [
+      "DSPJOB",
+      "DSPJOB JOB(123456/AUDIT/QPADEV0001)"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPJOBATTR",
+    "displayName": "Display Job Attributes",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayJobAttributes",
+    "helpText": "Displays extended job attributes for the current or specified job.",
+    "examples": [
+      "DSPJOBATTR",
+      "DSPJOBATTR JOB(230145/BACKUPADM/BACKUPJOB)"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPJOBLOG",
+    "displayName": "Display Job Log",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayJobLog",
+    "helpText": "Displays job log messages for interactive or batch jobs in the scenario.",
+    "examples": [
+      "DSPJOBLOG",
+      "DSPJOBLOG JOB(123456/AUDIT/QPADEV0001)"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPJOBSCD",
+    "displayName": "Display Job SCD",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPJOBSCD. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPJOBSCD",
+    "handler": "displayJobSchedule",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPJOBSCDE",
+    "displayName": "Display Job Schedule Entry",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Display Job Schedule Entry. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "displayJobSchedulerEntry",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "DSPJOBTBL",
+    "displayName": "Display Job TBL",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPJOBTBL. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPJOBTBL",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPSBSD",
+    "displayName": "Display Subsystem Description",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displaySubsystemDescription",
+    "helpText": "Display Subsystem Description. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "DSPSBSD SBS(QINTER)",
+      "DSPSBSD SBS(QBATCH)"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPSYSSTS",
+    "displayName": "Display System Status",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displaySystemStatus",
+    "helpText": "Displays system status including CPU, jobs, and ASP utilization.",
+    "examples": [
+      "DSPSYSSTS"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "ENDJOB",
+    "displayName": "End Job",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*JOBCTL"
+    ],
+    "handler": "endJob",
+    "mutatesState": true,
+    "helpText": "End Job. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "ENDJOB JOB(230220/BATCH/OLDVENDOR)"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "ENDSBS",
+    "displayName": "End Subsystem",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "End Subsystem. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogControl",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "HLDJOB",
+    "displayName": "Hold Job",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*JOBCTL"
+    ],
+    "handler": "holdJob",
+    "mutatesState": true,
+    "helpText": "Hold Job. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "HLDJOB JOB(230220/BATCH/OLDVENDOR)"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "HLDJOBSCDE",
+    "displayName": "Hold Job SCDE",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "HLDJOBSCDE. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "HLDJOBSCDE",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "MONJOB",
+    "displayName": "Monitor Job",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Monitor Job. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RLSJOB",
+    "displayName": "Release Job",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*JOBCTL"
+    ],
+    "handler": "releaseJob",
+    "mutatesState": true,
+    "helpText": "Release Job. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "RLSJOB JOB(230145/BATCH/BACKUPADM)"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RLSJOBSCDE",
+    "displayName": "Release Job SCDE",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "RLSJOBSCDE. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "RLSJOBSCDE",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RMVJOBSCDE",
+    "displayName": "Remove Job SCDE",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "RMVJOBSCDE. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "RMVJOBSCDE",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "SBMJOB",
+    "displayName": "Submit Job",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Submit Job. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "submitJob",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true
+  },
+  {
+    "name": "STRSBS",
+    "displayName": "Start Subsystem",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Start Subsystem. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogControl",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKACTJOB",
+    "displayName": "Work with Active Jobs",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workActiveJobs",
+    "helpText": "Work with Active Jobs. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "WRKACTJOB"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKDSKSTS",
+    "displayName": "Work with Disk Status",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workDiskStatus",
+    "helpText": "Work with disk units and ASP utilization. Option 5 displays disk unit detail.",
+    "examples": [
+      "WRKDSKSTS"
+    ],
+    "groupMenu": "CMDSYS",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKJOB",
+    "displayName": "Work with Job",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithJob",
+    "helpText": "Work with jobs for the current user or a specified job. Option 5 displays job detail.",
+    "examples": [
+      "WRKJOB",
+      "WRKJOB JOB(230145/BACKUPADM/BACKUPJOB)"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKJOBQ",
+    "displayName": "Work with Job Queue",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workJobQueue",
+    "helpText": "Work with job queues and jobs waiting to run in the active subsystem.",
+    "examples": [
+      "WRKJOBQ"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKJOBSCD",
+    "displayName": "Work with Job SCD",
+    "category": "job_batch",
+    "groupMenu": "CMDJOB",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "WRKJOBSCD. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "WRKJOBSCD",
+    "handler": "workJobSchedules",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "WRKJOBSCDE",
+    "displayName": "Work with Job Schedule Entries",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Work with Job Schedule Entries — cataloged in Legacy Control Lab.",
+    "handler": "workJobSchedulerEntries",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "WRKSBMJOB",
+    "displayName": "Work with Submitted Jobs",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workSubmittedJobs",
+    "helpText": "Work with Submitted Jobs. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "WRKSBMJOB"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKSBS",
+    "displayName": "Work with Subsystems",
+    "category": "job_batch",
+    "status": "implemented",
+    "handler": "workSubsystems",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "missionUse": [
+      "job_activity"
+    ],
+    "helpText": "Work with Subsystems. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "WRKSBS"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKSBSJOB",
+    "displayName": "Work with Subsystem Jobs",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workSubsystemJobs",
+    "helpText": "Work with Subsystem Jobs. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "WRKSBSJOB SBS(QINTER)",
+      "WRKSBSJOB SBS(QBATCH)"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKSYSSTS",
+    "displayName": "Work with System Status",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workSystemStatus",
+    "helpText": "Work with system status including CPU, jobs, and ASP utilization.",
+    "examples": [
+      "WRKSYSSTS"
+    ],
+    "groupMenu": "CMDSYS",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKSYSACT",
+    "displayName": "Work with System Activity",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workSystemActivity",
+    "helpText": "Work with system activity metrics including CPU, paging, and I/O rates.",
+    "examples": [
+      "WRKSYSACT"
+    ],
+    "groupMenu": "CMDSYS",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKUSRJOB",
+    "displayName": "Work with User Jobs",
+    "category": "job_batch",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workUserJobs",
+    "helpText": "Work with jobs for a user profile. Option 5 displays job detail.",
+    "examples": [
+      "WRKUSRJOB USER(BACKUPADM)",
+      "WRKUSRJOB"
+    ],
+    "groupMenu": "CMDJOB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

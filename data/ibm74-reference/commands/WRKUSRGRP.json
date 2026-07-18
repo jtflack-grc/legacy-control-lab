@@ -1,0 +1,18 @@
+{
+  "name": "WRKUSRGRP",
+  "displayName": "Work with User GRP",
+  "category": "user_profile",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkusrgrp",
+  "parameters": [],
+  "examples": [
+    "WRKUSRGRP"
+  ],
+  "helpText": "WRKUSRGRP. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDUSR",
+  "wrkOptions": {
+    "2": "CHGUSRGRP",
+    "5": "DSPUSRGRP"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "screenId": "DSPPRVSSN",
+  "primarySource": "https://www.ibm.com/docs/it/ssw_ibm_i_73/pdf/sc415302.pdf",
+  "sources": [
+    {
+      "title": "IBM i Security reference — QDSPSGNINF / Sign-on Information",
+      "url": "https://www.ibm.com/docs/it/ssw_ibm_i_73/pdf/sc415302.pdf",
+      "type": "redbook"
+    },
+    {
+      "title": "Micro Focus KB — QDSPSGNINF / DSPSGNINF",
+      "url": "https://support.microfocus.com/kb/doc.php?id=7730672",
+      "type": "vendor-documentation"
+    },
+    {
+      "title": "IBM Support — Displaying previous sign-on information",
+      "url": "https://www.ibm.com/support/pages/displaying-previous-sign-information",
+      "type": "ibm-support"
+    }
+  ],
+  "asciiPanel": " Sign-on Information\n System:\nPrevious sign-on . . . . . . . . . . . . . : 10/30/91 14:15:00\nPassword verifications not valid . . . . . : 3\nDays until password expires . . . . . . . : 5",
+  "requiredText": [
+    "Sign-on Information",
+    "System",
+    "Previous sign-on",
+    "Password verifications not valid",
+    "Days until password expires",
+    "Press Enter to continue"
+  ],
+  "notes": "Shown after sign-on when QDSPSGNINF=1 or user profile DSPSGNINF=*YES. Press Enter to continue to initial menu. Lab DSPPRVSSN command should mirror this information screen."
+}

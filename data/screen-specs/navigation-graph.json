@@ -1,0 +1,96 @@
+{
+  "updatedAt": "2026-06-13",
+  "description": "WRK* subfile option → target screenId for tier-A inventory. Targets must exist in inventory.json (handlers may be stubs). See docs/aaa-fidelity-roadmap.md Phase 4.",
+  "functionKeys": {
+    "F3": { "action": "exitMenu", "notes": "Return to previous menu or sign-off path" },
+    "F4": { "targetScreenId": "CMDPROMPT", "context": "commandLine", "notes": "Command/parameter prompt" },
+    "F9": { "action": "retrieve", "context": "commandLine" },
+    "F12": { "action": "cancel", "notes": "Cancel without save; return to caller screen" }
+  },
+  "menus": {
+    "AUDIT": {
+      "1": "WRKSYSVAL",
+      "2": "WRKUSRPRF",
+      "3": "WRKOBJ",
+      "4": "DSPJRN",
+      "5": "WRKACTJOB",
+      "6": "WRKSPLF",
+      "7": "DSPJOBLOG",
+      "8": "WRKFINDING",
+      "11": "SUBMITMSN"
+    }
+  },
+  "screens": {
+    "WRKUSRPRF": {
+      "options": {
+        "2": "CHGUSRPRF",
+        "5": "DSPUSRPRF",
+        "8": "DSPAUT"
+      }
+    },
+    "WRKSYSVAL": {
+      "options": {
+        "2": "CHGSYSVAL",
+        "5": "DSPSYSVAL"
+      }
+    },
+    "WRKOBJ": {
+      "options": {
+        "2": "GRTOBJAUT",
+        "5": "DSPOBJD",
+        "8": "DSPOBJAUT"
+      }
+    },
+    "WRKACTJOB": {
+      "options": {
+        "5": "DSPJOB",
+        "6": "DSPJOBLOG"
+      }
+    },
+    "WRKSPLF": {
+      "options": {}
+    },
+    "WRKPTFGRP": {
+      "options": {
+        "5": "DSPPTF"
+      }
+    },
+    "WRKLIB": {
+      "options": {
+        "5": "DSPLIB"
+      }
+    },
+    "WRKLNK": {
+      "options": {}
+    },
+    "WRKJOBSCDE": {
+      "options": {
+        "5": "DSPJOBSCDE"
+      },
+      "notes": "Option 5 → DSPJOBSCDE detail panel (tier B catalog screen)"
+    },
+    "WRKAUTL": {
+      "options": {
+        "5": "DSPAUTL"
+      }
+    },
+    "WRKOBJOWN": {
+      "options": {
+        "2": "EDTOBJAUT",
+        "5": "DSPOBJAUT",
+        "8": "DSPOBJD"
+      }
+    },
+    "WRKFINDING": {
+      "options": {
+        "2": "SUBMITMSN"
+      }
+    },
+    "DSPJRN": {
+      "options": {
+        "5": "DSPJRN"
+      },
+      "notes": "Option 5 opens journal entry detail (same screenId, detail variant)"
+    }
+  }
+}

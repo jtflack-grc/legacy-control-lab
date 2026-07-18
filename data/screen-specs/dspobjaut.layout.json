@@ -1,0 +1,17 @@
+{
+  "screenId": "DSPOBJAUT",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "ibm-i-7.4-display-object-authority",
+  "requiredFields": ["OBJ", "LIB", "TYPE", "PUB", "OWN", "HDR"],
+  "requiredText": [
+    "DSPOBJAUT",
+    "Display Object Authority",
+    "PAYROLL",
+    "PAYMST",
+    "Public authority",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Evidence note", "Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "DSPOBJAUT_PAYMST" }
+}

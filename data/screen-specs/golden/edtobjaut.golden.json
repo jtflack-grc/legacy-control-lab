@@ -1,0 +1,41 @@
+{
+  "screenId": "EDTOBJAUT",
+  "primarySource": "http://www.setgetweb.com/p/i5/edtobjaut.htm",
+  "sources": [
+    {
+      "title": "Edit Object Authority (EDTOBJAUT) — setgetweb",
+      "url": "http://www.setgetweb.com/p/i5/edtobjaut.htm",
+      "type": "command-reference"
+    },
+    {
+      "title": "IBM i 7.4 — EDTOBJAUT command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-edit-object-authority-edtobjaut",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "Display Object Authority (DSPOBJAUT) — setgetweb panel family",
+      "url": "http://www.setgetweb.com/p/i5/dspobjaut.htm",
+      "type": "command-reference"
+    },
+    {
+      "title": "IBM Support — Creating and assigning an authorization list",
+      "url": "https://www.ibm.com/support/pages/creating-and-assigning-authorization-list",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": " EDTOBJAUT                        Edit Object Authority                   CLAIMS400\n\nObject . . . . . . . . . . . . . : PAYROLL/PAYMST\nType . . . . . . . . . . . . . . : *FILE\nPublic authority . . . . . . . . : *EXCLUDE\n\nOpt  User profile          Object authority\n     PAYADMIN              *ALL\n     APCLERK               *USE\n\nF3=Exit   F6=Grant   F12=Cancel",
+  "requiredText": [
+    "Edit Object Authority",
+    "Object . . . . . . . . . . . .",
+    "Public authority",
+    "User profile",
+    "Object authority",
+    "F6=Grant",
+    "F3=Exit"
+  ],
+  "columnHeaders": [
+    "User profile",
+    "Object authority"
+  ],
+  "notes": "Same header block as DSPOBJAUT with editable member list. F6/F7 invoke GRTOBJAUT/RVKOBJAUT prompt panels. Authorization list name shown when object secured by AUTL."
+}

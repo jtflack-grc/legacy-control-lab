@@ -1,0 +1,26 @@
+{
+  "name": "DSPJOB",
+  "displayName": "Display Job",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspjob",
+  "parameters": [
+    {
+      "name": "JOB",
+      "label": "Job",
+      "required": false,
+      "type": "jobName",
+      "supportsSpecialValues": [
+        "*ACTIVE",
+        "*JOB"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPJOB",
+    "DSPJOB JOB(123456/AUDIT/QPADEV0001)"
+  ],
+  "helpText": "Displays job attributes for the current job or a specified job name.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJOB"
+}

@@ -1,0 +1,6 @@
+[
+  { "program": "CLMMAINT", "library": "CLAIMS400", "file": "CLAIMMST", "fileLibrary": "CLAIMS400", "usage": "*READ *UPDATE" },
+  { "program": "PAYAUTHR", "library": "CLAIMS400", "file": "PAYMST", "fileLibrary": "PAYROLL", "usage": "*READ" },
+  { "program": "NIGHTRUN", "library": "CLAIMS400", "file": "CLAIMMST", "fileLibrary": "CLAIMS400", "usage": "*READ" },
+  { "program": "RUNAUDRPT", "library": "CLAIMS400", "file": "CLAIMMST", "fileLibrary": "CLAIMS400", "usage": "*READ" }
+]

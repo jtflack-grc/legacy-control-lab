@@ -1,0 +1,30 @@
+{
+  "screenId": "WRKSPLF",
+  "primarySource": "https://www.as400andsqltricks.com/2021/12/work-with-spooled-files-wrksplf-in-as400.html",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — WRKSPLF command",
+      "url": "https://www.ibm.com/docs/en/i/7.4?topic=ssw_ibm_i_74/cl/wrksplf.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "Work with Spooled Files panel (community, matches IBM panel)",
+      "url": "https://www.as400andsqltricks.com/2021/12/work-with-spooled-files-wrksplf-in-as400.html",
+      "type": "panel-capture"
+    }
+  ],
+  "asciiPanel": "                         Work with All Spooled Files                          \n                                                                              \nType options, press Enter.                                                    \n  1=Send   2=Change   3=Hold   4=Delete   5=Display   6=Release   7=Messages  \n  8=Attributes        9=Work with printing status                             \n                                                                              \n                             Device or                     Total     Cur\nOpt  File        User        Queue       User Data   Sts   Pages    Page  Copy",
+  "requiredText": [
+    "Work with",
+    "Spooled Files",
+    "Type options, press Enter.",
+    "1=Send",
+    "2=Change",
+    "5=Display",
+    "8=Attributes",
+    "Opt  File",
+    "User Data",
+    "Pages"
+  ],
+  "notes": "Title may read 'Work with All Spooled Files' or 'Work with Spooled Files' depending on SELECT/DSPFMT."
+}

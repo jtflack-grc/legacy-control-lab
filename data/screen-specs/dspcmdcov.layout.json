@@ -1,0 +1,19 @@
+{
+  "screenId": "DSPCMDCOV",
+  "tier": "B",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-command-coverage-dspcmdcov",
+  "goldenFile": "dspcmdcov.golden.json",
+  "promptVariant": "menu",
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "requiredText": [
+    "DSPCMDCOV",
+    "Display Command Coverage",
+    "Category",
+    "Cataloged",
+    "Selection or command",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu", "Evidence note"],
+  "render": { "type": "command", "command": "DSPCMDCOV", "user": "AUDIT" }
+}

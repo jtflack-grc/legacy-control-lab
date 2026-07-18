@@ -1,0 +1,42 @@
+{
+  "screenId": "WRKUSRPRF",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=information-changing-user-group",
+  "goldenFile": "wrkusrprf.golden.json",
+  "promptVariant": "subfile",
+  "functionKeys": "F3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "optionLine": { "row": 3, "col": 6, "valueContains": "Type options, press Enter." },
+  "commandLine": { "row": 22, "label": "Parameters or command" },
+  "attributeRules": [
+    { "fieldId": "HEADER", "row": 1, "col": 1, "attrByte": 34 },
+    { "fieldId": "OPTS", "row": 3, "col": 6, "attrByte": 58 },
+    { "fieldId": "COLHDR_USR", "row": 6, "col": 10, "attrByte": 34 },
+    { "fieldId": "USR0", "row": 7, "col": 10, "attrByte": 32 }
+  ],
+  "requiredText": [
+    "WRKUSRPRF",
+    "Work with User Profiles",
+    "Type options, press Enter.",
+    "5=Display user profile",
+    "12=Work with objects by user",
+    "Parameters or command",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "forbiddenText": ["Evidence note", "Welcome!", "mission menu"],
+  "fieldRules": [
+    { "id": "OPT0", "row": 7, "col": 6 },
+    { "id": "USR0", "col": 10 },
+    { "id": "COLHDR_USR", "row": 6, "valueContains": "Profile" }
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 7,
+    "lastDataRow": 13,
+    "commandLineRow": 22,
+    "optionIdPattern": "^OPT\\d+$",
+    "pagingKeys": ["F7", "F8"]
+  },
+  "render": { "type": "sample", "sample": "WRKUSRPRF" }
+}

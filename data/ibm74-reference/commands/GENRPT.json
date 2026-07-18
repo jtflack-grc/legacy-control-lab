@@ -1,0 +1,27 @@
+{
+  "name": "GENRPT",
+  "displayName": "Generate Report",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-genrpt",
+  "parameters": [
+    {
+      "name": "TYPE",
+      "label": "Report type",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "*CAMPAIGN",
+        "*EXEC",
+        "*PRIV"
+      ]
+    }
+  ],
+  "examples": [
+    "GENRPT TYPE(*CAMPAIGN)",
+    "GENRPT TYPE(*EXEC)"
+  ],
+  "helpText": "Generates campaign or executive summary reports to data/reports/.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

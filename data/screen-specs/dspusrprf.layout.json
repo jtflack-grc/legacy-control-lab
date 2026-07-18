@@ -1,0 +1,32 @@
+{
+  "screenId": "DSPUSRPRF",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "ibm-i-7.4-display-user-profile",
+  "promptVariant": "detail",
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "attributeRules": [
+    { "fieldId": "HEADER", "row": 1, "col": 1, "attrByte": 34 },
+    { "fieldId": "USR_LBL", "row": 4, "col": 6, "attrByte": 32 },
+    { "fieldId": "USR", "row": 4, "col": 47, "attrByte": 32 }
+  ],
+  "requiredFields": ["USR", "STS", "CLS", "SPC", "GRP", "MENU", "SIGNON", "TXT", "OWNER", "JOBD"],
+  "requiredText": [
+    "DSPUSRPRF",
+    "Display User Profile",
+    "User profile",
+    "Special authority",
+    "Previous sign-on",
+    "Job description",
+    "Owner",
+    "Data owner",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Evidence note", "Welcome!", "mission menu", "governance training"],
+  "fieldRules": [
+    { "id": "USR_LBL", "col": 6, "valueContains": "User profile" },
+    { "id": "USR_LBL", "valueContains": ":" },
+    { "id": "USR", "col": 47 }
+  ],
+  "render": { "type": "sample", "sample": "DSPUSRPRF_OLDVENDOR" }
+}

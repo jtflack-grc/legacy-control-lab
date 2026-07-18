@@ -1,0 +1,27 @@
+{
+  "name": "ADDLIBLE",
+  "displayName": "Add Library List Entry",
+  "category": "library_object",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-addlible",
+  "parameters": [
+    {
+      "name": "LIB",
+      "label": "Library",
+      "required": true,
+      "type": "libraryName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB",
+        "*USRLIBL"
+      ]
+    }
+  ],
+  "examples": [
+    "ADDLIBLE LIB(CLAIMS400)",
+    "ADDLIBLE LIB(PAYROLL) POSITION(*LAST)"
+  ],
+  "helpText": "Adds a library to the user portion of the library list for the current session.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLIB"
+}

@@ -1,0 +1,250 @@
+[
+  {
+    "name": "ANZDFTPWD",
+    "displayName": "Analyze Default Passwords",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "analyzeDefaultPasswords",
+    "helpText": "Analyzes user profiles that still use default passwords. Security hygiene evidence command.",
+    "examples": [
+      "ANZDFTPWD"
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "ANZPRFACT",
+    "displayName": "Analyze Profile Attributes",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "analyzeProfileAttributes",
+    "helpText": "Analyzes profile attributes against common hardening checks such as inactive profiles and special authorities. Use INACT(n) to list dormant accounts.",
+    "examples": [
+      "ANZPRFACT",
+      "ANZPRFACT INACT(90)"
+    ],
+    "parameters": [
+      {
+        "name": "INACT",
+        "type": "number",
+        "required": false
+      }
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGACTPRFL",
+    "displayName": "Change Activity Profile List",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "changeActivityProfileList",
+    "helpText": "Marks a user profile as active for inactive-account analysis so ANZPRFACT INACT sweeps skip it.",
+    "examples": [
+      "CHGACTPRFL USRPRF(BACKUPADM) STATUS(*ACTIVE)"
+    ],
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": true
+      },
+      {
+        "name": "STATUS",
+        "type": "profileStatus",
+        "required": true,
+        "supportsSpecialValues": [
+          "*ACTIVE"
+        ]
+      }
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Lab stores exempt flag on user profile for inactive sweep exercises."
+  },
+  {
+    "name": "CHGSECA",
+    "displayName": "Change Security Attributes",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "changeSecurityAttributes",
+    "helpText": "Security attribute guidance screen — use WRKSYSVAL/CHGSYSVAL for value changes in the lab.",
+    "examples": [
+      "CHGSECA"
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGUSRAUD",
+    "displayName": "Change User Audit",
+    "category": "security",
+    "groupMenu": "CMDSEC",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "displayUserAudit",
+    "helpText": "Displays user audit levels. Profile audit changes are read-only in this lab.",
+    "examples": [
+      "CHGUSRAUD USRPRF(BACKUPADM)"
+    ],
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Display-only in lab — profile audit level changes are not persisted."
+  },
+  {
+    "name": "DSPSECA",
+    "displayName": "Display Security Attributes",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "displaySecurityAttributes",
+    "helpText": "Displays system security attributes including QSECURITY level and audit settings summary.",
+    "examples": [
+      "DSPSECA"
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "GO",
+    "displayName": "Go To Menu",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "goMenu",
+    "parameters": [
+      {
+        "name": "MENU",
+        "type": "menuName",
+        "required": false,
+        "label": "Menu or command group"
+      }
+    ],
+    "helpText": "Navigate to a menu or command group. Use GO CMDSEC, GO CMDJOB, GO RANGE, GO WORKSHOP, or GO AUDIT.",
+    "examples": [
+      "GO AUDIT",
+      "GO CMDSEC",
+      "GO CMDJOB",
+      "GO RANGE",
+      "GO WORKSHOP"
+    ],
+    "groupMenu": "CMDLAB",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RSTSECDTA",
+    "displayName": "Restore Security Data",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "restoreSecurityData",
+    "mutatesState": true,
+    "helpText": "Restore Security Data. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "RSTSECDTA"
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "SAVSECDTA",
+    "displayName": "Save Security Data",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "saveSecurityData",
+    "mutatesState": true,
+    "helpText": "Save Security Data. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "SAVSECDTA"
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPPRVSSN",
+    "displayName": "Display Sign-on Information",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayPrivilegedSession",
+    "helpText": "Display Privileged Session. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "DSPPRVSSN"
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPSTCONC",
+    "displayName": "Display Service Tools Concept",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayServiceToolsConcept",
+    "helpText": "Explains QSECOFR profile vs service tools user ID (synthetic lab).",
+    "examples": [
+      "DSPSTCONC"
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "SIGNOFF",
+    "displayName": "SIGNOFF",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "signOff",
+    "helpText": "Ends the current interactive session and returns to the sign-on screen.",
+    "examples": [
+      "SIGNOFF"
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

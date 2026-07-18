@@ -1,0 +1,31 @@
+{
+  "name": "DSPSYSVAL",
+  "displayName": "Display System Value",
+  "category": "system_value",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspsysval",
+  "parameters": [
+    {
+      "name": "SYSVAL",
+      "label": "System value",
+      "required": false,
+      "type": "systemValueName",
+      "supportsSpecialValues": [
+        "QSECURITY",
+        "QMAXSIGN",
+        "QAUDCTL",
+        "QINACTITV",
+        "QLMTDEVSSN",
+        "QPRTDEV",
+        "QASTLVL"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPSYSVAL SYSVAL(QSECURITY)",
+    "DSPSYSVAL SYSVAL(QAUDCTL)"
+  ],
+  "helpText": "Displays a system value such as QSECURITY or QMAXSIGN. Configuration evidence, not a control conclusion.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSYS"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "DSPEVID",
+  "displayName": "Display Evidence Coverage",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspevid",
+  "parameters": [],
+  "examples": [
+    "DSPEVID"
+  ],
+  "helpText": "Displays evidence coverage for the current mission attempt against required evidence types.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

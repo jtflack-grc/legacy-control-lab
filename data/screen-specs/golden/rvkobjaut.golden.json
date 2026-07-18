@@ -1,0 +1,33 @@
+{
+  "screenId": "RVKOBJAUT",
+  "primarySource": "http://www.setgetweb.com/p/i5/rvkobjaut.htm",
+  "sources": [
+    {
+      "title": "Revoke Object Authority (RVKOBJAUT) — setgetweb",
+      "url": "http://www.setgetweb.com/p/i5/rvkobjaut.htm",
+      "type": "command-reference"
+    },
+    {
+      "title": "IBM i 7.4 — RVKOBJAUT command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-revoke-object-authority-rvkobjaut",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i — Using the command prompt display (F4)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-using-command-prompt-display",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": "              Revoke Object Authority (RVKOBJAUT)\n\nType choices, press Enter.\n\nObject . . . . . . . . . . . . . . . . . . . . > PAYROLL/PAYMST\nObject type . . . . . . . . . . . . . . . . . . > *FILE\nUsers . . . . . . . . . . . . . . . . . . . . . > APCLERK\nAuthority . . . . . . . . . . . . . . . . . . . > *USE\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Revoke Object Authority (RVKOBJAUT)",
+    "Type choices, press Enter.",
+    "Object",
+    "Object type",
+    "Users",
+    "Authority",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "notes": "F4 prompt panel for RVKOBJAUT — mirror of GRTOBJAUT parameter layout. USER(*ALL) and AUTL parameters documented in Security Reference; revoking can leave users with more authority via AUTL."
+}

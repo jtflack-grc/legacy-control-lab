@@ -1,0 +1,14 @@
+{
+  "name": "WRKSYSACT",
+  "displayName": "Work with System Activity",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrksysact",
+  "parameters": [],
+  "examples": [
+    "WRKSYSACT"
+  ],
+  "helpText": "Work with system activity metrics including CPU, paging, and I/O rates.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSYS"
+}

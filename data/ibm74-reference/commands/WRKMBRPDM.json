@@ -1,0 +1,18 @@
+{
+  "name": "WRKMBRPDM",
+  "displayName": "Work with Members Using PDM",
+  "category": "source_pdm",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkmbrpdm",
+  "parameters": [],
+  "examples": [
+    "WRKMBRPDM FILE(CLAIMS400/QCLSRC)"
+  ],
+  "helpText": "Work with source file members using PDM. Option 5 displays member detail.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDPDM",
+  "wrkOptions": {
+    "2": "CHGPGM",
+    "5": "DSPPGM"
+  }
+}

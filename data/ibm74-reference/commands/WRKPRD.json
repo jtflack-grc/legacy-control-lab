@@ -1,0 +1,17 @@
+{
+  "name": "WRKPRD",
+  "displayName": "Work with Products",
+  "category": "ptf_license",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkprd",
+  "parameters": [],
+  "examples": [
+    "WRKPRD"
+  ],
+  "helpText": "Work with licensed products and option levels on the system.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDPTF",
+  "wrkOptions": {
+    "5": "DSPMSG"
+  }
+}

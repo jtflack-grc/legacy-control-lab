@@ -1,0 +1,17 @@
+{
+  "screenId": "EDTAUTL",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.5.0?topic=commands-authority-lists",
+  "requiredText": [
+    "EDTAUTL",
+    "Edit Authorization List",
+    "Authorization list",
+    "PAYADMIN",
+    "4=Remove",
+    "F6=Add",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "render": { "type": "command", "command": "EDTAUTL AUTL(PAYROLL)" }
+}

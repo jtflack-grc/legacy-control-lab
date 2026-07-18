@@ -1,0 +1,18 @@
+{
+  "screenId": "EDTOBJAUT",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-edit-object-authority-edtobjaut",
+  "requiredText": [
+    "EDTOBJAUT",
+    "Edit Object Authority",
+    "Object . . . . . . . . . . . .",
+    "PAYROLL",
+    "PAYMST",
+    "User profile",
+    "F6=Grant",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Evidence note", "Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "EDTOBJAUT_PAYMST" }
+}

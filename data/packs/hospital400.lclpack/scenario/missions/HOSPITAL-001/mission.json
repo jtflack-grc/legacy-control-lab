@@ -1,0 +1,10 @@
+{
+  "missionId": "HOSPITAL-001",
+  "title": "Sensitive Object Authority Review",
+  "persona": "IT auditor / GRC analyst",
+  "systemName": "HOSPITAL400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "mode": "investigate_and_remediate",
+  "allowedMutation": true
+}

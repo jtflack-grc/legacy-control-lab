@@ -1,0 +1,14 @@
+{
+  "name": "HELP",
+  "displayName": "Display Help",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-help",
+  "parameters": [],
+  "examples": [
+    "HELP"
+  ],
+  "helpText": "Alias for DSPHLP. Shows screen-level help and lab navigation tips for the active session.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

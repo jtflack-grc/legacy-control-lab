@@ -1,0 +1,15 @@
+{
+  "screenId": "SAVOBJ",
+  "category": "backup_restore",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "TITLE",
+    "BODY"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "screenId": "WRKLIB",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.3.0?topic=libraries-displaying-library-names-contents",
+  "goldenFile": "wrklib.golden.json",
+  "requiredText": [
+    "WRKLIB",
+    "Work with Libraries",
+    "Type options, press Enter.",
+    "1=Create",
+    "5=Display",
+    "ASP device",
+    "Library",
+    "Text",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 7,
+    "lastDataRow": 13,
+    "commandLineRow": 22,
+    "optionIdPattern": "^LOPT\\d+$"
+  },
+  "render": { "type": "command", "command": "WRKLIB", "user": "AUDIT" }
+}

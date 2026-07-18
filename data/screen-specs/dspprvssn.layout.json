@@ -1,0 +1,17 @@
+{
+  "screenId": "DSPPRVSSN",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/support/pages/displaying-previous-sign-information",
+  "goldenFile": "dspprvssn.golden.json",
+  "requiredText": [
+    "DSPPRVSSN",
+    "Sign-on Information",
+    "Previous sign-on",
+    "Password verifications not valid",
+    "Days until password expires",
+    "Press Enter to continue"
+  ],
+  "render": { "type": "sample", "sample": "DSPPRVSSN" }
+}

@@ -1,0 +1,85 @@
+{
+  "id": "clause-8",
+  "sourceFile": "sources/clause-8.excerpt.md",
+  "articleKey": "CLAIMS-003",
+  "menuLabel": "ISO 27701 Clause 8 — operational privacy",
+  "quotes": [
+    "Operational privacy — object auth, file layout, batch jobs, IFS flows, and audit journal.",
+    "Privacy officers ask for data inventories. On IBM i, the inventory starts at DSPFD and DSPFFD, not a cloud console."
+  ],
+  "articleRefs": [{ "kind": "command", "ref": "DSPFFD" }],
+  "steps": [
+    {
+      "id": "dspobjaut",
+      "title": "Display object authority on PAYMST",
+      "command": "DSPOBJAUT OBJ(PAYROLL/PAYMST) OBJTYPE(*FILE)",
+      "commandMatch": "DSPOBJAUT.*PAYMST",
+      "screenHint": "DSPOBJAUT",
+      "excerptRefs": ["Operational privacy — object auth, file layout, batch jobs, IFS flows, and audit journal."],
+      "watchFor": ["Individual user authorities", "AP clerk profiles"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "dspfd",
+      "title": "Display file description — SSN field",
+      "command": "DSPFD FILE(PAYROLL/PAYMST)",
+      "commandMatch": "DSPFD.*PAYMST",
+      "screenHint": "DSPFD",
+      "excerptRefs": [
+        "Privacy officers ask for data inventories. On IBM i, the inventory starts at DSPFD and DSPFFD, not a cloud console.",
+        "ISO 27701 Clause 8: prove you know which native files store personal data before you attest processing controls."
+      ],
+      "watchFor": ["SSN field", "*PII marker"],
+      "exitHint": "Press F3 when done."
+    },
+    {
+      "id": "dspffd",
+      "title": "Field-level PII inventory — DSPFFD",
+      "command": "DSPFFD FILE(PAYROLL/PAYMST)",
+      "commandMatch": "DSPFFD.*PAYMST",
+      "screenHint": "DSPFFD",
+      "excerptRefs": [
+        "Privacy officers ask for data inventories. On IBM i, the inventory starts at DSPFD and DSPFFD, not a cloud console."
+      ],
+      "watchFor": ["SSN field", "Column types and lengths"],
+      "exitHint": "Option 5 on a field for detail; F3 when done."
+    },
+    {
+      "id": "wrkjobscde",
+      "title": "Work with job schedule entries",
+      "command": "WRKJOBSCDE",
+      "commandMatch": "^WRKJOBSCDE",
+      "screenHint": "WRKJOBSCDE",
+      "excerptRefs": [
+        "PII processing on IBM i is often batch: nightly close, weekly extracts, IFS exports. WRKJOBSCDE is where those schedules live."
+      ],
+      "watchFor": ["PAYIFSEXP", "PAYADMIN user"],
+      "exitHint": "Press F3 to leave WRKJOBSCDE."
+    },
+    {
+      "id": "wrklnk",
+      "title": "IFS payroll path",
+      "command": "WRKLNK OBJ('/payroll')",
+      "commandMatch": "WRKLNK.*payroll",
+      "screenHint": "WRKLNK",
+      "excerptRefs": [
+        "The Clause 8 article names IFS data flows. paymst.sym points at PAYROLL/PAYMST.",
+        "Privacy impact: native authority + IFS path + batch export = full data-flow evidence chain."
+      ],
+      "watchFor": ["paymst.sym", "SYMLNK target"],
+      "exitHint": "Press F3 when done."
+    },
+    {
+      "id": "dspjrn",
+      "title": "Display audit journal",
+      "command": "DSPJRN JRN(QSYS/QAUDJRN)",
+      "commandMatch": "DSPJRN",
+      "screenHint": "DSPJRN",
+      "excerptRefs": [
+        "Audit journal review is the bridge between IT operations and assurance. You are not done when you saw a screen. You ask what got logged when someone changed it."
+      ],
+      "watchFor": ["QAUDJRN entries", "Timestamps and codes"],
+      "exitHint": "Press F3 to exit the journal."
+    }
+  ]
+}

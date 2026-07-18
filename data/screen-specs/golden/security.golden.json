@@ -1,0 +1,31 @@
+{
+  "screenId": "SECURITY",
+  "primarySource": "https://www.securemyi.com/nl/articles/userclass2.html",
+  "sources": [
+    {
+      "title": "SecureMyi — GO SECURITY user class visibility",
+      "url": "https://www.securemyi.com/nl/articles/userclass2.html",
+      "type": "vendor-documentation"
+    },
+    {
+      "title": "IBM i 7.6 — Password control (GO SECURITY / CHGPWD)",
+      "url": "https://www.ibm.com/docs/en/i/7.6.0?topic=auditors-password-control",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i Security reference — Commands and menus appendix",
+      "url": "https://www.ibm.com/docs/it/ssw_ibm_i_73/pdf/sc415302.pdf",
+      "type": "redbook"
+    }
+  ],
+  "asciiPanel": "                              Security\n                                                     System:\nSelect one of the following:\n\n     1. Change your password\n     2. Work with user profiles\n     3. Work with authorization lists\n     4. Work with adopted authority\n     5. Work with security auditing\n     6. Work with system values\n     7. Display security audit journal\n     8. Security tools\n\nSelection or command\n===>",
+  "requiredText": [
+    "Security",
+    "Select one of the following:",
+    "1. Change your password",
+    "2. Work with user profiles",
+    "8. Security tools",
+    "Selection or command"
+  ],
+  "notes": "IBM stock SECURITY menu (QSYS/SECURITY). *USER class sees only option 1. Option 8 runs GO SECTOOLS (requires authority). Lab GO SECURITY menu in src/screen-runtime/screens/mainMenu.ts is an expanded training hub — align labels separately or document as synthetic."
+}

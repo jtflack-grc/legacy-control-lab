@@ -1,0 +1,19 @@
+{
+  "name": "WRKMSGQ",
+  "displayName": "Work with Message Queue",
+  "category": "message_queue",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkmsgq",
+  "parameters": [],
+  "examples": [
+    "WRKMSGQ"
+  ],
+  "helpText": "Work with message queues defined in the scenario.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDMSG",
+  "wrkOptions": {
+    "2": "CHGMSGQ",
+    "4": "RMVMSG",
+    "5": "DSPMSG"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "CHGMODE",
+  "displayName": "Change Guidance Mode",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgmode",
+  "parameters": [
+    {
+      "name": "MODE",
+      "label": "Guidance mode",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "COACH",
+        "TUTORIAL",
+        "EXPERT"
+      ]
+    }
+  ],
+  "examples": [
+    "CHGMODE MODE(COACH)",
+    "CHGMODE MODE(EXAM)"
+  ],
+  "helpText": "Changes guidance mode between COACH (hints enabled) and EXAM (hints suppressed) for the active mission.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

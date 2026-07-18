@@ -1,0 +1,22 @@
+{
+  "screenId": "DSPOBJD",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "ibm-i-7.4-display-object-description",
+  "requiredText": [
+    "DSPOBJD",
+    "Display Object Description",
+    "Object",
+    "Library",
+    "Object type",
+    "Owner",
+    "Public authority",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "fieldRules": [
+    { "id": "OBJ", "row": 4, "col": 47 },
+    { "id": "PUB", "row": 12, "col": 47 }
+  ],
+  "render": { "type": "sample", "sample": "DSPOBJD_PAYMST" }
+}

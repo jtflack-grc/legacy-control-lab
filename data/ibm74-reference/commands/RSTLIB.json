@@ -1,0 +1,28 @@
+{
+  "name": "RSTLIB",
+  "displayName": "Restore Library",
+  "category": "backup_restore",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-rstlib",
+  "parameters": [
+    {
+      "name": "LIB",
+      "label": "Library",
+      "required": true,
+      "type": "libraryName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB",
+        "*USRLIBL"
+      ]
+    }
+  ],
+  "examples": [
+    "RSTLIB LIB(PAYROLL)"
+  ],
+  "helpText": "Restores a library from a prior SAVLIB save in the current attempt.",
+  "requiresAuthority": [
+    "*SAVSYS"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

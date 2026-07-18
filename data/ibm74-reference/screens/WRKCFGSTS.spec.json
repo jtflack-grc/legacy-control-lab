@@ -1,0 +1,15 @@
+{
+  "screenId": "WRKCFGSTS",
+  "category": "network_tcpip",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "OPT",
+    "LIST"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

@@ -1,0 +1,29 @@
+services:
+  lab:
+    build: .
+    ports:
+      # Host stays loopback-only; inside the container we bind 0.0.0.0 so Docker can publish.
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:6080:6080"
+    volumes:
+      - lab-data:/app/data
+    environment:
+      HTTP_PORT: "8080"
+      WEBSOCKIFY_PORT: "6080"
+      TN5250_PORT: "8023"
+      # Required for Docker port publish (host mapping above still uses 127.0.0.1).
+      HTTP_BIND_HOST: "0.0.0.0"
+      WEBSOCKIFY_BIND_HOST: "0.0.0.0"
+      # TN5250 stays loopback — only websockify talks to it inside the container.
+      TN5250_BIND_HOST: "127.0.0.1"
+      DATABASE_PATH: /app/data/claims400.db
+      DEV_FRAME_LOG: "false"
+      SERVE_IRONTERM: "true"
+      SYSTEM_NAME: CLAIMS400
+      SCENARIO_ID: claims400
+      LCL_SHOW_QUICKSTART: "true"
+      LCL_QSH_MODE: "synthetic"
+    restart: unless-stopped
+
+volumes:
+  lab-data:

@@ -1,0 +1,47 @@
+{
+  "screenId": "WRKJRN",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-journal-wrkjrn",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — WRKJRN command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-journal-wrkjrn",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Journal management",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-journal",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "B",
+      "title": "IT Jungle — QAUDJRN administration",
+      "url": "https://www.itjungle.com/",
+      "type": "community-panel"
+    }
+  ],
+  "asciiPanel": " WRKJRN                           Work with Journals                      CLAIMS400\n\n      Type options, press Enter.\n        2=Change   5=Display\n\n      Opt   Journal      Library    Status\n      __    QAUDJRN          QSYS         *ACTIVE\n\n      Parameters or command\n      ===>\nF3=Exit   F5=Refresh   F12=Cancel",
+  "requiredText": [
+    "Work with Journals",
+    "2=Change",
+    "5=Display",
+    "QAUDJRN",
+    "Type options",
+    "F3=Exit",
+    "F5=Refresh"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "columnHeaders": [
+    "Opt",
+    "Journal",
+    "Library",
+    "Status"
+  ],
+  "notes": "Lab lists QSYS/QAUDJRN only. Option 2 → CHGJRN; option 5 → DSPJRN. Receiver rotation (CRTJRNRCV) is command-only — no live receiver chain in SQLite.",
+  "auditNotes": "Journal inventory — option 2 CHGJRN for receiver policy; option 5 DSPJRN for QAUDJRN entry review. Receiver rotation via CRTJRNRCV/DSPJRNRCV.",
+  "grcMapping": [
+    "SOC2 CC7.2",
+    "COSO CC7 — monitoring activities"
+  ]
+}

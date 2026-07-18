@@ -1,0 +1,15 @@
+{
+  "screenId": "DSPAUT",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-authority-dspaut",
+  "requiredText": [
+    "DSPAUT",
+    "Display Authority",
+    "User profile",
+    "Special authority",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "DSPAUT_BACKUPADM" }
+}

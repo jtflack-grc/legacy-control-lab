@@ -1,0 +1,5 @@
+{
+  "screenId": "DSPOBJAUT",
+  "requiredFields": ["OBJ", "LIB", "TYPE", "PUB", "OWN", "HDR"],
+  "bannedSubstrings": ["Evidence note", "Welcome!"]
+}

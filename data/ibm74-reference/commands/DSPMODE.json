@@ -1,0 +1,14 @@
+{
+  "name": "DSPMODE",
+  "displayName": "Display Guidance Mode",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspmode",
+  "parameters": [],
+  "examples": [
+    "DSPMODE"
+  ],
+  "helpText": "Displays the current guidance mode (COACH or EXAM) for the session.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

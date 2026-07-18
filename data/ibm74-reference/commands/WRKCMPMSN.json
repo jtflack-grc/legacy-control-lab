@@ -1,0 +1,14 @@
+{
+  "name": "WRKCMPMSN",
+  "displayName": "Work with Campaign Missions",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkcmpmsn",
+  "parameters": [],
+  "examples": [
+    "WRKCMPMSN CAMPAIGN(IBM-I-ACCESS-GOVERNANCE)"
+  ],
+  "helpText": "Work with missions in a campaign. Select a mission to start or review completion status.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

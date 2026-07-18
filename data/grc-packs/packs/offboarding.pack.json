@@ -1,0 +1,64 @@
+{
+  "id": "offboarding",
+  "sourceFile": "sources/offboarding.excerpt.md",
+  "articleKey": "CLAIMS-002",
+  "menuLabel": "i on GRC: Offboarding profiles",
+  "quotes": [
+    "Dormant vendor IDs and TPRM offboarding — run the commands from the article here.",
+    "Offboarding failures are identity failures. The profile object is the receipt auditors ask for when TPRM claims access was removed.",
+    "INACT(90) lists dormant profiles — tie to the Offboarding article path."
+  ],
+  "articleRefs": [],
+  "steps": [
+    {
+      "id": "wrkusrprf",
+      "title": "Work with user profiles",
+      "command": "WRKUSRPRF",
+      "commandMatch": "^WRKUSRPRF",
+      "screenHint": "WRKUSRPRF",
+      "excerptRefs": [
+        "Dormant vendor IDs and TPRM offboarding — run the commands from the article here."
+      ],
+      "watchFor": ["Column headers for user, status, class", "Option column on the left"],
+      "exitHint": "Press F3 to step back toward the menu."
+    },
+    {
+      "id": "dsp-oldvendor",
+      "title": "Display OLDVENDOR",
+      "command": "DSPUSRPRF USRPRF(OLDVENDOR)",
+      "commandMatch": "DSPUSRPRF.*OLDVENDOR",
+      "screenHint": "DSPUSRPRF",
+      "excerptRefs": [
+        "Offboarding failures are identity failures. The profile object is the receipt auditors ask for when TPRM claims access was removed.",
+        "Previous sign-on date, status *ENABLED, and owner fields on DSPUSRPRF are the IBM i evidence for dormant access."
+      ],
+      "watchFor": ["Status *ENABLED", "Previous sign-on 01/17/23", "Owner *NONE"],
+      "exitHint": "Press F3 to return to WRKUSRPRF."
+    },
+    {
+      "id": "anzprfact",
+      "title": "Analyze inactive profiles",
+      "command": "ANZPRFACT INACT(90)",
+      "commandMatch": "ANZPRFACT",
+      "screenHint": "ANZPRFACT",
+      "excerptRefs": [
+        "INACT(90) lists dormant profiles — tie to the Offboarding article path.",
+        "This is the scheduled hygiene step the Offboarding article describes — not just finding OLDVENDOR, but proving the sweep exists."
+      ],
+      "watchFor": ["OLDVENDOR on inactive list", "INACT threshold 90 days"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "outfile-export",
+      "title": "Export profile inventory",
+      "command": "DSPUSRPRF USRPRF(*ALL) TYPE(*BASIC) OUTPUT(*OUTFILE) OUTFILE(QGPL/USERS)",
+      "commandMatch": "DSPUSRPRF.*OUTPUT\\(\\*OUTFILE\\)",
+      "screenHint": "DSPUSRPRF",
+      "excerptRefs": [
+        "Offboarding failures are identity failures. The profile object is the receipt auditors ask for when TPRM claims access was removed."
+      ],
+      "watchFor": ["CPI9898 outfile confirmation", "RUNSQL qsys2.outfile_export preview"],
+      "exitHint": "Query QGPL/USERS with RUNSQL after export."
+    }
+  ]
+}

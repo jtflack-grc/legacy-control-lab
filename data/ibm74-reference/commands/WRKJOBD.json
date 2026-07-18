@@ -1,0 +1,30 @@
+{
+  "name": "WRKJOBD",
+  "displayName": "Work with Job D",
+  "category": "user_profile",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkjobd",
+  "parameters": [
+    {
+      "name": "JOBD",
+      "label": "JOBD",
+      "required": false,
+      "type": "name",
+      "supportsSpecialValues": [
+        "*USRPRF",
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [
+    "WRKJOBD"
+  ],
+  "helpText": "WRKJOBD. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDUSR",
+  "wrkOptions": {
+    "2": "CHGJOBD",
+    "5": "DSPJOBD"
+  }
+}

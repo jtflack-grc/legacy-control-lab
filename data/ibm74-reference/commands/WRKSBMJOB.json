@@ -1,0 +1,17 @@
+{
+  "name": "WRKSBMJOB",
+  "displayName": "Work with Submitted Jobs",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrksbmjob",
+  "parameters": [],
+  "examples": [
+    "WRKSBMJOB"
+  ],
+  "helpText": "Work with submitted batch jobs and their status.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJOB",
+  "wrkOptions": {
+    "5": "DSPJOB"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "RESETLAB",
+  "displayName": "Reset Lab Attempt",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-resetlab",
+  "parameters": [
+    {
+      "name": "MISSION",
+      "label": "MISSION",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": []
+    },
+    {
+      "name": "CONFIRM",
+      "label": "CONFIRM",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "*YES",
+        "*NO"
+      ]
+    }
+  ],
+  "examples": [
+    "RESETLAB CONFIRM(*YES)"
+  ],
+  "helpText": "Resets the current mission attempt and restores scenario baseline state for the active system.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

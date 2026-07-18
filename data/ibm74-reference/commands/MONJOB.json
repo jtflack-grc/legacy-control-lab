@@ -1,0 +1,11 @@
+{
+  "name": "MONJOB",
+  "displayName": "Monitor Job",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-monjob",
+  "parameters": [],
+  "examples": [],
+  "helpText": "Monitor Job. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true
+}

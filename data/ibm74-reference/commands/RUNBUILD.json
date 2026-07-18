@@ -1,0 +1,14 @@
+{
+  "name": "RUNBUILD",
+  "displayName": "Run Build Instructions",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-runbuild",
+  "parameters": [],
+  "examples": [
+    "RUNBUILD"
+  ],
+  "helpText": "Executes scripted build steps for workshop authoring. Used by scenario forge workflows.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

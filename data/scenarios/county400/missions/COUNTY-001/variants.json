@@ -1,0 +1,16 @@
+[
+  {
+    "variantId": "COUNTY-001-A",
+    "missionId": "COUNTY-001",
+    "title": "Public Records Access Review — Variant A",
+    "seed": 2001,
+    "riskPattern": "public_authority_exposure"
+  },
+  {
+    "variantId": "COUNTY-001-B",
+    "missionId": "COUNTY-001",
+    "title": "Public Records Access Review — Variant B",
+    "seed": 2002,
+    "riskPattern": "stale_vendor_account"
+  }
+]

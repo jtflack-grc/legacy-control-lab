@@ -1,0 +1,17 @@
+{
+  "scenarioId": "claims400",
+  "systemName": "CLAIMS400",
+  "name": "CLAIMS400",
+  "title": "Healthcare Claims IBM i Evidence Runtime",
+  "industry": "Healthcare",
+  "description": "Synthetic IBM i-style environment for privileged access, audit, authority, and operational evidence missions.",
+  "defaultMissionId": "CLAIMS-001",
+  "defaultUser": "AUDIT",
+  "defaultUserAlias": "AUDITOR01",
+  "defaultPassword": "TRAIN",
+  "defaultPasswordAlias": "TRAINING",
+  "defaultMenu": "AUDIT",
+  "currentLibrary": "*CRTDFT",
+  "realismMode": "dense",
+  "version": "0.5.1"
+}

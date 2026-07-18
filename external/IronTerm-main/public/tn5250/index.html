@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Legacy Control Lab</title>
+    <meta name="description"
+          content="Legacy Control Lab — browser 5250 terminal for governance training. Connect via the local WebSocket bridge.">
+    <meta name="author" content="Alexandre Bencz">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000">
+    <link rel="canonical" href="https://ironterm.bencz.cc/tn5250/">
+
+    <link rel="icon" type="image/svg+xml"
+          href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23050a05'/><text x='32' y='46' font-family='monospace' font-size='38' font-weight='bold' fill='%2333ff33' text-anchor='middle'>IT</text></svg>">
+
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="Legacy Control Lab">
+    <meta property="og:title"       content="Legacy Control Lab — 5250 Terminal">
+    <meta property="og:description" content="Browser-side IBM 5250 terminal for the Legacy Control Lab training environment.">
+    <meta property="og:url"         content="https://ironterm.bencz.cc/tn5250/">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<div id="toolbar">
+    <a class="back-link" href="/lab/" title="Coach + terminal">← Legacy Control Lab</a>
+    <select id="profiles" class="profiles-select"
+            title="Saved connection profiles"></select>
+    <button id="profileSave"   class="profile-btn" title="Save current settings as profile">＋</button>
+    <button id="profileDelete" class="profile-btn" title="Delete selected profile">−</button>
+    <input id="bridge" type="text" placeholder="wss://bridge.example/tcp?port={port}"
+           value="ws://localhost:6080/" autocomplete="off"
+           title="WebSocket bridge URL (ws:// or wss://). {port} is substituted with the port field.">
+    <input id="port" type="number" placeholder="port" value="23" min="1" max="65535"
+           title="IBM i TCP port (substituted into the bridge URL via {port})">
+    <select id="model" title="Terminal model / size (native 5250 console types)">
+        <optgroup label="24×80">
+            <option value="5251-11">IBM-5251-11  ·  mono</option>
+            <option value="5291-1">IBM-5291-1   ·  mono</option>
+            <option value="5292-2" selected>IBM-5292-2   ·  color · ENPTUI</option>
+            <option value="3196-A1">IBM-3196-A1 ·  mono</option>
+            <option value="3179-2">IBM-3179-2   ·  color</option>
+        </optgroup>
+        <optgroup label="27×132">
+            <option value="3180-2">IBM-3180-2   ·  mono</option>
+            <option value="3477-FC">IBM-3477-FC ·  color</option>
+            <option value="3477-FG">IBM-3477-FG ·  mono</option>
+        </optgroup>
+    </select>
+    <select id="codePage" title="EBCDIC code page (IBM i native)">
+        <option value="CP037" selected>CP037 - US English</option>
+    </select>
+    <input id="devname" type="text" placeholder="device" maxlength="10"
+           title="DEVNAME (RFC 4777) - workstation name negotiated with the IBM i">
+    <input id="user" type="text" placeholder="USER (optional)" autocomplete="off"
+           title="Optional bypass-signon user profile (RFC 4777). Leave empty to see the standard signon screen.">
+    <input id="password" type="password" placeholder="password (optional)" autocomplete="off"
+           title="Optional bypass-signon password. Will be sent only when USER is filled. Cleared on connect.">
+    <button id="connect">Connect</button>
+    <button id="disconnect" disabled>Disconnect</button>
+
+    <div class="aid-bar">
+        <button data-aid="Enter">Enter</button>
+        <button data-aid="Clear">Clear</button>
+        <button data-aid="Help">Help</button>
+        <button data-aid="RollUp" title="Page Down">⇩</button>
+        <button data-aid="RollDown" title="Page Up">⇧</button>
+        <button data-aid="PF1">PF1</button>
+        <button data-aid="PF2">PF2</button>
+        <button data-aid="PF3">PF3</button>
+        <button data-aid="PF4">PF4</button>
+        <button data-aid="PF5">PF5</button>
+        <button data-aid="PF6">PF6</button>
+        <button data-aid="PF7">PF7</button>
+        <button data-aid="PF8">PF8</button>
+        <button data-aid="PF9">PF9</button>
+        <button data-aid="PF10">PF10</button>
+        <button data-aid="PF11">PF11</button>
+        <button data-aid="PF12">PF12</button>
+    </div>
+
+    <span class="hint" title="F1-F12 = PF1-12, Shift+F1-F12 = PF13-24, PgUp/PgDn = Roll">F#·Shift+F#·PgUp/Dn</span>
+    <span id="status">disconnected</span>
+</div>
+
+<div class="terminal-stage">
+    <canvas id="terminal" tabindex="0" aria-label="5250 terminal"></canvas>
+    <div id="nvt" class="nvt-overlay hidden" tabindex="0"
+         aria-label="NVT (telnet/ASCII) banner"></div>
+</div>
+
+<!-- 5250 Operator Information Area -->
+<div id="oia" class="oia" role="status" aria-live="polite">
+    <span id="oiaConn"   class="oia-cell oia-conn"   title="Connection state">●</span>
+    <span id="oiaSys"    class="oia-cell oia-sys"    title="System / 5250 state">SYS</span>
+    <span id="oiaLock"   class="oia-cell oia-lock"   title="Keyboard">▢</span>
+    <span id="oiaInsert" class="oia-cell oia-insert" title="Insert mode">·</span>
+    <span id="oiaMsg"    class="oia-cell oia-msg"    title="Message waiting">·</span>
+    <span id="oiaAlarm"  class="oia-cell oia-alarm"  title="Alarm">·</span>
+    <span class="oia-spacer"></span>
+    <span id="oiaModel"  class="oia-cell oia-model"  title="Negotiated terminal type">-</span>
+    <span id="oiaCursor" class="oia-cell oia-cursor" title="Cursor (row, column)">-</span>
+</div>
+
+<script>
+    // Pre-fill bridge URL / port from query params (deep-linkable / lab embed).
+    function applyLaunchQuery () {
+        var qs = new URLSearchParams(location.search);
+        var bridge = qs.get('bridge');
+        var port   = qs.get('port');
+        var model  = qs.get('model');
+        var changed = false;
+        function setField (id, value) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.value = value;
+            el.dispatchEvent(new Event('input',  { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+            changed = true;
+        }
+        if (bridge) setField('bridge', bridge);
+        if (port)   setField('port',   port);
+        if (model)  setField('model',  model);
+        if (qs.get('embed') === '1') {
+            document.body.classList.add('lab-embed');
+            document.body.setAttribute('tabindex', '-1');
+        }
+        if (changed && window.history && window.history.replaceState) {
+            window.history.replaceState({}, '', location.pathname);
+        }
+        if (qs.get('autoconnect') === '1') {
+            function tryConnect (attempt) {
+                var btn = document.getElementById('connect');
+                if (btn && !btn.disabled) {
+                    btn.click();
+                    return;
+                }
+                if (attempt < 20) setTimeout(function () { tryConnect(attempt + 1); }, 100);
+            }
+            window.addEventListener('load', function () { setTimeout(function () { tryConnect(0); }, 50); });
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyLaunchQuery);
+    } else {
+        applyLaunchQuery();
+    }
+
+    // Dynamic <title>.
+    window.addEventListener('load', function () {
+        var FALLBACK = 'Legacy Control Lab';
+        function hostFromBridge () {
+            var b = document.getElementById('bridge');
+            if (!b || !b.value) return '';
+            var v = b.value.trim().replace(/\{port\}/g, '0');
+            try { return new URL(v).host || ''; }
+            catch (e) { return v.replace(/^\w+:\/\//, '').split('/')[0]; }
+        }
+        function statePrefix () {
+            var s = document.getElementById('status');
+            if (!s) return '';
+            if (s.classList.contains('connected'))  return '● ';
+            if (s.classList.contains('connecting')) return '◌ ';
+            if (s.classList.contains('error'))      return '⚠ ';
+            return '';
+        }
+        function updateTitle () {
+            var host = hostFromBridge();
+            document.title = host
+                ? (statePrefix() + host + ' · Legacy Control Lab')
+                : FALLBACK;
+        }
+        updateTitle();
+        var bridge = document.getElementById('bridge');
+        if (bridge) {
+            bridge.addEventListener('input',  updateTitle);
+            bridge.addEventListener('change', updateTitle);
+        }
+        var status = document.getElementById('status');
+        if (status && window.MutationObserver) {
+            new MutationObserver(updateTitle).observe(status, {
+                attributes: true, attributeFilter: ['class'],
+                childList: true, characterData: true, subtree: true
+            });
+        }
+    });
+</script>
+
+<script type="module" src="src/main.js"></script>
+
+</body>
+</html>

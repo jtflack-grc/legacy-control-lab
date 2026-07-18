@@ -1,0 +1,62 @@
+[
+  {
+    "controlId": "LCL-AC-01",
+    "title": "Privileged access is restricted to approved users.",
+    "family": "Access Control",
+    "framework": "LCL Control Set",
+    "description": "Only approved users should hold privileged authorities on production objects.",
+    "evidenceTypes": ["user_profile", "special_authority"],
+    "relatedCommands": ["WRKUSRPRF", "DSPUSRPRF"],
+    "relatedFindings": ["excessive_privileged_access"]
+  },
+  {
+    "controlId": "LCL-AC-02",
+    "title": "Dormant privileged accounts are disabled or justified.",
+    "family": "Access Control",
+    "framework": "LCL Control Set",
+    "description": "Inactive privileged accounts should be disabled or supported by documented approval.",
+    "evidenceTypes": ["user_profile", "last_signon"],
+    "relatedCommands": ["WRKUSRPRF", "DSPUSRPRF", "DSPJRN"],
+    "relatedFindings": ["stale_privileged_profile"]
+  },
+  {
+    "controlId": "LCL-AC-03",
+    "title": "Public authority to sensitive objects is restricted.",
+    "family": "Access Control",
+    "framework": "LCL Control Set",
+    "description": "Sensitive files and programs should not grant excessive public authority.",
+    "evidenceTypes": ["object_authority", "public_authority"],
+    "relatedCommands": ["WRKOBJ", "DSPOBJAUT"],
+    "relatedFindings": ["excessive_public_authority"]
+  },
+  {
+    "controlId": "LCL-AU-01",
+    "title": "Audit logging is configured for security-relevant events.",
+    "family": "Audit",
+    "framework": "LCL Control Set",
+    "description": "Security-relevant events should be logged and retained.",
+    "evidenceTypes": ["audit_journal_entry", "system_value"],
+    "relatedCommands": ["DSPJRN", "DSPSYSVAL"],
+    "relatedFindings": ["audit_logging_gap"]
+  },
+  {
+    "controlId": "LCL-AU-02",
+    "title": "Audit evidence is reviewed and retained.",
+    "family": "Audit",
+    "framework": "LCL Control Set",
+    "description": "Audit evidence should be reviewed on a defined cadence.",
+    "evidenceTypes": ["audit_journal_entry", "access_review_record"],
+    "relatedCommands": ["DSPJRN", "DSPAUDJRNE"],
+    "relatedFindings": ["audit_review_gap"]
+  },
+  {
+    "controlId": "LCL-CM-01",
+    "title": "Security-relevant system values are configured and reviewed.",
+    "family": "Configuration Management",
+    "framework": "LCL Control Set",
+    "description": "System values affecting security should be reviewed and justified.",
+    "evidenceTypes": ["system_value"],
+    "relatedCommands": ["WRKSYSVAL", "DSPSYSVAL"],
+    "relatedFindings": ["weak_security_configuration"]
+  }
+]

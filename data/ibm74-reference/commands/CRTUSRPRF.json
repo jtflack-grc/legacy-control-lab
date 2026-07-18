@@ -1,0 +1,33 @@
+{
+  "name": "CRTUSRPRF",
+  "displayName": "Create User Profile",
+  "category": "user_profile",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-crtusrprf",
+  "parameters": [
+    {
+      "name": "USRPRF",
+      "label": "User profile",
+      "required": true,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*CURRENT"
+      ]
+    },
+    {
+      "name": "PASSWORD",
+      "label": "Password",
+      "required": false,
+      "type": "password",
+      "supportsSpecialValues": []
+    }
+  ],
+  "examples": [
+    "CRTUSRPRF USRPRF(TRAINER01) PASSWORD(TRAINING)"
+  ],
+  "helpText": "Creates a synthetic user profile for lab investigation and remediation exercises.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDUSR"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "WRKAUT",
+  "displayName": "Work with Authority",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkaut",
+  "parameters": [],
+  "examples": [
+    "WRKAUT"
+  ],
+  "helpText": "Work with special authorities assigned to user profiles in the scenario.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": false,
+  "groupMenu": "CMDAUT",
+  "wrkOptions": {
+    "2": "EDTOBJAUT",
+    "5": "DSPAUT",
+    "8": "EDTOBJAUT"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "WRKUSRPRF",
+  "displayName": "Work with User Profiles",
+  "category": "user_profile",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkusrprf",
+  "parameters": [
+    {
+      "name": "USRPRF",
+      "label": "USRPRF",
+      "required": false,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*CURRENT"
+      ]
+    }
+  ],
+  "examples": [
+    "WRKUSRPRF"
+  ],
+  "helpText": "Work with user profiles. Option 5 displays detail; option 8 shows object authority for the profile.",
+  "requiresAuthority": [
+    "*SECADM",
+    "*AUDITVIEW"
+  ],
+  "mutatesState": false,
+  "groupMenu": "CMDUSR",
+  "wrkOptions": {
+    "2": "CHGUSRPRF",
+    "5": "DSPUSRPRF",
+    "8": "DSPAUT"
+  }
+}

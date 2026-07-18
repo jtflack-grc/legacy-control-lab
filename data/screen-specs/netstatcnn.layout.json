@@ -1,0 +1,28 @@
+{
+  "screenId": "NETSTATCNN",
+  "tier": "B",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/ssw_ibm_i_73/pdf/rzakupdf.pdf",
+  "goldenFile": "netstat.golden.json",
+  "requiredText": [
+    "Work with TCP/IP Connection Status",
+    "Type options, press Enter.",
+    "3=Enable debug",
+    "4=End",
+    "5=Display details",
+    "8=Display jobs",
+    "Remote",
+    "Local",
+    "State",
+    "F5=Refresh"
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 7,
+    "lastDataRow": 13,
+    "commandLineRow": 22,
+    "optionIdPattern": "^NCNN\\d+$"
+  },
+  "render": { "type": "command", "command": "NETSTAT OPTION(*CNN)", "user": "AUDIT" }
+}

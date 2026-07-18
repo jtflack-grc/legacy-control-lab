@@ -1,0 +1,24 @@
+{
+  "screenId": "WRKUSRPRF",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=information-changing-user-group",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — Changing a user group",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=information-changing-user-group",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": "              Work with User Profiles \n\nType options, press Enter. \n  1=Create  2=Change  3=Copy  4=Delete  5=Display \n  12=Work with objects by owner \n\n     User \nOpt  Profile   Text \n     HARRISOK  Harrison, Keith \n2    HOGANR    Hogan, Richard \n.\n.\n                                            More... \nParameters for options 1, 2, 3, 4 and 5 or command \n===> PRTDEV(PRT02) \nF3=Exit  F5=Refresh  F12=Cancel  F16=Repeat position to  F17=Position to \nF21=Select assistance level  F24=More keys",
+  "requiredText": [
+    "Work with User Profiles",
+    "Type options, press Enter.",
+    "1=Create",
+    "2=Change",
+    "5=Display",
+    "12=Work with objects by owner",
+    "Parameters for options 1, 2, 3, 4 and 5 or command"
+  ],
+  "columnHeaders": ["Opt", "Profile", "Text"],
+  "commandLineLabel": "Parameters for options 1, 2, 3, 4 and 5 or command",
+  "notes": "Intermediate assistance level shows Profile + Text columns. Extended WRKUSRPRF at *INTERMED may add Status, Group profile, Special authorities — verify against partition F21 assistance level."
+}

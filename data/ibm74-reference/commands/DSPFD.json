@@ -1,0 +1,25 @@
+{
+  "name": "DSPFD",
+  "displayName": "Display File Description",
+  "category": "database_file",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspfd",
+  "parameters": [
+    {
+      "name": "FILE",
+      "label": "Database file",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*FIRST"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPFD FILE(PAYROLL/PAYMST)"
+  ],
+  "helpText": "Displays database file description including record format and member information.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDDB"
+}

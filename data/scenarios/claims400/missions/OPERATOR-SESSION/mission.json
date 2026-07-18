@@ -1,0 +1,12 @@
+{
+  "missionId": "OPERATOR-SESSION",
+  "title": "Privileged Operator Session",
+  "persona": "Security officer",
+  "systemName": "CLAIMS400",
+  "startingMenu": "SECURITY",
+  "briefingFile": "briefing.md",
+  "objective": "Track privileged administration with audit and state-diff side effects.",
+  "mode": "operate",
+  "allowedMutation": true,
+  "resetOnStart": true
+}

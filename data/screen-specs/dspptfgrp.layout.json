@@ -1,0 +1,25 @@
+{
+  "screenId": "DSPPTFGRP",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=fixes-groups",
+  "goldenFile": "dspptfgrp.golden.json",
+  "requiredText": [
+    "DSPPTFGRP",
+    "Display PTF Group",
+    "PTF group",
+    "SF99740",
+    "5=Display PTF",
+    "SI76195",
+    "F3=Exit"
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 10,
+    "lastDataRow": 16,
+    "commandLineRow": 22,
+    "optionIdPattern": "^PTOPT\\d+$"
+  },
+  "render": { "type": "command", "command": "DSPPTFGRP PTFID(SF99740)" }
+}

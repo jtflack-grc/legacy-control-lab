@@ -1,0 +1,24 @@
+{
+  "name": "DSPSCN",
+  "displayName": "Display Scenario Package",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspscn",
+  "parameters": [
+    {
+      "name": "PACKAGE",
+      "label": "PACKAGE",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "claims400"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPSCN SCENARIO(CLAIMS400)"
+  ],
+  "helpText": "Displays metadata for the active scenario pack (libraries, missions, controls).",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

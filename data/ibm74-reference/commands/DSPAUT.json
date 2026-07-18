@@ -1,0 +1,27 @@
+{
+  "name": "DSPAUT",
+  "displayName": "Display Authority",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspaut",
+  "parameters": [
+    {
+      "name": "USER",
+      "label": "User profile",
+      "required": false,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*PUBLIC",
+        "*CURRENT"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPAUT USER(BACKUPADM)"
+  ],
+  "helpText": "Displays special authorities held by a user profile.",
+  "requiresAuthority": [
+    "*AUDITVIEW"
+  ],
+  "mutatesState": false,
+  "groupMenu": "CMDAUT"
+}

@@ -1,0 +1,25 @@
+{
+  "screenId": "CHGSYSVAL",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-system-value-chgsysval",
+  "goldenFile": "chgsysval.golden.json",
+  "requiredText": [
+    "Change System Value (CHGSYSVAL)",
+    "Type choices, press Enter.",
+    "System value",
+    "QSECURITY",
+    "Bottom",
+    "F4=Prompt",
+    "F9=",
+    "F24=More keys"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel   F24=More keys",
+  "promptVariant": "cmdprompt",
+  "fieldRules": [
+    { "id": "P0", "valueContains": "QSECURITY" },
+    { "id": "BOTTOM", "row": 20, "valueContains": "Bottom" }
+  ],
+  "forbiddenText": ["Evidence note", "mission menu"],
+  "render": { "type": "sample", "sample": "CHGSYSVAL_PROMPT" }
+}

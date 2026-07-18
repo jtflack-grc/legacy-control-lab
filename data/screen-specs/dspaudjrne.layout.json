@@ -1,0 +1,38 @@
+{
+  "screenId": "DSPAUDJRNE",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-audit-journal-entries-dspaudjrne",
+  "goldenFile": "dspaudjrne.golden.json",
+  "requiredText": [
+    "DSPAUDJRNE",
+    "Display Audit Journal Entries",
+    "Journal",
+    "QAUDJRN",
+    "Entry type",
+    "Type options, press Enter.",
+    "5=Display entry details",
+    "Opt  Date      Time      Type  User        Job        Message",
+    "Parameters or command",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "optionLine": { "row": 6, "col": 6, "valueContains": "Type options" },
+  "promptVariant": "subfile",
+  "fieldRules": [
+    { "id": "JOPT0", "row": 10, "col": 6 },
+    { "id": "COLHDR", "row": 9, "valueContains": "Opt  Date" },
+    { "id": "JRN", "valueContains": "QAUDJRN" }
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 10,
+    "lastDataRow": 16,
+    "commandLineRow": 22,
+    "optionIdPattern": "^JOPT\\d+$"
+  },
+  "commandLine": { "row": 22, "label": "Parameters or command" },
+  "forbiddenText": ["Evidence note", "Welcome!", "mission menu"],
+  "render": { "type": "command", "command": "DSPAUDJRNE ENTTYP(AF)", "user": "AUDIT" }
+}

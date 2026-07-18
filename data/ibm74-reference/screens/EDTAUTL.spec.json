@@ -1,0 +1,7 @@
+{
+  "screenId": "EDTAUTL",
+  "category": "authority",
+  "auditMode": "deep",
+  "requiredFields": ["AUTL"],
+  "bannedSubstrings": ["Welcome!", "mission menu", "governance training", "Evidence note"]
+}

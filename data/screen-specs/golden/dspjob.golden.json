@@ -1,0 +1,41 @@
+{
+  "screenId": "DSPJOB",
+  "primarySource": "https://www.as400andsqltricks.com/2021/12/Work%20with%20Job%20WRKJOB%20in%20AS400.html",
+  "sources": [
+    {
+      "title": "Work with Job (WRKJOB) panel — same as DSPJOB OPTION(*SELECT)",
+      "url": "https://www.as400andsqltricks.com/2021/12/Work%20with%20Job%20WRKJOB%20in%20AS400.html",
+      "type": "panel-capture"
+    },
+    {
+      "title": "IBM i 7.5 — Display Job (DSPJOB)",
+      "url": "https://www.ibm.com/docs/en/i/7.5.0?topic=ssw_ibm_i_75/cl/dspjob.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "Display Job (DSPJOB) command reference",
+      "url": "http://www.setgetweb.com/p/i5/dspjob.htm",
+      "type": "vendor-documentation"
+    }
+  ],
+  "asciiPanel": "                                Work with Job               \n                                                            \nJob:   QPAD082403     User:   EASYCLASS      Number:   29961\n                                                            \nSelect one of the following:                                \n                                                            \n     1. Display job status attributes                       \n     2. Display job definition attributes                   \n     3. Display job run attributes, if active               \n     4. Work with spooled files                              \n                                                            \n    10. Display job log, if active, on job queue, or pending\n    11. Display call stack, if active                       \n    12. Work with locks, if active                          \n    13. Display library list, if active                     \n    14. Display open files, if active                       \n    15. Display file overrides, if active                   \n    16. Display commitment control status, if active        \n    17. Display communications status, if active            \n    18. Display activation groups, if active                  \n    19. Work with mutexes, if active                        \n    20. Work with threads, if active                        \n    21. Work with media library attributes, if active       \n    22. Display environment variables, if active          \n                                                            \n    30. All of the above                                    \n                                                            \n    40. Change job                                          \n    41. End job                                             \n    42. Hold job                                            \n    43. Release job                                         \n                                                            \n    45. Work with Java Virtual Machine, if active           \n                                                            \nSelection or command                                        \n===> ______________________________________________________",
+  "requiredText": [
+    "Work with Job",
+    "Job:",
+    "User:",
+    "Number:",
+    "Select one of the following:",
+    "1. Display job status attributes",
+    "4. Work with spooled files",
+    "10. Display job log",
+    "Selection or command",
+    "2. Display job definition attributes",
+    "30. All of the above",
+    "40. Change job"
+  ],
+  "notes": "DSPJOB OPTION(*SELECT) and WRKACTJOB opt 5 present this menu. Title may read 'Work with Job' or 'Display Job' depending on entry path; option 10 routes to DSPJOBLOG.",
+  "auditNotes": "Hub menu from WRKACTJOB opt 5. Option 1 → DSPJOBATTR (status attributes); option 10 → DSPJOBLOG (command trace). Title reads 'Work with Job' on stock panels.",
+  "grcMapping": [
+    "Blue Team — respond workflow"
+  ]
+}

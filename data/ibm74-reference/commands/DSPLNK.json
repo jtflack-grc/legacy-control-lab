@@ -1,0 +1,25 @@
+{
+  "name": "DSPLNK",
+  "displayName": "Display Object Link",
+  "category": "ifs",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dsplnk",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Object path",
+      "required": true,
+      "type": "ifsPath",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPLNK OBJ('/claims/claimmst.sym')"
+  ],
+  "helpText": "Displays an integrated file system object link or stream file path.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDIFS"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "CHGJOB",
+  "displayName": "Change Job",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgjob",
+  "parameters": [
+    {
+      "name": "JOB",
+      "label": "Job",
+      "required": true,
+      "type": "jobName",
+      "supportsSpecialValues": [
+        "*ACTIVE",
+        "*JOB"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "Change Job. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true
+}

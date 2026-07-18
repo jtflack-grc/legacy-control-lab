@@ -1,0 +1,14 @@
+{
+  "missionId": "CLAIMS-003",
+  "title": "Can You Prove Privacy Operations?",
+  "persona": "IT auditor / GRC analyst",
+  "systemName": "CLAIMS400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "objective": "Determine whether payroll PII on CLAIMS400 is governed through object authority, file design, batch processing, and integration paths.",
+  "mode": "investigation_only",
+  "allowedMutation": false,
+  "resetOnStart": true,
+  "sourceArticle": "i on GRC: ISO 27701, Clause 8 & the IBM i",
+  "frameworks": ["ISO 27701 Clause 8", "PII processing", "Operational privacy controls"]
+}

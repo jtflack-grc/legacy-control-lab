@@ -1,0 +1,1136 @@
+{
+  "missions": [
+    {
+      "id": "CLAIMS-001",
+      "title": "Can You Prove IBM i Security?",
+      "persona": "IT auditor / GRC analyst",
+      "briefing": "The control owner claims privileged access on CLAIMS400 is reviewed quarterly, restricted to approved administrators, and monitored through audit logging. Sign on as AUDIT, inspect the available evidence, and determine whether the control claim is defensible."
+    },
+    {
+      "id": "OPERATOR-SESSION",
+      "title": "Privileged Operator Session",
+      "persona": "Security officer",
+      "briefing": "Runtime tracking for QSECOFR administration — audit journal, job log, and state diff side effects."
+    },
+    {
+      "id": "CLAIMS-002",
+      "title": "Can You Prove Offboarding Hygiene?",
+      "persona": "IT auditor / GRC analyst",
+      "briefing": "The control owner claims contractor and vendor access is revoked within 90 days of departure and that dormant IBM i profiles are reviewed on schedule. Sign on as AUDIT to inspect dormant accounts (especially OLDVENDOR). Sign on as QSECOFR to run inactive analysis, exempt justified profiles, disable stale IDs, and confirm audit journal evidence."
+    },
+    {
+      "id": "CLAIMS-003",
+      "title": "Can You Prove Privacy Operations?",
+      "persona": "IT auditor / GRC analyst",
+      "briefing": "The control owner claims payroll PII on CLAIMS400 is governed through object authority, file design, scheduled batch jobs, and controlled IFS integration paths. Sign on as AUDIT and follow the ISO 27701 Clause 8 evidence chain: DSPOBJAUT and DSPFD on PAYROLL/PAYMST, WRKJOBSCDE for payroll batch, WRKLNK under /payroll, and DSPJRN for access monitoring."
+    },
+    {
+      "id": "CLAIMS-004",
+      "title": "Can You Prove Privacy Risk Planning?",
+      "persona": "IT auditor / GRC analyst",
+      "briefing": "The control owner claims privacy risks on CLAIMS400 are planned through authorization lists, profile authorities, and measurable audit monitoring. Sign on as AUDIT and walk ISO 27701 Clause 6: WRKAUTL and DSPAUTL on PAYROLL, DSPAUT on privileged profiles, DSPSECAUD or DSPAUDJRNE, and DSPJRN to test whether monitoring objectives are met."
+    },
+    {
+      "id": "CLAIMS-005",
+      "title": "Can You Blue Team IBM i?",
+      "persona": "IT auditor / SOC analyst",
+      "briefing": "The control owner claims security events on CLAIMS400 are detected and reviewable through active job monitoring, filtered audit journal views, job logs, and QAUDJRN. Sign on as AUDIT and follow the Blue Team article path: WRKACTJOB for suspicious batch work, DSPAUDJRNE for AF/PW events, DSPSECAUD, DSPJOBLOG, and DSPJRN — then write what you would escalate."
+    },
+    {
+      "id": "CLAIMS-006",
+      "title": "Can You Prove Profile Ownership?",
+      "persona": "IT auditor / privacy analyst",
+      "briefing": "The control owner claims payroll and claims data on CLAIMS400 has named accountability in user profiles. Sign on as AUDIT and walk ISO 27701 Clause 5: WRKUSRPRF, DSPUSRPRF PAYADMIN, RUNSQL against QSYS2.USER_INFO, and WRKFINDING with decision impact — is a data owner actually named for PII-touching profiles?"
+    },
+    {
+      "id": "CLAIMS-007",
+      "title": "Can You Red Team IBM i Boundaries?",
+      "persona": "Adversarial simulation / internal audit",
+      "briefing": "You are simulating a limited insider (APCLERK with LMTCPB(*YES)). Sign on as APCLERK / TRAIN. Inspect your own profile, attempt privilege escalation on PAYROLL/PAYMST (GRTOBJAUT or EDTOBJAUT), and review network attributes. Document escape attempts as findings — the lab blocks exploits but should prove boundary controls."
+    },
+    {
+      "id": "CLAIMS-008",
+      "title": "Can You Map SOC 2 to the Green Screen?",
+      "persona": "IT auditor / GRC analyst",
+      "briefing": "The control owner claims SOC 2 CC6/CC7 logical access and monitoring controls are supported by IBM i evidence. Sign on as AUDIT and map Trust Services criteria to green-screen proof: profiles, object authority, audit journal, and detect/respond signals."
+    },
+    {
+      "id": "CLAIMS-009",
+      "title": "Can You See Tail Risk on the Green Screen?",
+      "persona": "IT auditor / resilience analyst",
+      "briefing": "Leadership claims CLAIMS400 is stable because interactive uptime looks fine. Sign on as AUDIT and walk the Black Swan path: WRKSBMJOB for failed/held batch, DSPJOB, WRKACTJOB for vendor batch work, WRKSYSSTS, DSPMSG QSYSOPR, DSPJOBLOG, then WRKFINDING with decision impact."
+    },
+    {
+      "id": "CLAIMS-010",
+      "title": "Can You Map COSO to the Control Atlas?",
+      "persona": "IT auditor / GRC analyst",
+      "briefing": "The control owner claims COSO control environment components are reflected in IBM i evidence and the lab control atlas. Sign on as AUDIT, open GO WORKSHOP, review WRKCTRL, collect green-screen evidence, MAPCTRL a finding to LCL-AC-01, and document decision impact in WRKFINDING."
+    }
+  ],
+  "missionEvidenceRequirements": [
+    {
+      "missionId": "CLAIMS-001",
+      "key": "user_profiles",
+      "description": "Review user profiles (WRKUSRPRF or DSPUSRPRF)",
+      "commandPattern": "WRKUSRPRF|DSPUSRPRF",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "qsecurity",
+      "description": "Display system value QSECURITY",
+      "commandPattern": "DSPSYSVAL:QSECURITY",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "qaudctl",
+      "description": "Display system value QAUDCTL",
+      "commandPattern": "DSPSYSVAL:QAUDCTL",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "paymst_authority",
+      "description": "Review PAYROLL/PAYMST object authority",
+      "commandPattern": "DSPOBJAUT:PAYROLL/PAYMST|WRKOBJ",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "audit_journal",
+      "description": "Review QAUDJRN audit journal entries",
+      "commandPattern": "DSPJRN|DSPAUDJRNE|DSPSECAUD",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "optional_ops",
+      "description": "Optional: DSPJOBLOG or DSPMSG QSYSOPR",
+      "commandPattern": "DSPJOBLOG|DSPMSG",
+      "optional": true,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "user_profiles",
+      "description": "Review user profiles (WRKUSRPRF or DSPUSRPRF)",
+      "commandPattern": "WRKUSRPRF|DSPUSRPRF",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "oldvendor_profile",
+      "description": "Display OLDVENDOR profile detail",
+      "commandPattern": "DSPUSRPRF:OLDVENDOR",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "inactive_analysis",
+      "description": "Optional (QSECOFR): ANZPRFACT INACT(90) inactive sweep",
+      "commandPattern": "ANZPRFACT",
+      "optional": true,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "vendor_disabled",
+      "description": "Optional (QSECOFR): CHGUSRPRF OLDVENDOR STATUS(*DISABLED)",
+      "commandPattern": "CHGUSRPRF:OLDVENDOR",
+      "optional": true,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "audit_journal",
+      "description": "Review QAUDJRN after remediation",
+      "commandPattern": "DSPJRN|DSPAUDJRNE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "profile_outfile",
+      "description": "Optional: export profile list to outfile",
+      "commandPattern": "DSPUSRPRF",
+      "optional": true,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "activity_exempt",
+      "description": "Optional: exempt justified profile (CHGACTPRFL)",
+      "commandPattern": "CHGACTPRFL",
+      "optional": true,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "paymst_authority",
+      "description": "Review PAYROLL/PAYMST object authority",
+      "commandPattern": "DSPOBJAUT:PAYROLL/PAYMST",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "paymst_file_desc",
+      "description": "Display file description for PAYROLL/PAYMST (DSPFD)",
+      "commandPattern": "DSPFD:PAYROLL/PAYMST",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "payroll_batch",
+      "description": "Review job schedule entries touching payroll (WRKJOBSCDE)",
+      "commandPattern": "WRKJOBSCDE|DSPJOBSCDE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "ifs_payroll_path",
+      "description": "Review IFS payroll integration path (WRKLNK)",
+      "commandPattern": "WRKLNK",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "audit_journal",
+      "description": "Review QAUDJRN for sensitive object access",
+      "commandPattern": "DSPJRN|DSPAUDJRNE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "auth_list",
+      "description": "Optional: WRKAUTL / DSPAUTL PAYROLL authorization list",
+      "commandPattern": "WRKAUTL|DSPAUTL",
+      "optional": true,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-004",
+      "key": "auth_list",
+      "description": "Review PAYROLL authorization list (WRKAUTL / DSPAUTL)",
+      "commandPattern": "WRKAUTL|DSPAUTL",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-004",
+      "key": "profile_authority",
+      "description": "Display user authority for privileged profile (DSPAUT)",
+      "commandPattern": "DSPAUT",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-004",
+      "key": "security_audit",
+      "description": "Display security audit or filtered journal (DSPSECAUD / DSPAUDJRNE)",
+      "commandPattern": "DSPSECAUD|DSPAUDJRNE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-004",
+      "key": "audit_journal",
+      "description": "Review QAUDJRN audit journal",
+      "commandPattern": "DSPJRN",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-004",
+      "key": "qaudctl",
+      "description": "Optional: DSPSYSVAL SYSVAL(QAUDCTL)",
+      "commandPattern": "DSPSYSVAL:QAUDCTL",
+      "optional": true,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-005",
+      "key": "active_jobs",
+      "description": "Work with active jobs (WRKACTJOB)",
+      "commandPattern": "WRKACTJOB",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-005",
+      "key": "audit_journal_filtered",
+      "description": "Filtered audit journal entries (DSPAUDJRNE)",
+      "commandPattern": "DSPAUDJRNE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-005",
+      "key": "security_audit",
+      "description": "Display security audit (DSPSECAUD)",
+      "commandPattern": "DSPSECAUD",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-005",
+      "key": "job_log",
+      "description": "Display job log (DSPJOBLOG)",
+      "commandPattern": "DSPJOBLOG",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-005",
+      "key": "audit_journal",
+      "description": "Review full audit journal (DSPJRN)",
+      "commandPattern": "DSPJRN",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-006",
+      "key": "user_profiles",
+      "description": "Review user profiles (WRKUSRPRF)",
+      "commandPattern": "WRKUSRPRF",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-006",
+      "key": "payadmin_profile",
+      "description": "Display PAYADMIN profile — owner and *SECADM",
+      "commandPattern": "DSPUSRPRF:PAYADMIN",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-006",
+      "key": "user_info_sql",
+      "description": "RUNSQL SELECT from QSYS2.USER_INFO for ownership",
+      "commandPattern": "RUNSQL.*USER_INFO",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-006",
+      "key": "finding_decision",
+      "description": "WRKFINDING with decision impact (no named data owner)",
+      "commandPattern": "WRKFINDING",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-007",
+      "key": "limited_profile",
+      "description": "Display own profile (DSPUSRPRF) — LMTCPB(*YES)",
+      "commandPattern": "DSPUSRPRF",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-007",
+      "key": "escape_attempt",
+      "description": "Attempt GRTOBJAUT or EDTOBJAUT on PAYROLL/PAYMST",
+      "commandPattern": "GRTOBJAUT|EDTOBJAUT",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-007",
+      "key": "network_recon",
+      "description": "Display network attributes (DSPNETA)",
+      "commandPattern": "DSPNETA",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-007",
+      "key": "red_team_finding",
+      "description": "WRKFINDING — document boundary outcome",
+      "commandPattern": "WRKFINDING",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "user_profiles",
+      "description": "Review privileged profiles (WRKUSRPRF / DSPUSRPRF)",
+      "commandPattern": "WRKUSRPRF|DSPUSRPRF",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "object_authority",
+      "description": "Review sensitive object authority (DSPOBJAUT)",
+      "commandPattern": "DSPOBJAUT:PAYROLL/PAYMST",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "audit_config",
+      "description": "Review audit configuration (DSPSYSVAL QAUDCTL or DSPSECAUD)",
+      "commandPattern": "DSPSYSVAL:QAUDCTL|DSPSECAUD",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "audit_journal",
+      "description": "Review QAUDJRN security events (DSPJRN / DSPAUDJRNE)",
+      "commandPattern": "DSPJRN|DSPAUDJRNE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "detect_respond",
+      "description": "Review detect/respond signal (WRKACTJOB or DSPJOBLOG)",
+      "commandPattern": "WRKACTJOB|DSPJOBLOG",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "soc2_finding",
+      "description": "WRKFINDING with SOC 2 CC6/CC7 mapping and decision impact",
+      "commandPattern": "WRKFINDING",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "submitted_batch",
+      "description": "Review submitted batch jobs (WRKSBMJOB)",
+      "commandPattern": "WRKSBMJOB",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "job_detail",
+      "description": "Display job detail (DSPJOB from WRKSBMJOB)",
+      "commandPattern": "DSPJOB",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "active_batch",
+      "description": "Review active jobs for unexpected batch (WRKACTJOB)",
+      "commandPattern": "WRKACTJOB",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "system_status",
+      "description": "Review system status metrics (WRKSYSSTS)",
+      "commandPattern": "WRKSYSSTS",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "operator_messages",
+      "description": "Review operator messages (DSPMSG QSYSOPR)",
+      "commandPattern": "DSPMSG",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "job_log_trace",
+      "description": "Review job log for failure trace (DSPJOBLOG)",
+      "commandPattern": "DSPJOBLOG",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "availability_finding",
+      "description": "WRKFINDING with availability tail-risk narrative",
+      "commandPattern": "WRKFINDING",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-010",
+      "key": "workshop",
+      "description": "Open workshop menu (GO WORKSHOP)",
+      "commandPattern": "GO|WORKSHOP",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-010",
+      "key": "control_atlas",
+      "description": "Work with control atlas (WRKCTRL)",
+      "commandPattern": "WRKCTRL",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-010",
+      "key": "control_evidence",
+      "description": "Review access evidence (WRKUSRPRF or DSPOBJAUT)",
+      "commandPattern": "WRKUSRPRF|DSPOBJAUT",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-010",
+      "key": "control_mapping",
+      "description": "Map finding to control (MAPCTRL)",
+      "commandPattern": "MAPCTRL",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-010",
+      "key": "coso_finding",
+      "description": "WRKFINDING with COSO control environment narrative",
+      "commandPattern": "WRKFINDING",
+      "optional": false,
+      "weight": 1
+    }
+  ],
+  "missionExpectedFindings": [
+    {
+      "missionId": "CLAIMS-001",
+      "key": "backupadm_stale",
+      "description": "BACKUPADM remains enabled with *ALLOBJ and *SAVSYS despite stale last signon.",
+      "matchPatterns": [
+        "backupadm",
+        "allobj",
+        "savsys",
+        "stale",
+        "privileged"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "oldvendor_enabled",
+      "description": "OLDVENDOR remains enabled with *JOBCTL and authority failure activity.",
+      "matchPatterns": [
+        "oldvendor",
+        "vendor",
+        "jobctl",
+        "enabled",
+        "authority failure"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "paymst_public_auth",
+      "description": "PAYROLL/PAYMST has excessive public authority.",
+      "matchPatterns": [
+        "paymst",
+        "payroll",
+        "public authority",
+        "excessive",
+        "change"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "qsecurity_insufficient",
+      "description": "QSECURITY=40 is not sufficient proof of effective access governance.",
+      "matchPatterns": [
+        "qsecurity",
+        "security level",
+        "40",
+        "not sufficient",
+        "governance"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "audit_no_review_proof",
+      "description": "Audit evidence exists but does not prove quarterly review/recertification.",
+      "matchPatterns": [
+        "quarterly",
+        "review",
+        "recertification",
+        "does not prove",
+        "audit evidence"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "oldvendor_offboarding",
+      "description": "OLDVENDOR contractor profile remains enabled long after departure.",
+      "matchPatterns": [
+        "oldvendor",
+        "vendor",
+        "contractor",
+        "offboard",
+        "dormant",
+        "enabled",
+        "stale"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "no_tprm_proof",
+      "description": "Third-party / MSP offboarding not coupled with IBM i identity lifecycle.",
+      "matchPatterns": [
+        "third",
+        "tprm",
+        "vendor",
+        "contractor",
+        "msp",
+        "offboarding",
+        "identity"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "inactive_sweep_gap",
+      "description": "No scheduled inactive profile review or ANZPRFACT evidence.",
+      "matchPatterns": [
+        "inactive",
+        "90",
+        "anzprfact",
+        "dormant",
+        "scheduled",
+        "sweep"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "backupadm_stale_offboard",
+      "description": "BACKUPADM privileged profile stale without documented owner or exemption.",
+      "matchPatterns": [
+        "backupadm",
+        "stale",
+        "privileged",
+        "owner",
+        "exempt",
+        "chgactprfl"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "paymst_pii_exposure",
+      "description": "PAYROLL/PAYMST contains SSN and pay data with excessive public authority.",
+      "matchPatterns": [
+        "paymst",
+        "ssn",
+        "pii",
+        "payroll",
+        "public authority",
+        "privacy"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "batch_no_privacy_owner",
+      "description": "Payroll batch jobs run without documented privacy owner or review.",
+      "matchPatterns": [
+        "payrollngt",
+        "payifsexp",
+        "batch",
+        "job schedule",
+        "privacy",
+        "owner"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "ifs_export_path",
+      "description": "IFS symlink exposes payroll master to integration path without control narrative.",
+      "matchPatterns": [
+        "ifs",
+        "symlink",
+        "paymst.sym",
+        "export",
+        "integration",
+        "payroll"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "journal_not_privacy_monitoring",
+      "description": "Audit journal exists but does not prove privacy monitoring or review.",
+      "matchPatterns": [
+        "journal",
+        "monitoring",
+        "privacy",
+        "does not prove",
+        "review"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-004",
+      "key": "autl_payroll_gap",
+      "description": "PAYROLL authorization list membership does not align with privacy risk treatment.",
+      "matchPatterns": [
+        "payroll",
+        "autl",
+        "authorization list",
+        "privacy",
+        "risk",
+        "objective"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-004",
+      "key": "privileged_authority",
+      "description": "Privileged profile authorities not tied to measurable privacy objectives.",
+      "matchPatterns": [
+        "backupadm",
+        "allobj",
+        "special authority",
+        "dspaut",
+        "privacy",
+        "clause 6"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-004",
+      "key": "audit_not_objectives",
+      "description": "Security audit config exists but does not prove privacy monitoring objectives.",
+      "matchPatterns": [
+        "qaudctl",
+        "dspsecaud",
+        "monitoring",
+        "objective",
+        "does not prove"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-005",
+      "key": "vendor_batch_job",
+      "description": "OLDVENDOR batch job VENDORJOB still active on QBATCH.",
+      "matchPatterns": [
+        "oldvendor",
+        "vendorjob",
+        "batch",
+        "wrkactjob",
+        "qbatch"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-005",
+      "key": "af_pw_events",
+      "description": "Authority failures and password events visible but not triaged.",
+      "matchPatterns": [
+        "authority failure",
+        "password",
+        "dspaudjrne",
+        "af",
+        "pw",
+        "oldvendor"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-005",
+      "key": "detect_without_response",
+      "description": "Audit evidence exists without proof of detect-and-respond workflow.",
+      "matchPatterns": [
+        "detect",
+        "respond",
+        "blue team",
+        "job log",
+        "escalat",
+        "triage"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-006",
+      "key": "no_data_owner",
+      "description": "PAYADMIN touches payroll PII but OWNER profile is *NONE — no named data owner.",
+      "matchPatterns": [
+        "payadmin",
+        "owner",
+        "*none",
+        "data owner",
+        "accountability",
+        "clause 5"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-006",
+      "key": "secadm_without_owner",
+      "description": "PAYADMIN holds *SECADM without documented business ownership for privacy data.",
+      "matchPatterns": [
+        "secadm",
+        "payadmin",
+        "privileged",
+        "ownership",
+        "privacy",
+        "27701"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-006",
+      "key": "decision_not_audit_ready",
+      "description": "Finding lacks decision impact — audit-ready but not decision-ready.",
+      "matchPatterns": [
+        "decision",
+        "so what",
+        "impact",
+        "executive",
+        "leadership",
+        "risk"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-007",
+      "key": "lmtcpb_boundary",
+      "description": "LMTCPB(*YES) profile blocked from security administration commands.",
+      "matchPatterns": [
+        "lmtcpb",
+        "limited",
+        "cpf9902",
+        "cpf2209",
+        "not authorized",
+        "boundary"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-007",
+      "key": "objaut_escape_blocked",
+      "description": "GRTOBJAUT/EDTOBJAUT escape on PAYMST denied for APCLERK.",
+      "matchPatterns": [
+        "grtobjaut",
+        "edtobjaut",
+        "paymst",
+        "payroll",
+        "denied",
+        "not authorized"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-007",
+      "key": "recon_without_escalation",
+      "description": "Network recon possible but no path to payroll data authority.",
+      "matchPatterns": [
+        "dspneta",
+        "recon",
+        "network",
+        "escape",
+        "finding",
+        "red team"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact — who must act and by when.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "leadership",
+        "remediate",
+        "by when",
+        "so what",
+        "cio",
+        "owner"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-002",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact — who must act and by when.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "leadership",
+        "remediate",
+        "by when",
+        "so what",
+        "cio",
+        "owner"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-003",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact — who must act and by when.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "leadership",
+        "remediate",
+        "by when",
+        "so what",
+        "cio",
+        "owner"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-004",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact — who must act and by when.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "leadership",
+        "remediate",
+        "by when",
+        "so what",
+        "cio",
+        "owner"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-005",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact — who must act and by when.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "leadership",
+        "remediate",
+        "by when",
+        "so what",
+        "cio",
+        "owner"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-006",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact — who must act and by when.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "leadership",
+        "remediate",
+        "by when",
+        "so what",
+        "cio",
+        "owner"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-007",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact — who must act and by when.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "leadership",
+        "remediate",
+        "by when",
+        "so what",
+        "cio",
+        "owner"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact — who must act and by when.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "leadership",
+        "remediate",
+        "by when",
+        "so what",
+        "cio",
+        "owner"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "cc6_access_gap",
+      "description": "CC6 logical access — excessive authority or dormant privileged IDs.",
+      "matchPatterns": [
+        "cc6",
+        "logical access",
+        "privileged",
+        "backupadm",
+        "oldvendor",
+        "access"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "cc7_monitoring_gap",
+      "description": "CC7 monitoring — journal exists but detect/respond not demonstrated.",
+      "matchPatterns": [
+        "cc7",
+        "monitor",
+        "journal",
+        "detect",
+        "respond",
+        "qaudjrn",
+        "wrkactjob"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-008",
+      "key": "trust_services_mapping",
+      "description": "Finding maps IBM i evidence to SOC 2 Trust Services criteria.",
+      "matchPatterns": [
+        "soc 2",
+        "trust services",
+        "cc6",
+        "cc7",
+        "system description",
+        "green screen"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "batch_tail_risk",
+      "description": "Held or failed batch job threatens availability window.",
+      "matchPatterns": [
+        "nightrun",
+        "backupjob",
+        "held",
+        "failed",
+        "batch",
+        "qbatch"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "uptime_myth",
+      "description": "System status looks stable while jobs are held or failing.",
+      "matchPatterns": [
+        "wrksyssts",
+        "uptime",
+        "stable",
+        "held",
+        "waiting",
+        "asp"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "operator_signal_missed",
+      "description": "Operator messages show batch failure without response evidence.",
+      "matchPatterns": [
+        "qsysopr",
+        "dspmsg",
+        "operator",
+        "message",
+        "failure"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-009",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "executive",
+        "by when"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-010",
+      "key": "control_environment_gap",
+      "description": "COSO control environment gap on IBM i evidence.",
+      "matchPatterns": [
+        "coso",
+        "control environment",
+        "integrity",
+        "accountability",
+        "privileged"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-010",
+      "key": "control_mapping_documented",
+      "description": "Finding mapped to LCL control id.",
+      "matchPatterns": [
+        "mapctrl",
+        "lcl-ac",
+        "control atlas",
+        "wrkctrl"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-010",
+      "key": "decision_impact_documented",
+      "description": "Finding documents decision impact.",
+      "matchPatterns": [
+        "decision",
+        "impact",
+        "must act",
+        "by when"
+      ],
+      "weight": 1
+    }
+  ]
+}

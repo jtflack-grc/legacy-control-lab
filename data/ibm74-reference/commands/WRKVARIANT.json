@@ -1,0 +1,18 @@
+{
+  "name": "WRKVARIANT",
+  "displayName": "Work with Variants",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkvariant",
+  "parameters": [],
+  "examples": [
+    "WRKVARIANT"
+  ],
+  "helpText": "Work with mission variants defined for the active scenario pack.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB",
+  "wrkOptions": {
+    "2": "CHGVARIANT",
+    "5": "DSPVARIANT"
+  }
+}

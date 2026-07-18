@@ -1,0 +1,12 @@
+{
+  "name": "CRTUSRGRP",
+  "displayName": "Create User GRP",
+  "category": "user_profile",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-crtusrgrp",
+  "parameters": [],
+  "examples": [],
+  "helpText": "CRTUSRGRP. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDUSR"
+}

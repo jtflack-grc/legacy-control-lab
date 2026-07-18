@@ -1,0 +1,14 @@
+{
+  "name": "DSPPERS",
+  "displayName": "Display Persona",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dsppers",
+  "parameters": [],
+  "examples": [
+    "DSPPERS"
+  ],
+  "helpText": "Displays the active persona and how it affects briefing and scoring.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

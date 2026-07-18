@@ -1,0 +1,115 @@
+[
+  {
+    "library": "CLAIMS400",
+    "file": "QCLSRC",
+    "member": "NIGHTRUN",
+    "sourceType": "CLP",
+    "text": "Night batch control program",
+    "lines": [
+      "/* NIGHTRUN - Claims batch control */",
+      "PGM",
+      "  MONMSG MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))",
+      "  SBMJOB CMD(CALL PGM(CLAIMS400/CLMMAINT)) JOB(BATCHCLM)",
+      "  GOTO CMDLBL(END)",
+      " ERROR:",
+      "  SNDPGMMSG MSG('Night run failed') TOPGMQ(*PRV)",
+      " END:",
+      " ENDPGM"
+    ]
+  },
+  {
+    "library": "CLAIMS400",
+    "file": "QCLSRC",
+    "member": "AUDRPTCL",
+    "sourceType": "CLP",
+    "text": "Audit report CL",
+    "lines": [
+      "PGM PARM(&LIB &OUTQ)",
+      "  DCL VAR(&LIB) TYPE(*CHAR) LEN(10)",
+      "  OVRDBF FILE(CLAIMMST) TOFILE(&LIB/CLAIMMST)",
+      "  CALL PGM(RUNAUDRPT)",
+      " ENDPGM"
+    ]
+  },
+  {
+    "library": "CLAIMS400",
+    "file": "QRPGLESRC",
+    "member": "CLMMAINT",
+    "sourceType": "RPGLE",
+    "text": "Claims maintenance RPG",
+    "lines": [
+      "     FCLAIMMST  UF A E           K DISK",
+      "     C     *ENTRY        PLIST",
+      "     C                   READ      CLAIMMST",
+      "     C                   IF        %EOF(CLAIMMST)",
+      "     C                   LEAVE",
+      "     C                   ENDIF",
+      "     C                   EXSR      UPDCLM",
+      "     C                   ENDDO",
+      "     C                   SETON                                        LR"
+    ]
+  },
+  {
+    "library": "CLAIMS400",
+    "file": "QRPGLESRC",
+    "member": "PAYAUTHR",
+    "sourceType": "RPGLE",
+    "text": "Payroll authority check",
+    "lines": [
+      "     FPAYMST    IF   E           K DISK",
+      "     C                   READ      PAYMST",
+      "     C                   IF        %EOF(PAYMST)",
+      "     C                   RETURN",
+      "     C                   ENDIF"
+    ]
+  },
+  {
+    "library": "CLAIMS400",
+    "file": "QDDSSRC",
+    "member": "CLAIMMST",
+    "sourceType": "DDS",
+    "text": "Claims master DDS",
+    "lines": [
+      "     A          R CLAIMR",
+      "     A            CLMNO         10A",
+      "     A            MEMBER        12A",
+      "     A            AMOUNT         9P 2"
+    ]
+  },
+  {
+    "library": "CLAIMS400",
+    "file": "QDDSSRC",
+    "member": "PAYMST",
+    "sourceType": "DDS",
+    "text": "Payroll master DDS",
+    "lines": [
+      "     A          R PAYR",
+      "     A            EMPNO          8A",
+      "     A            PAYRATE        7P 2"
+    ]
+  },
+  {
+    "library": "CLAIMS400",
+    "file": "QCMDSRC",
+    "member": "RUNAUDRPT",
+    "sourceType": "CMD",
+    "text": "Run audit report command",
+    "lines": [
+      "CMD PROMPT('Run audit report')",
+      " PARM KWD(LIB) TYPE(*CHAR) LEN(10) DFT(CLAIMS400)",
+      " PARM KWD(OUTQ) TYPE(*CHAR) LEN(10) DFT(QPRINT)"
+    ]
+  },
+  {
+    "library": "CLAIMS400",
+    "file": "QSQLSRC",
+    "member": "USERAUTH",
+    "sourceType": "SQL",
+    "text": "User authority SQL",
+    "lines": [
+      "SELECT user_name, special_authorities",
+      "FROM qsys2.user_info",
+      "WHERE special_authorities LIKE '%*ALLOBJ%';"
+    ]
+  }
+]

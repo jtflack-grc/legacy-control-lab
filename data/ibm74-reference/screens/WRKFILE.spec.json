@@ -1,0 +1,12 @@
+{
+  "screenId": "WRKFILE",
+  "category": "database_file",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

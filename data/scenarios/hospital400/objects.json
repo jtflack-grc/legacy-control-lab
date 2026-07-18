@@ -1,0 +1,34 @@
+[
+  {
+    "library": "BILLING",
+    "name": "BILLMST",
+    "objectType": "*FILE",
+    "owner": "BILLMGR",
+    "textDescription": "Billing master file — PHI exposure risk",
+    "publicAuthority": "*CHANGE"
+  },
+  {
+    "library": "PAYROLL",
+    "name": "PAYMST",
+    "objectType": "*FILE",
+    "owner": "PAYADMIN",
+    "textDescription": "Payroll master — excessive public authority",
+    "publicAuthority": "*CHANGE"
+  },
+  {
+    "library": "SCHED",
+    "name": "APPTIDX",
+    "objectType": "*FILE",
+    "owner": "HOSPADM",
+    "textDescription": "Scheduling index",
+    "publicAuthority": "*USE"
+  },
+  {
+    "library": "CLAIMSIF",
+    "name": "CLMIFACE",
+    "objectType": "*PGM",
+    "owner": "OLDINTF",
+    "textDescription": "Claims interface program",
+    "publicAuthority": "*EXCLUDE"
+  }
+]

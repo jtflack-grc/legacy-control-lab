@@ -1,0 +1,12 @@
+{
+  "screenId": "WRKJRN",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-journal-wrkjrn",
+  "goldenFile": "wrkjrn.golden.json",
+  "requiredText": ["WRKJRN", "Work with Journals", "2=Change", "5=Display", "QAUDJRN", "F5=Refresh"],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "optionLine": { "row": 4, "col": 6 },
+  "promptVariant": "subfile",
+  "render": { "type": "command", "command": "WRKJRN", "user": "AUDIT" }
+}

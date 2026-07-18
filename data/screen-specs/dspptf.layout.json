@@ -1,0 +1,20 @@
+{
+  "screenId": "DSPPTF",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=information-status-descriptions-using-command-interface",
+  "goldenFile": "dspptf.golden.json",
+  "requiredText": [
+    "DSPPTF",
+    "Display PTF Details",
+    "General information",
+    "Product",
+    "PTF identifier",
+    "Status",
+    "IPL required",
+    "Cover letter",
+    "Permanently applied"
+  ],
+  "render": { "type": "command", "command": "DSPPTF PTF(SI76195)" }
+}

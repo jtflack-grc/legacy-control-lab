@@ -1,0 +1,29 @@
+{
+  "screenId": "CHGNETA",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-network-attributes-chgneta",
+  "sources": [
+    {
+      "tier": "A",
+      "type": "ibm-documentation",
+      "title": "IBM i 7.4 — CHGNETA command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-network-attributes-chgneta"
+    },
+    {
+      "tier": "A",
+      "type": "ibm-documentation",
+      "title": "IBM i 7.4 — TCP/IP setup and troubleshooting",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=setup-tcpip"
+    }
+  ],
+  "asciiPanel": "              Change Network Attributes (CHGNETA)\n\nType choices, press Enter.\n\nDomain . . . . . . . . . . . . . . . . . . . . > LAB.LOCAL\nHost name . . . . . . . . . . . . . . . . . . > CLAIMS400\nDefault router . . . . . . . . . . . . . . . > 10.10.10.1\nHost server job name . . . . . . . . . . . . . > *NETSRV\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Change Network Attributes (CHGNETA)",
+    "Type choices, press Enter.",
+    "Domain",
+    "Host name",
+    "Default router",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "notes": "Network hardening story for CLAIMS-007 — lab records attribute changes for boundary review."
+}

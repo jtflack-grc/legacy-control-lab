@@ -1,0 +1,31 @@
+{
+  "screenId": "WRKAUTL",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-authorization-lists-wrkautl",
+  "sources": [
+    { "tier": "A", "title": "IBM i 7.4 — WRKAUTL command", "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-authorization-lists-wrkautl", "type": "ibm-cl-reference" },
+    { "tier": "B", "title": "setgetweb — WRKAUTL panel", "url": "http://www.setgetweb.com/p/iSeries/v5r3/wrkautl.htm", "type": "community-panel" },
+    { "tier": "B", "title": "MC Press — Managing Authorization Lists 101", "url": "https://www.mcpressonline.com/security/general/techtip-managing-authorization-lists-101-part-ii", "type": "community-panel" }
+  ],
+  "asciiPanel": "              Work with Authorization Lists\n\nType options, press Enter.\n  2=Change   4=Delete   5=Display\n\nOpt  Authorization list     Text\n     PAYROLL                  Payroll object authority list\n     SECDATA                  Security administration objects\n\nParameters or command\n===>\nF3=Exit   F5=Refresh   F12=Cancel",
+  "requiredText": [
+    "WRKAUTL",
+    "Work with Authorization Lists",
+    "Type options, press Enter.",
+    "2=Change",
+    "4=Delete",
+    "5=Display",
+    "Authorization list",
+    "PAYROLL",
+    "Parameters or command",
+    "F3=Exit",
+    "F5=Refresh"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "columnHeaders": [
+    "Opt",
+    "Authorization list",
+    "Text"
+  ],
+  "commandLineLabel": "Parameters or command",
+  "notes": "Stock IBM list display uses Authorization list + Text columns. Option 2 opens EDTAUTL; option 5 opens DSPAUTL. Lab runtime may show List/Library/Description column variant — verify against F21 assistance level on partition."
+}

@@ -1,0 +1,36 @@
+{
+  "screenId": "DSPAUT",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=authority-displaying-users",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — Displaying a user's authority",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=authority-displaying-users",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — DSPAUT command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-authority-dspaut",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — User profile parameter fields",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=profiles-user-profile-parameter-fields",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "SecureMyi — special authority visibility",
+      "url": "https://www.securemyi.com/nl/articles/userclass2.html",
+      "type": "vendor-documentation"
+    }
+  ],
+  "asciiPanel": " DSPAUT                           Display Authority                       CLAIMS400\n\nUser profile . . . . . . . . . . . . . . . . . : BACKUPADM\nSpecial authority . . . . . . . . . . . . . . : *ALLOBJ *AUDIT *IOSYSCFG *JOBCTL\nObject owner . . . . . . . . . . . . . . . . . : *ALL\nSave system . . . . . . . . . . . . . . . . . . : *ALL\nSecurity administrator . . . . . . . . . . . . : *ALL\n\nF3=Exit   F12=Cancel",
+  "requiredText": [
+    "Display Authority",
+    "User profile",
+    "Special authority",
+    "Object owner",
+    "Save system",
+    "F3=Exit"
+  ],
+  "notes": "WRKUSRPRF option 8 — user special-authority detail panel (not the IFS object-authority DSPAUT variant). Shows SPCAUT values for privileged users such as BACKUPADM."
+}

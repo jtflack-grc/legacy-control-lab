@@ -1,0 +1,14 @@
+{
+  "name": "DSPSYSSTS",
+  "displayName": "Display System Status",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspsyssts",
+  "parameters": [],
+  "examples": [
+    "DSPSYSSTS"
+  ],
+  "helpText": "Displays system status including CPU, jobs, and ASP utilization.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSYS"
+}

@@ -1,0 +1,17 @@
+{
+  "screenId": "DSPEVDDIFF",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "lab-native evidence diff (QSECOFR lane)",
+  "requiredText": [
+    "DSPEVDDIFF",
+    "Display Evidence Changes",
+    "Type . . . . . . . . . . . . . . . . . . . :",
+    "Mission . . . . . . . . . . . . . . . . . :",
+    "Date/Time           Type    Entity       Change summary",
+    "Session user",
+    "F3=Exit   F5=Refresh   F12=Cancel"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "DSPEVDDIFF" }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "DSPMSGHLP",
+  "displayName": "Display Message Help",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspmsghlp",
+  "parameters": [
+    {
+      "name": "MSGID",
+      "label": "Message identifier",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "CPF0006",
+        "CPF0007",
+        "CPF2204",
+        "CPF2209"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPMSGHLP MSGID(LCL0901)",
+    "DSPMSGHLP MSGID(CPF0001)"
+  ],
+  "helpText": "Displays second-level help for CPF, CPI, and LCL messages returned by the lab runtime.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "WRKFINDING",
+  "displayName": "Work with Findings",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkfinding",
+  "parameters": [],
+  "examples": [
+    "WRKFINDING"
+  ],
+  "helpText": "Work with recorded findings for the current mission attempt. Option 2 edits narrative.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB",
+  "wrkOptions": {
+    "2": "SUBMITMSN"
+  }
+}

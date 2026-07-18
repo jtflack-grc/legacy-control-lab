@@ -1,0 +1,18 @@
+{
+  "name": "WRKMBR",
+  "displayName": "Work with Member",
+  "category": "database_file",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkmbr",
+  "parameters": [],
+  "examples": [
+    "WRKMBR"
+  ],
+  "helpText": "WRKMBR. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDFILE",
+  "wrkOptions": {
+    "2": "CHGPF",
+    "5": "DSPMBR"
+  }
+}

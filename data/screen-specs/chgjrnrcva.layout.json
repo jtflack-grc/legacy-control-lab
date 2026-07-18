@@ -1,0 +1,11 @@
+{
+  "screenId": "CHGJRNRCVA",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-journal-receiver-attributes-chgjrnrcva",
+  "goldenFile": "chgjrnrcva.golden.json",
+  "requiredText": ["CHGJRNRCVA", "Change Journal Receiver Attributes", "Receiver threshold"],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "promptVariant": "detail",
+  "render": { "type": "command", "command": "CHGJRNRCVA JRN(QSYS/QAUDJRN) RCV(QAUDJRN)", "user": "QSECOFR" }
+}

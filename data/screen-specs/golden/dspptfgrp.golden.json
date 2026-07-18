@@ -1,0 +1,26 @@
+{
+  "screenId": "DSPPTFGRP",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=fixes-groups",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Display PTF group",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-ptf-group-dspptfgrp",
+      "type": "ibm-cl-reference"
+    }
+  ],
+  "asciiPanel": " DSPPTFGRP                        Display PTF Group                       CLAIMS400\n\nPTF group . . . . . . . . . . . : SF99740\nStatus  . . . . . . . . . . . . : Installed\nLevel   . . . . . . . . . . . . : 25303\n\nType options, press Enter.\n  5=Display PTF\n\nOpt  PTF ID    Status      Product     Description\n     SI76195   Applied     5770-SS1    Security - authority failure\n\nParameters or command\n===>\nF3=Exit  F5=Refresh  F7=Page up  F8=Page down  F12=Cancel",
+  "requiredText": [
+    "Display PTF Group",
+    "SF99740",
+    "5=Display PTF",
+    "SI76195",
+    "F3=Exit"
+  ],
+  "functionKeys": "F3=Exit  F5=Refresh  F7=Page up  F8=Page down  F12=Cancel",
+  "auditNotes": "Group-level PTF drill-down from WRKPTFGRP opt 5 — tie cumulative SF99740 level to individual PTF status.",
+  "grcMapping": [
+    "SOC2 CC8.1",
+    "COSO CC8 — change management"
+  ]
+}

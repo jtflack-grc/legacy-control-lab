@@ -1,0 +1,25 @@
+{
+  "name": "DLTSPLF",
+  "displayName": "Delete Spooled File",
+  "category": "spool_print",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dltsplf",
+  "parameters": [
+    {
+      "name": "FILE",
+      "label": "Spooled file",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*FIRST"
+      ]
+    }
+  ],
+  "examples": [
+    "DLTSPLF FILE(QAUDRPT)"
+  ],
+  "helpText": "Deletes a spooled file from the output queue in the lab runtime.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDSPL"
+}

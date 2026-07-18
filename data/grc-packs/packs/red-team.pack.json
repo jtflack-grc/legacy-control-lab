@@ -1,0 +1,73 @@
+{
+  "id": "red-team",
+  "sourceFile": "sources/red-team.excerpt.md",
+  "articleKey": "CLAIMS-007",
+  "menuLabel": "Red Team — authority boundaries",
+  "quotes": [
+    "find where the platform is intentionally delegating authority too broadly",
+    "excessive special authorities, dangerous *PUBLIC rights, owner-adopted programs"
+  ],
+  "articleRefs": [],
+  "steps": [
+    {
+      "id": "dsp-profile",
+      "title": "Display own profile",
+      "command": "DSPUSRPRF USRPRF(APCLERK)",
+      "commandMatch": "DSPUSRPRF.*APCLERK",
+      "screenHint": "DSPUSRPRF",
+      "excerptRefs": [
+        "find where the platform is intentionally delegating authority too broadly"
+      ],
+      "watchFor": ["Limit capabilities *YES", "Special authorities *NONE"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "dspobjaut",
+      "title": "Recon object authority",
+      "command": "DSPOBJAUT OBJ(PAYROLL/PAYMST)",
+      "commandMatch": "DSPOBJAUT",
+      "screenHint": "DSPOBJAUT",
+      "excerptRefs": [
+        "excessive special authorities, dangerous *PUBLIC rights, owner-adopted programs"
+      ],
+      "watchFor": ["Public authority on PAYMST", "Users with *CHANGE or higher"],
+      "exitHint": "Press F3 to exit."
+    },
+    {
+      "id": "edtobjaut",
+      "title": "Escape attempt — edit authority",
+      "command": "EDTOBJAUT OBJ(PAYROLL/PAYMST)",
+      "commandMatch": "EDTOBJAUT",
+      "screenHint": "EDTOBJAUT",
+      "excerptRefs": [
+        "authority-model failures and integration failures"
+      ],
+      "watchFor": ["CPF9902 function check", "No edit panel for APCLERK"],
+      "exitHint": "Denial is success — document the boundary."
+    },
+    {
+      "id": "grtobjaut",
+      "title": "Escape attempt — grant authority",
+      "command": "GRTOBJAUT OBJ(PAYROLL/PAYMST) USER(APCLERK) AUT(*ALL)",
+      "commandMatch": "GRTOBJAUT",
+      "screenHint": "GRTOBJAUT",
+      "excerptRefs": [
+        "find where the platform is intentionally delegating authority too broadly"
+      ],
+      "watchFor": ["CPF9902 on GRTOBJAUT", "AF journal entry during mission"],
+      "exitHint": "Press Enter after denial message."
+    },
+    {
+      "id": "dspneta",
+      "title": "Network recon",
+      "command": "DSPNETA",
+      "commandMatch": "^DSPNETA",
+      "screenHint": "DSPNETA",
+      "excerptRefs": [
+        "IBM documents host-server ports for ACS-supported services"
+      ],
+      "watchFor": ["Telnet/5250 listeners", "Read-only perimeter view"],
+      "exitHint": "Recon without escalation — note in finding."
+    }
+  ]
+}

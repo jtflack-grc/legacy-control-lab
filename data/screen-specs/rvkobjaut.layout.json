@@ -1,0 +1,18 @@
+{
+  "screenId": "RVKOBJAUT",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-revoke-object-authority-rvkobjaut",
+  "requiredText": [
+    "Revoke Object Authority (RVKOBJAUT)",
+    "Type choices, press Enter.",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "forbiddenText": ["Evidence note", "mission menu"],
+  "fieldRules": [
+    { "id": "P0", "valueContains": "PAYROLL/PAYMST" },
+    { "id": "P1", "valueContains": "APCLERK" }
+  ],
+  "render": { "type": "sample", "sample": "RVKOBJAUT_PROMPT" }
+}

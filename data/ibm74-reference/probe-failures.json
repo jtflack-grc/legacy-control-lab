@@ -1,0 +1,90 @@
+{
+  "generatedAt": "2026-06-10T19:43:02.481Z",
+  "failures": [
+    {
+      "label": "bare:CHGCURLIB",
+      "input": "CHGCURLIB",
+      "detail": "CPF0006 - CURLIB parameter required."
+    },
+    {
+      "label": "bare:CHGSPLFA",
+      "input": "CHGSPLFA",
+      "detail": "CPF0006 - FILE parameter required."
+    },
+    {
+      "label": "bare:CRTLIB",
+      "input": "CRTLIB",
+      "detail": "CPF0006 - LIB parameter required."
+    },
+    {
+      "label": "bare:DLTSPLF",
+      "input": "DLTSPLF",
+      "detail": "CPF0006 - FILE parameter required."
+    },
+    {
+      "label": "bare:DSPLIB",
+      "input": "DSPLIB",
+      "detail": "CPF0006 - LIB parameter required."
+    },
+    {
+      "label": "bare:DSPLIBD",
+      "input": "DSPLIBD",
+      "detail": "CPF0006 - LIB parameter required."
+    },
+    {
+      "label": "bare:DSPMSGD",
+      "input": "DSPMSGD",
+      "detail": "CPF0006 - MSGID parameter required."
+    },
+    {
+      "label": "bare:ENDJOB",
+      "input": "ENDJOB",
+      "detail": "CPF0006 - JOB parameter required."
+    },
+    {
+      "label": "bare:GENRPT",
+      "input": "GENRPT",
+      "detail": "CPF0006 - Use GENRPT TYPE(*CAMPAIGN), TYPE(*EXEC), or TYPE(*PRIV)."
+    },
+    {
+      "label": "bare:HLDJOB",
+      "input": "HLDJOB",
+      "detail": "CPF0006 - JOB parameter required."
+    },
+    {
+      "label": "bare:HLDSPLE",
+      "input": "HLDSPLE",
+      "detail": "CPF0006 - FILE parameter required."
+    },
+    {
+      "label": "bare:RESETLAB",
+      "input": "RESETLAB",
+      "detail": "CPF0006 - RESETLAB requires CONFIRM(*YES)."
+    },
+    {
+      "label": "bare:RLSJOB",
+      "input": "RLSJOB",
+      "detail": "CPF0006 - JOB parameter required."
+    },
+    {
+      "label": "bare:RLSSPLF",
+      "input": "RLSSPLF",
+      "detail": "CPF0006 - FILE parameter required."
+    },
+    {
+      "label": "bare:SBMJOB",
+      "input": "SBMJOB",
+      "detail": "CPF0006 - CMD parameter required."
+    },
+    {
+      "label": "bare:SNDMSG",
+      "input": "SNDMSG",
+      "detail": "CPF0006 - MSG parameter required."
+    },
+    {
+      "label": "bare:SNDPGMMSG",
+      "input": "SNDPGMMSG",
+      "detail": "CPF0006 - MSG parameter required."
+    }
+  ]
+}

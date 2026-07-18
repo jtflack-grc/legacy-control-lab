@@ -1,0 +1,16 @@
+{
+  "screenId": "CHGAUTL",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-authorization-list-chgautl",
+  "goldenFile": "chgautl.golden.json",
+  "requiredText": [
+    "Change Authorization List (CHGAUTL)",
+    "Type choices, press Enter.",
+    "Authorization list",
+    "PAYROLL",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "render": { "type": "command", "command": "CHGAUTL AUTL(PAYROLL)", "user": "QSECOFR" }
+}

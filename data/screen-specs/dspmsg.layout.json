@@ -1,0 +1,20 @@
+{
+  "screenId": "DSPMSG",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://setgetweb.com/p/iSeries/v5r3/wrkmsg.htm",
+  "goldenFile": "dspmsg.golden.json",
+  "requiredText": [
+    "Work with Messages",
+    "Messages in:",
+    "Type options below, then press Enter.",
+    "4=Remove",
+    "5=Display details and reply",
+    "Opt",
+    "Message",
+    "Messages needing a reply",
+    "Messages not needing a reply"
+  ],
+  "render": { "type": "command", "command": "DSPMSG MSGQ(QSYSOPR)" }
+}

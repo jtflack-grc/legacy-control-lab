@@ -1,0 +1,105 @@
+{
+  "version": "1.0.0",
+  "paths": [
+    {
+      "id": "clause-9-evaluation",
+      "articleId": "clause-9",
+      "label": "Clause 9 — program evaluation",
+      "intro": "Evaluate whether privacy controls on the partition match what the program promised — ownership, authorities, and monitoring.",
+      "steps": [
+        {
+          "id": "profiles",
+          "label": "Review PII-related profiles",
+          "command": "DSPUSRPRF USRPRF(PAYADMIN)",
+          "coach": "Confirm named accountability and special authorities on data-owner profiles."
+        },
+        {
+          "id": "authorities",
+          "label": "Inspect effective authority",
+          "command": "DSPAUT USRPRF(PAYADMIN)",
+          "coach": "Map profile authorities to privacy risk inputs from the article."
+        },
+        {
+          "id": "ownership",
+          "label": "Work objects by owner",
+          "command": "WRKOBJOWN USRPRF(PAYADMIN)",
+          "coach": "Option 5 displays object authority; option 9 supports ownership remediation."
+        },
+        {
+          "id": "autl",
+          "label": "Review authorization lists",
+          "command": "WRKAUTL",
+          "coach": "Option 5 on PAYROLL — who is on the list?"
+        },
+        {
+          "id": "edit-autl",
+          "label": "Edit authorization list (if remediating)",
+          "command": "EDTAUTL AUTL(PAYROLL)",
+          "coach": "Document before/after when evaluation finds gaps."
+        },
+        {
+          "id": "journal",
+          "label": "Prove monitoring",
+          "command": "DSPAUDJRNE ENTTYP(AF PW)",
+          "coach": "Authority failures and password events — evaluation evidence."
+        },
+        {
+          "id": "sysval",
+          "label": "Security system values",
+          "command": "DSPSYSVAL SYSVAL(QAUDCTL)",
+          "coach": "Audit control settings underpin program evaluation."
+        }
+      ]
+    },
+    {
+      "id": "clause-10-improvement",
+      "articleId": "clause-10",
+      "label": "Clause 10 — continuous improvement",
+      "intro": "Corrective action on the green screen — ownership drift, authorization lists, and authority remediation with journal proof.",
+      "steps": [
+        {
+          "id": "ownership-drift",
+          "label": "Find ownership drift",
+          "command": "WRKOBJOWN USRPRF(QPGMR) OBJTYPE(*FILE)",
+          "coach": "Disabled profiles still owning source files — classic improvement finding."
+        },
+        {
+          "id": "payadmin-own",
+          "label": "Data-owner objects",
+          "command": "WRKOBJOWN USRPRF(PAYADMIN)",
+          "coach": "Compare ownership to Clause 5 accountability narrative."
+        },
+        {
+          "id": "edit-payroll-autl",
+          "label": "Remediate PAYROLL autl",
+          "command": "EDTAUTL AUTL(PAYROLL)",
+          "coach": "Option 4 removes users; document the corrective action."
+        },
+        {
+          "id": "grant-fix",
+          "label": "Authority remediation",
+          "command": "GRTOBJAUT OBJ(PAYROLL/PAYMST) USER(*PUBLIC) AUT(*EXCLUDE)",
+          "coach": "Tighten public authority after evaluation."
+        },
+        {
+          "id": "revoke-fix",
+          "label": "Revoke excess authority",
+          "command": "RVKOBJAUT OBJ(PAYROLL/PAYMST) USER(APCLERK) AUT(*ALL)",
+          "coach": "Pair grants with revokes — improvement, not one-sided change."
+        },
+        {
+          "id": "obj-audit",
+          "label": "Object auditing flag",
+          "command": "CHGOBJAUD OBJ(PAYROLL/PAYMST) OBJTYPE(*FILE) AUD(*ALL)",
+          "coach": "Raise monitoring after corrective action."
+        },
+        {
+          "id": "journal-proof",
+          "label": "Journal proof",
+          "command": "DSPJRN JRN(QSYS/QAUDJRN)",
+          "coach": "AF/CP entries prove the improvement landed."
+        }
+      ]
+    }
+  ]
+}

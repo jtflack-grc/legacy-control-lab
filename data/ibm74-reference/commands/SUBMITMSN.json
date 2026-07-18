@@ -1,0 +1,14 @@
+{
+  "name": "SUBMITMSN",
+  "displayName": "Submit Mission",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-submitmsn",
+  "parameters": [],
+  "examples": [
+    "SUBMITMSN"
+  ],
+  "helpText": "Submits the current mission attempt for scoring and exports Markdown/JSON reports plus evidence packet.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

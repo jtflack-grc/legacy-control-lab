@@ -1,0 +1,46 @@
+[
+  {
+    "name": "STRQSH",
+    "displayName": "Start Qshell",
+    "category": "pase",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "startQshell",
+    "parameters": [
+      {
+        "name": "CMD",
+        "type": "string",
+        "required": false,
+        "label": "Command"
+      }
+    ],
+    "helpText": "Starts an interactive Qshell (PASE) session. In the lab, PASE is approximated by the Linux runtime in the Docker container; /QOpenSys maps to data/qopensys.",
+    "examples": ["STRQSH", "STRQSH CMD('pwd')", "STRQSH CMD('ls -l')"],
+    "groupMenu": "CMDIFS",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true
+  },
+  {
+    "name": "QSH",
+    "displayName": "Run Qshell Command",
+    "category": "pase",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "qsh",
+    "parameters": [
+      {
+        "name": "CMD",
+        "type": "string",
+        "required": true,
+        "label": "Command"
+      }
+    ],
+    "helpText": "Runs a Qshell command script. Opens the Qshell panel, executes CMD, and leaves output on screen.",
+    "examples": ["QSH CMD('pwd')", "QSH CMD('ps -ef | head')", "QSH CMD('system DSPJOB')"],
+    "groupMenu": "CMDIFS",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true
+  }
+]

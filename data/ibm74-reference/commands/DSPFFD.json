@@ -1,0 +1,25 @@
+{
+  "name": "DSPFFD",
+  "displayName": "Display File Field Description",
+  "category": "database_file",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspffd",
+  "parameters": [
+    {
+      "name": "FILE",
+      "label": "Database file",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*FIRST"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPFFD FILE(PAYROLL/PAYMST)"
+  ],
+  "helpText": "Displays field-level description for a database file. Evidence for sensitive column review.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDDB"
+}

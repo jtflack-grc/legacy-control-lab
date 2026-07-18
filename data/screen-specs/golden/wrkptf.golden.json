@@ -1,0 +1,32 @@
+{
+  "screenId": "WRKPTF",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=fixes-working-with-ptfs",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Maintaining and managing software",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=program-management-fix-temporary-program-ptf",
+      "type": "ibm-documentation"
+    },
+    {
+      "tier": "A",
+      "title": "Guide to fixes — FAQs",
+      "url": "https://www.ibm.com/support/pages/guide-fixes-faqs",
+      "type": "ibm-support"
+    }
+  ],
+  "asciiPanel": " WRKPTF                           Work with PTFs                          CLAIMS400\n\nType options, press Enter.\n  5=Display PTF details\n\nOpt  PTF ID    Status      Product     Group   Description\n     SI76195   Applied     5770-SS1    SF99740 Security - authority failure\n\nParameters or command\n===>\nF3=Exit  F5=Refresh  F7=Page up  F8=Page down  F12=Cancel",
+  "requiredText": [
+    "Work with PTFs",
+    "5=Display PTF details",
+    "SI76195",
+    "F3=Exit"
+  ],
+  "functionKeys": "F3=Exit  F5=Refresh  F7=Page up  F8=Page down  F12=Cancel",
+  "auditNotes": "Flat PTF list for patch verification — drill opt 5 to DSPPTF cover letter. SOC2 CC8.1 change-management evidence.",
+  "grcMapping": [
+    "SOC2 CC8.1",
+    "ITGC — patch verification"
+  ],
+  "qmgtoolsRelation": "COLESADTA prints DSPPTF; WRKPTF is operator flat-list before group-level WRKPTFGRP review."
+}

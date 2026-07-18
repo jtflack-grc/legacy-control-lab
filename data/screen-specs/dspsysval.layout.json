@@ -1,0 +1,16 @@
+{
+  "screenId": "DSPSYSVAL",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "ibm-i-7.4-display-system-value",
+  "requiredText": [
+    "DSPSYSVAL",
+    "Display System Value",
+    "System value",
+    "Current value",
+    "QSECURITY",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Evidence note", "Welcome!"],
+  "render": { "type": "sample", "sample": "DSPSYSVAL_QSECURITY" }
+}

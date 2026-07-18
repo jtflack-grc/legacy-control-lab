@@ -1,0 +1,11 @@
+{
+  "screenId": "DSPJRNRCV",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-journal-receiver-dspjrnrcv",
+  "goldenFile": "dspjrnrcv.golden.json",
+  "requiredText": ["DSPJRNRCV", "Display Journal Receiver", "Receiver", "First entry"],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "promptVariant": "detail",
+  "render": { "type": "command", "command": "DSPJRNRCV JRN(QSYS/QAUDJRN) RCV(QAUDJRN)", "user": "AUDIT" }
+}

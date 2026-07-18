@@ -1,0 +1,40 @@
+{
+  "screenId": "DSPUSRPRF",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4?topic=profiles-user-profile-parameter-fields",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — User-profile parameter fields",
+      "url": "https://www.ibm.com/docs/en/i/7.4?topic=profiles-user-profile-parameter-fields",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.6 — DSPUSRPRF command",
+      "url": "https://www.ibm.com/docs/en/i/7.6.0?topic=ssw_ibm_i_76/cl/dspusrprf.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — User-profile parameter fields",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=profiles-user-profile-parameter-fields",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "DSPUSRPRF — setgetweb v5r3",
+      "url": "https://setgetweb.com/p/iSeries/v5r3/dspusrpr.htm",
+      "type": "panel-capture"
+    }
+  ],
+  "requiredText": [
+    "Display User Profile",
+    "User profile",
+    "User class",
+    "Special authority",
+    "Group profile",
+    "Previous sign-on",
+    "Text description",
+    "Job description",
+    "Owner",
+    "Data owner"
+  ],
+  "notes": "TYPE(*BASIC) shows dotted-label detail panel (QUSRSRAA-style: label col 6, colon col 45, value col 47). Lab adds Data owner and Activity list exempt for governance training.",
+  "asciiPanel": " DSPUSRPRF                        Display User Profile                    CLAIMS400\n\n      User profile . . . . . . . . . . . . . . . . : OLDVENDOR\n      Status . . . . . . . . . . . . . . . . . . . : *ENABLED\n      User class . . . . . . . . . . . . . . . . . : *USER\n      Special authority . . . . . . . . . . . . . : *JOBCTL\n      Group profile . . . . . . . . . . . . . . . : *NONE\n      Initial menu . . . . . . . . . . . . . . . . : MAIN\n      Job description . . . . . . . . . . . . . . . : QDFTJOBD/QGPL\n      Owner . . . . . . . . . . . . . . . . . . . . : *NONE\n      Data owner . . . . . . . . . . . . . . . . . : Finance Ops\n      Previous sign-on . . . . . . . . . . . . . . . : 03/01/26\n      Text description . . . . . . . . . . . . . . . : Former vendor AP clerk\n\nF1=Help   F3=Exit   F4=Prompt   F9=Retrieve   F12=Cancel"
+}

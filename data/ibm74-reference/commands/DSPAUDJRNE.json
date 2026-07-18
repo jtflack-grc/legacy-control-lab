@@ -1,0 +1,45 @@
+{
+  "name": "DSPAUDJRNE",
+  "displayName": "Display Audit Journal Entries",
+  "category": "journal_audit",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspaudjrne",
+  "parameters": [
+    {
+      "name": "ENTTYP",
+      "label": "Entry types",
+      "required": false,
+      "type": "auditEntryType",
+      "supportsSpecialValues": [
+        "*ALL",
+        "AF",
+        "CA",
+        "CP",
+        "OW",
+        "PG",
+        "PW",
+        "SV",
+        "UA",
+        "OM"
+      ]
+    },
+    {
+      "name": "USER",
+      "label": "USER",
+      "required": false,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*PUBLIC",
+        "*CURRENT"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPAUDJRNE ENTTYP(AF)",
+    "DSPAUDJRNE ENTTYP(PW CP)"
+  ],
+  "helpText": "Displays audit journal entries by entry type (AF, PW, CP, etc.). Primary security audit evidence.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJRN"
+}

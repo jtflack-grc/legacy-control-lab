@@ -1,0 +1,28 @@
+{
+  "name": "DSPEVDDIFF",
+  "displayName": "Display Evidence Diff",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspevddiff",
+  "parameters": [
+    {
+      "name": "TYPE",
+      "label": "Entity type",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*USRPRF",
+        "*SYSVAL",
+        "*OBJAUT"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPEVDDIFF TYPE(*ALL)",
+    "DSPEVDDIFF TYPE(*USRPRF)"
+  ],
+  "helpText": "Displays state changes made during the current attempt across profiles, authorities, and system values.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

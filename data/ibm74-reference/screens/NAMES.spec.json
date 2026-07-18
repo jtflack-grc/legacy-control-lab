@@ -1,0 +1,15 @@
+{
+  "screenId": "NAMES",
+  "category": "network_tcpip",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "TITLE",
+    "BODY"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

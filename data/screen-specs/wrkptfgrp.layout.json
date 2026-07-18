@@ -1,0 +1,36 @@
+{
+  "screenId": "WRKPTFGRP",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=fixes-groups",
+  "goldenFile": "wrkptfgrp.golden.json",
+  "promptVariant": "subfile",
+  "functionKeys": "F3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "optionLine": { "row": 3, "col": 6, "valueContains": "Type options, press Enter." },
+  "commandLine": { "row": 22, "label": "Parameters or command" },
+  "attributeRules": [
+    { "fieldId": "HEADER", "row": 1, "col": 1, "attrByte": 34 },
+    { "fieldId": "OPTS", "row": 3, "col": 6, "attrByte": 58 },
+    { "fieldId": "COL_GRP", "row": 6, "col": 10, "attrByte": 34 },
+    { "fieldId": "PGRP0", "row": 8, "col": 10, "attrByte": 32 }
+  ],
+  "requiredText": [
+    "WRKPTFGRP",
+    "Work with PTF Groups",
+    "Type options, press Enter.",
+    "5=Display group",
+    "SF99740",
+    "Cumulative PTF Package",
+    "HIPER Group"
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 8,
+    "lastDataRow": 14,
+    "commandLineRow": 22,
+    "optionIdPattern": "^PGOPT\\d+$",
+    "pagingKeys": ["F7", "F8"]
+  },
+  "render": { "type": "command", "command": "WRKPTFGRP" }
+}

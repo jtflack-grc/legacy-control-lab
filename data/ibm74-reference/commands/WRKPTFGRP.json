@@ -1,0 +1,17 @@
+{
+  "name": "WRKPTFGRP",
+  "displayName": "Work with PTF Groups",
+  "category": "ptf_license",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkptfgrp",
+  "parameters": [],
+  "examples": [
+    "WRKPTFGRP"
+  ],
+  "helpText": "Work with PTF groups and cumulative fix levels installed on the synthetic system image.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDPTF",
+  "wrkOptions": {
+    "5": "DSPPTFGRP"
+  }
+}

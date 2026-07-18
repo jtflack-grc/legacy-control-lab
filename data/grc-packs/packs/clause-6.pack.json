@@ -1,0 +1,46 @@
+{
+  "id": "clause-6",
+  "sourceFile": "sources/clause-6.excerpt.md",
+  "articleKey": "CLAIMS-004",
+  "menuLabel": "ISO 27701 Clause 6 — privacy risk planning",
+  "quotes": [
+    "Privacy risk planning — authorization lists, profile authorities, and audit monitoring.",
+    "Who is on the PAYROLL authorization list?"
+  ],
+  "articleRefs": [],
+  "steps": [
+    {
+      "id": "wrkautl",
+      "title": "Work with authorization lists",
+      "command": "WRKAUTL AUTL(PAYROLL)",
+      "commandMatch": "WRKAUTL",
+      "screenHint": "WRKAUTL",
+      "excerptRefs": ["Who is on the PAYROLL authorization list?"],
+      "watchFor": ["PAYROLL authorization list members"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "dspaut",
+      "title": "Display profile authorities",
+      "command": "DSPAUT USRPRF(PAYADMIN)",
+      "commandMatch": "DSPAUT",
+      "screenHint": "DSPAUT",
+      "excerptRefs": ["Profile-level authorities are privacy risk inputs."],
+      "watchFor": ["Special authorities on PAYADMIN"],
+      "exitHint": "Press F3 when done."
+    },
+    {
+      "id": "dspsecaud",
+      "title": "Display security audit settings",
+      "command": "DSPSECAUD",
+      "commandMatch": "^DSPSECAUD",
+      "screenHint": "DSPSECAUD",
+      "excerptRefs": [
+        "QAUDCTL plus authority-failure journal — monitoring baseline and signal.",
+        "ISO 27701 Clause 6: measurable objectives for privacy risk treatment on the partition."
+      ],
+      "watchFor": ["QAUDCTL settings", "Authority failure logging"],
+      "exitHint": "Press F3 to exit."
+    }
+  ]
+}

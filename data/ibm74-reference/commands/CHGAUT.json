@@ -1,0 +1,53 @@
+{
+  "name": "CHGAUT",
+  "displayName": "Change Authority",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgaut",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Object path",
+      "required": true,
+      "type": "pathName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    },
+    {
+      "name": "USER",
+      "label": "USER",
+      "required": false,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*PUBLIC",
+        "*CURRENT"
+      ]
+    },
+    {
+      "name": "DTAAUT",
+      "label": "Data authority",
+      "required": false,
+      "type": "authorityName",
+      "supportsSpecialValues": [
+        "*RWX",
+        "*RW",
+        "*RX",
+        "*R",
+        "*W",
+        "*X",
+        "*EXCLUDE",
+        "*AUTL"
+      ]
+    }
+  ],
+  "examples": [
+    "CHGAUT OBJ('/claims/claimmst.sym') DTAAUT(*RX)"
+  ],
+  "helpText": "Changes data authority for an IFS object path in the lab runtime.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDIFS"
+}

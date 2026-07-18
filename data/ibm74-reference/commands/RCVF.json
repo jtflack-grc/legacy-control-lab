@@ -1,0 +1,12 @@
+{
+  "name": "RCVF",
+  "displayName": "Receive F",
+  "category": "database_file",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-rcvf",
+  "parameters": [],
+  "examples": [],
+  "helpText": "RCVF. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDFILE"
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "systemId": "claims400",
+    "systemName": "CLAIMS400",
+    "title": "Healthcare Claims IBM i Evidence Runtime",
+    "industry": "Healthcare claims",
+    "status": "active",
+    "defaultMission": "CLAIMS-001",
+    "scenarioPath": "data/scenarios/claims400"
+  },
+  {
+    "systemId": "county400",
+    "systemName": "COUNTY400",
+    "title": "County Public Records IBM i Evidence Runtime",
+    "industry": "Public sector",
+    "status": "active",
+    "defaultMission": "COUNTY-001",
+    "scenarioPath": "data/scenarios/county400"
+  },
+  {
+    "systemId": "hospital400",
+    "systemName": "HOSPITAL400",
+    "title": "Hospital Operations IBM i Evidence Runtime",
+    "industry": "Healthcare operations",
+    "status": "active",
+    "defaultMission": "HOSPITAL-001",
+    "scenarioPath": "data/scenarios/hospital400"
+  }
+]

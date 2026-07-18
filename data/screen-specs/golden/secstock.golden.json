@@ -1,0 +1,38 @@
+{
+  "screenId": "SECSTOCK",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.6.0?topic=auditors-password-control",
+  "sources": [
+    {
+      "title": "IBM i 7.6 — Password control (GO SECURITY paths)",
+      "url": "https://www.ibm.com/docs/en/i/7.6.0?topic=auditors-password-control",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "SecureMyi — GO SECURITY user class visibility",
+      "url": "https://www.securemyi.com/nl/articles/userclass2.html",
+      "type": "vendor-documentation"
+    },
+    {
+      "title": "IBM i Security reference — commands and menus appendix",
+      "url": "https://www.ibm.com/docs/it/ssw_ibm_i_73/pdf/sc415302.pdf",
+      "type": "redbook"
+    },
+    {
+      "title": "Lab stock SECURITY menu reference",
+      "url": "data/screen-specs/golden/security.golden.json",
+      "type": "lab-documentation"
+    }
+  ],
+  "asciiPanel": " SECSTOCK                         IBM i Security Paths                    CLAIMS400\n\nSelect one of the following:\n 1. Change your password\n 2. Work with authorization lists\n 3. Work with security auditing\n 4. Work with user profiles\n20. Work with system values\n\n90. Sign off\n\nSelection or command\n===>\nF3=Exit   F12=Cancel",
+  "requiredText": [
+    "IBM i Security Paths",
+    "Select one of the following:",
+    "1. Change your password",
+    "Work with authorization lists",
+    "Work with security auditing",
+    "90. Sign off",
+    "Selection or command"
+  ],
+  "commandLineLabel": "Selection or command",
+  "notes": "Lab GO SECSTOCK training hub (expanded SECURITY paths from SECURITY option 20). Stock IBM GO SECURITY (QSYS/SECURITY) shows 8 different options — see security.golden.json: stock has '2. Work with user profiles', '3. Work with authorization lists', '5. Work with security auditing', '8. Security tools'; lab SECSTOCK renumbers and adds governance paths (inactive profiles, privileged session, CHGACTPRFL, SECTOOLS concept). *USER class on stock system sees only option 1."
+}

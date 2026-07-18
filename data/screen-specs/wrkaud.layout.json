@@ -1,0 +1,12 @@
+{
+  "screenId": "WRKAUD",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-audit-values-wrkaud",
+  "goldenFile": "wrkaud.golden.json",
+  "requiredText": ["WRKAUD", "Work with Audit Values", "QAUDCTL", "2=Change", "F5=Refresh"],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "optionLine": { "row": 4, "col": 6 },
+  "promptVariant": "subfile",
+  "render": { "type": "command", "command": "WRKAUD", "user": "AUDIT" }
+}

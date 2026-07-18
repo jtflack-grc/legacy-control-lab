@@ -1,0 +1,34 @@
+{
+  "name": "CHGOBJOWN",
+  "displayName": "Change Object OWN",
+  "category": "library_object",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgobjown",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "OBJ",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    },
+    {
+      "name": "LIB",
+      "label": "LIB",
+      "required": false,
+      "type": "libraryName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB",
+        "*USRLIBL"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "CHGOBJOWN. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDOBJ"
+}

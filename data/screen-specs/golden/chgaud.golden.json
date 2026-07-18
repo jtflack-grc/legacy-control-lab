@@ -1,0 +1,39 @@
+{
+  "screenId": "CHGAUD",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-audit-values-chgaud",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — CHGAUD command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-audit-values-chgaud",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Security auditing",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=auditors-security-auditing",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "B",
+      "title": "IT Jungle — QAUDCTL/QAUDLVL baseline",
+      "url": "https://www.itjungle.com/",
+      "type": "community-panel"
+    }
+  ],
+  "asciiPanel": "              Change Audit Values (CHGAUD)\n\nType choices, press Enter.\n\nAuditing control . . . . . . . . . . . . . . . > *AUDLVL *OBJAUD\nAuditing level . . . . . . . . . . . . . . . . > *AUTFAIL *PGMFAIL\nForce auditing level . . . . . . . . . . . . . > *NONE\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Change Audit Values",
+    "Auditing control",
+    "Auditing level",
+    "Force auditing level",
+    "F4=Prompt"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel   F24=More keys",
+  "notes": "Lab maps CHGAUD to SQLite system values QAUDCTL/QAUDLVL/QAUDFRCLVL — not MI CHGAUD program execution.",
+  "auditNotes": "Audit policy change — QAUDCTL/QAUDLVL baseline. Mutations logged to QAUDJRN when auditing enabled.",
+  "grcMapping": [
+    "SOC2 CC6.1",
+    "Clause 6 — logical access monitoring"
+  ]
+}

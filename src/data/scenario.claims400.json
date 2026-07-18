@@ -1,0 +1,5 @@
+{
+  "systemName": "CLAIMS400",
+  "description": "Healthcare claims operations training scenario",
+  "seedFile": "claims400.seed.json"
+}

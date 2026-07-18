@@ -1,0 +1,14 @@
+[
+  {
+    "library": "PAYROLL",
+    "object": "PAYMST",
+    "userName": "HOSPADM",
+    "authority": "*ALL"
+  },
+  {
+    "library": "BILLING",
+    "object": "BILLMST",
+    "userName": "OLDINTF",
+    "authority": "*CHANGE"
+  }
+]

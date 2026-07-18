@@ -1,0 +1,23 @@
+{
+  "screenId": "DSPOBJD",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspobjd-display-object-description",
+  "requiredText": [
+    "Display Object Description",
+    "Object",
+    "Library",
+    "Object type",
+    "Owner",
+    "Text description",
+    "Public authority",
+    "F3=Exit"
+  ],
+  "notes": "Dotted-label detail panel for WRKOBJ option 5 drill-down.",
+  "asciiPanel": " DSPOBJD                          Display Object Description              CLAIMS400\n\nObject . . . . . . . . . . . . . . . . . . . . : PAYMST\nLibrary . . . . . . . . . . . . . . . . . . . . : PAYROLL\nObject type . . . . . . . . . . . . . . . . . . : *FILE\nOwner . . . . . . . . . . . . . . . . . . . . . : PAYADMIN\nAttribute . . . . . . . . . . . . . . . . . . . : PF\nText description . . . . . . . . . . . . . . . . : Payroll master file\nPublic authority . . . . . . . . . . . . . . . : *EXCLUDE\n\nF3=Exit   F12=Cancel",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — DSPOBJD command reference",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspobjd-display-object-description",
+      "type": "ibm-documentation"
+    }
+  ]
+}

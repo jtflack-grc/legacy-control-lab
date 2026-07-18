@@ -1,0 +1,121 @@
+[
+  {
+    "name": "DSPLICKEY",
+    "displayName": "Display License Key",
+    "category": "ptf_license",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Display License Key. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "DSPPTF",
+    "displayName": "Display Program Temporary Fix",
+    "category": "ptf_license",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayPtf",
+    "helpText": "Displays PTF (program temporary fix) information for the synthetic system image.",
+    "examples": [
+      "DSPPTF PTF(SI12345)"
+    ],
+    "groupMenu": "CMDPTF",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPPTFAPYI",
+    "displayName": "Display PTF APYI",
+    "category": "ptf_license",
+    "groupMenu": "CMDPTF",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPPTFAPYI. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPPTFAPYI",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPPTFGRP",
+    "displayName": "Display PTF Group",
+    "category": "ptf_license",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Display PTF Group. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "displayPtfGroup",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "WRKLICINF",
+    "displayName": "Work with License Information",
+    "category": "ptf_license",
+    "status": "implemented",
+    "handler": "workLicenseInfo",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "missionUse": [
+      "ptf_currency"
+    ],
+    "helpText": "Work with licensed program information installed on the lab partition.",
+    "examples": [
+      "WRKLICINF"
+    ],
+    "groupMenu": "CMDPTF",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKPRD",
+    "displayName": "Work with Products",
+    "category": "ptf_license",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workProducts",
+    "helpText": "Work with Products. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "WRKPRD"
+    ],
+    "groupMenu": "CMDPTF",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKPTF",
+    "displayName": "Work with PTFs",
+    "category": "ptf_license",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workPtfs",
+    "helpText": "Work with program temporary fixes installed on the lab partition — patch hygiene evidence for SOC2 CC8.1.",
+    "examples": ["WRKPTF"],
+    "groupMenu": "CMDPTF",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic PTF list from scenario — compare levels with WRKPTFGRP for change management."
+  },
+  {
+    "name": "WRKPTFGRP",
+    "displayName": "Work with PTF Groups",
+    "category": "ptf_license",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workPtfGroups",
+    "helpText": "Work with PTF groups and cumulative fix levels installed on the synthetic system image.",
+    "examples": [
+      "WRKPTFGRP"
+    ],
+    "groupMenu": "CMDPTF",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

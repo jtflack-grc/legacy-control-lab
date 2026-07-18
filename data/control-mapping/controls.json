@@ -1,0 +1,42 @@
+[
+  {
+    "id": "LCL-AC-01",
+    "title": "Privileged access is restricted to approved users.",
+    "framework": "Custom IBM i Governance Control Set"
+  },
+  {
+    "id": "LCL-AC-02",
+    "title": "Dormant privileged accounts are disabled or justified.",
+    "framework": "Custom IBM i Governance Control Set"
+  },
+  {
+    "id": "LCL-AC-03",
+    "title": "Public authority to sensitive objects is restricted.",
+    "framework": "Custom IBM i Governance Control Set"
+  },
+  {
+    "id": "LCL-AU-01",
+    "title": "Audit logging is configured for security-relevant events.",
+    "framework": "Custom IBM i Governance Control Set"
+  },
+  {
+    "id": "LCL-AU-02",
+    "title": "Audit evidence is reviewed and retained.",
+    "framework": "Custom IBM i Governance Control Set"
+  },
+  {
+    "id": "LCL-CM-01",
+    "title": "Security-relevant system values are configured and reviewed.",
+    "framework": "Custom IBM i Governance Control Set"
+  },
+  {
+    "id": "LCL-OP-01",
+    "title": "Job logs and operational messages are monitored.",
+    "framework": "Custom IBM i Governance Control Set"
+  },
+  {
+    "id": "LCL-RC-01",
+    "title": "Remediation actions are evidenced and traceable.",
+    "framework": "Custom IBM i Governance Control Set"
+  }
+]

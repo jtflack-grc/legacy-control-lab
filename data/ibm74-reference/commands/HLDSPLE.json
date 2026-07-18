@@ -1,0 +1,25 @@
+{
+  "name": "HLDSPLE",
+  "displayName": "Hold Spooled File",
+  "category": "spool_print",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-hldsple",
+  "parameters": [
+    {
+      "name": "FILE",
+      "label": "Spooled file",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*FIRST"
+      ]
+    }
+  ],
+  "examples": [
+    "HLDSPLE FILE(QAUDRPT)"
+  ],
+  "helpText": "Places a spooled file on hold so it will not print until released.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDSPL"
+}

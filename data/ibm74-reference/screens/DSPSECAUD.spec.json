@@ -1,0 +1,12 @@
+{
+  "screenId": "DSPSECAUD",
+  "category": "journal_audit",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "CHGPERS",
+  "displayName": "Change Persona",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgpers",
+  "parameters": [
+    {
+      "name": "PERSONA",
+      "label": "Persona",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "AUDITOR",
+        "OPERATOR",
+        "STUDENT"
+      ]
+    }
+  ],
+  "examples": [
+    "CHGPERS PERSONA(AUDITOR)",
+    "CHGPERS PERSONA(ADMIN)"
+  ],
+  "helpText": "Changes the active persona (AUDITOR, OPERATOR, ADMIN) which adjusts briefing tone and scoring emphasis.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

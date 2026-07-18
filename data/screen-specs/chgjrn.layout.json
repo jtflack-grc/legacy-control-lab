@@ -1,0 +1,11 @@
+{
+  "screenId": "CHGJRN",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-journal-chgjrn",
+  "goldenFile": "chgjrn.golden.json",
+  "requiredText": ["CHGJRN", "Change Journal", "Journal", "Manage receivers", "F4=Prompt"],
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel   F24=More keys",
+  "promptVariant": "cmdprompt",
+  "render": { "type": "command", "command": "CHGJRN JRN(QSYS/QAUDJRN)", "user": "QSECOFR" }
+}

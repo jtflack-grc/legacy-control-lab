@@ -1,0 +1,40 @@
+{
+  "screenId": "WRKAUD",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-audit-values-wrkaud",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — WRKAUD command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-audit-values-wrkaud",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "B",
+      "title": "SecureMyi — audit policy review",
+      "url": "https://www.securemyi.com/",
+      "type": "community-panel"
+    }
+  ],
+  "asciiPanel": " WRKAUD                           Work with Audit Values                  CLAIMS400\n\n      Type options, press Enter.\n        2=Change   5=Display\n\n      Opt   System value    Value                     Text\n      __    QAUDCTL         *AUDLVL *OBJAUD            Audit control\n      __    QAUDLVL         *AUTFAIL *PGMFAIL         Audit level\n\n      Parameters or command\n      ===>\nF3=Exit   F5=Refresh   F12=Cancel",
+  "requiredText": [
+    "Work with Audit Values",
+    "QAUDCTL",
+    "QAUDLVL",
+    "2=Change",
+    "5=Display",
+    "F5=Refresh"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "columnHeaders": [
+    "Opt",
+    "System value",
+    "Value",
+    "Text"
+  ],
+  "notes": "Option 2 opens CHGAUD/CHGSYSVAL prefill for audit system values. Lab reads SQLite system value table.",
+  "auditNotes": "Work-with audit system values — option 2 CHGSYSVAL/CHGAUD; option 5 DSPSYSVAL for QAUDCTL/QAUDLVL evidence.",
+  "grcMapping": [
+    "SOC2 CC6.1",
+    "Clause 6 — audit configuration"
+  ]
+}

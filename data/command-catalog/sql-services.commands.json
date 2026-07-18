@@ -1,0 +1,63 @@
+[
+  {
+    "name": "RUNSQL",
+    "displayName": "Run SQL Statement",
+    "category": "sql_services",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "runSql",
+    "parameters": [
+      {
+        "name": "SQL",
+        "type": "sqlStatement",
+        "required": true,
+        "label": "SQL statement"
+      }
+    ],
+    "helpText": "Runs a read-only SQL statement against QSYS2-style views mapped to the scenario database. Primary path for tabular evidence export.",
+    "examples": [
+      "RUNSQL SQL('select user_name, status from qsys2.user_info')",
+      "RUNSQL SQL('select name, current_value from qsys2.system_value_info')"
+    ],
+    "groupMenu": "CMDSQL",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "STRSQL",
+    "displayName": "Start SQL",
+    "category": "sql_services",
+    "status": "implemented",
+    "handler": "startSql",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Starts the interactive SQL session screen. Equivalent entry point to RUNSQL for ad hoc queries.",
+    "examples": [
+      "STRSQL"
+    ],
+    "groupMenu": "CMDSQL",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKSQLSVC",
+    "displayName": "Work with SQL Services",
+    "category": "sql_services",
+    "groupMenu": "CMDSQL",
+    "status": "implemented",
+    "handler": "workSqlServices",
+    "promptable": true,
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Browse QSYS2-style SQL service views available in the lab and launch sample RUNSQL queries.",
+    "shortDescription": "Work with SQL Services",
+    "examples": [
+      "WRKSQLSVC"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

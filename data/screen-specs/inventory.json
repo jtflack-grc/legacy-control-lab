@@ -1,0 +1,1172 @@
+{
+  "updatedAt": "2026-06-13",
+  "description": "Flagship IBM i screens for CLAIMS400 audit lane. Tier A = hand-built mission panels (must have .layout.json). Tier B = catalog factory screens. Status needs-golden = capture required from a real 7.4 partition before layout spec can be written.",
+  "entries": [
+    {
+      "screenId": "WRKSYSVAL",
+      "command": "WRKSYSVAL",
+      "menuPath": "AUDIT/1",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrksysval.layout.json",
+      "goldenFile": "wrksysval.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPSYSVAL",
+      "command": "DSPSYSVAL SYSVAL(...)",
+      "menuPath": "WRKSYSVAL opt 5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspsysval.layout.json",
+      "goldenFile": "dspsysval.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "WRKUSRPRF",
+      "command": "WRKUSRPRF",
+      "menuPath": "AUDIT/2",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkusrprf.layout.json",
+      "goldenFile": "wrkusrprf.golden.json",
+      "fidelityScore": {
+        "layout": 5,
+        "colors": 4,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPUSRPRF",
+      "command": "DSPUSRPRF USRPRF(...)",
+      "menuPath": "WRKUSRPRF opt 5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspusrprf.layout.json",
+      "goldenFile": "dspusrprf.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "WRKOBJ",
+      "command": "WRKOBJ",
+      "menuPath": "AUDIT/3",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkobj.layout.json",
+      "goldenFile": "wrkobj.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPOBJAUT",
+      "command": "DSPOBJAUT OBJ(...)",
+      "menuPath": "WRKOBJ opt 8",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspobjaut.layout.json",
+      "goldenFile": "dspobjaut.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPJRN",
+      "command": "DSPJRN JRN(QSYS/QAUDJRN)",
+      "menuPath": "AUDIT/4",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspjrn.layout.json",
+      "goldenFile": "dspjrn.golden.json",
+      "fidelityScore": {
+        "layout": 5,
+        "colors": 4,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 5
+      }
+    },
+    {
+      "screenId": "WRKJRN",
+      "command": "WRKJRN",
+      "menuPath": "AUDIT/journal",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkjrn.layout.json",
+      "goldenFile": "wrkjrn.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CHGJRN",
+      "command": "CHGJRN JRN(QSYS/QAUDJRN)",
+      "menuPath": "WRKJRN opt 2",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgjrn.layout.json",
+      "goldenFile": "chgjrn.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CRTJRNRCV",
+      "command": "CRTJRNRCV JRN(QSYS/QAUDJRN)",
+      "menuPath": "journal rotation",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "crtjrnrcv.layout.json",
+      "goldenFile": "crtjrnrcv.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CHGJRNRCVA",
+      "command": "CHGJRNRCVA JRN(QSYS/QAUDJRN)",
+      "menuPath": "journal rotation",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgjrnrcva.layout.json",
+      "goldenFile": "chgjrnrcva.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPJRNRCV",
+      "command": "DSPJRNRCV JRN(QSYS/QAUDJRN)",
+      "menuPath": "journal rotation",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspjrnrcv.layout.json",
+      "goldenFile": "dspjrnrcv.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CHGAUD",
+      "command": "CHGAUD",
+      "menuPath": "WRKAUD opt 2",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgaud.layout.json",
+      "goldenFile": "chgaud.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPAUD",
+      "command": "DSPAUD",
+      "menuPath": "audit policy",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspaud.layout.json",
+      "goldenFile": "dspaud.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "WRKAUD",
+      "command": "WRKAUD",
+      "menuPath": "AUDIT/journal",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkaud.layout.json",
+      "goldenFile": "wrkaud.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPACTPRFL",
+      "command": "DSPACTPRFL",
+      "menuPath": "CLAIMS-002",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspactprfl.layout.json",
+      "goldenFile": "dspactprfl.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "WRKACTJOB",
+      "command": "WRKACTJOB",
+      "menuPath": "AUDIT/5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkactjob.layout.json",
+      "goldenFile": "wrkactjob.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 3,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPJOB",
+      "command": "DSPJOB",
+      "menuPath": "WRKACTJOB opt 5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspjob.layout.json",
+      "goldenFile": "dspjob.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPJOBATTR",
+      "command": "DSPJOBATTR JOB(...)",
+      "menuPath": "WRKACTJOB opt 5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspjobattr.layout.json",
+      "goldenFile": "dspjobattr.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "WRKSPLF",
+      "command": "WRKSPLF",
+      "menuPath": "AUDIT/6",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrksplf.layout.json",
+      "goldenFile": "wrksplf.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPJOBLOG",
+      "command": "DSPJOBLOG",
+      "menuPath": "AUDIT/7",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspjoblog.layout.json",
+      "goldenFile": "dspjoblog.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPMSG",
+      "command": "DSPMSG MSGQ(QSYSOPR)",
+      "menuPath": "GO SPL/2",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspmsg.layout.json",
+      "goldenFile": "dspmsg.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "WRKPTFGRP",
+      "command": "WRKPTFGRP",
+      "menuPath": "PTF audit",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkptfgrp.layout.json",
+      "goldenFile": "wrkptfgrp.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "WRKPTF",
+      "command": "WRKPTF",
+      "menuPath": "PTF audit",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkptf.layout.json",
+      "goldenFile": "wrkptf.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPPTFGRP",
+      "command": "DSPPTFGRP PTFID(SF99740)",
+      "menuPath": "WRKPTFGRP opt 5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspptfgrp.layout.json",
+      "goldenFile": "dspptfgrp.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPPTF",
+      "command": "DSPPTF PTF(SI76195)",
+      "menuPath": "DSPPTFGRP opt 5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspptf.layout.json",
+      "goldenFile": "dspptf.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPPRVSSN",
+      "command": "DSPPRVSSN",
+      "menuPath": "stakeholder",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspprvssn.layout.json",
+      "goldenFile": "dspprvssn.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "WRKLIB",
+      "command": "WRKLIB",
+      "menuPath": "GO CMDLL",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrklib.layout.json",
+      "goldenFile": "wrklib.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPLIB",
+      "command": "DSPLIB",
+      "menuPath": "WRKLIB opt 5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dsplib.layout.json",
+      "goldenFile": "dsplib.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "WRKLNK",
+      "command": "WRKLNK",
+      "menuPath": "IFS",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrklnk.layout.json",
+      "goldenFile": "wrklnk.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CMDPROMPT",
+      "command": "F4 prompt",
+      "menuPath": "any",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "cmdprompt.layout.json",
+      "goldenFile": "cmdprompt.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 4,
+        "pfKeys": 4,
+        "options": 3,
+        "sources": 5
+      }
+    },
+    {
+      "screenId": "SIGNON",
+      "command": "SIGNON",
+      "menuPath": "entry",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "signon.layout.json",
+      "goldenFile": "signon.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "AUDIT",
+      "command": "GO AUDIT",
+      "menuPath": "MAIN/1",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "audit.layout.json",
+      "goldenFile": "audit.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "SECURITY",
+      "command": "GO SECURITY",
+      "menuPath": "QSECOFR",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "security.layout.json",
+      "goldenFile": "security.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "SECSTOCK",
+      "command": "GO SECSTOCK",
+      "menuPath": "SECURITY/20",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "secstock.layout.json",
+      "goldenFile": "secstock.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CHGPWD",
+      "command": "CHGPWD",
+      "menuPath": "SECSTOCK/1",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgpwd.layout.json",
+      "goldenFile": "chgpwd.golden.json",
+      "fidelityScore": {
+        "layout": 2,
+        "colors": 2,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CHGUSRPRF",
+      "command": "CHGUSRPRF",
+      "menuPath": "WRKUSRPRF opt 2 / Path B",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgusrprf.layout.json",
+      "goldenFile": "chgusrprf.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "CHGSYSVAL",
+      "command": "CHGSYSVAL",
+      "menuPath": "WRKSYSVAL opt 2",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgsysval.layout.json",
+      "goldenFile": "chgsysval.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "GRTOBJAUT",
+      "command": "GRTOBJAUT",
+      "menuPath": "WRKOBJ opt 2",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "grtobjaut.layout.json",
+      "goldenFile": "grtobjaut.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "RVKOBJAUT",
+      "command": "RVKOBJAUT",
+      "menuPath": "authority",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "rvkobjaut.layout.json",
+      "goldenFile": "rvkobjaut.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPEVDDIFF",
+      "command": "DSPEVDDIFF",
+      "menuPath": "Path B",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspevddiff.layout.json",
+      "goldenFile": "dspevddiff.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 2
+      }
+    },
+    {
+      "screenId": "WRKFINDING",
+      "command": "WRKFINDING",
+      "menuPath": "AUDIT/Path A",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkfinding.layout.json",
+      "goldenFile": "wrkfinding.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 2
+      }
+    },
+    {
+      "screenId": "SUBMITMSN",
+      "command": "SUBMITMSN",
+      "menuPath": "AUDIT/Path A",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "submitmsn.layout.json",
+      "goldenFile": "submitmsn.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 2
+      }
+    },
+    {
+      "screenId": "QSH",
+      "command": "STRQSH",
+      "menuPath": "PASE",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "qsh.layout.json",
+      "goldenFile": "qsh.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "ANZPRFACT",
+      "command": "ANZPRFACT INACT(90)",
+      "menuPath": "CLAIMS-002 / Offboarding article",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "anzprfact.layout.json",
+      "goldenFile": "anzprfact.golden.json",
+      "fidelityScore": {
+        "layout": 2,
+        "colors": 2,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CHGACTPRFL",
+      "command": "CHGACTPRFL",
+      "menuPath": "CLAIMS-002 operator",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgactprfl.layout.json",
+      "goldenFile": "chgactprfl.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPFFD",
+      "command": "DSPFFD FILE(...)",
+      "menuPath": "database",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspffd.layout.json",
+      "goldenFile": "dspffd.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPFD",
+      "command": "DSPFD FILE(PAYROLL/PAYMST)",
+      "menuPath": "CLAIMS-003 / Clause 8",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspfd.layout.json",
+      "goldenFile": "dspfd.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "WRKJOBSCDE",
+      "command": "WRKJOBSCDE",
+      "menuPath": "CLAIMS-003 / Clause 8",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkjobscde.layout.json",
+      "goldenFile": "wrkjobscde.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPJOBSCDE",
+      "command": "DSPJOBSCDE JOBSCDE(...)",
+      "menuPath": "WRKJOBSCDE opt 5",
+      "tier": "B",
+      "verificationStatus": "catalog-factory",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 2
+      }
+    },
+    {
+      "screenId": "WRKAUTL",
+      "command": "WRKAUTL",
+      "menuPath": "Clause 6 privacy",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkautl.layout.json",
+      "goldenFile": "wrkautl.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPAUTL",
+      "command": "DSPAUTL AUTL(PAYROLL)",
+      "menuPath": "WRKAUTL opt 5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspautl.layout.json",
+      "goldenFile": "dspautl.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPSECAUD",
+      "command": "DSPSECAUD",
+      "menuPath": "CLAIMS-004 / Clause 6",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspsecaud.layout.json",
+      "goldenFile": "dspsecaud.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPAUT",
+      "command": "DSPAUT USER(BACKUPADM)",
+      "menuPath": "WRKUSRPRF opt 8",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspaut.layout.json",
+      "goldenFile": "dspaut.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "DSPOBJD",
+      "command": "DSPOBJD OBJ(...)",
+      "menuPath": "WRKOBJ opt 5",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspobjd.layout.json",
+      "goldenFile": "dspobjd.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "WRKDSKSTS",
+      "command": "WRKDSKSTS",
+      "menuPath": "monitor",
+      "tier": "B",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkdsksts.layout.json",
+      "goldenFile": "wrkdsksts.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "WRKSYSSTS",
+      "command": "WRKSYSSTS",
+      "menuPath": "monitor",
+      "tier": "B",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrksyssts.layout.json",
+      "goldenFile": "wrksyssts.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "NETSTAT",
+      "command": "NETSTAT",
+      "menuPath": "TCP/IP",
+      "tier": "B",
+      "verificationStatus": "layout-audited",
+      "specFile": "netstat.layout.json",
+      "goldenFile": "netstat.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "WRKTCPIP",
+      "command": "WRKTCPIP",
+      "menuPath": "stakeholder",
+      "tier": "B",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrktcpip.layout.json",
+      "goldenFile": "wrktcpip.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "WRKOBJOWN",
+      "command": "WRKOBJOWN USRPRF(PAYADMIN)",
+      "menuPath": "command line",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "wrkobjown.layout.json",
+      "goldenFile": "wrkobjown.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CHGOBJOWN",
+      "command": "CHGOBJOWN OBJ(PAYROLL/PAYMST)",
+      "menuPath": "WRKOBJOWN opt 9",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgobjown.layout.json",
+      "goldenFile": "chgobjown.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CRTAUTL",
+      "command": "CRTAUTL AUTL(NEWAUTL)",
+      "menuPath": "authority",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "crtautl.layout.json",
+      "goldenFile": "crtautl.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "CHGAUTL",
+      "command": "CHGAUTL AUTL(PAYROLL)",
+      "menuPath": "WRKAUTL opt 2",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgautl.layout.json",
+      "goldenFile": "chgautl.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "ADDAUTLE",
+      "command": "ADDAUTLE AUTL(PAYROLL)",
+      "menuPath": "EDTAUTL F6",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "addautle.layout.json",
+      "goldenFile": "addautle.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "EDTAUTL",
+      "command": "EDTAUTL AUTL(PAYROLL)",
+      "menuPath": "command line",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "edtautl.layout.json",
+      "goldenFile": "edtautl.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 3
+      }
+    },
+    {
+      "screenId": "EDTOBJAUT",
+      "command": "EDTOBJAUT OBJ(PAYROLL/PAYMST)",
+      "menuPath": "CLAIMS-007 / Red team",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "edtobjaut.layout.json",
+      "goldenFile": "edtobjaut.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPNETA",
+      "command": "DSPNETA",
+      "menuPath": "CLAIMS-007 / Red team",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspneta.layout.json",
+      "goldenFile": "dspneta.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "CFGTCP",
+      "command": "CFGTCP",
+      "menuPath": "CMDTCP / network",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "cfgtcp.layout.json",
+      "goldenFile": "cfgtcp.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "CHGNETA",
+      "command": "CHGNETA",
+      "menuPath": "CFGTCP opt 3 / CLAIMS-007",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "chgneta.layout.json",
+      "goldenFile": "chgneta.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "CRTUSRPRF",
+      "command": "CRTUSRPRF",
+      "menuPath": "CMDUSR / profile lifecycle",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "crtusrprf.layout.json",
+      "goldenFile": "crtusrprf.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 3,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DLTUSRPRF",
+      "command": "DLTUSRPRF",
+      "menuPath": "CMDUSR / profile lifecycle",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dltusrprf.layout.json",
+      "goldenFile": "dltusrprf.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 3,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPAUDJRNE",
+      "command": "DSPAUDJRNE ENTTYP(AF)",
+      "menuPath": "CLAIMS-005 / Blue team",
+      "tier": "A",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspaudjrne.layout.json",
+      "goldenFile": "dspaudjrne.golden.json",
+      "fidelityScore": {
+        "layout": 4,
+        "colors": 3,
+        "pfKeys": 4,
+        "options": 4,
+        "sources": 4
+      }
+    },
+    {
+      "screenId": "DSPCMDCOV",
+      "command": "DSPCMDCOV",
+      "menuPath": "stakeholder",
+      "tier": "B",
+      "verificationStatus": "layout-audited",
+      "specFile": "dspcmdcov.layout.json",
+      "goldenFile": "dspcmdcov.golden.json",
+      "fidelityScore": {
+        "layout": 3,
+        "colors": 2,
+        "pfKeys": 3,
+        "options": 2,
+        "sources": 2
+      }
+    }
+  ]
+}

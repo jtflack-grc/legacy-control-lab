@@ -1,0 +1,15 @@
+{
+  "screenId": "OPNQRYF",
+  "category": "database_file",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "TITLE",
+    "BODY"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

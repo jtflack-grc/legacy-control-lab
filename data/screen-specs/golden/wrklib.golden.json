@@ -1,0 +1,35 @@
+{
+  "screenId": "WRKLIB",
+  "primarySource": "https://public.dhe.ibm.com/systems/power/docs/systemi/v5r4/en_US/5505_EXP.pdf",
+  "sources": [
+    {
+      "title": "Mastering IBM i — Work with Libraries (WRKLIB) Figures 1.17–1.18",
+      "url": "https://public.dhe.ibm.com/systems/power/docs/systemi/v5r4/en_US/5505_EXP.pdf",
+      "type": "redbook"
+    },
+    {
+      "title": "WRKLIB command reference",
+      "url": "https://www.setgetweb.com/p/iSeries/v5r3/wrklib.htm",
+      "type": "vendor-documentation"
+    },
+    {
+      "title": "IBM i 7.3 — Displaying library names and contents",
+      "url": "https://www.ibm.com/docs/en/i/7.3.0?topic=libraries-displaying-library-names-contents",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": "              Work with Libraries (WRKLIB)              \n\nType options, press Enter.\n  1=Create   2=Change   3=Copy   4=Delete   5=Display\n  6=Print    7=Rename   8=Display description\n\n     Library     Type   ASP device    Text\n     QGPL         PROD   *SYSBAS       General Purpose Library\n     QUSRSYS      PROD   *SYSBAS       System library for users\n                                            More...\nParameters for options 1, 2, 3, 4, 5, 6, 7 or command\n===>",
+  "requiredText": [
+    "Work with Libraries",
+    "Type options, press Enter.",
+    "1=Create",
+    "2=Change",
+    "5=Display",
+    "Library",
+    "ASP",
+    "Text"
+  ],
+  "columnHeaders": ["Opt", "Library", "Type", "ASP device", "Text"],
+  "commandLineLabel": "Parameters for options 1, 2, 3, 4, 5, 6, 7 or command",
+  "notes": "WRKLIB may first show a parameter entry screen (LIB default *LIBL) before the list. Option 5 displays library contents via DSPLIB."
+}

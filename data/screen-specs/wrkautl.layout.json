@@ -1,0 +1,38 @@
+{
+  "screenId": "WRKAUTL",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-authorization-lists-wrkautl",
+  "goldenFile": "wrkautl.golden.json",
+  "requiredText": [
+    "WRKAUTL",
+    "Work with Authorization Lists",
+    "Type options, press Enter.",
+    "2=Change",
+    "4=Delete",
+    "5=Display",
+    "Authorization list",
+    "PAYROLL",
+    "SECDATA",
+    "Parameters or command",
+    "F3=Exit",
+    "F5=Refresh"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "optionLine": { "row": 4, "col": 6, "valueContains": "2=Change" },
+  "promptVariant": "subfile",
+  "fieldRules": [
+    { "id": "COLHDR", "row": 6, "valueContains": "Authorization list" },
+    { "id": "WOPT0", "row": 7, "col": 6 }
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 7,
+    "lastDataRow": 13,
+    "commandLineRow": 22,
+    "optionIdPattern": "^WOPT\\d+$"
+  },
+  "commandLine": { "row": 22, "label": "Parameters or command" },
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "WRKAUTL" }
+}

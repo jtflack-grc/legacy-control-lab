@@ -1,0 +1,21 @@
+{
+  "screenId": "DSPJOB",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.5.0?topic=ssw_ibm_i_75/cl/dspjob.html",
+  "goldenFile": "dspjob.golden.json",
+  "requiredText": [
+    "DSPJOB",
+    "Work with Job",
+    "Job:",
+    "User:",
+    "Number:",
+    "Select one of the following:",
+    "1. Display job status attributes",
+    "4. Work with spooled files",
+    "10. Display job log",
+    "Selection or command"
+  ],
+  "render": { "type": "command", "command": "DSPJOB", "user": "AUDIT" }
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "controlId": "HIPAA-164.312-a",
+    "title": "Access control (synthetic training reference)",
+    "family": "Technical Safeguards",
+    "framework": "HIPAA Lite",
+    "description": "Training-only synthetic mapping — not a compliance determination.",
+    "evidenceTypes": ["user_profile", "object_authority"],
+    "relatedCommands": ["WRKUSRPRF", "WRKOBJ"],
+    "relatedFindings": ["phi_access_risk"]
+  }
+]

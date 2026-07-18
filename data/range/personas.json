@@ -1,0 +1,68 @@
+[
+  {
+    "personaId": "auditor",
+    "title": "Auditor Mode",
+    "description": "Focuses on evidence sufficiency, control claims, findings, and report quality.",
+    "defaultCoachLevel": "medium",
+    "commandRestrictions": [],
+    "scoringWeights": {
+      "evidenceCoverage": 40,
+      "issueIdentification": 35,
+      "controlInterpretation": 15,
+      "findingQuality": 10
+    },
+    "expectedArtifact": "audit_finding_report"
+  },
+  {
+    "personaId": "grc_analyst",
+    "title": "GRC Analyst Mode",
+    "description": "Map evidence to control objectives and identify governance gaps.",
+    "defaultCoachLevel": "medium",
+    "scoringWeights": {
+      "evidenceCoverage": 35,
+      "issueIdentification": 30,
+      "controlInterpretation": 25,
+      "findingQuality": 10
+    },
+    "expectedArtifact": "control_assessment_memo"
+  },
+  {
+    "personaId": "blue_team",
+    "title": "Blue Team Mode",
+    "description": "Identify and remediate exposure with before/after evidence.",
+    "defaultCoachLevel": "low",
+    "scoringWeights": {
+      "evidenceCoverage": 30,
+      "issueIdentification": 25,
+      "controlInterpretation": 15,
+      "findingQuality": 30
+    },
+    "expectedArtifact": "remediation_evidence_packet"
+  },
+  {
+    "personaId": "operator",
+    "title": "Operator Mode",
+    "description": "Diagnose operational evidence from jobs, logs, queues, and spool files.",
+    "defaultCoachLevel": "medium",
+    "scoringWeights": {
+      "evidenceCoverage": 45,
+      "issueIdentification": 30,
+      "controlInterpretation": 10,
+      "findingQuality": 15
+    },
+    "expectedArtifact": "operational_incident_note"
+  },
+  {
+    "personaId": "executive_reviewer",
+    "title": "Executive Reviewer Mode",
+    "description": "Summarize risk, control gaps, and residual uncertainty for management.",
+    "defaultCoachLevel": "high",
+    "scoringWeights": {
+      "evidenceCoverage": 25,
+      "issueIdentification": 25,
+      "controlInterpretation": 25,
+      "findingQuality": 25
+    },
+    "expectedArtifact": "management_summary"
+  }
+]

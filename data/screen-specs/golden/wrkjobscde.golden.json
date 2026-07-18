@@ -1,0 +1,55 @@
+{
+  "screenId": "WRKJOBSCDE",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-job-schedule-entries-wrkjobscde",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — WRKJOBSCDE command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-job-schedule-entries-wrkjobscde",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "B",
+      "title": "SecureMyi — QSECIDL1 schedule entry",
+      "url": "https://www.securemyi.com/nl/articles/usertools.html",
+      "type": "community-panel"
+    },
+    {
+      "tier": "B",
+      "title": "setgetweb — WRKJOBSCDE panel",
+      "url": "http://www.setgetweb.com/p/iSeries/v5r3/wrkjobscde.htm",
+      "type": "community-panel"
+    }
+  ],
+  "asciiPanel": " WRKJOBSCDE                       Work with Job Schedule Entries          CLAIMS400\n\n      Type options, press Enter.\n        2=Change   5=Display   6=Display job log\n\n      Opt   Job          User       Status\n      __    PAYROLLNGT   PAYADMIN   *ENABLED\n      __    PAYEXTRCT    PAYADMIN   *ENABLED\n      __    PAYIFSEXP    PAYADMIN   *ENABLED\n\n      Parameters or command\n      ===>\nF3=Exit   F5=Refresh   F12=Cancel",
+  "requiredText": [
+    "WRKJOBSCDE",
+    "Work with Job Schedule Entries",
+    "Type options, press Enter.",
+    "2=Change",
+    "5=Display",
+    "6=Display job log",
+    "PAYROLLNGT",
+    "PAYIFSEXP",
+    "Parameters or command",
+    "F3=Exit",
+    "F5=Refresh",
+    "F12=Cancel",
+    "4=Remove"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "columnHeaders": [
+    "Opt",
+    "Job",
+    "User",
+    "Status"
+  ],
+  "commandLineLabel": "Parameters or command",
+  "notes": "Stock IBM WRKJOBSCDE lists QSECIDL1 (ANZPRFACT nightly disable) at 1:00 AM. Lab seeds PAYROLLNGT/PAYIFSEXP for Clause 8 privacy path — PAYIFSEXP CPYTOIMPF exports PAYMST SSN to IFS.",
+  "auditNotes": "Scheduled jobs are change-management and privacy evidence — QSECIDL1 from ANZPRFACT, batch exports (PAYIFSEXP). QMGTOOLS COLESADTA captures scheduler entries for support.",
+  "grcMapping": [
+    "Clause 8 — batch privacy",
+    "COSO CC8 — automated job changes"
+  ],
+  "qmgtoolsRelation": "COLESADTA exports WRKJOBSCDE entries automatically for IBM Support PMRs."
+}

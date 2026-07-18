@@ -1,0 +1,21 @@
+{
+  "name": "DSPPTFGRP",
+  "displayName": "Display PTF Group",
+  "category": "ptf_license",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspptfgrp",
+  "parameters": [
+    {
+      "name": "PTFID",
+      "label": "PTF identifier",
+      "required": false,
+      "type": "name",
+      "supportsSpecialValues": [
+        "*ALL"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "Display PTF Group. IBM i Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+  "requiresAuthority": [],
+  "mutatesState": false
+}

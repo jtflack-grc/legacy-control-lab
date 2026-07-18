@@ -1,0 +1,31 @@
+{
+  "name": "SAVSCNPKG",
+  "displayName": "Save Scenario Package",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-savscnpkg",
+  "parameters": [
+    {
+      "name": "SCENARIO",
+      "label": "Scenario id",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "CLAIMS400"
+      ]
+    },
+    {
+      "name": "TOSTMF",
+      "label": "TOSTMF",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": []
+    }
+  ],
+  "examples": [
+    "SAVSCNPKG SCENARIO(CLAIMS400)"
+  ],
+  "helpText": "Packages the active scenario directory into a portable .lclpack file under data/exports/.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

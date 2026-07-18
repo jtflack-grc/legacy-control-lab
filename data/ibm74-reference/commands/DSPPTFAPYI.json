@@ -1,0 +1,22 @@
+{
+  "name": "DSPPTFAPYI",
+  "displayName": "Display PTF APYI",
+  "category": "ptf_license",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspptfapyi",
+  "parameters": [
+    {
+      "name": "PTFID",
+      "label": "PTF identifier",
+      "required": false,
+      "type": "name",
+      "supportsSpecialValues": [
+        "*ALL"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "DSPPTFAPYI. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDPTF"
+}

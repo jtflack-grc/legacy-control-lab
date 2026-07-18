@@ -1,0 +1,16 @@
+{
+  "name": "CHGUSRAUD",
+  "displayName": "Change User Audit",
+  "category": "security",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgusraud",
+  "parameters": [],
+  "examples": [
+    "CHGUSRAUD USRPRF(BACKUPADM)"
+  ],
+  "helpText": "Displays user audit levels. Profile audit changes are read-only in this lab.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDSEC"
+}

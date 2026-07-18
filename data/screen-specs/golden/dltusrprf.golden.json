@@ -1,0 +1,27 @@
+{
+  "screenId": "DLTUSRPRF",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-delete-user-profile-dltusrprf",
+  "sources": [
+    {
+      "tier": "A",
+      "type": "ibm-documentation",
+      "title": "IBM i 7.4 — DLTUSRPRF command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-delete-user-profile-dltusrprf"
+    },
+    {
+      "tier": "B",
+      "type": "community-panel",
+      "title": "DLTUSRPRF panel — setgetweb",
+      "url": "http://www.setgetweb.com/p/i5/dltusrprf.htm"
+    }
+  ],
+  "asciiPanel": "              Delete User Profile (DLTUSRPRF)\n\nType choices, press Enter.\n\nUser profile . . . . . . . . . . . . . . . . . > TRAINER01\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Delete User Profile (DLTUSRPRF)",
+    "Type choices, press Enter.",
+    "User profile",
+    "F4=Prompt",
+    "F12=Cancel"
+  ],
+  "notes": "Deletes lab-created profiles — blocked for seeded mission IDs."
+}

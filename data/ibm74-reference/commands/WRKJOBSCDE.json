@@ -1,0 +1,17 @@
+{
+  "name": "WRKJOBSCDE",
+  "displayName": "Work with Job Schedule Entries",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkjobscde",
+  "parameters": [],
+  "examples": [
+    "WRKJOBSCDE"
+  ],
+  "helpText": "Work with Job Schedule Entries — cataloged in Legacy Control Lab.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "wrkOptions": {
+    "2": "CHGJOBSCDE",
+    "5": "DSPJOBSCDE"
+  }
+}

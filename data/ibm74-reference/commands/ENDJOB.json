@@ -1,0 +1,27 @@
+{
+  "name": "ENDJOB",
+  "displayName": "End Job",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-endjob",
+  "parameters": [
+    {
+      "name": "JOB",
+      "label": "Job",
+      "required": true,
+      "type": "jobName",
+      "supportsSpecialValues": [
+        "*ACTIVE",
+        "*JOB"
+      ]
+    }
+  ],
+  "examples": [
+    "ENDJOB JOB(230220/BATCH/OLDVENDOR)"
+  ],
+  "helpText": "Ends the specified job in the lab partition.",
+  "requiresAuthority": [
+    "*JOBCTL"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDJOB"
+}

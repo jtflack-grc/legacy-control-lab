@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ---- Primary meta ----------------------------------------------- -->
+    <title>IronTerm - Browser-side IBM 3270 / 5250 Terminal Emulator</title>
+    <meta name="description"
+          content="IronTerm - browser-side IBM 3270 (TN3270 / TN3270E) and 5250 (TN5250 / TN5250E) terminal emulator. Pure JavaScript, no backend, no build step. Connect to z/OS, Hercules MVS, TSO, CICS, IBM i and AS/400 via a WebSocket bridge.">
+    <meta name="keywords"
+          content="IronTerm, IBM 3270, TN3270, TN3270E, terminal emulator, mainframe, z/OS, Hercules, MVS, TSO, CICS, AS/400, IBM i, TN5250, websockify, WebSocket, EBCDIC, IND$FILE, RFC 1041, RFC 2355, browser terminal, web terminal">
+    <meta name="author" content="Alexandre Bencz">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="theme-color" content="#050a05">
+    <link rel="canonical" href="https://ironterm.bencz.cc/">
+
+    <!-- ---- Favicon (inline SVG: green 'IT' on black) ----------------- -->
+    <link rel="icon" type="image/svg+xml"
+          href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23050a05'/><text x='32' y='46' font-family='monospace' font-size='38' font-weight='bold' fill='%2333ff33' text-anchor='middle'>IT</text></svg>">
+
+    <!-- ---- Open Graph (Facebook / LinkedIn / Discord / Slack) -------- -->
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="IronTerm">
+    <meta property="og:title"       content="IronTerm - Browser-side IBM 3270 / 5250 Terminal Emulator">
+    <meta property="og:description" content="Browser-side IBM 3270 and 5250 terminal emulator in pure JavaScript. Connect to z/OS, Hercules MVS, TSO, CICS, IBM i and AS/400 via a WebSocket bridge - no backend, no build step.">
+    <meta property="og:url"         content="https://ironterm.bencz.cc/">
+    <meta property="og:image"       content="https://github.com/user-attachments/assets/f5d7d630-b739-4a8e-8a0e-f2e2e8c9944b">
+    <meta property="og:image:alt"   content="IronTerm TN3270 client connected to a Hercules MVS mainframe">
+    <meta property="og:locale"      content="en_US">
+
+    <!-- ---- Twitter Card ---------------------------------------------- -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="IronTerm - Browser-side IBM 3270 / 5250 Terminal Emulator">
+    <meta name="twitter:description" content="Browser-side IBM 3270 and 5250 terminal emulator in pure JavaScript. Connect to z/OS, Hercules MVS, TSO, CICS, IBM i and AS/400 via a WebSocket bridge - no backend, no build step.">
+    <meta name="twitter:image"       content="https://github.com/user-attachments/assets/f5d7d630-b739-4a8e-8a0e-f2e2e8c9944b">
+
+    <!-- ---- Structured data (schema.org / JSON-LD) -------------------- -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "IronTerm",
+            "alternateName": ["Iron Term", "IronTerm 3270", "IronTerm 5250"],
+            "url": "https://ironterm.bencz.cc/",
+            "description": "Browser-side IBM 3270 (TN3270 / TN3270E) and 5250 (TN5250 / TN5250E) terminal emulator written in pure JavaScript. Connects to z/OS, VM/CMS, Hercules MVS, TSO, CICS, IBM i and AS/400 through a WebSocket-to-TCP bridge. No backend, no build step.",
+            "applicationCategory": "DeveloperApplication",
+            "applicationSubCategory": "Terminal Emulator",
+            "operatingSystem": "Any (modern web browser)",
+            "softwareVersion": "1.0",
+            "license": "https://opensource.org/licenses/MIT",
+            "codeRepository": "https://github.com/bencz/IronTerm",
+            "image": "https://github.com/user-attachments/assets/f5d7d630-b739-4a8e-8a0e-f2e2e8c9944b",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "author": {
+                "@type": "Person",
+                "name": "Alexandre Bencz",
+                "url": "https://github.com/bencz"
+            },
+            "featureList": [
+                "TN3270 / TN3270E datastream (RFC 1041 / RFC 2355)",
+                "TN5250 / TN5250E datastream (RFC 1205 / RFC 4777)",
+                "EBCDIC code pages CP037 and CP1047",
+                "IND$FILE upload/download (DFT mode)",
+                "Models 3278-2/3/4/5 (24x80 to 27x132)",
+                "5250 models 3179-2, 3196-A1, 3477-FC/FG, 3180-2, 5251-11",
+                "Extended attributes, structured fields, Query Reply",
+                "Connection profiles persisted in localStorage"
+            ]
+        }
+    </script>
+
+    <!-- ---- Fonts ----------------------------------------------------- -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+
+    <style>
+        :root {
+            --bg:        #050a05;
+            --bg-soft:   #0a1a0a;
+            --fg:        #33ff33;
+            --fg-bright: #9dff9d;
+            --fg-dim:    #1c8a1c;
+            --fg-faint:  #0e4a0e;
+            --accent:    #5cf6ff;
+            --amber:     #ffb86c;
+            --red:       #ff6b6b;
+
+            /* IBM i / AS400 column uses a slightly warmer amber tone */
+            --as400:        #ffb86c;
+            --as400-bright: #ffd9a8;
+            --as400-dim:    #a87238;
+            --as400-faint:  #4a3018;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--fg);
+            font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            text-shadow: 0 0 1px rgba(120, 255, 120, 0.4);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background:
+                    radial-gradient(ellipse at top, var(--bg-soft) 0%, var(--bg) 70%);
+        }
+
+        main {
+            flex: 1 0 auto;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 28px 28px 16px;
+        }
+
+        /* ---- ASCII logo ------------------------------------------------- */
+        .logo {
+            font-size: clamp(7px, 1.8vw, 13px);
+            line-height: 1.0;
+            margin: 0;
+            padding: 0;
+            white-space: pre;
+            color: var(--fg-bright);
+            text-align: center;
+            overflow: hidden;
+            text-shadow:
+                    0 0 2px  rgba(157, 255, 157, 0.85),
+                    0 0 8px  rgba( 51, 255,  51, 0.45),
+                    0 0 18px rgba( 51, 255,  51, 0.18);
+        }
+
+        .tagline {
+            text-align: center;
+            color: var(--fg-dim);
+            letter-spacing: 2px;
+            font-size: 11px;
+            margin: 14px 0 4px;
+        }
+
+        .copyright {
+            text-align: center;
+            color: var(--fg-faint);
+            font-size: 11px;
+            letter-spacing: 1px;
+            margin: 0 0 22px;
+        }
+
+        /* ---- Split layout ---------------------------------------------- */
+        .split {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0;
+            margin: 22px 0 0;
+            align-items: stretch;
+        }
+
+        .col {
+            min-width: 0;
+            padding: 0 22px;
+        }
+
+        .col-mainframe { padding-left: 4px; }
+        .col-as400     { padding-right: 4px; }
+
+        /* Central vertical divider with a CRT-ish glow */
+        .divider {
+            width: 1px;
+            background: linear-gradient(
+                    to bottom,
+                    transparent 0%,
+                    var(--fg-faint) 8%,
+                    var(--fg-dim) 50%,
+                    var(--fg-faint) 92%,
+                    transparent 100%
+            );
+            position: relative;
+            box-shadow:
+                    0 0 6px rgba(51, 255, 51, 0.25),
+                    0 0 16px rgba(51, 255, 51, 0.10);
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            width: 9px;
+            height: 9px;
+            background: var(--bg);
+            border: 1px solid var(--fg-dim);
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        .divider::before { top: 0; }
+        .divider::after  { top: 100%; }
+
+        /* ---- Column headers -------------------------------------------- */
+        .col-title {
+            margin: 0 0 4px;
+            padding: 0;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        .col-mainframe .col-title { color: var(--fg-bright); }
+        .col-as400 .col-title     { color: var(--as400-bright); }
+
+        .col-subtitle {
+            margin: 0 0 14px;
+            padding: 0;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .col-mainframe .col-subtitle { color: var(--fg-dim); }
+        .col-as400 .col-subtitle     { color: var(--as400-dim); }
+
+        .col-rule {
+            white-space: pre;
+            font-size: 13px;
+            line-height: 1.0;
+            margin: 0 0 8px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .col-mainframe .col-rule { color: var(--fg-dim); }
+        .col-as400 .col-rule     { color: var(--as400-dim); }
+
+        .col-banner {
+            font-size: clamp(6px, 1vw, 9px);
+            line-height: 1.0;
+            white-space: pre;
+            margin: 0 0 16px;
+            padding: 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .col-mainframe .col-banner {
+            color: var(--fg);
+            text-shadow:
+                    0 0 2px rgba(157, 255, 157, 0.6),
+                    0 0 6px rgba(51, 255, 51, 0.30);
+        }
+        .col-as400 .col-banner {
+            color: var(--as400);
+            text-shadow:
+                    0 0 2px rgba(255, 217, 168, 0.6),
+                    0 0 6px rgba(255, 184, 108, 0.30);
+        }
+
+        /* ---- Section labels -------------------------------------------- */
+        .section-label {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin: 18px 0 8px;
+            padding: 0 2px;
+        }
+
+        .col-mainframe .section-label { color: var(--fg-bright); }
+        .col-as400 .section-label     { color: var(--as400-bright); }
+
+        .section-label .badge {
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .col-mainframe .section-label .badge { color: var(--fg-dim); }
+        .col-as400 .section-label .badge     { color: var(--as400-dim); }
+
+        /* ---- Menu items ------------------------------------------------ */
+        .menu-item {
+            display: block;
+            padding: 10px 14px;
+            margin: 6px 0;
+            text-decoration: none;
+            color: var(--fg);
+            border-left: 2px solid var(--fg-faint);
+            transition: background 0.1s linear, border-color 0.1s linear;
+        }
+
+        .col-as400 .menu-item {
+            color: var(--as400);
+            border-left-color: var(--as400-faint);
+        }
+
+        .menu-item:hover,
+        .menu-item:focus {
+            background: rgba(51, 255, 51, 0.08);
+            border-left-color: var(--accent);
+            outline: none;
+        }
+
+        .col-as400 .menu-item:hover,
+        .col-as400 .menu-item:focus {
+            background: rgba(255, 184, 108, 0.08);
+            border-left-color: var(--as400-bright);
+        }
+
+        .menu-item:hover .menu-num,
+        .menu-item:focus .menu-num {
+            color: var(--accent);
+        }
+
+        .col-as400 .menu-item:hover .menu-num,
+        .col-as400 .menu-item:focus .menu-num {
+            color: var(--as400-bright);
+        }
+
+        .menu-head {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .menu-num {
+            color: var(--amber);
+            font-weight: 600;
+        }
+
+        .menu-name {
+            color: var(--fg-bright);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .col-as400 .menu-name { color: var(--as400-bright); }
+
+        .menu-rfc {
+            color: var(--fg-dim);
+            font-size: 12px;
+        }
+
+        .col-as400 .menu-rfc { color: var(--as400-dim); }
+
+        .menu-meta {
+            display: block;
+            margin-top: 6px;
+            padding-left: 0;
+        }
+
+        .menu-meta-row {
+            display: block;
+            color: var(--fg-dim);
+            font-size: 13px;
+            padding-left: 24px;
+        }
+
+        .col-as400 .menu-meta-row { color: var(--as400-dim); }
+
+        .menu-meta-row::before {
+            content: "·  ";
+            color: var(--fg-faint);
+        }
+
+        .col-as400 .menu-meta-row::before { color: var(--as400-faint); }
+
+        .menu-url {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: 600;
+            background: rgba(92, 246, 255, 0.06);
+            padding: 1px 8px;
+            margin-left: 4px;
+            border: 1px solid rgba(92, 246, 255, 0.30);
+            border-radius: 2px;
+        }
+
+        .menu-warn { color: var(--amber); }
+
+        .menu-status {
+            display: inline-block;
+            padding: 1px 8px;
+            border: 1px solid var(--amber);
+            border-radius: 2px;
+            color: var(--amber);
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* ---- Help / shortcut hints ------------------------------------- */
+        .help {
+            margin: 22px 0 0;
+            color: var(--fg-dim);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .help-key {
+            display: inline-block;
+            color: var(--fg-bright);
+            border: 1px solid var(--fg-dim);
+            padding: 1px 6px;
+            margin: 0 2px;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        /* ---- Prompt + cursor ------------------------------------------- */
+        .prompt {
+            margin: 18px 0 6px;
+            color: var(--fg);
+            text-align: left;
+            padding-left: 4px;
+        }
+
+        .prompt-arrow {
+            color: var(--accent);
+            margin-right: 8px;
+        }
+
+        .prompt-input {
+            color: var(--fg-bright);
+            font-weight: 600;
+            white-space: pre;
+        }
+
+        .prompt-error {
+            margin: 4px 0 0 0;
+            text-align: left;
+            padding-left: 52px;
+            color: var(--red);
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .prompt-error[hidden] { display: none; }
+
+        .cursor {
+            display: inline-block;
+            width: 0.6em;
+            height: 1em;
+            background: var(--fg-bright);
+            vertical-align: -2px;
+            animation: blink 1.05s steps(2, end) infinite;
+            box-shadow: 0 0 6px rgba(157, 255, 157, 0.6);
+        }
+
+        @keyframes blink {
+            0%, 50%   { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* ---- Links footer ---------------------------------------------- */
+        footer {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px 18px;
+            padding: 12px 16px;
+            border-top: 1px solid var(--fg-dim);
+            background: var(--bg);
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--fg);
+            padding: 4px 10px;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            transition: background 0.1s linear,
+            border-color 0.1s linear,
+            color 0.1s linear;
+        }
+
+        .link:hover,
+        .link:focus {
+            background: rgba(51, 255, 51, 0.08);
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        .link-label {
+            color: var(--fg-bright);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .link-label::before { content: "[ "; color: var(--fg-dim); }
+        .link-label::after  { content: " ]"; color: var(--fg-dim); }
+
+        .link-url { color: var(--fg-dim); }
+
+        .link:hover .link-url,
+        .link:focus .link-url { color: var(--accent); }
+
+        .link-sep { color: var(--fg-faint); }
+
+        /* ---- Responsive: collapse split on narrow screens -------------- */
+        @media (max-width: 980px) {
+            .split {
+                grid-template-columns: 1fr;
+            }
+            .col {
+                padding: 0 4px;
+            }
+            .divider {
+                width: 100%;
+                height: 1px;
+                background: linear-gradient(
+                        to right,
+                        transparent 0%,
+                        var(--fg-faint) 8%,
+                        var(--fg-dim) 50%,
+                        var(--fg-faint) 92%,
+                        transparent 100%
+                );
+                margin: 18px 0;
+            }
+            .divider::before,
+            .divider::after {
+                top: 50%;
+                left: auto;
+            }
+            .divider::before { left: 0; }
+            .divider::after  { left: 100%; }
+        }
+
+        @media (max-width: 720px) {
+            main { padding: 18px 14px 10px; }
+            .tagline { letter-spacing: 2px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<main>
+
+    <pre class="logo">
+██╗██████╗  ██████╗ ███╗   ██╗████████╗███████╗██████╗ ███╗   ███╗
+██║██╔══██╗██╔═══██╗████╗  ██║╚══██╔══╝██╔════╝██╔══██╗████╗ ████║
+██║██████╔╝██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝██╔████╔██║
+██║██╔══██╗██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║
+██║██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║██║ ╚═╝ ██║
+╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝</pre>
+
+    <p class="tagline">BROWSER-SIDE · MAINFRAME · MIDRANGE · TERMINAL</p>
+    <p class="copyright">(C) IRONTERM SYSTEMS · NO BUILD · NO BACKEND</p>
+
+    <div class="split">
+
+        <!-- ===================== LEFT: MAINFRAME ====================== -->
+        <section class="col col-mainframe" aria-labelledby="col-mainframe-title">
+
+            <h2 id="col-mainframe-title" class="col-title">▌ MAINFRAME ▐</h2>
+            <p class="col-subtitle">SYSTEM/360 · S/370 · S/390 · z/ARCHITECTURE</p>
+            <pre class="col-rule">══════════════════════════════════════════════</pre>
+
+            <pre class="col-banner">z/OS  ·  VM/CMS  ·  MVS  ·  TSO</pre>
+
+            <div class="section-label">
+                <span>▌ PROTOCOLS</span>
+                <span class="badge">[ 1 ENABLED ]</span>
+            </div>
+
+            <a class="menu-item" href="tn3270/">
+                <span class="menu-head">
+                    <span class="menu-num">▸ [1]</span>
+                    <span class="menu-name">TN3270</span>
+                    <span class="menu-rfc">RFC 1041 / 2355</span>
+                </span>
+                <span class="menu-meta">
+                    <span class="menu-meta-row">IBM 3270 datastream over TN3270E</span>
+                    <span class="menu-meta-row">z/OS, VM/CMS, Hercules MVS, TSO, CICS</span>
+                    <span class="menu-meta-row">Models 2 / 3 / 4 / 5  -  24×80 to 27×132</span>
+                    <span class="menu-meta-row">Extended attributes, structured fields, Query Reply</span>
+                    <span class="menu-meta-row">IND$FILE upload/download (DFT mode)</span>
+                    <span class="menu-meta-row">Default port 23 - needs websockify-style TCP↔WebSocket bridge</span>
+                </span>
+            </a>
+
+            <div class="section-label">
+                <span>▌ PUBLIC SERVERS</span>
+                <span class="badge">[ 1 AVAILABLE ]</span>
+            </div>
+
+            <a class="menu-item"
+               href="tn3270/?bridge=wss%3A%2F%2Ftk5.bencz.cc&amp;port=6080">
+                <span class="menu-head">
+                    <span class="menu-num">▸ TK5</span>
+                    <span class="menu-name">tk5.bencz.cc</span>
+                    <span class="menu-rfc">Hercules MVS 3.8j · TN3270E · TLS</span>
+                </span>
+                <span class="menu-meta">
+                    <span class="menu-meta-row">
+                        Bridge: <code class="menu-url">wss://tk5.bencz.cc:6080</code>
+                    </span>
+                    <span class="menu-meta-row">Click to open the TN3270 client with bridge pre-filled</span>
+                    <span class="menu-meta-row">Image source: github.com/bencz/tk5-hercules</span>
+                    <span class="menu-meta-row"><span class="menu-warn">Public test server</span></span>
+                </span>
+            </a>
+
+        </section>
+
+        <!-- ===================== DIVIDER ============================== -->
+        <div class="divider" aria-hidden="true"></div>
+
+        <!-- ===================== RIGHT: AS/400 ======================== -->
+        <section class="col col-as400" aria-labelledby="col-as400-title">
+
+            <h2 id="col-as400-title" class="col-title">▌ IBM i / AS/400 ▐</h2>
+            <p class="col-subtitle">SYSTEM/38 · AS/400 · iSERIES · SYSTEM i · IBM i</p>
+            <pre class="col-rule">══════════════════════════════════════════════</pre>
+
+            <pre class="col-banner">OS/400  ·  IBM i</pre>
+
+            <div class="section-label">
+                <span>▌ PROTOCOLS</span>
+                <span class="badge">[ 1 BETA ]</span>
+            </div>
+
+            <a class="menu-item" href="tn5250/">
+                <span class="menu-head">
+                    <span class="menu-num">▸ [2]</span>
+                    <span class="menu-name">TN5250</span>
+                    <span class="menu-status">BETA</span>
+                    <span class="menu-rfc">RFC 1205 / 4777</span>
+                </span>
+                <span class="menu-meta">
+                    <span class="menu-meta-row">IBM 5250 datastream over TN5250E</span>
+                    <span class="menu-meta-row">IBM i (formerly AS/400, System i)</span>
+                    <span class="menu-meta-row">Models 3179-2, 3196-A1, 3477-FC/FG, 3180-2, 5251-11</span>
+                    <span class="menu-meta-row">24×80, 27×132 screen sizes</span>
+                    <span class="menu-meta-row">NEW-ENVIRON (RFC 4777): DEVNAME, KBDTYPE, CODEPAGE, bypass-signon</span>
+                    <span class="menu-meta-row">Default port 23 - same websockify-style bridge as TN3270</span>
+                    <span class="menu-meta-row"><span class="menu-warn">Beta: signon and WTD work; ENPTUI (choice fields, menu bars, scroll bars) coming next</span></span>
+                </span>
+            </a>
+
+            <div class="section-label">
+                <span>▌ PUBLIC SERVERS</span>
+                <span class="badge">[ 1 AVAILABLE ]</span>
+            </div>
+
+            <a class="menu-item"
+               href="tn5250/?bridge=wss%3A%2F%2Fpub400.bencz.cc&amp;port=6080">
+                <span class="menu-head">
+                    <span class="menu-num">▸ PUB</span>
+                    <span class="menu-name">pub400.com</span>
+                    <span class="menu-rfc">IBM i public host · TN5250 · TLS</span>
+                </span>
+                <span class="menu-meta">
+                    <span class="menu-meta-row">
+                        Bridge: <code class="menu-url">wss://pub400.bencz.cc:6080</code>
+                    </span>
+                    <span class="menu-meta-row">Click to open the TN5250 client with bridge pre-filled</span>
+                    <span class="menu-meta-row">Free signup at pub400.com for your own user profile</span>
+                    <span class="menu-meta-row"><span class="menu-warn">Public test server</span></span>
+                </span>
+            </a>
+
+        </section>
+
+    </div>
+
+    <p class="help">
+        <span class="help-key">↵</span> open client &nbsp;·&nbsp;
+        <span class="help-key">Tab</span> focus protocol &nbsp;·&nbsp;
+        <span class="help-key">PF1</span> help &nbsp;·&nbsp;
+        <span class="help-key">PF3</span> exit
+    </p>
+
+    <p class="prompt">
+        <span class="prompt-arrow">===&gt;</span><span id="prompt-input" class="prompt-input"></span><span class="cursor"></span>
+    </p>
+    <p class="prompt-error" id="prompt-error" hidden></p>
+
+</main>
+
+<footer aria-label="External resources">
+    <a class="link" href="https://github.com/bencz/IronTerm"
+       target="_blank" rel="noopener noreferrer">
+        <span class="link-label">SOURCE</span>
+        <span class="link-url">github.com/bencz/IronTerm</span>
+    </a>
+    <span class="link-sep">·</span>
+    <a class="link" href="https://github.com/bencz/tk5-hercules"
+       target="_blank" rel="noopener noreferrer">
+        <span class="link-label">MVS-TK5 DOCKER</span>
+        <span class="link-url">github.com/bencz/tk5-hercules</span>
+    </a>
+</footer>
+
+<script>
+    // ---- Mobile warning -------------------------------------------------
+    (function () {
+        var ua = navigator.userAgent || '';
+        var isMobile =
+            window.matchMedia('(max-width: 768px)').matches ||
+            /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+
+        if (isMobile) {
+            alert(
+                '\u26A0  NOT OPTIMIZED FOR MOBILE\n\n' +
+                'IronTerm and the TN3270 / TN5250 terminals are NOT optimized or designed ' +
+                'for mobile devices.\n\n' +
+                'The terminal needs a physical keyboard to work properly: ' +
+                'keyboard input, AID keys (Enter, PF, PA, Clear), copy/paste, ' +
+                'and IND$FILE transfers all assume a hardware keyboard.\n\n' +
+                'For the full experience, please open this page on a desktop ' +
+                'browser.'
+            );
+        }
+    })();
+
+    // ---- Interactive prompt --------------------------------------------
+    // Type "1" + Enter to navigate to the TN3270 client.
+    // Type "2" + Enter to navigate to the TN5250 client.
+    // Backspace removes a char, Esc clears the line.
+    (function () {
+        var input = '';
+        var inputEl = document.getElementById('prompt-input');
+        var errEl   = document.getElementById('prompt-error');
+        var errTimer = null;
+
+        function render () { inputEl.textContent = input; }
+
+        function showError (msg) {
+            errEl.textContent = msg;
+            errEl.hidden = false;
+            clearTimeout(errTimer);
+            errTimer = setTimeout(function () {
+                errEl.hidden = true;
+                input = '';
+                render();
+            }, 2200);
+        }
+
+        function isFocusableActive () {
+            var a = document.activeElement;
+            if (!a || a === document.body || a === document.documentElement) return false;
+            var t = a.tagName;
+            return t === 'A' || t === 'BUTTON' || t === 'INPUT' ||
+                t === 'TEXTAREA' || t === 'SELECT' || a.isContentEditable;
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey || e.metaKey || e.altKey) return;
+            if (isFocusableActive()) return;
+
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (input === '1') {
+                    window.location.href = 'tn3270/';
+                } else if (input === '2') {
+                    window.location.href = 'tn5250/';
+                } else if (input.length === 0) {
+                    showError('ENTER A PROTOCOL NUMBER - TYPE 1 OR 2 TO CONTINUE');
+                } else {
+                    showError('INVALID PROTOCOL: "' + input + '" - TYPE 1 OR 2 TO CONTINUE');
+                }
+                return;
+            }
+            if (e.key === 'Backspace') {
+                e.preventDefault();
+                input = input.slice(0, -1);
+                errEl.hidden = true;
+                render();
+                return;
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                input = '';
+                errEl.hidden = true;
+                render();
+                return;
+            }
+            if (e.key.length === 1 && /^[\x20-\x7E]$/.test(e.key) && input.length < 16) {
+                e.preventDefault();
+                input += e.key.toUpperCase();
+                errEl.hidden = true;
+                render();
+            }
+        });
+    })();
+</script>
+
+</body>
+</html>

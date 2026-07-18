@@ -1,0 +1,11 @@
+{
+  "name": "STRSEU",
+  "displayName": "Start Source Entry Utility",
+  "category": "source_pdm",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-strseu",
+  "parameters": [],
+  "examples": [],
+  "helpText": "View-only educational stub — use WRKMBRPDM to browse source members.",
+  "requiresAuthority": [],
+  "mutatesState": true
+}

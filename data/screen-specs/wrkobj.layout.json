@@ -1,0 +1,35 @@
+{
+  "screenId": "WRKOBJ",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "ibm-i-7.4-work-with-objects",
+  "promptVariant": "subfile",
+  "functionKeys": "F3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "optionLine": { "row": 3, "col": 6, "valueContains": "Type options, press Enter." },
+  "commandLine": { "row": 22, "label": "Parameters or command" },
+  "attributeRules": [
+    { "fieldId": "HEADER", "row": 1, "col": 1, "attrByte": 34 },
+    { "fieldId": "OPTS", "row": 3, "col": 6, "attrByte": 58 },
+    { "fieldId": "COLHDR", "row": 6, "col": 6, "attrByte": 34 },
+    { "fieldId": "OBJ0", "row": 7, "col": 10, "attrByte": 32 }
+  ],
+  "requiredText": [
+    "WRKOBJ",
+    "Work with Objects",
+    "5=Display description",
+    "8=Display authority",
+    "Opt  Library",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "forbiddenText": ["Evidence note", "Welcome!"],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 7,
+    "lastDataRow": 13,
+    "commandLineRow": 22,
+    "optionIdPattern": "^OOPT\\d+$",
+    "pagingKeys": ["F7", "F8"]
+  },
+  "render": { "type": "command", "command": "WRKOBJ OBJ(PAYROLL/*ALL)" }
+}

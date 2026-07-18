@@ -1,0 +1,13 @@
+.git
+.gitignore
+.github
+.vscode
+.idea
+README.md
+LICENSE
+Dockerfile
+.dockerignore
+**/.DS_Store
+**/Thumbs.db
+node_modules
+*.log

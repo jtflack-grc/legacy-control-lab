@@ -1,0 +1,104 @@
+[
+  {
+    "userName": "QSECOFR",
+    "status": "*ENABLED",
+    "userClass": "*SECOFR",
+    "text": "Security officer",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*ALLOBJ *SAVSYS *JOBCTL *SERVICE *SPLCTL *SECADM *AUDIT *IOSYSCFG",
+    "initialMenu": "SECURITY",
+    "initialProgram": "*NONE",
+    "currentLibrary": "*CRTDFT",
+    "limitCapabilities": "*NO",
+    "password": "TRAIN",
+    "lastSignon": "05/12/26"
+  },
+  {
+    "userName": "IONGRC",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "i on GRC article practice — author packs, no mission scoring",
+    "groupProfile": "AUDITGRP",
+    "specialAuthorities": "*AUDIT",
+    "initialMenu": "IBMMAIN",
+    "password": "IONGRC",
+    "limitCapabilities": "*NO"
+  },
+  {
+    "userName": "DEMO",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Showroom demo walkthrough — no mission scoring",
+    "groupProfile": "AUDITGRP",
+    "specialAuthorities": "*AUDIT",
+    "initialMenu": "MAIN",
+    "password": "TRAIN",
+    "limitCapabilities": "*NO"
+  },
+  {
+    "userName": "AUDIT",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "IT auditor / GRC analyst training profile",
+    "groupProfile": "AUDITGRP",
+    "specialAuthorities": "*AUDIT",
+    "initialMenu": "AUDIT",
+    "password": "TRAIN",
+    "lastSignon": "06/02/26"
+  },
+  {
+    "userName": "BACKUPADM",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Backup administrator — stale privileged access",
+    "groupProfile": "ITOPS",
+    "specialAuthorities": "*ALLOBJ *SAVSYS",
+    "initialMenu": "AUDIT",
+    "lastSignon": "11/03/24",
+    "businessOwner": "IT Operations (CIO delegate)",
+    "activityProfileExempt": true
+  },
+  {
+    "userName": "OLDVENDOR",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Former vendor account — should be disabled",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*JOBCTL",
+    "initialMenu": "AUDIT",
+    "lastSignon": "01/17/23",
+    "businessOwner": "*NONE"
+  },
+  {
+    "userName": "APCLERK",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Accounts payable clerk — limited capabilities",
+    "groupProfile": "APGRP",
+    "specialAuthorities": "*NONE",
+    "limitCapabilities": "*YES",
+    "initialMenu": "AUDIT",
+    "lastSignon": "05/29/26"
+  },
+  {
+    "userName": "PAYADMIN",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Payroll administrator",
+    "groupProfile": "PAYGRP",
+    "specialAuthorities": "*SECADM",
+    "initialMenu": "AUDIT",
+    "lastSignon": "04/18/26",
+    "businessOwner": "*NONE"
+  },
+  {
+    "userName": "QPGMR",
+    "status": "*DISABLED",
+    "userClass": "*USER",
+    "text": "Disabled programmer profile",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*JOBCTL",
+    "initialMenu": "AUDIT",
+    "lastSignon": "08/14/22"
+  }
+]

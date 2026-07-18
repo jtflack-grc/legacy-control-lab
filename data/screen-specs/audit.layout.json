@@ -1,0 +1,19 @@
+{
+  "screenId": "AUDIT",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "data/screen-specs/golden/audit.golden.json",
+  "goldenFile": "audit.golden.json",
+  "requiredText": [
+    "AUDIT",
+    "Select one of the following:",
+    "Review system security values",
+    "Work with user profiles",
+    "Display audit journal entries",
+    "Write audit finding",
+    "Selection or command"
+  ],
+  "forbiddenText": ["Welcome!", "Evidence note"],
+  "render": { "type": "sample", "sample": "AUDIT" }
+}

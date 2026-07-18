@@ -1,0 +1,25 @@
+{
+  "name": "DSPJRN",
+  "displayName": "Display Journal",
+  "category": "journal_audit",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspjrn",
+  "parameters": [
+    {
+      "name": "JRN",
+      "label": "Journal",
+      "required": false,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPJRN JRN(QSYS/QAUDJRN) ENTTYP(PW AF CP)"
+  ],
+  "helpText": "Displays audit journal entries filtered by entry type. Shows synthetic PW/AF/CP style events.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJRN"
+}

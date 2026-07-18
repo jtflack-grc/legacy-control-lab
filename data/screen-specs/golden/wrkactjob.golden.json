@@ -1,0 +1,61 @@
+{
+  "screenId": "WRKACTJOB",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=jobs-display-using-wrkactjob",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — Display using WRKACTJOB",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=jobs-display-using-wrkactjob",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM Redpaper — Performance Management Tools (WRKACTJOB)",
+      "url": "https://www.redbooks.ibm.com/redpapers/pdfs/redp4026.pdf",
+      "type": "redbook"
+    },
+    {
+      "tier": "B",
+      "title": "setgetweb — WRKACTJOB panel",
+      "url": "http://www.setgetweb.com/p/iSeries/v5r3/wrkactjob.htm",
+      "type": "community-panel"
+    }
+  ],
+  "asciiPanel": " WRKACTJOB                        Work with Active Jobs                   CLAIMS400\n                                        06/13/26  15:13:08\n      CPU %:   3.1   Elapsed time:  21:38:40  Active jobs:  77\n\n      Type options, press Enter.\n        2=Change   3=Hold   4=End   5=Work with   6=Release   7=Display message\n        8=Work with spooled files   13=Disconnect\n\n      Opt  Subsystem/Job  Current User  Type  CPU %  Function  Status\n      __   QSYSWRK        QSYS          SBS      .0                   DEQW\n\n      Parameters or command\n      ===>\nF3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "requiredText": [
+    "WRKACTJOB",
+    "Work with Active Jobs",
+    "CPU %:",
+    "Elapsed time:",
+    "Active jobs:",
+    "Type options, press Enter.",
+    "2=Change",
+    "4=End",
+    "5=Work with",
+    "7=Display message",
+    "8=Work with spooled files",
+    "13=Disconnect",
+    "Opt  Subsystem/Job  Current User  Type  CPU %  Function  Status",
+    "Parameters or command",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F7=Page up   F8=Page down   F12=Cancel",
+  "columnLayout": {
+    "opt": 6,
+    "name": 10,
+    "user": 27,
+    "type": 38,
+    "cpu": 43,
+    "function": 49,
+    "status": 66,
+    "headerColor": "white"
+  },
+  "notes": "IBM panel uses hierarchical subsystem/job tree, white column headers (Opt through Status), and status line metrics. Set LIVE_HOST_JOBS=true in Docker to overlay Linux ps rows as QSYSWRK/QSERVER-style jobs.",
+  "auditNotes": "Detect/respond entry point — option 5 Work with → DSPJOB menu. CPU/elapsed line is white banner per IBM panel. Correlate suspicious batch job with DSPAUDJRNE and DSPJOBLOG.",
+  "grcMapping": [
+    "Blue Team — detect",
+    "SOC2 CC7.2"
+  ],
+  "qmgtoolsRelation": "COLESADTA includes current joblog; not a substitute for WRKACTJOB live triage."
+}

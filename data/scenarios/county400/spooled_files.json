@@ -1,0 +1,26 @@
+[
+  {
+    "fileName": "QAUDRPT",
+    "userName": "AUDIT",
+    "spoolNumber": "000014",
+    "status": "READY"
+  },
+  {
+    "fileName": "USRPRFREV",
+    "userName": "PAYADMIN",
+    "spoolNumber": "000021",
+    "status": "READY"
+  },
+  {
+    "fileName": "PAYAUTH",
+    "userName": "PAYADMIN",
+    "spoolNumber": "000032",
+    "status": "READY"
+  },
+  {
+    "fileName": "JOBLOG",
+    "userName": "BACKUPADM",
+    "spoolNumber": "000045",
+    "status": "HELD"
+  }
+]

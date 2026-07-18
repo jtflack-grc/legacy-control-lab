@@ -1,0 +1,22 @@
+{
+  "name": "CRTJRN",
+  "displayName": "Create Journal",
+  "category": "journal_audit",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-crtjrn",
+  "parameters": [
+    {
+      "name": "JRN",
+      "label": "Journal",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "Create Journal. IBM i Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+  "requiresAuthority": [],
+  "mutatesState": true
+}

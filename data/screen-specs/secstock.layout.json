@@ -1,0 +1,18 @@
+{
+  "screenId": "SECSTOCK",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "data/screen-specs/golden/secstock.golden.json",
+  "goldenFile": "secstock.golden.json",
+  "requiredText": [
+    "IBM i Security Paths",
+    "Select one of the following:",
+    "1. Change your password",
+    "Work with authorization lists",
+    "Work with security auditing",
+    "90. Sign off",
+    "Selection or command"
+  ],
+  "render": { "type": "sample", "sample": "SECSTOCK" }
+}

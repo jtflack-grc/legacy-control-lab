@@ -1,0 +1,14 @@
+{
+  "missionId": "CLAIMS-006",
+  "title": "Can You Prove Profile Ownership?",
+  "persona": "IT auditor / privacy analyst",
+  "systemName": "CLAIMS400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "objective": "Determine whether payroll-touching profiles on CLAIMS400 have named data ownership accountable to privacy leadership.",
+  "mode": "investigation_only",
+  "allowedMutation": false,
+  "resetOnStart": true,
+  "sourceArticle": "i on GRC: ISO 27701, Clause 5 & the IBM i",
+  "frameworks": ["ISO 27701 Clause 5", "Profile ownership", "Decision-ready findings"]
+}

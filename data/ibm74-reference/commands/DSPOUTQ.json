@@ -1,0 +1,25 @@
+{
+  "name": "DSPOUTQ",
+  "displayName": "Display Output Queue",
+  "category": "spool_print",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspoutq",
+  "parameters": [
+    {
+      "name": "OUTQ",
+      "label": "Output queue",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*JOB",
+        "*PRINT"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPOUTQ OUTQ(QPRINT)"
+  ],
+  "helpText": "Displays output queue status and spooled file count.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSPL"
+}

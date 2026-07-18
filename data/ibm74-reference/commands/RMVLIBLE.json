@@ -1,0 +1,26 @@
+{
+  "name": "RMVLIBLE",
+  "displayName": "Remove Library List Entry",
+  "category": "library_object",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-rmvlible",
+  "parameters": [
+    {
+      "name": "LIB",
+      "label": "Library",
+      "required": true,
+      "type": "libraryName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB",
+        "*USRLIBL"
+      ]
+    }
+  ],
+  "examples": [
+    "RMVLIBLE LIB(CLAIMS400)"
+  ],
+  "helpText": "Removes a library from the user portion of the library list.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLIB"
+}

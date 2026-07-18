@@ -1,0 +1,161 @@
+[
+  {
+    "name": "CRTPGM",
+    "displayName": "Create Program",
+    "category": "source_pdm",
+    "groupMenu": "CMDSRC",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CRTPGM. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CRTPGM",
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTPGM",
+    "displayName": "Delete Program",
+    "category": "source_pdm",
+    "groupMenu": "CMDSRC",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DLTPGM. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DLTPGM",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPPGM",
+    "displayName": "Display Program",
+    "category": "source_pdm",
+    "status": "implemented",
+    "handler": "displayProgram",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "missionUse": [
+      "source_reference"
+    ],
+    "helpText": "Displays program attributes including source file, create date, and user profile.",
+    "examples": [
+      "DSPPGM PGM(PAYROLL/PAYCALC)"
+    ],
+    "groupMenu": "CMDPDM",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPPGMREF",
+    "displayName": "Display Program References",
+    "category": "source_pdm",
+    "status": "implemented",
+    "handler": "displayProgramReferences",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "missionUse": [
+      "source_reference"
+    ],
+    "helpText": "Displays programs called by or calling a program. Useful for dependency and change-impact review.",
+    "examples": [
+      "DSPPGMREF PGM(CLAIMS400/PAYAUTHR)"
+    ],
+    "groupMenu": "CMDPDM",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "STRPDM",
+    "displayName": "Start PDM",
+    "category": "source_pdm",
+    "status": "implemented",
+    "handler": "startPdm",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "Starts Programming Development Manager for a library. Entry to member and object PDM screens.",
+    "missionUse": [
+      "source_reference"
+    ],
+    "examples": [
+      "STRPDM LIB(CLAIMS400)"
+    ],
+    "groupMenu": "CMDPDM",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "STRSEU",
+    "displayName": "Start Source Entry Utility",
+    "category": "source_pdm",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "helpText": "View-only educational stub — use WRKMBRPDM to browse source members.",
+    "realismNotes": "No full SEU editor in lab runtime.",
+    "handler": "catalogControl",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKMBRPDM",
+    "displayName": "Work with Members Using PDM",
+    "category": "source_pdm",
+    "status": "implemented",
+    "handler": "workMemberPdm",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameterSummary": "FILE(library/file)",
+    "missionUse": [
+      "source_reference"
+    ],
+    "helpText": "Work with source file members using PDM. Option 5 displays member detail.",
+    "examples": [
+      "WRKMBRPDM FILE(CLAIMS400/QCLSRC)"
+    ],
+    "groupMenu": "CMDPDM",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKOBJPDM",
+    "displayName": "Work with Objects Using PDM",
+    "category": "source_pdm",
+    "status": "implemented",
+    "handler": "workObjectPdm",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "parameterSummary": "OBJ(library/object) OBJTYPE(*FILE)",
+    "missionUse": [
+      "source_reference"
+    ],
+    "helpText": "Work with objects in a library using PDM. Option 5 displays object description.",
+    "examples": [
+      "WRKOBJPDM LIB(PAYROLL)"
+    ],
+    "groupMenu": "CMDPDM",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKPGM",
+    "displayName": "Work with Program",
+    "category": "source_pdm",
+    "groupMenu": "CMDSRC",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "WRKPGM. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "WRKPGM",
+    "handler": "workPrograms",
+    "implementationLevel": "display_implemented"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "name": "DSPOBJD",
+  "displayName": "Display Object Description",
+  "category": "library_object",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspobjd",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Object",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPOBJD OBJ(PAYROLL/PAYMST)",
+    "DSPOBJD OBJ(QSYS/QAUDJRN)"
+  ],
+  "helpText": "Displays object description including type, attribute, owner, and create date.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDOBJ"
+}

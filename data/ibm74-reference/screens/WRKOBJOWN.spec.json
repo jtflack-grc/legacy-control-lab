@@ -1,0 +1,7 @@
+{
+  "screenId": "WRKOBJOWN",
+  "category": "authority",
+  "auditMode": "deep",
+  "requiredFields": ["USRPRF"],
+  "bannedSubstrings": ["Welcome!", "mission menu", "governance training", "Evidence note"]
+}

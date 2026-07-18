@@ -1,0 +1,397 @@
+[
+  {
+    "name": "CHGJRN",
+    "displayName": "Change Journal",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Change journal attributes — manage receivers, image size, delete policy.",
+    "handler": "changeJournal",
+    "examples": ["CHGJRN JRN(QSYS/QAUDJRN)"],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Receiver-threshold interactive panels not modeled — see golden notes."
+  },
+  {
+    "name": "CHGAUD",
+    "displayName": "Change Audit Values",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*SECADM"],
+    "handler": "changeAuditSettings",
+    "helpText": "Change QAUDCTL, QAUDLVL, and related audit system values.",
+    "examples": ["CHGAUD"],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Maps to SQLite system values — not a live MI CHGAUD program."
+  },
+  {
+    "name": "CHGJRNRCVA",
+    "displayName": "Change Journal Receiver Attributes",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "changeJournalReceiverAttributes",
+    "helpText": "Change journal receiver threshold and management attributes.",
+    "examples": ["CHGJRNRCVA JRN(QSYS/QAUDJRN) RCV(QAUDJRN)"],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "promptable": true,
+    "realismLimits": "Receiver threshold alerts not simulated in lab."
+  },
+  {
+    "name": "CHGOBJAUD",
+    "displayName": "Change Object Auditing",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Change Object Auditing. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "changeObjectAuditing",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "examples": ["CHGOBJAUD OBJ(PAYROLL/PAYMST) OBJTYPE(*FILE) AUD(*ALL)"],
+    "realismLimits": "Message confirmation with audit journal side effect — interactive panel when parameters omitted."
+  },
+  {
+    "name": "CHGSECAUD",
+    "displayName": "Change Security Audit",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "helpText": "Change Security Audit. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CRTJRNRCV",
+    "displayName": "Create Journal Receiver",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "createJournalReceiver",
+    "helpText": "Create a journal receiver for QAUDJRN rotation narrative.",
+    "examples": ["CRTJRNRCV JRN(QSYS/QAUDJRN) RCV(QAUDJRN0002)"],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Confirmation panel only — no receiver chain in SQLite."
+  },
+  {
+    "name": "CRTJRN",
+    "displayName": "Create Journal",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Create Journal. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTJRN",
+    "displayName": "Delete Journal",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Delete Journal. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPACTPRFL",
+    "displayName": "Display Activity Profile List",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "displayActivityProfileList",
+    "helpText": "Display profiles exempt from inactive-profile disable (pairs with ANZPRFACT).",
+    "examples": ["DSPACTPRFL"],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Lab subfile from user profile exempt flags — not QSECIDL1 list API."
+  },
+  {
+    "name": "DSPAUD",
+    "displayName": "Display Audit Values",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayAuditSettings",
+    "helpText": "Display QAUDCTL, QAUDLVL, QAUDFRCLVL, and end action.",
+    "examples": ["DSPAUD"],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Reads SQLite system values — evidence baseline for audit policy."
+  },
+  {
+    "name": "DSPAUDJRNE",
+    "displayName": "Display Audit Journal Entries",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayAuditJournalEntries",
+    "parameters": [
+      {
+        "name": "ENTTYP",
+        "type": "auditEntryType",
+        "required": false,
+        "label": "Entry types"
+      },
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": false,
+        "supportsSpecialValues": [
+          "*ALL"
+        ]
+      }
+    ],
+    "helpText": "Displays audit journal entries by entry type (AF, PW, CP, etc.). Primary security audit evidence.",
+    "examples": [
+      "DSPAUDJRNE ENTTYP(AF)",
+      "DSPAUDJRNE ENTTYP(PW CP)"
+    ],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CPYAUDJRNE",
+    "displayName": "Copy Audit Journal Entries",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": ["*AUDIT"],
+    "handler": "copyAuditJournalEntries",
+    "parameters": [
+      {
+        "name": "ENTTYP",
+        "type": "auditEntryType",
+        "required": false,
+        "label": "Entry types"
+      },
+      {
+        "name": "OUTFILE",
+        "type": "qualifiedName",
+        "required": false,
+        "label": "Output file"
+      },
+      {
+        "name": "OUTMBR",
+        "type": "name",
+        "required": false,
+        "label": "Output member"
+      }
+    ],
+    "helpText": "Copies filtered QAUDJRN entries to an output file for repeatable COSO/CC7 monitoring extracts.",
+    "examples": [
+      "CPYAUDJRNE ENTTYP(AF PW) OUTFILE(QGPL/AUDJRN)",
+      "CPYAUDJRNE ENTTYP(AF) OUTFILE(QGPL/AUDJRN) OUTMBR(AUDJRN)"
+    ],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "OUTFILE writes SQLite-backed rows queryable via qsys2.outfile_export."
+  },
+  {
+    "name": "DSPAUTJRNE",
+    "displayName": "Display Authority Journal E",
+    "category": "journal_audit",
+    "groupMenu": "CMDJRN",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPAUTJRNE. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPAUTJRNE",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPJRN",
+    "displayName": "Display Journal",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayJournal",
+    "helpText": "Displays audit journal entries filtered by entry type. Shows synthetic PW/AF/CP style events.",
+    "examples": [
+      "DSPJRN JRN(QSYS/QAUDJRN) ENTTYP(PW AF CP)"
+    ],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPJRNDTA",
+    "displayName": "Display Journal DTA",
+    "category": "journal_audit",
+    "groupMenu": "CMDJRN",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPJRNDTA. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPJRNDTA",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPJRNE",
+    "displayName": "Display Journal E",
+    "category": "journal_audit",
+    "groupMenu": "CMDJRN",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPJRNE. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPJRNE",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPJRNIMG",
+    "displayName": "Display Journal Image",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Display Journal Image. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "DSPJRNRCV",
+    "displayName": "Display Journal Receiver",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "displayJournalReceiver",
+    "helpText": "Display journal receiver attributes and entry range.",
+    "examples": ["DSPJRNRCV JRN(QSYS/QAUDJRN) RCV(QAUDJRN)"],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "promptable": true,
+    "realismLimits": "Synthetic receiver metadata — save receivers before DLTRCV on production."
+  },
+  {
+    "name": "DSPJRNRCVA",
+    "displayName": "Display Journal Receiver Attributes",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Display Journal Receiver Attributes — stubbed in Legacy Control Lab.",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented",
+    "promptable": true
+  },
+  {
+    "name": "DSPSECAUD",
+    "displayName": "Display Security Audit",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*AUDITVIEW"
+    ],
+    "handler": "displaySecurityAudit",
+    "helpText": "Displays security audit configuration and recent security-relevant journal summary.",
+    "examples": [
+      "DSPSECAUD"
+    ],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "RCVJRNE",
+    "displayName": "Receive Journal Entry",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Receive Journal Entry. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKAUD",
+    "displayName": "Work with Audit Values",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "handler": "workWithAuditSettings",
+    "helpText": "Work with audit-related system values (QAUDCTL, QAUDLVL, …).",
+    "examples": ["WRKAUD"],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Subfile over audit system values — option 2 opens CHGAUD/CHGSYSVAL prefill."
+  },
+  {
+    "name": "WRKJRN",
+    "displayName": "Work with Journal Attributes",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithJournal",
+    "helpText": "Work with journals attached to libraries or objects in the scenario.",
+    "examples": [
+      "WRKJRN"
+    ],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKJRNA",
+    "displayName": "Work with Journal Attributes",
+    "category": "journal_audit",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithJournalAttributes",
+    "helpText": "Work with Journal Attributes. Legacy Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+    "examples": [
+      "WRKJRNA"
+    ],
+    "groupMenu": "CMDJRN",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

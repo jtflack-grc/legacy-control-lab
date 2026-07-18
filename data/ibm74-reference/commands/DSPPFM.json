@@ -1,0 +1,25 @@
+{
+  "name": "DSPPFM",
+  "displayName": "Display Physical File Member",
+  "category": "database_file",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dsppfm",
+  "parameters": [
+    {
+      "name": "FILE",
+      "label": "File",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*FIRST"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPPFM FILE(PAYROLL/PAYMST)"
+  ],
+  "helpText": "Displays physical file member information including record counts.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDDB"
+}

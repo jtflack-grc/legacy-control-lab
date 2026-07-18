@@ -1,0 +1,18 @@
+{
+  "screenId": "CRTUSRPRF",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-create-user-profile-crtusrprf",
+  "goldenFile": "crtusrprf.golden.json",
+  "promptVariant": "cmdprompt",
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel   F24=More keys",
+  "requiredText": [
+    "CRTUSRPRF",
+    "Create User Profile",
+    "User profile",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu", "Evidence note"],
+  "render": { "type": "sample", "sample": "CRTUSRPRF_PROMPT" }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "CHGJOBSCDE",
+  "displayName": "Change Job Schedule Entry",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgjobscde",
+  "parameters": [
+    {
+      "name": "JOB",
+      "label": "Job",
+      "required": true,
+      "type": "jobName",
+      "supportsSpecialValues": [
+        "*ACTIVE",
+        "*JOB"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "Change Job Schedule Entry. IBM i Control Lab implements this command with 5250 screens, F4 prompt metadata, and scenario-backed data where applicable.",
+  "requiresAuthority": [],
+  "mutatesState": true
+}

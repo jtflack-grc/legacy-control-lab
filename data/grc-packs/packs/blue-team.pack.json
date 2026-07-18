@@ -1,0 +1,46 @@
+{
+  "id": "blue-team",
+  "sourceFile": "sources/blue-team.excerpt.md",
+  "articleKey": "CLAIMS-005",
+  "menuLabel": "Blue Team — detect and respond",
+  "quotes": [
+    "Detect and respond with WRKACTJOB, DSPAUDJRNE, DSPSECAUD, job log, and journal.",
+    "Filter QAUDJRN by ENTTYP before you export to a SIEM."
+  ],
+  "articleRefs": [],
+  "steps": [
+    {
+      "id": "wrkactjob",
+      "title": "Work with active jobs",
+      "command": "WRKACTJOB",
+      "commandMatch": "^WRKACTJOB",
+      "screenHint": "WRKACTJOB",
+      "excerptRefs": ["Live jobs — spot OLDVENDOR batch work on QBATCH."],
+      "watchFor": ["Active job list", "Subsystem QBATCH"],
+      "exitHint": "Press F3 when finished."
+    },
+    {
+      "id": "dspaudjrne",
+      "title": "Display audit journal entries",
+      "command": "DSPAUDJRNE JRN(QSYS/QAUDJRN) ENTTYP(AF PW)",
+      "commandMatch": "DSPAUDJRNE",
+      "screenHint": "DSPAUDJRNE",
+      "excerptRefs": ["Filter QAUDJRN by ENTTYP before you export to a SIEM."],
+      "watchFor": ["ENTTYP AF/PW filters", "Journal entry list"],
+      "exitHint": "Press F3 to exit."
+    },
+    {
+      "id": "dspjoblog",
+      "title": "Display job log",
+      "command": "DSPJOBLOG",
+      "commandMatch": "^DSPJOBLOG",
+      "screenHint": "DSPJOBLOG",
+      "excerptRefs": [
+        "WRKACTJOB names the job; DSPJOBLOG shows the command; DSPJRN timestamps the event.",
+        "Command-level trace for incident timelines."
+      ],
+      "watchFor": ["Command history in job log"],
+      "exitHint": "Press F3 when done."
+    }
+  ]
+}

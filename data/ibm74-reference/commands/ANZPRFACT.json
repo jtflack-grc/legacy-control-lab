@@ -1,0 +1,16 @@
+{
+  "name": "ANZPRFACT",
+  "displayName": "Analyze Profile Attributes",
+  "category": "security",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-anzprfact",
+  "parameters": [],
+  "examples": [
+    "ANZPRFACT"
+  ],
+  "helpText": "Analyzes profile attributes against common hardening checks such as inactive profiles and special authorities.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": false,
+  "groupMenu": "CMDSEC"
+}

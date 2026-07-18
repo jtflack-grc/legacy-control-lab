@@ -1,0 +1,26 @@
+{
+  "name": "DSPJOBLOG",
+  "displayName": "Display Job Log",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspjoblog",
+  "parameters": [
+    {
+      "name": "JOB",
+      "label": "Job",
+      "required": false,
+      "type": "jobName",
+      "supportsSpecialValues": [
+        "*ACTIVE",
+        "*JOB"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPJOBLOG",
+    "DSPJOBLOG JOB(123456/AUDIT/QPADEV0001)"
+  ],
+  "helpText": "Displays job log messages for interactive or batch jobs in the scenario.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJOB"
+}

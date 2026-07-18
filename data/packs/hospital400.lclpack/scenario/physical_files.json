@@ -1,0 +1,87 @@
+[
+  {
+    "library": "BILLING",
+    "name": "BILLMST",
+    "recordFormat": "BILLR",
+    "fileType": "*PF",
+    "member": "*FIRST",
+    "textDescription": "Hospital billing master file",
+    "recordLength": 256,
+    "fields": [
+      {
+        "name": "CLMNO",
+        "type": "CHAR",
+        "length": 10,
+        "decimals": 0,
+        "text": "Medical record number"
+      },
+      {
+        "name": "MEMBER",
+        "type": "CHAR",
+        "length": 12,
+        "decimals": 0,
+        "text": "Member ID"
+      },
+      {
+        "name": "SVCDate",
+        "type": "DEC",
+        "length": 8,
+        "decimals": 0,
+        "text": "Service date"
+      },
+      {
+        "name": "AMOUNT",
+        "type": "PACKED",
+        "length": 9,
+        "decimals": 2,
+        "text": "Claim amount"
+      },
+      {
+        "name": "STATUS",
+        "type": "CHAR",
+        "length": 2,
+        "decimals": 0,
+        "text": "Claim status"
+      }
+    ]
+  },
+  {
+    "library": "PAYROLL",
+    "name": "PAYMST",
+    "recordFormat": "PAYR",
+    "fileType": "*PF",
+    "member": "*FIRST",
+    "textDescription": "Payroll master file",
+    "recordLength": 192,
+    "fields": [
+      {
+        "name": "EMPNO",
+        "type": "CHAR",
+        "length": 8,
+        "decimals": 0,
+        "text": "Employee number"
+      },
+      {
+        "name": "SSN",
+        "type": "CHAR",
+        "length": 9,
+        "decimals": 0,
+        "text": "Social security number"
+      },
+      {
+        "name": "PAYRATE",
+        "type": "PACKED",
+        "length": 7,
+        "decimals": 2,
+        "text": "Hourly pay rate"
+      },
+      {
+        "name": "DEPT",
+        "type": "CHAR",
+        "length": 4,
+        "decimals": 0,
+        "text": "Department code"
+      }
+    ]
+  }
+]

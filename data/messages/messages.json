@@ -1,0 +1,129 @@
+[
+  {
+    "messageId": "CPF0001",
+    "severity": "error",
+    "shortText": "Command &CMD not found.",
+    "secondLevelText": "The command name was not found in the command catalog.",
+    "category": "command",
+    "relatedCommands": []
+  },
+  {
+    "messageId": "CPF0006",
+    "severity": "error",
+    "shortText": "Errors occurred in command.",
+    "category": "command"
+  },
+  {
+    "messageId": "CPF1015",
+    "severity": "error",
+    "shortText": "No library list entry found.",
+    "category": "library"
+  },
+  {
+    "messageId": "CPF2105",
+    "severity": "error",
+    "shortText": "Object not found.",
+    "category": "object"
+  },
+  {
+    "messageId": "CPF2204",
+    "severity": "error",
+    "shortText": "User profile &USR not found.",
+    "category": "security"
+  },
+  {
+    "messageId": "CPF2217",
+    "severity": "error",
+    "shortText": "Not authorized to user profile &USR.",
+    "category": "security"
+  },
+  {
+    "messageId": "CPF2225",
+    "severity": "error",
+    "shortText": "Not able to display user profile &USR.",
+    "category": "security"
+  },
+  {
+    "messageId": "CPF9801",
+    "severity": "error",
+    "shortText": "Object &OBJ in &LIB not found.",
+    "category": "object"
+  },
+  {
+    "messageId": "CPF9898",
+    "severity": "info",
+    "shortText": "General message.",
+    "category": "general"
+  },
+  {
+    "messageId": "CPI2201",
+    "severity": "completion",
+    "shortText": "User profile &USR created.",
+    "category": "security"
+  },
+  {
+    "messageId": "CPI0000",
+    "severity": "completion",
+    "shortText": "Operation completed.",
+    "category": "general"
+  },
+  {
+    "messageId": "LCL0901",
+    "severity": "info",
+    "shortText": "Command &CMD is recognized but not implemented in this lab runtime.",
+    "secondLevelText": "The command exists in the catalog for training realism. Use HELP or the mission coach for supported alternatives.",
+    "category": "lab",
+    "relatedCommands": ["HELP", "RUNSQL"]
+  },
+  {
+    "messageId": "LCL0902",
+    "severity": "info",
+    "shortText": "Command &CMD is outside the scope of this governance lab.",
+    "category": "lab"
+  },
+  {
+    "messageId": "LCL1001",
+    "severity": "completion",
+    "shortText": "Evidence item reviewed.",
+    "category": "mission"
+  },
+  {
+    "messageId": "LCL2001",
+    "severity": "completion",
+    "shortText": "Mission requirement satisfied.",
+    "category": "mission"
+  },
+  {
+    "messageId": "LCL3001",
+    "severity": "completion",
+    "shortText": "Finding saved.",
+    "category": "mission"
+  },
+  {
+    "messageId": "LCL4001",
+    "severity": "completion",
+    "shortText": "Report generated.",
+    "category": "mission"
+  },
+  {
+    "messageId": "LCL1101",
+    "severity": "error",
+    "shortText": "Required parameter &PARAM missing.",
+    "secondLevelText": "A required command parameter was not specified.",
+    "category": "command"
+  },
+  {
+    "messageId": "LCL1102",
+    "severity": "error",
+    "shortText": "Parameter &PARAM value not valid.",
+    "secondLevelText": "The parameter value is not in the allowed set for this lab command.",
+    "category": "command"
+  },
+  {
+    "messageId": "CPF6801",
+    "severity": "info",
+    "shortText": "Command prompting not available.",
+    "secondLevelText": "F4 prompting requires a signed-on session with command catalog metadata loaded.",
+    "category": "command"
+  }
+]

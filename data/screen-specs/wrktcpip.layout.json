@@ -1,0 +1,18 @@
+{
+  "screenId": "WRKTCPIP",
+  "tier": "B",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=setup-tcpip",
+  "goldenFile": "wrktcpip.golden.json",
+  "requiredText": [
+    "WRKTCPIP",
+    "Work with TCP/IP",
+    "Type options, press Enter.",
+    "Service",
+    "Status",
+    "Description",
+    "F5=Refresh"
+  ],
+  "render": { "type": "command", "command": "WRKTCPIP", "user": "QSECOFR" }
+}

@@ -1,0 +1,24 @@
+{
+  "screenId": "WRKOBJOWN",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.5.0?topic=authority-working-object-ownership",
+  "requiredText": [
+    "WRKOBJOWN",
+    "Work with Objects by Owner",
+    "User profile",
+    "2=Edit authority",
+    "9=Change owner",
+    "Parameters or command",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 7,
+    "lastDataRow": 13,
+    "commandLineRow": 22,
+    "optionIdPattern": "^OOPT\\d+$"
+  },
+  "render": { "type": "command", "command": "WRKOBJOWN USRPRF(PAYADMIN)" }
+}

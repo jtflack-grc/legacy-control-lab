@@ -1,0 +1,53 @@
+node_modules/
+dist/
+coverage/
+.vitest/
+.env
+.env.local
+*.log
+.DS_Store
+Thumbs.db
+
+# Local export archives (not part of the product)
+/*.zip
+
+# Internal planning notes (not for public release)
+/A ChatGPT assessment*.txt
+/ibm-i-phase*.md
+
+# Generated runtime artifacts
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/reports/*
+!data/reports/.gitkeep
+data/evidence-packets/*
+!data/evidence-packets/.gitkeep
+data/scorebook/*
+!data/scorebook/.gitkeep
+data/qopensys/
+data/security-saves/
+
+# Marketing / portfolio / capture (not required to run)
+launch/
+examples/
+dev/
+vendor/
+
+# Most scripts are local authoring tools; keep only install/build/hygiene
+scripts/*
+!scripts/install.ps1
+!scripts/copyRuntimeAssets.mjs
+!scripts/checkReleaseHygiene.ts
+
+# Deep docs stay local; ship install + security support only
+docs/*
+!docs/docker.md
+!docs/quickstart.md
+!docs/security-ship-checklist.md
+!docs/troubleshooting.md
+
+# Tests are not required for Docker run
+tests/
+vitest.config.ts
+vitest.config.*

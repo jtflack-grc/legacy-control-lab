@@ -1,0 +1,13 @@
+{
+  "scenarioId": "county400",
+  "systemName": "COUNTY400",
+  "name": "COUNTY400",
+  "title": "County Public Records IBM i Evidence Runtime",
+  "industry": "Public sector",
+  "description": "Public-sector IBM i environment for public records, tax, permitting, and batch reporting governance.",
+  "defaultMissionId": "COUNTY-001",
+  "defaultUser": "AUDIT",
+  "defaultPassword": "TRAIN",
+  "defaultMenu": "AUDIT",
+  "version": "0.5.0"
+}

@@ -1,0 +1,6 @@
+{"entryTime":"2026-06-08 07:42:11","userName":"HOSPADM","entryType":"PW","objectRef":"HOSPADM","message":"Invalid password attempt for HOSPADM"}
+{"entryTime":"2026-06-08 09:15:33","userName":"OLDINTF","entryType":"AF","objectRef":"CLAIMSIF/CLMIFACE","message":"Authority failure for OLDINTF on interface program"}
+{"entryTime":"2026-06-08 10:02:07","userName":"OLDINTF","entryType":"CP","objectRef":"WRKACTJOB","message":"Command WRKACTJOB run by OLDINTF"}
+{"entryTime":"2026-06-08 11:30:44","userName":"PAYADMIN","entryType":"SV","objectRef":"QSECURITY","message":"System value QSECURITY displayed"}
+{"entryTime":"2026-06-08 14:18:02","userName":"RXBATCH","entryType":"DO","objectRef":"BILLING/BILLMST","message":"Object delete attempt by RXBATCH on billing master"}
+{"entryTime":"2026-06-09 08:15:02","userName":"AUDIT","entryType":"SV","objectRef":"QAUDCTL","message":"System value QAUDCTL displayed by auditor"}

@@ -1,0 +1,90 @@
+[
+  {
+    "library": "CLAIMS400",
+    "name": "APPMENU",
+    "objectType": "*MENU",
+    "owner": "QSECOFR",
+    "textDescription": "Application menu",
+    "publicAuthority": "*USE"
+  },
+  {
+    "library": "CLAIMS400",
+    "name": "QCLSRC",
+    "objectType": "*FILE",
+    "owner": "QSECOFR",
+    "textDescription": "CL source file",
+    "publicAuthority": "*CHANGE"
+  },
+  {
+    "library": "CLAIMS400",
+    "name": "QRPGLESRC",
+    "objectType": "*FILE",
+    "owner": "QPGMR",
+    "textDescription": "RPGLE source file",
+    "publicAuthority": "*CHANGE"
+  },
+  {
+    "library": "CLAIMS400",
+    "name": "QDDSSRC",
+    "objectType": "*FILE",
+    "owner": "QPGMR",
+    "textDescription": "DDS source file",
+    "publicAuthority": "*EXCLUDE"
+  },
+  {
+    "library": "CLAIMS400",
+    "name": "CLMMAINT",
+    "objectType": "*PGM",
+    "owner": "APCLERK",
+    "textDescription": "Claims maintenance RPG program",
+    "publicAuthority": "*USE"
+  },
+  {
+    "library": "CLAIMS400",
+    "name": "NIGHTRUN",
+    "objectType": "*PGM",
+    "owner": "QPGMR",
+    "textDescription": "Nightly batch CL program — owner is disabled profile",
+    "publicAuthority": "*USE"
+  },
+  {
+    "library": "CLAIMS400",
+    "name": "CLAIMMST",
+    "objectType": "*FILE",
+    "owner": "APCLERK",
+    "textDescription": "Claims master data file",
+    "publicAuthority": "*USE"
+  },
+  {
+    "library": "PAYROLL",
+    "name": "PAYMST",
+    "objectType": "*FILE",
+    "owner": "PAYADMIN",
+    "textDescription": "Payroll master — excessive public authority",
+    "publicAuthority": "*CHANGE"
+  },
+  {
+    "library": "CLAIMS400",
+    "name": "CLAIMOUTQ",
+    "objectType": "*OUTQ",
+    "owner": "QSECOFR",
+    "textDescription": "Claims output queue",
+    "publicAuthority": "*USE"
+  },
+  {
+    "library": "CLAIMS400",
+    "name": "QBATCHCLM",
+    "objectType": "*JOBD",
+    "owner": "QSECOFR",
+    "textDescription": "Claims batch job description",
+    "publicAuthority": "*USE"
+  },
+  {
+    "library": "QSYS",
+    "name": "QAUDJRN",
+    "objectType": "*JRN",
+    "owner": "QSYS",
+    "textDescription": "System audit journal",
+    "publicAuthority": "*EXCLUDE"
+  }
+]

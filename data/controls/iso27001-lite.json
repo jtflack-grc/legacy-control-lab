@@ -1,0 +1,12 @@
+[
+  {
+    "controlId": "ISO-A.5.15",
+    "title": "Access control",
+    "family": "Organizational",
+    "framework": "ISO 27001 Lite",
+    "description": "Lightweight reference mapping for access control evidence.",
+    "evidenceTypes": ["user_profile", "object_authority"],
+    "relatedCommands": ["WRKUSRPRF", "DSPOBJAUT"],
+    "relatedFindings": ["access_control_weakness"]
+  }
+]

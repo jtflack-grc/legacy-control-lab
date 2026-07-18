@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legacy Control Lab</title>
+  <meta name="description" content="An IBM i-style governance and security range — local 5250 training environment">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="/assets/brand/lcl-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/lab/lab.css">
+</head>
+<body>
+  <div id="narrow-screen-banner" class="narrow-banner" hidden>
+    Legacy Control Lab is designed for desktop-width screens — 5250 displays need horizontal space.
+  </div>
+  <header class="top-bar">
+    <div class="brand">
+      <a
+        class="brand-iongrc-link"
+        href="https://ibmireference.blogspot.com/search/label/IBM%20%22%28A%29i%20on%20GRC%22"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="i on GRC — articles and lab paths"
+      >
+        <img
+          class="brand-iongrc"
+          src="/assets/brand/i-on-grc-mark.png"
+          width="132"
+          height="44"
+          alt="i on GRC"
+        />
+      </a>
+      <div class="brand-product">
+        <span class="brand-title">Legacy Control Lab</span>
+        <span class="brand-sub" id="system-label">CLAIMS400</span>
+        <span class="lane-badge" id="lane-badge" hidden>auditor</span>
+        <span class="health-pill mono" id="health-pill" hidden></span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button type="button" class="link-quiet link-btn" id="demo-toggle" hidden>Demo guide</button>
+      <button type="button" class="link-quiet link-btn" id="lane-switch" hidden>Change lane</button>
+      <button type="button" class="link-quiet link-btn top-action-btn" id="restart-mission" hidden>Restart mission</button>
+      <a class="link-quiet top-action-link" href="/tn5250/" target="_blank" rel="noopener">Terminal only</a>
+    </div>
+  </header>
+
+  <main class="split" id="lab-split">
+    <section class="panel terminal-panel" aria-label="5250 terminal">
+      <iframe
+        id="terminal-frame"
+        title="Legacy Control Lab — 5250 terminal"
+        src="about:blank"
+        tabindex="0"
+        allow="clipboard-read; clipboard-write"
+      ></iframe>
+    </section>
+
+    <aside class="panel coach-rail" id="coach-rail" hidden aria-label="Screen guide">
+      <div class="coach-mode demo-mode" id="demo-panel" hidden>
+        <div class="panel-head">
+          <h2>Five-Minute Demo</h2>
+          <p class="persona" id="demo-path-label">Showroom · DEMO / TRAIN</p>
+          <p class="demo-path-intro" id="demo-path-intro" hidden></p>
+        </div>
+
+        <article class="coach-card demo-credentials-card" id="demo-credentials-card">
+          <h3>Sign-on credentials</h3>
+          <div class="demo-cred-fields mono demo-cred-grid" id="demo-cred-fields">
+            <span class="demo-cred-label">User</span>
+            <span class="demo-cred-dots">. . . . . . . . . . . . . . . . . . . . :</span>
+            <span class="demo-cred-value" id="demo-cred-user">DEMO</span>
+            <span class="demo-cred-label">Password</span>
+            <span class="demo-cred-dots">. . . . . . . . . . . . . . . . . . . . :</span>
+            <span class="demo-cred-value" id="demo-cred-password">TRAIN</span>
+          </div>
+          <p class="demo-cred-note">Type these on the <strong>sign-on screen</strong> (the user and password fields). Not on the <span class="mono">===&gt;</span> command line.</p>
+        </article>
+
+        <div class="demo-nav-strip mono" id="demo-nav-strip" aria-label="5250 navigation">
+          <span><strong>F3</strong> back one screen</span>
+          <span><strong>F12</strong> cancel / back on many menus</span>
+          <span><strong>Enter</strong> on <span class="mono">===&gt;</span> runs a command</span>
+        </div>
+
+        <article class="coach-card guide-primary demo-step-card">
+          <div class="demo-step-header">
+            <span class="demo-phase" id="demo-step-phase">Orient</span>
+            <span class="mono demo-step-meta" id="demo-step-meta">Step 1 of 10</span>
+          </div>
+          <h3 id="demo-step-title">Welcome</h3>
+          <p id="demo-step-intro" class="briefing demo-lead"></p>
+        </article>
+
+        <article class="coach-card guide-primary demo-command-card">
+          <h3>Run this in the green screen</h3>
+          <div class="demo-command-block" id="demo-command-block">
+            <p class="mono demo-command" id="demo-step-command">AUDIT / TRAIN</p>
+          </div>
+          <p id="demo-command-note" class="demo-command-note"></p>
+          <p id="demo-exit-hint" class="demo-exit-hint mono" hidden></p>
+        </article>
+
+        <article class="coach-card guide-primary demo-focus-card demo-why-card">
+          <h3>Why this step matters</h3>
+          <p id="demo-narrative" class="briefing"></p>
+        </article>
+
+        <article class="coach-card guide-primary demo-focus-card demo-unique-card">
+          <h3>Why Legacy Control Lab is different</h3>
+          <p id="demo-why-unique" class="briefing"></p>
+        </article>
+
+        <div class="demo-dive-in" id="demo-dive-in" hidden>
+          <article class="coach-card guide-primary demo-next-steps-card" id="demo-next-steps-card">
+            <h3 id="demo-next-steps-title">Pick your next path</h3>
+            <p class="briefing" id="demo-next-steps-lead">
+              The showroom tour is unscored. Sign off DEMO if needed, then sign on with the profile on your chosen card.
+            </p>
+            <p class="briefing demo-signoff-notice" id="demo-signoff-notice" hidden></p>
+            <div class="demo-dive-actions">
+              <button type="button" class="lane-card demo-dive-btn" id="dive-iongrc">
+                <span class="lane-card-title">i on GRC · IONGRC / IONGRC</span>
+                <span class="lane-card-desc">Article practice on the stock Main Menu — no scoring, match reading to doing.</span>
+              </button>
+              <button type="button" class="lane-card demo-dive-btn" id="dive-governance">
+                <span class="lane-card-title">Governance · AUDIT / TRAIN</span>
+                <span class="lane-card-desc">Evidence checklists, findings, SUBMITMSN scoring · CLAIMS-001.</span>
+              </button>
+              <button type="button" class="lane-card demo-dive-btn" id="dive-blueteam">
+                <span class="lane-card-title">Blue Team · AUDIT / TRAIN</span>
+                <span class="lane-card-desc">Detect and respond missions · scored CLAIMS-005.</span>
+              </button>
+              <button type="button" class="lane-card demo-dive-btn" id="dive-redteam">
+                <span class="lane-card-title">Red Team · APCLERK / TRAIN</span>
+                <span class="lane-card-desc">Boundary testing · scored CLAIMS-007.</span>
+              </button>
+              <button type="button" class="lane-card demo-dive-btn lane-card-operator" id="dive-operator">
+                <span class="lane-card-title">Operator · QSECOFR / TRAIN</span>
+                <span class="lane-card-desc">Privileged changes, journals, job logs · SECURITY menu.</span>
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <article class="coach-card demo-screen-guide-card" id="demo-screen-guide-card">
+          <h3>Right now on your screen</h3>
+          <p class="briefing demo-screen-headline" id="demo-screen-headline">Click inside the green screen when you are ready.</p>
+          <ul id="demo-screen-bullets" class="tips demo-screen-bullets"></ul>
+        </article>
+
+        <details class="guide-secondary">
+          <summary>IBM i in plain English</summary>
+          <div class="guide-body">
+            <p id="demo-ibm-concept" class="briefing"></p>
+          </div>
+        </details>
+
+        <details class="guide-secondary">
+          <summary>Control / GRC angle</summary>
+          <div class="guide-body">
+            <p id="demo-control-angle" class="briefing"></p>
+          </div>
+        </details>
+
+        <details class="guide-secondary">
+          <summary>Watch for and tips</summary>
+          <div class="guide-body">
+            <h4 class="subhead">Watch for</h4>
+            <ul id="demo-watch-for" class="tips"></ul>
+            <h4 class="subhead">Tips</h4>
+            <ul id="demo-tips" class="tips"></ul>
+          </div>
+        </details>
+
+        <p id="demo-uniqueness" hidden></p>
+
+        <article class="coach-card demo-article-card" id="demo-article-card" hidden>
+          <h3>i on GRC article path</h3>
+          <p class="briefing" id="demo-article-hook"></p>
+          <p class="mono demo-article-mission" id="demo-article-mission"></p>
+          <ul id="demo-framework-refs" class="tips framework-tags"></ul>
+          <a class="demo-article-link" id="demo-article-link" href="#" target="_blank" rel="noopener noreferrer">Read the article</a>
+        </article>
+
+        <details class="guide-secondary">
+          <summary>All steps in this path</summary>
+          <div class="guide-body">
+            <ol id="demo-outline" class="steps"></ol>
+          </div>
+        </details>
+
+        <div class="demo-actions">
+          <button type="button" class="lane-card demo-btn" id="demo-prev">Previous</button>
+          <button type="button" class="lane-card demo-btn" id="demo-next">Next</button>
+          <button type="button" class="link-quiet link-btn" id="demo-reset">Reset step</button>
+        </div>
+      </div>
+
+      <div class="coach-mode iongrc-mode" id="iongrc-panel" hidden>
+        <div class="panel-head">
+          <h2>i on GRC practice desk</h2>
+          <p class="persona" id="iongrc-path-label">i on GRC · IONGRC / IONGRC · stock Main Menu</p>
+          <p class="demo-path-intro" id="iongrc-path-intro"></p>
+          <p class="mono iongrc-coverage-badge" id="iongrc-coverage-badge"></p>
+        </div>
+
+        <article class="coach-card demo-credentials-card">
+          <h3>Sign-on credentials</h3>
+          <div class="demo-cred-fields mono demo-cred-grid" id="iongrc-cred-fields">
+            <span class="demo-cred-label">User</span>
+            <span class="demo-cred-dots">. . . . . . . . . . . . . . . . . . . . :</span>
+            <span class="demo-cred-value" id="iongrc-cred-user">IONGRC</span>
+            <span class="demo-cred-label">Password</span>
+            <span class="demo-cred-dots">. . . . . . . . . . . . . . . . . . . . :</span>
+            <span class="demo-cred-value" id="iongrc-cred-password">IONGRC</span>
+          </div>
+        </article>
+
+        <label class="field-label">
+          Article library
+          <select id="iongrc-pack-select" class="iongrc-pack-select"></select>
+        </label>
+
+        <article class="coach-card guide-primary demo-article-card">
+          <h3 id="iongrc-pack-title">Article</h3>
+          <p class="mono iongrc-lab-status" id="iongrc-lab-status"></p>
+          <p class="iongrc-section-label">In the article</p>
+          <ul id="iongrc-quotes" class="tips iongrc-quotes"></ul>
+          <a class="demo-article-link" id="iongrc-article-link" href="#" target="_blank" rel="noopener noreferrer">Read the full article</a>
+        </article>
+
+        <article class="coach-card guide-primary" id="iongrc-mission-bridge" hidden>
+          <h3>Ready to prove it?</h3>
+          <p class="briefing" id="iongrc-mission-bridge-hint"></p>
+          <p class="mono demo-article-mission" id="iongrc-mission-bridge-mission"></p>
+        </article>
+
+        <article class="coach-card guide-primary" id="iongrc-guided-path" hidden>
+          <h3 id="iongrc-guided-path-title">Guided path</h3>
+          <p class="briefing" id="iongrc-guided-path-intro"></p>
+          <ol id="iongrc-guided-steps" class="steps iongrc-guided-steps"></ol>
+        </article>
+
+        <article class="coach-card guide-primary demo-screen-guide-card iongrc-screen-card">
+          <h3>Right now on your screen</h3>
+          <p class="briefing demo-screen-headline" id="iongrc-screen-headline"></p>
+          <ul id="iongrc-screen-bullets" class="tips demo-screen-bullets"></ul>
+        </article>
+
+        <article class="coach-card guide-primary demo-command-card">
+          <h3>Run this in the green screen</h3>
+          <div class="demo-command-block" id="iongrc-command-block">
+            <p class="mono demo-command" id="iongrc-step-command"></p>
+          </div>
+          <p class="iongrc-section-label">Article excerpt</p>
+          <div id="iongrc-excerpts" class="iongrc-excerpts"></div>
+          <section id="iongrc-ibm-reference" class="iongrc-ibm-reference" hidden>
+            <p class="iongrc-section-label">IBM i reference</p>
+            <div id="iongrc-ibm-reference-body"></div>
+          </section>
+          <p id="iongrc-practice-hint" class="briefing iongrc-practice-hint" hidden></p>
+          <p id="iongrc-gap-callout" class="iongrc-gap-callout briefing" hidden></p>
+          <p id="iongrc-exit-hint" class="demo-exit-hint mono" hidden></p>
+        </article>
+
+        <details class="guide-secondary">
+          <summary>Commands in context</summary>
+          <div class="guide-body">
+            <ul id="iongrc-watch-for" class="tips iongrc-command-context"></ul>
+          </div>
+        </details>
+
+        <details class="guide-secondary" id="iongrc-training-section">
+          <summary>Training paths</summary>
+          <div class="guide-body" id="iongrc-training-paths"></div>
+        </details>
+
+        <details class="guide-secondary">
+          <summary>Article library</summary>
+          <div class="guide-body">
+            <ol id="iongrc-outline" class="steps"></ol>
+          </div>
+        </details>
+      </div>
+
+      <div class="coach-mode" id="auditor-panel" hidden>
+        <article class="coach-card guide-primary sql-evidence-card evidence-focus-card" id="evidence-focus-card" hidden>
+          <h3 id="evidence-focus-headline">Evidence engineering</h3>
+          <p class="context-screen mono evidence-focus-screen" id="evidence-focus-screen" hidden></p>
+          <p class="sql-evidence-stats mono" id="evidence-focus-stats"></p>
+          <div class="sql-evidence-contrast" id="evidence-focus-contrast">
+            <div class="sql-contrast-col sql-contrast-checkbox">
+              <h4 class="subhead">Checkbox / screenshot</h4>
+              <p id="evidence-contrast-checkbox"></p>
+            </div>
+            <div class="sql-contrast-col sql-contrast-live">
+              <h4 class="subhead">Queryable live evidence</h4>
+              <p id="evidence-contrast-live"></p>
+            </div>
+          </div>
+          <p class="note sql-evidence-lead" id="evidence-focus-lead" hidden></p>
+          <a class="demo-article-link sql-evidence-article" id="evidence-focus-article" href="#" target="_blank" rel="noopener noreferrer" hidden>Read the article</a>
+          <div class="sql-evidence-categories" id="evidence-focus-categories" aria-label="Evidence engineering reference by category"></div>
+        </article>
+
+        <div class="auditor-gamification-block" id="auditor-gamification-block">
+        <div class="panel-head">
+          <p class="skill-path-kicker mono" id="mission-skill-path" hidden></p>
+          <h2 id="mission-title">Loading mission…</h2>
+          <p id="mission-persona" class="persona"></p>
+          <p class="mission-meta mono" id="mission-meta" hidden></p>
+        </div>
+
+        <article class="coach-card mission-stakes-card" id="mission-stakes-card" hidden>
+          <h3 class="stakes-label">The situation</h3>
+          <p class="briefing stakes-text" id="mission-stakes"></p>
+        </article>
+
+        <article class="coach-card campaign-dashboard-card" id="campaign-dashboard-card" hidden>
+          <h3>Your path</h3>
+          <p class="mono dashboard-skill" id="dashboard-skill-path"></p>
+          <p class="briefing" id="dashboard-campaign-title"></p>
+          <div class="campaign-quest-progress dashboard-progress">
+            <div class="campaign-quest-bar" id="dashboard-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="campaign-quest-fill" id="dashboard-progress-fill"></div>
+            </div>
+            <p class="mono campaign-quest-stats" id="dashboard-progress-stats"></p>
+          </div>
+          <p class="note" id="dashboard-next-hint"></p>
+        </article>
+
+        <nav class="mission-phase-strip" id="mission-phase-strip" hidden aria-label="Mission phase">
+          <span class="phase-step" data-phase="collect">Collect</span>
+          <span class="phase-connector" aria-hidden="true">→</span>
+          <span class="phase-step" data-phase="document">Document</span>
+          <span class="phase-connector" aria-hidden="true">→</span>
+          <span class="phase-step" data-phase="submit">Submit</span>
+          <span class="phase-connector" aria-hidden="true">→</span>
+          <span class="phase-step" data-phase="complete">Debrief</span>
+        </nav>
+
+        <article class="coach-card guide-primary campaign-quest-card" id="campaign-quest-card" hidden>
+          <h3 id="campaign-quest-title">Campaign quest</h3>
+          <div class="campaign-quest-progress">
+            <div
+              class="campaign-quest-bar"
+              id="campaign-quest-bar"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <div class="campaign-quest-fill" id="campaign-quest-fill"></div>
+            </div>
+            <p class="mono campaign-quest-stats" id="campaign-quest-stats">0 / 0 missions</p>
+          </div>
+          <p class="briefing" id="campaign-quest-next-title"></p>
+          <p class="note" id="campaign-quest-profile-hint" hidden></p>
+          <button type="button" class="lane-card quest-cta-btn" id="campaign-quest-cta" hidden>
+            Start next mission
+          </button>
+          <p class="mono quest-status" id="campaign-quest-status" hidden></p>
+        </article>
+
+        <article class="coach-card guide-primary" id="evidence-card" hidden>
+          <h3>Evidence checklist</h3>
+          <div class="evidence-progress">
+            <div class="evidence-progress-bar" id="evidence-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="evidence-progress-fill" id="evidence-progress-fill"></div>
+            </div>
+            <p class="coverage mono" id="evidence-coverage">0/0 required</p>
+          </div>
+          <ul id="evidence-list" class="checklist evidence-checklist"></ul>
+          <p class="note">Click an item to capture evidence here, or run the command in the green screen — either path counts. Menu <strong>10</strong> (DSPEVID) mirrors this in-session.</p>
+        </article>
+
+        <article class="coach-card" id="signals-card" hidden>
+          <h3>Signals captured</h3>
+          <ul id="signals-list" class="signals-feed"></ul>
+        </article>
+
+        <article class="coach-card" id="investigation-leads-card" hidden>
+          <h3>Investigation leads</h3>
+          <ul id="investigation-leads-list" class="leads-list"></ul>
+        </article>
+
+        <article class="coach-card guide-primary" id="finding-composer" hidden>
+          <h3>Finding composer</h3>
+          <form id="finding-form" class="finding-form">
+            <label class="field-label">Title
+              <input type="text" id="finding-title" name="title" required maxlength="80" autocomplete="off">
+            </label>
+            <label class="field-label">Severity
+              <select id="finding-severity" name="severity">
+                <option value="LOW">Low</option>
+                <option value="MODERATE" selected>Moderate</option>
+                <option value="HIGH">High</option>
+                <option value="OBSERVATION">Observation</option>
+                <option value="INSUFFICIENT EVIDENCE">Insufficient evidence</option>
+              </select>
+            </label>
+            <label class="field-label">Evidence refs
+              <select id="finding-evidence-refs" name="evidenceRefs" multiple size="4"></select>
+              <input type="text" id="finding-evidence-free" name="evidenceFree" placeholder="Additional refs (free text)" autocomplete="off">
+            </label>
+            <label class="field-label">Control mapping
+              <select id="finding-control" name="controlMapping">
+                <option value="">— Select control —</option>
+              </select>
+            </label>
+            <label class="field-label">Finding text
+              <textarea id="finding-text" name="findingText" rows="3" maxlength="500"></textarea>
+            </label>
+            <label class="field-label">Decision impact
+              <textarea id="finding-impact" name="decisionImpact" rows="2" maxlength="300"></textarea>
+              <span class="char-count mono" id="finding-impact-count">0 / 15 min</span>
+            </label>
+            <label class="field-label">Recommendation
+              <textarea id="finding-recommendation" name="recommendation" rows="2" maxlength="300"></textarea>
+            </label>
+            <div class="finding-quality" id="finding-quality" hidden>
+              <span class="quality-label">Quality preview</span>
+              <div class="quality-bar"><div class="quality-fill" id="finding-quality-fill"></div></div>
+              <span class="mono quality-score" id="finding-quality-score">—</span>
+            </div>
+            <div class="finding-form-actions">
+              <button type="submit" class="lane-card demo-btn" id="finding-save">Save finding</button>
+              <span class="finding-status mono" id="finding-status" hidden></span>
+            </div>
+          </form>
+        </article>
+
+        <article class="coach-card guide-primary" id="playbook-guide-card" hidden>
+          <h3 id="playbook-guide-title">Playbook</h3>
+          <p class="briefing" id="playbook-guide-subtitle"></p>
+          <ol id="playbook-start-steps" class="steps playbook-steps"></ol>
+        </article>
+
+        <article class="coach-card guide-primary" id="mission-progression-card" hidden>
+          <h3>Mission complete — what's next</h3>
+          <p class="briefing" id="progression-summary"></p>
+          <button type="button" class="lane-card quest-cta-btn" id="progression-cta" hidden>
+            Start next mission
+          </button>
+          <p class="subhead progression-or-label" id="progression-or-label" hidden>Or use the green screen</p>
+          <ol id="progression-steps" class="steps progression-steps"></ol>
+          <div class="campaign-track-block" id="progression-campaign-block" hidden>
+            <h4 class="subhead" id="progression-campaign-title"></h4>
+            <ul id="progression-campaign-missions" class="campaign-mission-list"></ul>
+          </div>
+        </article>
+
+        <article class="coach-card" id="score-debrief-card" hidden>
+          <h3>Score debrief</h3>
+          <p class="debrief-total mono" id="debrief-total">—</p>
+          <div class="case-strength-block" id="case-strength-block" hidden>
+            <div class="case-strength-header">
+              <span class="subhead">Case strength</span>
+              <span class="mono" id="case-strength-percent">—</span>
+            </div>
+            <div class="case-strength-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="case-strength-bar">
+              <div class="case-strength-fill" id="case-strength-fill"></div>
+            </div>
+            <p class="note" id="case-strength-label"></p>
+          </div>
+          <div class="debrief-bars" id="debrief-bars"></div>
+          <div class="debrief-leads">
+            <h4 class="subhead">Investigation themes</h4>
+            <ul id="debrief-leads-list" class="leads-list"></ul>
+          </div>
+          <p class="note" id="debrief-export-note"></p>
+        </article>
+
+        <article class="coach-card" id="campaign-progress-card" hidden>
+          <h3>Campaign progress</h3>
+          <ul id="campaign-progress-list" class="campaign-list"></ul>
+        </article>
+
+        <div class="achievement-badges" id="achievement-badges" hidden aria-label="Achievements"></div>
+        <p class="discipline-badge mono" id="discipline-badge" hidden>Discipline: all required evidence before first finding</p>
+
+        <article class="coach-card demo-article-card" id="mission-article-card" hidden>
+          <h3>i on GRC — proof → pudding</h3>
+          <p class="briefing" id="mission-article-hook"></p>
+          <a class="demo-article-link" id="mission-article-link" href="#" target="_blank" rel="noopener noreferrer">Read the article</a>
+        </article>
+
+        <article class="coach-card" id="iongrc-pointer-card" hidden>
+          <h3>Practice in IONGRC</h3>
+          <p class="briefing" id="iongrc-pointer-text">Full article context lives on the IONGRC profile — sign on IONGRC / IONGRC.</p>
+          <button type="button" class="lane-card demo-btn" id="iongrc-pointer-open">Open in IONGRC</button>
+        </article>
+
+        <article class="coach-card guide-primary" id="context-card">
+          <h3>Live coach</h3>
+          <p class="context-screen mono" id="context-screen">Screen: —</p>
+          <div id="context-insight" class="coach-insight" hidden>
+            <dl class="insight-list">
+              <div><dt>What you are looking at</dt><dd id="insight-looking-at"></dd></div>
+              <div><dt>Why it matters</dt><dd id="insight-why"></dd></div>
+              <div><dt>What it proves</dt><dd id="insight-proves"></dd></div>
+              <div><dt>What it does not prove</dt><dd id="insight-not-proves"></dd></div>
+              <div><dt>Suggested next step</dt><dd id="insight-next"></dd></div>
+            </dl>
+          </div>
+          <ul id="context-hints" class="tips"></ul>
+        </article>
+
+        <details class="guide-secondary" id="mission-notes-panel">
+          <summary>Mission notebook</summary>
+          <div class="guide-body">
+            <p class="note">Scratch notes stay in this browser — export with your report when done.</p>
+            <label class="field-label mission-notes-label">
+              Notes
+              <textarea id="mission-notes" rows="4" maxlength="2000" placeholder="Who must act, open questions, follow-ups…"></textarea>
+            </label>
+          </div>
+        </details>
+
+        <details class="guide-secondary">
+          <summary>Mission briefing &amp; flow</summary>
+          <div class="guide-body">
+            <p id="mission-briefing" class="briefing"></p>
+            <ol id="mission-steps" class="steps"></ol>
+          </div>
+        </details>
+
+        <details class="guide-secondary">
+          <summary>5250 reference</summary>
+          <div class="guide-body">
+            <h4 class="subhead">Keyboard</h4>
+            <ul id="tips-keyboard" class="tips"></ul>
+            <h4 class="subhead">Subfile options</h4>
+            <ul id="tips-subfile" class="tips"></ul>
+            <h4 class="subhead">Useful commands</h4>
+            <ul id="tips-commands" class="tips mono"></ul>
+            <p id="signon-hint" class="mono signon-line"></p>
+          </div>
+        </details>
+        </div>
+      </div>
+
+      <div class="coach-mode operator-mode" id="operator-panel" hidden>
+        <article class="coach-card guide-primary sql-evidence-card evidence-focus-card" id="operator-evidence-focus-card" hidden>
+          <h3 id="operator-evidence-focus-headline">Evidence engineering</h3>
+          <p class="context-screen mono evidence-focus-screen" id="operator-evidence-focus-screen" hidden></p>
+          <p class="sql-evidence-stats mono" id="operator-evidence-focus-stats"></p>
+          <div class="sql-evidence-contrast" id="operator-evidence-focus-contrast">
+            <div class="sql-contrast-col sql-contrast-checkbox">
+              <h4 class="subhead">Checkbox / screenshot</h4>
+              <p id="operator-evidence-contrast-checkbox"></p>
+            </div>
+            <div class="sql-contrast-col sql-contrast-live">
+              <h4 class="subhead">Queryable live evidence</h4>
+              <p id="operator-evidence-contrast-live"></p>
+            </div>
+          </div>
+          <p class="note sql-evidence-lead" id="operator-evidence-focus-lead" hidden></p>
+          <a class="demo-article-link sql-evidence-article" id="operator-evidence-focus-article" href="#" target="_blank" rel="noopener noreferrer" hidden>Read the article</a>
+          <div class="sql-evidence-categories" id="operator-evidence-focus-categories" aria-label="Operator evidence engineering reference"></div>
+        </article>
+
+        <div class="operator-coach-block" id="operator-coach-block">
+        <div class="panel-head">
+          <h2 id="operator-title">IBM i Security Administration</h2>
+          <p id="operator-subtitle" class="persona">Security Officer Sandbox</p>
+        </div>
+
+        <article class="coach-card demo-article-card" id="operator-context-article-card" hidden>
+          <h3>i on GRC — article for this screen</h3>
+          <p class="briefing" id="operator-context-article-hook"></p>
+          <a class="demo-article-link" id="operator-context-article-link" href="#" target="_blank" rel="noopener noreferrer">Read the article</a>
+        </article>
+
+        <article class="coach-card guide-primary operator-screen-card" id="operator-screen-card">
+          <h3 id="operator-screen-heading">Current screen</h3>
+          <p class="context-screen mono" id="operator-screen-id">Screen: —</p>
+          <p id="operator-screen-purpose" class="briefing"></p>
+          <h4 class="subhead">On the display</h4>
+          <ul id="operator-on-screen" class="tips"></ul>
+          <h4 class="subhead">What to do</h4>
+          <ul id="operator-what-to-do" class="tips"></ul>
+          <h4 class="subhead">PF keys</h4>
+          <ul id="operator-pf-keys" class="tips mono"></ul>
+          <h4 class="subhead">IBM i note</h4>
+          <p id="operator-realism" class="realism-note"></p>
+          <div id="operator-grc-block" class="coach-insight" hidden>
+            <h4 class="subhead">IBM i meaning</h4>
+            <p id="operator-ibm-meaning" class="briefing"></p>
+            <h4 class="subhead">Rough analogy</h4>
+            <p id="operator-analogy" class="briefing"></p>
+            <h4 class="subhead">GRC takeaway</h4>
+            <p id="operator-grc-takeaway" class="briefing"></p>
+            <h4 class="subhead">What it proves / does not prove</h4>
+            <p id="operator-proves" class="briefing"></p>
+            <p id="operator-not-proves" class="briefing muted-brief"></p>
+            <p class="mono insight-next" id="operator-next-step"></p>
+          </div>
+          <h4 class="subhead">Related CL</h4>
+          <ul id="operator-related-cmds" class="tips mono"></ul>
+        </article>
+
+        <details class="guide-secondary">
+          <summary>About this lane</summary>
+          <div class="guide-body">
+            <p id="operator-intro" class="briefing"></p>
+          </div>
+        </details>
+
+        <details class="guide-secondary">
+          <summary>Suggested workflow</summary>
+          <div class="guide-body">
+            <ol id="operator-workflow" class="steps"></ol>
+          </div>
+        </details>
+
+        <details class="guide-secondary">
+          <summary>5250 reference</summary>
+          <div class="guide-body">
+            <h4 class="subhead">Keyboard</h4>
+            <ul id="operator-tips-keyboard" class="tips"></ul>
+            <h4 class="subhead">Subfile options</h4>
+            <ul id="operator-tips-subfile" class="tips"></ul>
+            <h4 class="subhead">Commands to try</h4>
+            <ul id="operator-tips-commands" class="tips mono"></ul>
+            <p id="operator-signon-hint" class="mono signon-line"></p>
+          </div>
+        </details>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <div id="lane-chooser" class="welcome" hidden aria-modal="true" role="dialog" aria-labelledby="lane-chooser-title">
+    <div class="welcome-card lane-chooser-card">
+      <div class="launcher-brand-row">
+        <img
+          class="launcher-iongrc"
+          src="/assets/brand/i-on-grc-mark.png"
+          width="220"
+          height="74"
+          alt="i on GRC"
+        />
+        <p class="launcher-product-title">Legacy Control Lab</p>
+      </div>
+      <p class="welcome-kicker">IBM i Evidence Runtime · i on GRC lab paths</p>
+      <h1 id="lane-chooser-title" class="welcome-title visually-hidden">Legacy Control Lab</h1>
+      <p class="welcome-tagline" id="launcher-tagline">Control evidence, from the green screen out.</p>
+      <p class="welcome-lead" id="launcher-subtitle">
+        Stop memorizing frameworks. Start practicing governance on a real green screen.
+      </p>
+      <p class="welcome-local-note">Runs locally. No IBM i required. No cloud required. Synthetic training runtime.</p>
+
+      <div class="contrast-frame launcher-paths-only" aria-label="How this lab differs">
+        <div class="contrast-col contrast-traditional">
+          <h2 class="contrast-heading">Dashboard GRC training</h2>
+          <ul>
+            <li>Memorize framework acronyms</li>
+            <li>Fill blank templates</li>
+            <li>Pass multiple-choice exams</li>
+          </ul>
+        </div>
+        <div class="contrast-col contrast-lcl">
+          <h2 class="contrast-heading">Legacy Control Lab</h2>
+          <ul>
+            <li>Collect evidence on a 5250 screen</li>
+            <li>Write decision-ready findings</li>
+            <li>Submit scored missions with exports</li>
+          </ul>
+        </div>
+      </div>
+
+      <section id="launcher-stage-intro" class="launcher-stage" hidden aria-labelledby="launcher-intro-heading">
+        <p class="launcher-crawl-kicker mono">Crawl · Walk · Run</p>
+        <h2 class="skill-paths-heading" id="launcher-intro-heading">Start with the five-minute demo</h2>
+        <p class="launcher-doors-lead">
+          New here? The showroom tour walks the green screen, coach panel, and why this lab is different — unscored, about five minutes.
+        </p>
+        <button type="button" class="lane-card lane-card-door lane-card-demo-primary" id="pick-demo-intro" data-skill-path="demo">
+          <span class="lane-card-kicker">Crawl · Showroom · No scoring</span>
+          <span class="lane-card-title">Five-Minute Demo</span>
+          <span class="lane-card-creds welcome-mono" id="pick-demo-intro-creds">DEMO / TRAIN</span>
+          <span class="lane-card-desc">Step-by-step in the right panel while the 5250 stays authentic.</span>
+        </button>
+        <div class="launcher-intro-actions">
+          <button type="button" class="link-quiet link-btn" id="launcher-skip-intro">Skip intro — choose a skill path</button>
+        </div>
+      </section>
+
+      <section id="launcher-stage-paths" class="launcher-stage" hidden aria-labelledby="launcher-paths-heading">
+      <p class="launcher-crawl-kicker mono">Walk · Run</p>
+      <h2 class="skill-paths-heading" id="launcher-paths-heading">Choose your skill path</h2>
+      <p class="launcher-doors-lead">Three levels on the same partition (<span class="welcome-mono">CLAIMS400</span>). Pick one — change lane anytime from the header.</p>
+
+      <section class="launcher-door launcher-door-numbered" aria-labelledby="door-prove-heading">
+        <h3 class="launcher-door-heading" id="door-prove-heading"><span class="launcher-door-num">1</span> Prove the control</h3>
+        <p class="launcher-door-desc">Scored missions, findings, evidence exports — walk before you run privileged.</p>
+        <div class="lane-options">
+          <button type="button" class="lane-card" id="pick-governance" data-skill-path="governance">
+            <span class="lane-card-kicker">Access governance</span>
+            <span class="lane-card-title">Prove the control claim</span>
+            <span class="lane-card-creds welcome-mono" id="pick-governance-creds">AUDIT / TRAIN</span>
+            <span class="lane-card-desc">CLAIMS-001 campaign · ~45–60 min · Beginner friendly</span>
+          </button>
+          <button type="button" class="lane-card" id="pick-blueteam" data-skill-path="blueteam">
+            <span class="lane-card-kicker">Detect &amp; respond</span>
+            <span class="lane-card-title">Blue Team — detect</span>
+            <span class="lane-card-creds welcome-mono" id="pick-blueteam-creds">AUDIT / TRAIN</span>
+            <span class="lane-card-desc">WRKACTJOB, journals, job logs · scored CLAIMS-005</span>
+          </button>
+          <button type="button" class="lane-card" id="pick-redteam" data-skill-path="redteam">
+            <span class="lane-card-kicker">Adversarial boundaries</span>
+            <span class="lane-card-title">Red Team — boundaries</span>
+            <span class="lane-card-creds welcome-mono" id="pick-redteam-creds">APCLERK / TRAIN</span>
+            <span class="lane-card-desc">Escape attempts as findings · scored CLAIMS-007</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="launcher-door launcher-door-numbered" aria-labelledby="door-practice-heading">
+        <h3 class="launcher-door-heading" id="door-practice-heading"><span class="launcher-door-num">2</span> Practice i on GRC</h3>
+        <p class="launcher-door-desc">Read → do on the stock Main Menu. Article excerpts and IBM command reference — no scoring.</p>
+        <button type="button" class="lane-card lane-card-door" id="pick-iongrc" data-skill-path="iongrc">
+          <span class="lane-card-kicker">Article practice · No scoring</span>
+          <span class="lane-card-title">i on GRC practice desk</span>
+          <span class="lane-card-creds welcome-mono" id="pick-iongrc-creds">IONGRC / IONGRC</span>
+          <span class="lane-card-desc">Training paths and guided sequences — match reading to green-screen practice.</span>
+        </button>
+      </section>
+
+      <section class="launcher-door launcher-door-numbered" aria-labelledby="door-operate-heading">
+        <h3 class="launcher-door-heading" id="door-operate-heading"><span class="launcher-door-num">3</span> Operate privileged</h3>
+        <p class="launcher-door-desc">Run — make changes as security officer and see audit journals and job logs react.</p>
+        <button type="button" class="lane-card lane-card-operator lane-card-door" id="pick-operator" data-skill-path="operator">
+          <span class="lane-card-kicker">Privileged operations</span>
+          <span class="lane-card-title">Operate privileged authority</span>
+          <span class="lane-card-creds welcome-mono" id="pick-operator-creds">QSECOFR / TRAIN</span>
+          <span class="lane-card-desc">SECURITY menu · state changes · DSPEVDDIFF evidence</span>
+        </button>
+      </section>
+
+      <details class="launcher-advanced">
+        <summary>More options</summary>
+        <div class="lane-secondary-actions">
+          <button type="button" class="lane-card lane-card-secondary" id="pick-demo" data-skill-path="demo">
+            <span class="lane-card-kicker">Crawl · Showroom</span>
+            <span class="lane-card-title">Five-Minute Demo</span>
+            <span class="lane-card-creds welcome-mono" id="pick-demo-creds">DEMO / TRAIN</span>
+            <span class="lane-card-desc">Replay the product walkthrough.</span>
+          </button>
+          <button type="button" class="lane-card lane-card-secondary" id="launcher-replay-intro">
+            <span class="lane-card-title">Show intro again</span>
+            <span class="lane-card-desc">Return to the first-run demo prompt.</span>
+          </button>
+          <a class="lane-card lane-card-secondary lane-card-link" href="/docs/iongrc-practice-guide.md" target="_blank" rel="noopener">
+            <span class="lane-card-title">i on GRC practice guide</span>
+            <span class="lane-card-desc">Which path to use, badges, and example session.</span>
+          </a>
+          <a class="lane-card lane-card-secondary lane-card-link" href="/docs/quickstart.md" target="_blank" rel="noopener">
+            <span class="lane-card-title">Documentation</span>
+            <span class="lane-card-desc">Quickstart, troubleshooting, and demo script.</span>
+          </a>
+          <button type="button" class="lane-card lane-card-secondary" id="setup-hint">
+            <span class="lane-card-title">Setup help</span>
+            <span class="lane-card-desc">Run <span class="welcome-mono">npm run trainer:setup</span> if install fails.</span>
+          </button>
+        </div>
+      </details>
+
+      <div class="welcome-actions launcher-paths-only">
+        <label class="welcome-skip">
+          <input type="checkbox" id="lane-remember" />
+          Remember my choice on this browser
+        </label>
+      </div>
+      </section>
+      <p class="welcome-disclaimer">Not affiliated with IBM. Not a production emulator. No real system authority.</p>
+    </div>
+  </div>
+
+  <script type="module" src="/lab/lab.js"></script>
+</body>
+</html>

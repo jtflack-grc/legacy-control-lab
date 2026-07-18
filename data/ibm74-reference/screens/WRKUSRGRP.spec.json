@@ -1,0 +1,15 @@
+{
+  "screenId": "WRKUSRGRP",
+  "category": "user_profile",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "OPT",
+    "LIST"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

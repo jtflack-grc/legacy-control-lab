@@ -1,0 +1,37 @@
+{
+  "screenId": "DSPLIB",
+  "primarySource": "https://www.ibm.com/docs/en/SSH53X_1.9.0/com.ibm.tivoli.dszos.doc.1.9.0/AS400/SC279060.pdf",
+  "sources": [
+    {
+      "title": "Tivoli AS/400 guide — DSPLIB Figure 3/5",
+      "url": "https://www.ibm.com/docs/en/SSH53X_1.9.0/com.ibm.tivoli.dszos.doc.1.9.0/AS400/SC279060.pdf",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.3 — Displaying library names and contents",
+      "url": "https://www.ibm.com/docs/en/i/7.3.0?topic=libraries-displaying-library-names-contents",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "DSPLIB command reference",
+      "url": "https://www.setgetweb.com/p/iSeries/v5r3/dsplib.htm",
+      "type": "vendor-documentation"
+    }
+  ],
+  "asciiPanel": "                        Display Library\n\nLibrary . . . . . . : DRLLIB          Number of objects . : 20\nType . . . . . . . . : PROD            Library ASP number . : 1\nCreate authority . . : *SYSVAL         Library ASP device . : *SYSBAS\n\nType options, press Enter.\n  5=Display full attributes   8=Display service attributes\n\nOpt  Object       Type      Attribute   Freed    Size     Text\n     DRL601C      *PGM      C           NO       10240\n     DRL602A      *PGM      CLP         NO       19456\n     DRLMSGF      *MSGF                             NO       14848\n     DRLDTA       *FILE     SAVF        NO      153600\n                                            More...\nF3=Exit   F12=Cancel   F17=Top   F18=Bottom",
+  "requiredText": [
+    "Display Library",
+    "Library . . . . . . :",
+    "Number of objects",
+    "Type options, press Enter.",
+    "5=Display full attributes",
+    "8=Display service attributes",
+    "Opt  Object",
+    "Type",
+    "Attribute",
+    "Size",
+    "Text"
+  ],
+  "columnHeaders": ["Opt", "Object", "Type", "Attribute", "Freed", "Size", "Text"],
+  "notes": "Objects grouped by type within library. Reached from WRKLIB opt 5 or DSPLIB LIB(name)."
+}

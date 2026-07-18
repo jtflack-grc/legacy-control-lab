@@ -1,0 +1,5 @@
+[
+  { "name": "QPRINT", "library": "QGPL", "status": "RELEASED", "description": "Default printer output queue" },
+  { "name": "QUSRSYS/QPRINT", "library": "QUSRSYS", "status": "RELEASED", "description": "User output queue" },
+  { "name": "HOLDQ", "library": "CLAIMS400", "status": "HELD", "description": "Held reports queue" }
+]

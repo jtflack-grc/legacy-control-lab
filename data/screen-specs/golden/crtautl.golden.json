@@ -1,0 +1,31 @@
+{
+  "screenId": "CRTAUTL",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-create-authorization-list-crtautl",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — CRTAUTL command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-create-authorization-list-crtautl",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM i Security reference — authorization lists (SC41-5302 ch. 3)",
+      "url": "https://www.ibm.com/docs/it/ssw_ibm_i_73/pdf/sc415302.pdf",
+      "type": "redbook"
+    }
+  ],
+  "asciiPanel": "              Create Authorization List (CRTAUTL)\n\nType choices, press Enter.\n\nAuthorization list . . . . . . . . . . . . . . > NEWAUTL\nText description . . . . . . . . . . . . . . . > Audit remediation list\nAuthority  . . . . . . . . . . . . . . . . . . > *EXCLUDE\n\nBottom\nF3=Exit   F4=Prompt   F12=Cancel   F24=More keys",
+  "requiredText": [
+    "Create Authorization List",
+    "Authorization list",
+    "Text description",
+    "F4=Prompt"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F12=Cancel   F24=More keys",
+  "auditNotes": "Create authorization list for least-privilege remediation — SC41-5302 authority list chapter.",
+  "grcMapping": [
+    "SOC2 CC6.1",
+    "Clause 6 — logical access"
+  ]
+}

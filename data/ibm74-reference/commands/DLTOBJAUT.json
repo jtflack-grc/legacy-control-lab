@@ -1,0 +1,69 @@
+{
+  "name": "DLTOBJAUT",
+  "displayName": "Delete Object Authority",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dltobjaut",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Object",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    },
+    {
+      "name": "USER",
+      "label": "User",
+      "required": false,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*PUBLIC",
+        "*CURRENT"
+      ]
+    },
+    {
+      "name": "AUT",
+      "label": "Authority",
+      "required": false,
+      "type": "authorityName",
+      "supportsSpecialValues": [
+        "*USE",
+        "*CHANGE",
+        "*EXCLUDE",
+        "*AUTL",
+        "*OBJOPR",
+        "*OBJEXIST",
+        "*OBJMGT",
+        "*OBJREF",
+        "*ALL"
+      ]
+    },
+    {
+      "name": "OBJTYPE",
+      "label": "Object type",
+      "required": false,
+      "type": "objectType",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*FILE",
+        "*PGM",
+        "*PGM",
+        "*DTAARA",
+        "*LIB",
+        "*JRN",
+        "*OUTQ",
+        "*MSGQ",
+        "*JOBD",
+        "*SBSD"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "DLTOBJAUT. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDAUT"
+}

@@ -1,0 +1,21 @@
+{
+  "screenId": "DSPJOBATTR",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.5.0?topic=ssw_ibm_i_75/cl/dspjobattr.html",
+  "requiredText": [
+    "DSPJOBATTR",
+    "Display Job Attributes",
+    "Job name . . . . . . . . . . . :",
+    "Subsystem . . . . . . . . . . :",
+    "Status . . . . . . . . . . . . :",
+    "Type . . . . . . . . . . . . . :",
+    "Function . . . . . . . . . . . :"
+  ],
+  "render": {
+    "type": "command",
+    "command": "DSPJOBATTR JOB(230231/QSECOFR/NIGHTRUN)",
+    "user": "AUDIT"
+  }
+}

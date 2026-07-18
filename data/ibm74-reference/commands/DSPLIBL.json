@@ -1,0 +1,14 @@
+{
+  "name": "DSPLIBL",
+  "displayName": "Display Library List",
+  "category": "library_object",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dsplibl",
+  "parameters": [],
+  "examples": [
+    "DSPLIBL"
+  ],
+  "helpText": "Displays the current library list including system, product, and user libraries.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLIB"
+}

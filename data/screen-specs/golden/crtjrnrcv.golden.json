@@ -1,0 +1,33 @@
+{
+  "screenId": "CRTJRNRCV",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-create-journal-receiver-crtjrnrcv",
+  "sources": [
+    {
+      "tier": "A",
+      "title": "IBM i 7.4 — CRTJRNRCV command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-create-journal-receiver-crtjrnrcv",
+      "type": "ibm-cl-reference"
+    },
+    {
+      "tier": "A",
+      "title": "IBM Security Reference — QAUDJRN receivers",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=auditors-security-auditing",
+      "type": "ibm-cl-reference"
+    }
+  ],
+  "asciiPanel": "              Create Journal Receiver (CRTJRNRCV)\n\nType choices, press Enter.\n\nJournal . . . . . . . . . . . . . . . . . . . > QSYS/QAUDJRN\nReceiver . . . . . . . . . . . . . . . . . . . > QAUDJRN0002\nText . . . . . . . . . . . . . . . . . . . . . > Security audit journal receiver\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Create Journal Receiver",
+    "Journal",
+    "Receiver",
+    "Text",
+    "F4=Prompt"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel   F24=More keys",
+  "notes": "Lab confirms CRTJRNRCV only — no append-only receiver chain persisted. Save receivers before DLTRCV on production LPAR.",
+  "auditNotes": "Create journal receiver for QAUDJRN rotation — lab confirmation only; no live receiver chain in SQLite.",
+  "grcMapping": [
+    "SOC2 CC7.2",
+    "Audit log continuity"
+  ]
+}

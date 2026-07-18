@@ -1,0 +1,26 @@
+{
+  "screenId": "WRKDSKSTS",
+  "tier": "B",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/wrkdsksts.html",
+  "goldenFile": "wrkdsksts.golden.json",
+  "requiredText": [
+    "WRKDSKSTS",
+    "Work with Disk Status",
+    "Elapsed time",
+    "Type options, press Enter.",
+    "5=Display disk unit detail",
+    "F5=Refresh",
+    "F10=Restart",
+    "F12=Cancel"
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 7,
+    "lastDataRow": 13,
+    "commandLineRow": 22,
+    "optionIdPattern": "^DOPT\\d+$"
+  },
+  "render": { "type": "command", "command": "WRKDSKSTS", "user": "QSECOFR" }
+}

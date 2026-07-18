@@ -1,0 +1,14 @@
+{
+  "name": "NETSTAT",
+  "displayName": "Display TCP/IP Network Status",
+  "category": "network_tcpip",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-netstat",
+  "parameters": [],
+  "examples": [
+    "NETSTAT"
+  ],
+  "helpText": "Displays TCP/IP listeners and established connections.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDTCP"
+}

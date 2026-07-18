@@ -1,0 +1,39 @@
+{
+  "screenId": "SIGNON",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/support/pages/node/638499",
+  "goldenFile": "signon.golden.json",
+  "requiredText": [
+    "Sign On",
+    "System",
+    "Subsystem",
+    "Display",
+    "User",
+    "Password",
+    "Program/procedure",
+    "Menu",
+    "Current library",
+    "COPYRIGHT LCL",
+    "IONGRC"
+  ],
+  "forbiddenText": [
+    "IBM management approved purposes",
+    "IBM Confidential is allowed",
+    "audit at any time by IBM management"
+  ],
+  "fieldRules": [
+    { "id": "TITLE", "row": 1, "valueContains": "Sign On" },
+    { "id": "USER", "row": 6, "col": 53 },
+    { "id": "PWD_LABEL", "row": 7 },
+    { "id": "PASSWORD", "row": 7, "col": 53 },
+    { "id": "PROGRAM", "row": 10, "col": 53 },
+    { "id": "MENU", "row": 11, "col": 53 },
+    { "id": "CURLIB", "row": 12, "col": 53 },
+    { "id": "SYS_LINE", "row": 2, "valueContains": "CLAIMS400" },
+    { "id": "COPYRIGHT", "row": 24, "valueContains": "COPYRIGHT LCL IONGRC" }
+  ],
+  "promptVariant": "detail",
+  "render": { "type": "sample", "sample": "SIGNON" }
+}

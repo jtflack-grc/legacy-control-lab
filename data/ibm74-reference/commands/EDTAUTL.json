@@ -1,0 +1,19 @@
+{
+  "name": "EDTAUTL",
+  "displayName": "Edit Authorization List",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-edtautl",
+  "parameters": [
+    {
+      "name": "AUTL",
+      "label": "Authorization list",
+      "required": true,
+      "type": "name"
+    }
+  ],
+  "examples": ["EDTAUTL AUTL(PAYROLL)"],
+  "helpText": "Edit users and authorities on an authorization list.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDAUT"
+}

@@ -1,0 +1,54 @@
+{
+  "screenId": "DSPJRN",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=information-displaying-printing-journal-entries",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — Displaying and printing journal entries",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=information-displaying-printing-journal-entries",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — Journal management",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-journal",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "Setting up security auditing (QAUDJRN)",
+      "url": "https://www.ibm.com/support/pages/setting-security-auditing",
+      "type": "ibm-support"
+    }
+  ],
+  "requiredText": [
+    "Journal",
+    "Entry type",
+    "5=Display entry details",
+    "Type options, press Enter.",
+    "Opt  Date      Time      Type  User        Job        Message",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "notes": "Interactive DSPJRN shows journal metadata then entry subfile. Security audit journal QAUDJRN uses entry types PW, AF, CP, etc. Layout-audit sample filters PW AF CP.",
+  "asciiPanel": " DSPJRN                           Display Journal Entries                 CLAIMS400\n\n      Journal  . . . . . . . . . . . . . . . . . . . : QAUDJRN\n      Library  . . . . . . . . . . . . . . . . . . . : QSYS\n      Entry type . . . . . . . . . . . . . . . . . . : PW AF CP\n      Type options, press Enter.\n        5=Display entry details\n\n      Opt  Date      Time      Type  User        Job        Message\n           06/13/26  14:22:01  AF    APCLERK     QINTER     Authority failure\n           06/13/26  14:18:44  PW    QSECOFR     QSYS       Password change\n                                            More...\n\n      Parameters or command\n      ===>\nF1=Help   F3=Exit   F5=Refresh   F7=Page up   F8=Page down   F11=Job IP   F12=Cancel",
+  "columnHeaders": [
+    "Opt",
+    "Date",
+    "Time",
+    "Type",
+    "User",
+    "Job",
+    "Message"
+  ],
+  "auditNotes": "QAUDJRN is append-only; receiver rotation via CHGJRN/CRTJRNRCV. Save receivers before DLTRCV. ENTTYP codes: PW password, AF authority failure, CP change profile, CD create/delete object.",
+  "grcMapping": [
+    "SOC2 CC7.2",
+    "COSO CC7 — monitoring activities",
+    "PCI — audit log retention"
+  ],
+  "entryTypes": {
+    "PW": "Password change or violation",
+    "AF": "Authority failure (CPF9902-class events)",
+    "CP": "Change user profile",
+    "CD": "Create or delete object (when QAUDLVL includes *CREATE/*DELETE)",
+    "JS": "Job start/end (when *JOBDTA in QAUDLVL)"
+  }
+}

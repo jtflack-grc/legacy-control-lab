@@ -1,0 +1,30 @@
+{
+  "screenId": "QSH",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=utilities-qshell",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — Qshell utilities",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=utilities-qshell",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — Start Qshell (STRQSH)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/strqsh.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — PASE for i commands",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=utilities-pase-i-commands",
+      "type": "ibm-documentation"
+    }
+  ],
+  "requiredText": [
+    "Qshell — PASE Interactive",
+    "Directory  . . . . . . . . . . :",
+    "PASE shell",
+    "PASE catalog:",
+    "F3=Exit   F7=Scroll up   F8=Scroll down   F12=Cancel"
+  ],
+  "notes": "STRQSH interactive shell — lab uses simplified scrollable stream with PASE catalog stats. Not a byte-accurate IBM Qshell TTY (see docs/runtime-realism-limits.md).",
+  "asciiPanel": " STRQSH                           Qshell — PASE Interactive             CLAIMS400\n\n      Directory  . . . . . . . . . . : /home/AUDIT\n      Synthetic QSH — ls, pwd, cat, cd on /qopensys (LCL_QSH_MODE=host for dev)\n\n      $ pwd\n      /home/AUDIT\n      $ ls claims\n      audit-evidence.json  mission-state.json\n      PASE catalog: 42 cmds  3 blocked  18 IBM i builtins\n      $ _\n\nF1=Help   F3=Exit   F7=Scroll up   F8=Scroll down   F12=Cancel"
+}

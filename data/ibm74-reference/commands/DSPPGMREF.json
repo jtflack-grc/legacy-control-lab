@@ -1,0 +1,14 @@
+{
+  "name": "DSPPGMREF",
+  "displayName": "Display Program References",
+  "category": "source_pdm",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dsppgmref",
+  "parameters": [],
+  "examples": [
+    "DSPPGMREF PGM(PAYROLL/PAYCALC)"
+  ],
+  "helpText": "Displays programs called by or calling a program. Useful for dependency and change-impact review.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDPDM"
+}

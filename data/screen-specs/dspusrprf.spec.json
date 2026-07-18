@@ -1,0 +1,5 @@
+{
+  "screenId": "DSPUSRPRF",
+  "requiredFields": ["USR", "STS", "CLS", "MENU", "INLPGM", "CURLIB", "LMT", "SPC", "GRP", "SIGNON", "TXT"],
+  "bannedSubstrings": ["Evidence note", "Welcome!", "mission menu", "governance training"]
+}

@@ -1,0 +1,7 @@
+{
+  "missions": ["CLAIMS-005", "CLAIMS-007"],
+  "personas": {
+    "blue_team": { "signOn": "AUDIT", "mission": "CLAIMS-005" },
+    "red_team_adversarial": { "signOn": "APCLERK", "mission": "CLAIMS-007" }
+  }
+}

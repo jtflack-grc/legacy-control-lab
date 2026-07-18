@@ -1,0 +1,462 @@
+[
+  {
+    "name": "CHGJOBD",
+    "displayName": "Change Job D",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": true,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CHGJOBD. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CHGJOBD",
+    "parameters": [
+      {
+        "name": "JOBD",
+        "type": "name",
+        "required": true
+      }
+    ],
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGUSRCLS",
+    "displayName": "Change User CLS",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CHGUSRCLS. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CHGUSRCLS",
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGUSRGRP",
+    "displayName": "Change User GRP",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CHGUSRGRP. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CHGUSRGRP",
+    "handler": "catalogChange",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CHGPWD",
+    "displayName": "Change Password",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "changePassword",
+    "helpText": "Change the password for the current user profile. Stock IBM i GO SECURITY paths route here from SECURITY option 20.",
+    "secondLevelHelp": "Enter current, new, and verified new password on the CHGPWD panel. Training passwords remain uppercase like sign-on.",
+    "examples": ["CHGPWD"],
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true
+  },
+  {
+    "name": "CHGUSRPRF",
+    "displayName": "Change User Profile",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "changeUserProfile",
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": true,
+        "label": "User profile"
+      },
+      {
+        "name": "STATUS",
+        "type": "profileStatus",
+        "required": false,
+        "label": "Status",
+        "supportsSpecialValues": [
+          "*ENABLED",
+          "*DISABLED"
+        ]
+      },
+      {
+        "name": "PASSWORD",
+        "type": "password",
+        "required": false,
+        "label": "Password"
+      }
+    ],
+    "helpText": "Changes selected attributes of a user profile in the lab runtime. Use to enable/disable accounts or review privileged profile posture during missions.",
+    "secondLevelHelp": "On IBM i, CHGUSRPRF changes profile attributes such as status, password, and special authorities. This lab implements a subset for governance training.",
+    "examples": [
+      "CHGUSRPRF USRPRF(OLDVENDOR) STATUS(*DISABLED)",
+      "CHGUSRPRF USRPRF(BACKUPADM) LMTCPB(*YES)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDUSR",
+    "realismLimits": "Subset of profile attributes modeled. No real password policy enforcement.",
+    "implementationLevel": "stateful_implemented"
+  },
+  {
+    "name": "CRTJOBD",
+    "displayName": "Create Job D",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": true,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CRTJOBD. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CRTJOBD",
+    "parameters": [
+      {
+        "name": "JOBD",
+        "type": "name",
+        "required": true
+      }
+    ],
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CRTUSRCLS",
+    "displayName": "Create User CLS",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CRTUSRCLS. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CRTUSRCLS",
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CRTUSRGRP",
+    "displayName": "Create User GRP",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "CRTUSRGRP. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "CRTUSRGRP",
+    "handler": "catalogCreate",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "CRTUSRPRF",
+    "displayName": "Create User Profile",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "createUserProfileHandler",
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": true,
+        "label": "User profile"
+      },
+      {
+        "name": "PASSWORD",
+        "type": "password",
+        "required": false,
+        "label": "Password"
+      }
+    ],
+    "helpText": "Creates a synthetic user profile for lab investigation and remediation exercises.",
+    "examples": [
+      "CRTUSRPRF USRPRF(TRAINER01) PASSWORD(TRAINING)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDUSR",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTUSRCLS",
+    "displayName": "Delete User CLS",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DLTUSRCLS. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DLTUSRCLS",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTUSRGRP",
+    "displayName": "Delete User GRP",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DLTUSRGRP. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DLTUSRGRP",
+    "handler": "catalogDelete",
+    "implementationLevel": "stateful_implemented",
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DLTUSRPRF",
+    "displayName": "Delete User Profile",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM"
+    ],
+    "handler": "deleteUserProfileHandler",
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": true,
+        "label": "User profile"
+      }
+    ],
+    "helpText": "Deletes a synthetic user profile created during the current lab attempt.",
+    "examples": [
+      "DLTUSRPRF USRPRF(TRAINER01)"
+    ],
+    "mutatesState": true,
+    "groupMenu": "CMDUSR",
+    "implementationLevel": "stateful_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "DSPJOBD",
+    "displayName": "Display Job D",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": true,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPJOBD. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPJOBD",
+    "parameters": [
+      {
+        "name": "JOBD",
+        "type": "name",
+        "required": true
+      }
+    ],
+    "handler": "displayJobDescription",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPUSRCLS",
+    "displayName": "Display User CLS",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPUSRCLS. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPUSRCLS",
+    "handler": "displayUserClass",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPUSRGRP",
+    "displayName": "Display User GRP",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPUSRGRP. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPUSRGRP",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPUSRIDX",
+    "displayName": "Display User IDX",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "DSPUSRIDX. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "DSPUSRIDX",
+    "handler": "catalogDisplay",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "DSPUSRPRF",
+    "displayName": "Display User Profile",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayUserProfile",
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": true,
+        "label": "User profile",
+        "supportsSpecialValues": ["*CURRENT", "*ALL"]
+      },
+      {
+        "name": "TYPE",
+        "type": "name",
+        "required": false,
+        "label": "Type of information"
+      },
+      {
+        "name": "OUTPUT",
+        "type": "name",
+        "required": false,
+        "label": "Output",
+        "supportsSpecialValues": ["*", "*PRINT", "*OUTFILE"]
+      },
+      {
+        "name": "OUTFILE",
+        "type": "qualifiedName",
+        "required": false,
+        "label": "Output file"
+      },
+      {
+        "name": "OUTMBR",
+        "type": "name",
+        "required": false,
+        "label": "Output member"
+      }
+    ],
+    "helpText": "Displays user profile attributes including status, special authorities, last sign-on, and initial menu. Primary evidence source for privileged access reviews.",
+    "examples": [
+      "DSPUSRPRF USRPRF(BACKUPADM)",
+      "DSPUSRPRF USRPRF(AUDIT)",
+      "DSPUSRPRF USRPRF(*ALL) TYPE(*BASIC) OUTPUT(*OUTFILE) OUTFILE(QGPL/USERS)"
+    ],
+    "groupMenu": "CMDUSR",
+    "relatedCommands": [
+      "WRKUSRPRF",
+      "DSPAUT",
+      "DSPJRN"
+    ],
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state. OUTPUT(*OUTFILE) writes qsys2.outfile_export rows."
+  },
+  {
+    "name": "WRKJOBD",
+    "displayName": "Work with Job D",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": true,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "WRKJOBD. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "WRKJOBD",
+    "parameters": [
+      {
+        "name": "JOBD",
+        "type": "name",
+        "required": false
+      }
+    ],
+    "handler": "workJobDescriptions",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "WRKUSRCLS",
+    "displayName": "Work with User CLS",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "WRKUSRCLS. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "WRKUSRCLS",
+    "handler": "workUserClasses",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "WRKUSRGRP",
+    "displayName": "Work with User GRP",
+    "category": "user_profile",
+    "groupMenu": "CMDUSR",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "WRKUSRGRP. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "WRKUSRGRP",
+    "handler": "catalogWorkWith",
+    "implementationLevel": "display_implemented"
+  },
+  {
+    "name": "WRKUSRPRF",
+    "displayName": "Work with User Profiles",
+    "category": "user_profile",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*SECADM",
+      "*AUDITVIEW"
+    ],
+    "handler": "workWithUserProfiles",
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "default": "*ALL",
+        "required": false,
+        "supportsSpecialValues": [
+          "*ALL"
+        ]
+      }
+    ],
+    "helpText": "Work with user profiles. Option 5 displays detail; option 8 shows object authority for the profile.",
+    "examples": [
+      "WRKUSRPRF"
+    ],
+    "groupMenu": "CMDUSR",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

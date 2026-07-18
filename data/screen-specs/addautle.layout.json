@@ -1,0 +1,16 @@
+{
+  "screenId": "ADDAUTLE",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-add-authorization-list-entry-addautle",
+  "goldenFile": "addautle.golden.json",
+  "requiredText": [
+    "Add Authorization List Entry (ADDAUTLE)",
+    "Type choices, press Enter.",
+    "Authorization list",
+    "User profile",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "render": { "type": "command", "command": "ADDAUTLE AUTL(PAYROLL) USER(APCLERK) AUT(*USE)", "user": "QSECOFR" }
+}

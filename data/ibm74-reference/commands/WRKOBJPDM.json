@@ -1,0 +1,18 @@
+{
+  "name": "WRKOBJPDM",
+  "displayName": "Work with Objects Using PDM",
+  "category": "source_pdm",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkobjpdm",
+  "parameters": [],
+  "examples": [
+    "WRKOBJPDM LIB(PAYROLL)"
+  ],
+  "helpText": "Work with objects in a library using PDM. Option 5 displays object description.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDPDM",
+  "wrkOptions": {
+    "2": "CHGPGM",
+    "5": "DSPPGM"
+  }
+}

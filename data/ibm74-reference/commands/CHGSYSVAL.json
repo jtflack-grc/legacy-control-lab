@@ -1,0 +1,43 @@
+{
+  "name": "CHGSYSVAL",
+  "displayName": "Change System Value",
+  "category": "system_value",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-chgsysval",
+  "parameters": [
+    {
+      "name": "SYSVAL",
+      "label": "System value",
+      "required": true,
+      "type": "systemValueName",
+      "supportsSpecialValues": [
+        "QSECURITY",
+        "QMAXSIGN",
+        "QAUDCTL",
+        "QINACTITV",
+        "QLMTDEVSSN",
+        "QPRTDEV",
+        "QASTLVL"
+      ]
+    },
+    {
+      "name": "VALUE",
+      "label": "Value",
+      "required": true,
+      "type": "systemValueValue",
+      "supportsSpecialValues": [
+        "*SYSVAL",
+        "*BLANK"
+      ]
+    }
+  ],
+  "examples": [
+    "CHGSYSVAL SYSVAL(QMAXSIGN) VALUE(5)",
+    "CHGSYSVAL SYSVAL(QSECURITY) VALUE(40)"
+  ],
+  "helpText": "Changes a system value in the synthetic runtime. Generates audit and state-diff evidence.",
+  "requiresAuthority": [
+    "*SECADM"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDSYS"
+}

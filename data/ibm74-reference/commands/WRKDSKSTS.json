@@ -1,0 +1,14 @@
+{
+  "name": "WRKDSKSTS",
+  "displayName": "Work with Disk Status",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkdsksts",
+  "parameters": [],
+  "examples": [
+    "WRKDSKSTS"
+  ],
+  "helpText": "Work with disk units and ASP utilization. Option 5 displays disk unit detail.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDSYS"
+}

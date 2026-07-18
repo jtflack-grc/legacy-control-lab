@@ -1,0 +1,10 @@
+{
+  "missionId": "HOSPITAL-003",
+  "title": "Operational Evidence and PTF Currency",
+  "persona": "IT auditor / operator",
+  "systemName": "HOSPITAL400",
+  "startingMenu": "AUDIT",
+  "briefingFile": "briefing.md",
+  "mode": "investigate_and_remediate",
+  "allowedMutation": true
+}

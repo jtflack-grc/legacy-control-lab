@@ -1,0 +1,18 @@
+{
+  "screenId": "DSPFFD",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "ibm-i-7.4-display-file-field-description",
+  "requiredText": [
+    "DSPFFD",
+    "Display File Field Description",
+    "File",
+    "Record format",
+    "Type options, press Enter.",
+    "5=Display field details",
+    "Field",
+    "F3=Exit"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "DSPFFD_PAYMST" }
+}

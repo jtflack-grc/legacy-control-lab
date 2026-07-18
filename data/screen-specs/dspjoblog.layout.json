@@ -1,0 +1,16 @@
+{
+  "screenId": "DSPJOBLOG",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/dspjoblog.html",
+  "goldenFile": "dspjoblog.golden.json",
+  "requiredText": [
+    "Display Job Log",
+    "Job . . :",
+    "User . . :",
+    "Number . . . :",
+    "F10=Display all messages"
+  ],
+  "render": { "type": "command", "command": "DSPJOBLOG", "user": "AUDIT" }
+}

@@ -1,0 +1,27 @@
+{
+  "screenId": "CHGACTPRFL",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-activity-profile-list-chgactprfl",
+  "goldenFile": "chgactprfl.golden.json",
+  "requiredText": [
+    "CHGACTPRFL",
+    "Change Activity Profile List",
+    "Profiles on the activity list",
+    "Activity list status",
+    "Profile      Activity list status",
+    "*ACTIVE",
+    "Changed profile",
+    "BACKUPADM",
+    "F3=Exit",
+    "F12=Cancel"
+  ],
+  "functionKeys": "F3=Exit   F12=Cancel",
+  "promptVariant": "detail",
+  "fieldRules": [
+    { "id": "COLHDR", "valueContains": "Activity list status" },
+    { "id": "NOTE_LBL", "valueContains": "Changed profile" }
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "CHGACTPRFL_BACKUPADM" }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "ENDWTR",
+  "displayName": "End WTR",
+  "category": "spool_print",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-endwtr",
+  "parameters": [
+    {
+      "name": "OUTQ",
+      "label": "Output queue",
+      "required": false,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*JOB",
+        "*PRINT"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "ENDWTR. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDSPL"
+}

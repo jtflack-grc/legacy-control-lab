@@ -1,0 +1,16 @@
+{
+  "screenId": "DSPJOBTBL",
+  "category": "job_batch",
+  "auditMode": "catalog",
+  "requiredFields": [
+    "TITLE",
+    "JOB",
+    "JSTAT"
+  ],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

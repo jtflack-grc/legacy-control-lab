@@ -1,0 +1,12 @@
+{
+  "screenId": "WRKSQLSVC",
+  "category": "sql_services",
+  "auditMode": "deep",
+  "requiredFields": [],
+  "bannedSubstrings": [
+    "Welcome!",
+    "mission menu",
+    "governance training",
+    "Evidence note"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "screenId": "CRTUSRPRF",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-create-user-profile-crtusrprf",
+  "sources": [
+    {
+      "tier": "A",
+      "type": "ibm-documentation",
+      "title": "IBM i 7.4 — CRTUSRPRF command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-create-user-profile-crtusrprf"
+    },
+    {
+      "tier": "B",
+      "type": "community-panel",
+      "title": "CRTUSRPRF panel — setgetweb",
+      "url": "http://www.setgetweb.com/p/i5/crtusrprf.htm"
+    },
+    {
+      "tier": "A",
+      "type": "ibm-documentation",
+      "title": "IBM i — Using the command prompt display (F4)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-using-command-prompt-display"
+    }
+  ],
+  "asciiPanel": "              Create User Profile (CRTUSRPRF)\n\nType choices, press Enter.\n\nUser profile . . . . . . . . . . . . . . . . . > TRAINER01\nPassword . . . . . . . . . . . . . . . . . . . >\nUser class . . . . . . . . . . . . . . . . . . > *USER\nStatus . . . . . . . . . . . . . . . . . . . . > *ENABLED\n\nBottom\nF3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel\nF13=How to use this display   F24=More keys",
+  "requiredText": [
+    "Create User Profile (CRTUSRPRF)",
+    "Type choices, press Enter.",
+    "User profile",
+    "Password",
+    "User class",
+    "F4=Prompt",
+    "F24=More keys"
+  ],
+  "notes": "Lab creates profiles in SQLite with QAUDJRN UA entry on success — requires *SECADM."
+}

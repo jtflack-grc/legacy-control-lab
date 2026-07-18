@@ -1,0 +1,26 @@
+{
+  "screenId": "WRKSYSVAL",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.mcpressonline.com/it-infrastructure/it-infrastructure-other/working-with-system-values",
+  "goldenFile": "wrksysval.golden.json",
+  "requiredText": [
+    "WRKSYSVAL",
+    "Work with System Values",
+    "2=Change",
+    "5=Display",
+    "Opt  System value",
+    "Parameters or command",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "forbiddenText": ["Evidence note", "Welcome!"],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 7,
+    "lastDataRow": 13,
+    "commandLineRow": 22,
+    "optionIdPattern": "^SOPT\\d+$"
+  },
+  "render": { "type": "sample", "sample": "WRKSYSVAL" }
+}

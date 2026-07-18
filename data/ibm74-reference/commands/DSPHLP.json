@@ -1,0 +1,23 @@
+{
+  "name": "DSPHLP",
+  "displayName": "Display Help",
+  "category": "mission_lab",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dsphlp",
+  "parameters": [
+    {
+      "name": "TOPIC",
+      "label": "Help topic",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": []
+    }
+  ],
+  "examples": [
+    "DSPHLP",
+    "DSPHLP TOPIC(SPECIAL_AUTHORITY)"
+  ],
+  "helpText": "Displays contextual help for the current screen, function keys, and related commands in the lab.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDLAB"
+}

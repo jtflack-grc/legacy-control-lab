@@ -1,0 +1,40 @@
+{
+  "screenId": "DSPPTF",
+  "primarySource": "https://www.ibm.com/support/pages/basic-ptf-tutorial-applying-individual-ptfs",
+  "sources": [
+    {
+      "title": "IBM — Basic PTF tutorial",
+      "url": "https://www.ibm.com/support/pages/basic-ptf-tutorial-applying-individual-ptfs",
+      "type": "ibm-support"
+    },
+    {
+      "title": "Fix status descriptions",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=information-status-descriptions-using-command-interface",
+      "type": "ibm-documentation"
+    }
+  ],
+  "requiredText": [
+    "Display PTF Details",
+    "General information",
+    "Product",
+    "Release",
+    "PTF identifier",
+    "Status date/time",
+    "PTF save file",
+    "Action pending",
+    "Cover letter",
+    "F3=Exit",
+    "Status",
+    "Temporary",
+    "Permanent",
+    "F6=Print cover letter"
+  ],
+  "notes": "DSPPTF general information panel with IBM dotted-label detail layout.",
+  "asciiPanel": " DSPPTF                           Display PTF Details                     CLAIMS400\n\nGeneral information\n\nProduct . . . . . . . . . . . . . . . . . . . . : 5770SS1\nRelease . . . . . . . . . . . . . . . . . . . . : V7R4M0\nPTF identifier . . . . . . . . . . . . . . . . : SI76195\nStatus . . . . . . . . . . . . . . . . . . . . : Permanent\nStatus date/time . . . . . . . . . . . . . . . : 06/01/26 08:15:00\nPTF save file . . . . . . . . . . . . . . . . . : QGPL/SI76195\nAction pending . . . . . . . . . . . . . . . . : None\n\nCover letter\n  Schedule IPL during maintenance window.\n\nF3=Exit   F6=Print cover letter   F12=Cancel",
+  "auditNotes": "Patch evidence: Permanent vs Temporary status, action pending (IPL), cover letter special instructions. Auditors tie individual PTF to change ticket.",
+  "grcMapping": [
+    "SOC2 CC8.1",
+    "ITGC — patch verification"
+  ],
+  "qmgtoolsRelation": "COLESADTA and Electronic Services collection include DSPPTF OUTPUT(*PRINT)."
+}

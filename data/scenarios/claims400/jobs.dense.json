@@ -1,0 +1,22 @@
+[
+  {
+    "jobNumber": "230202",
+    "userName": "QUSER",
+    "jobName": "QZRCSRVS",
+    "jobType": "BATCH",
+    "subsystem": "QSERVER",
+    "status": "ACTIVE",
+    "jobDescription": "QSYSJOBD",
+    "outputQueue": "QPRINT"
+  },
+  {
+    "jobNumber": "230203",
+    "userName": "QUSER",
+    "jobName": "QPWFSERVSO",
+    "jobType": "BATCH",
+    "subsystem": "QHTTPSVR",
+    "status": "ACTIVE",
+    "jobDescription": "QSYSJOBD",
+    "outputQueue": "QPRINT"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "name": "DSPUSRPRF",
+  "displayName": "Display User Profile",
+  "category": "user_profile",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspusrprf",
+  "parameters": [
+    {
+      "name": "USRPRF",
+      "label": "User profile",
+      "required": true,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*CURRENT",
+        "*ALL"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPUSRPRF USRPRF(BACKUPADM)",
+    "DSPUSRPRF USRPRF(AUDIT)"
+  ],
+  "helpText": "Displays user profile attributes including status, special authorities, last sign-on, and initial menu. Primary evidence source for privileged access reviews.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDUSR"
+}

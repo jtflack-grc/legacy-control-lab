@@ -1,0 +1,24 @@
+{
+  "screenId": "SUBMITMSN",
+  "primarySource": "lab-native mission scoring",
+  "sources": [
+    {
+      "title": "Legacy Control Lab — mission score export",
+      "url": "docs/demo-script.md",
+      "type": "lab-spec"
+    },
+    {
+      "title": "Legacy Control Lab — mission engine",
+      "url": "docs/mission-engine.md",
+      "type": "lab-spec"
+    }
+  ],
+  "requiredText": [
+    "Mission Score",
+    "Mission score:",
+    "Evidence coverage:",
+    "Report exported:"
+  ],
+  "notes": "Synthetic mission completion screen — not a stock IBM panel. SUBMITMSN runs after WRKFINDING; scores evidence coverage and exports markdown report path.",
+  "asciiPanel": " SUBMITMSN                        Mission Score                           CLAIMS400\n\n      Mission score: 82\n      Evidence coverage: 78%\n      Report exported: examples/reports/claims-001-auditor-report.md\n\nF1=Help   F3=Exit   F4=Prompt   F9=Retrieve   F12=Cancel"
+}

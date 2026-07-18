@@ -1,0 +1,201 @@
+{
+  "WRKUSRPRF": {
+    "2": "CHGUSRPRF",
+    "5": "DSPUSRPRF",
+    "8": "DSPAUT"
+  },
+  "WRKSYSVAL": {
+    "2": "CHGSYSVAL",
+    "5": "DSPSYSVAL"
+  },
+  "WRKOBJ": {
+    "2": "GRTOBJAUT",
+    "5": "DSPOBJD",
+    "8": "DSPOBJAUT"
+  },
+  "WRKACTJOB": {
+    "2": "CHGJOB",
+    "4": "ENDJOB",
+    "5": "DSPJOB",
+    "6": "DSPJOBLOG"
+  },
+  "WRKSPLF": {
+    "2": "CHGSPLFA",
+    "4": "DLTSPLF",
+    "5": "DSPSPLF",
+    "6": "RLSSPLF"
+  },
+  "WRKMSGQ": {
+    "2": "CHGMSGQ",
+    "4": "RMVMSG",
+    "5": "DSPMSG"
+  },
+  "WRKJRN": {
+    "2": "CHGJRN",
+    "5": "DSPJRN"
+  },
+  "WRKAUD": {
+    "2": "CHGSYSVAL",
+    "5": "DSPSYSVAL"
+  },
+  "WRKAUT": {
+    "2": "EDTOBJAUT",
+    "5": "DSPAUT",
+    "8": "EDTOBJAUT"
+  },
+  "WRKLIB": {
+    "2": "CHGLIB",
+    "5": "DSPLIB",
+    "7": "DSPLIBD"
+  },
+  "WRKOUTQ": {
+    "2": "CHGOUTQ",
+    "5": "DSPOUTQ"
+  },
+  "WRKLNK": {
+    "2": "CHGAUT",
+    "5": "DSPLNK"
+  },
+  "WRKJOBD": {
+    "2": "CHGJOBD",
+    "5": "DSPJOBD"
+  },
+  "WRKJOB": {
+    "2": "CHGJOB",
+    "5": "DSPJOB"
+  },
+  "WRKSBS": {
+    "2": "CHGSBSD",
+    "5": "DSPSBSD"
+  },
+  "WRKSBMJOB": {
+    "5": "DSPJOB"
+  },
+  "WRKUSRJOB": {
+    "5": "DSPJOB"
+  },
+  "WRKSBSJOB": {
+    "5": "DSPJOB"
+  },
+  "WRKFILE": {
+    "2": "CHGPF",
+    "5": "DSPFD"
+  },
+  "WRKMBR": {
+    "2": "CHGPF",
+    "5": "DSPMBR"
+  },
+  "WRKDTAQ": {
+    "2": "CHGDTAQ",
+    "5": "DSPDTAQ"
+  },
+  "WRKJOBQ": {
+    "2": "CHGJOBQ",
+    "5": "DSPJOBQ"
+  },
+  "WRKJOBSCDE": {
+    "2": "CHGJOBSCDE",
+    "5": "DSPJOBSCDE"
+  },
+  "WRKTCPIP": {
+    "2": "CHGTCPIP",
+    "5": "DSPNETA"
+  },
+  "WRKLNKSVR": {
+    "2": "CHGTCPSVR",
+    "5": "DSPLNKSVR"
+  },
+  "WRKPTFGRP": {
+    "5": "DSPPTFGRP"
+  },
+  "WRKLICINF": {
+    "5": "DSPLICKEY"
+  },
+  "WRKCFGSTS": {
+    "5": "DSPHDWRSC"
+  },
+  "WRKHDWRSC": {
+    "5": "DSPHDWRSC"
+  },
+  "WRKPRB": {
+    "5": "DSPMSG"
+  },
+  "WRKPRD": {
+    "5": "DSPMSG"
+  },
+  "WRKOBJLCK": {
+    "5": "DSPOBJD"
+  },
+  "WRKOBJPDM": {
+    "2": "CHGPGM",
+    "5": "DSPPGM"
+  },
+  "WRKMBRPDM": {
+    "2": "CHGPGM",
+    "5": "DSPPGM"
+  },
+  "WRKPGM": {
+    "2": "CHGPGM",
+    "5": "DSPPGM"
+  },
+  "WRKUSRCLS": {
+    "2": "CHGUSRCLS",
+    "5": "DSPUSRCLS"
+  },
+  "WRKUSRGRP": {
+    "2": "CHGUSRGRP",
+    "5": "DSPUSRGRP"
+  },
+  "WRKAUTL": {
+    "2": "CHGAUTL",
+    "5": "DSPAUTL"
+  },
+  "WRKJRNA": {
+    "5": "DSPJRNRCVA"
+  },
+  "WRKLIBL": {
+    "5": "DSPLIBL"
+  },
+  "WRKWTR": {
+    "2": "CHGOUTQ",
+    "5": "DSPOUTQ"
+  },
+  "WRKMSGW": {
+    "2": "CHGMSGW",
+    "5": "DSPMSGW"
+  },
+  "WRKCMPGN": {},
+  "WRKCMPMSN": {},
+  "WRKCTRL": {
+    "2": "MAPCTRL",
+    "5": "DSPCTRL"
+  },
+  "WRKDSKSTS": {},
+  "WRKFINDING": {
+    "2": "SUBMITMSN"
+  },
+  "WRKJOBSCD": {
+    "5": "DSPJOBSCD"
+  },
+  "WRKRANGE": {
+    "2": "GO"
+  },
+  "WRKSCN": {
+    "2": "SAVSCNPKG",
+    "5": "DSPSCN"
+  },
+  "WRKSCORE": {
+    "2": "GENRPT"
+  },
+  "WRKSQLSVC": {
+    "2": "RUNSQL"
+  },
+  "WRKSYSACT": {},
+  "WRKSYSSTS": {
+    "5": "DSPSYSSTS"
+  },
+  "WRKVARIANT": {
+    "2": "CHGVARIANT",
+    "5": "DSPVARIANT"
+  }
+}

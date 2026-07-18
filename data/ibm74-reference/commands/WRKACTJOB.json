@@ -1,0 +1,20 @@
+{
+  "name": "WRKACTJOB",
+  "displayName": "Work with Active Jobs",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkactjob",
+  "parameters": [],
+  "examples": [
+    "WRKACTJOB"
+  ],
+  "helpText": "Work with active jobs. Option 5 displays job detail.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDJOB",
+  "wrkOptions": {
+    "2": "CHGJOB",
+    "4": "ENDJOB",
+    "5": "DSPJOB",
+    "6": "DSPJOBLOG"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "screenId": "ANZPRFACT",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-analyze-profile-attributes-anzprfact",
+  "goldenFile": "anzprfact.golden.json",
+  "requiredText": [
+    "ANZPRFACT",
+    "Analyze Profile Attributes",
+    "Review inactive profiles",
+    "INACT threshold",
+    "Candidates for disable",
+    "Profile      Last sign-on  Days idle  Finding",
+    "Bottom",
+    "F3=Exit",
+    "F5=Refresh",
+    "F12=Cancel"
+  ],
+  "functionKeys": "F3=Exit   F5=Refresh   F12=Cancel",
+  "promptVariant": "detail",
+  "fieldRules": [
+    { "id": "COLHDR", "valueContains": "Profile      Last sign-on" },
+    { "id": "BOTTOM", "row": 20, "valueContains": "Bottom" }
+  ],
+  "forbiddenText": ["Welcome!", "mission menu", "Evidence note"],
+  "render": { "type": "sample", "sample": "ANZPRFACT_INACT90" }
+}

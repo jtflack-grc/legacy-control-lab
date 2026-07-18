@@ -1,0 +1,32 @@
+{
+  "screenId": "DSPJOBATTR",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.5.0?topic=ssw_ibm_i_75/cl/dspjobattr.html",
+  "sources": [
+    {
+      "title": "IBM i 7.5 — Display Job Attributes (DSPJOBATTR)",
+      "url": "https://www.ibm.com/docs/en/i/7.5.0?topic=ssw_ibm_i_75/cl/dspjobattr.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "Display Job (DSPJOB) — Work with Job option 1",
+      "url": "https://www.ibm.com/docs/en/i/7.5.0?topic=ssw_ibm_i_75/cl/dspjob.html",
+      "type": "ibm-documentation"
+    }
+  ],
+  "asciiPanel": " DSPJOBATTR                       Display Job Attributes                  CLAIMS400\n\n      Job name . . . . . . . . . . . :   QPAD082403\n      User . . . . . . . . . . . . . :   QSECOFR\n      Job number . . . . . . . . . . :   29961\n\n      Subsystem . . . . . . . . . . :   QINTER\n      Status . . . . . . . . . . . . :   ACTIVE\n      Type . . . . . . . . . . . . . :   BATCH\n      Function . . . . . . . . . . . :   PGM-QCMD\n\n      Press Enter to continue.",
+  "requiredText": [
+    "Display Job Attributes",
+    "Job name . . . . . . . . . . . :",
+    "Subsystem . . . . . . . . . . :",
+    "Status . . . . . . . . . . . . :",
+    "Type . . . . . . . . . . . . . :",
+    "Function . . . . . . . . . . . :",
+    "Press Enter to continue",
+    "Job number"
+  ],
+  "notes": "Reached from WRKACTJOB option 5 or DSPJOB OPTION(*SELECT) option 1. Dotted-label detail panel per QUSRSRAA-style layout.",
+  "auditNotes": "Job status attributes — subsystem, status (ACTIVE/HOLD), type (BATCH/INT), current program. Dotted-label detail panel; press Enter to continue on stock IBM i.",
+  "grcMapping": [
+    "Incident triage — job context"
+  ]
+}

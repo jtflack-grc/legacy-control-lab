@@ -1,0 +1,16 @@
+{
+  "name": "WRKCFGSTS",
+  "displayName": "Work with Configuration Status",
+  "category": "network_tcpip",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-wrkcfgsts",
+  "parameters": [],
+  "examples": [
+    "WRKCFGSTS"
+  ],
+  "helpText": "Work with Configuration Status — cataloged in Legacy Control Lab.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "wrkOptions": {
+    "5": "DSPHDWRSC"
+  }
+}

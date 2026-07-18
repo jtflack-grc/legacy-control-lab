@@ -1,0 +1,73 @@
+[
+  {
+    "userName": "QSECOFR",
+    "status": "*ENABLED",
+    "userClass": "*SECOFR",
+    "text": "System security officer",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*ALLOBJ *SECADM",
+    "initialMenu": "AUDIT",
+    "lastSignon": "05/12/26"
+  },
+  {
+    "userName": "AUDIT",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "County auditor training profile",
+    "groupProfile": "AUDITGRP",
+    "specialAuthorities": "*AUDIT",
+    "initialMenu": "AUDIT",
+    "password": "TRAIN",
+    "lastSignon": "06/02/26"
+  },
+  {
+    "userName": "COUNTYADM",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "County IT administrator",
+    "groupProfile": "ITOPS",
+    "specialAuthorities": "*ALLOBJ *SECADM",
+    "initialMenu": "AUDIT",
+    "lastSignon": "04/10/26"
+  },
+  {
+    "userName": "TAXBATCH",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Tax roll batch user — elevated authority",
+    "groupProfile": "BATCHGRP",
+    "specialAuthorities": "*JOBCTL",
+    "initialMenu": "AUDIT",
+    "lastSignon": "05/30/26"
+  },
+  {
+    "userName": "OLDVEND",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Dormant vendor account",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*JOBCTL",
+    "initialMenu": "AUDIT",
+    "lastSignon": "02/14/22"
+  },
+  {
+    "userName": "RECORDS1",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "Public records clerk",
+    "groupProfile": "RECGRP",
+    "specialAuthorities": "*NONE",
+    "initialMenu": "AUDIT",
+    "lastSignon": "05/28/26"
+  },
+  {
+    "userName": "QPGMR",
+    "status": "*DISABLED",
+    "userClass": "*USER",
+    "text": "Disabled programmer profile",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*JOBCTL",
+    "initialMenu": "AUDIT",
+    "lastSignon": "08/14/22"
+  }
+]

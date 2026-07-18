@@ -1,0 +1,38 @@
+{
+  "screenId": "WRKLNK",
+  "primarySource": "https://archive.midrange.com/midrange-l/200212/msg01202.html",
+  "sources": [
+    {
+      "title": "MIDRANGE-L — WRKLNK DETAIL(*EXTENDED) panel",
+      "url": "https://archive.midrange.com/midrange-l/200212/msg01202.html",
+      "type": "panel-capture"
+    },
+    {
+      "title": "IBM i 7.4 — Work with Object Links (WRKLNK)",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/wrklnk.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "QShell and IFS presentation — root directory WRKLNK",
+      "url": "https://slideplayer.com/slide/6619666/",
+      "type": "vendor-documentation"
+    }
+  ],
+  "asciiPanel": "                            Work with Object Links\n\nDirectory  . . . . :   /home/VERN\n\nType options, press Enter.\n  2=Edit   3=Copy   4=Remove   5=Display   7=Rename   8=Display attributes\n  11=Change current directory ...\n  12=Work with links  (DETAIL *EXTENDED only)\n\nOpt   Object link            Type             Attribute    Text\n      .                      DIR\n      ..                     DIR\n      testxxx                SYMLNK->PGM\n                                                                       More...",
+  "requiredText": [
+    "Work with Object Links",
+    "Directory",
+    "Type options, press Enter.",
+    "2=Edit",
+    "4=Remove",
+    "5=Display",
+    "8=Display attributes",
+    "11=Change current directory",
+    "Opt   Object link",
+    "Type",
+    "Attribute",
+    "Text"
+  ],
+  "columnHeaders": ["Opt", "Object link", "Type", "Attribute", "Text"],
+  "notes": "Option 12 appears with DETAIL(*EXTENDED). Root listing shows QDLS, QFileSvr, QIBM, QNTC, QOpenSys, QOPT, QSR, QSYS.LIB directories."
+}

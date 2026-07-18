@@ -1,0 +1,24 @@
+{
+  "name": "DSPPTF",
+  "displayName": "Display Program Temporary Fix",
+  "category": "ptf_license",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspptf",
+  "parameters": [
+    {
+      "name": "PTFID",
+      "label": "PTF identifier",
+      "required": false,
+      "type": "name",
+      "supportsSpecialValues": [
+        "*ALL"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPPTF PTF(SI12345)"
+  ],
+  "helpText": "Displays PTF (program temporary fix) information for the synthetic system image.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDPTF"
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "variantId": "HOSPITAL-001-A",
+    "missionId": "HOSPITAL-001",
+    "title": "Sensitive Object Authority Review — Variant A",
+    "seed": 2001,
+    "riskPattern": "public_authority_exposure"
+  },
+  {
+    "variantId": "HOSPITAL-001-B",
+    "missionId": "HOSPITAL-001",
+    "title": "Sensitive Object Authority Review — Variant B",
+    "seed": 2002,
+    "riskPattern": "stale_vendor_account"
+  }
+]

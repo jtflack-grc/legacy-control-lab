@@ -1,0 +1,35 @@
+{
+  "screenId": "DSPFFD",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspffd-display-file-field-description",
+  "requiredText": [
+    "Display File Field Description",
+    "File",
+    "Record format",
+    "Type options, press Enter.",
+    "5=Display field details",
+    "Field",
+    "F3=Exit"
+  ],
+  "notes": "Subfile-style field list for database file privacy review — option 5 drills to per-field detail panel.",
+  "asciiPanel": " DSPFFD                           Display File Field Description          CLAIMS400\n\n      File . . . . . . . . . . . . . : PAYROLL/PAYMST\n      Record format  . . . . . . . . : PAYMSTR\n      Type options, press Enter.\n        5=Display field details\n\n      Opt  Field       Type   Length  Dec  Text\n      __   EMPNO       CHAR       10    0  Employee number\n      __   SSN         CHAR       11    0  Social security number\n      __   PAYRATE     PACKED      7    2  Pay rate\n\n      Parameters or command\n      ===>\nF1=Help   F3=Exit   F5=Refresh   F12=Cancel",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — DSPFFD command reference",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspffd-display-file-field-description",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — Display file field description",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=files-displaying-file-field-description",
+      "type": "ibm-documentation"
+    }
+  ],
+  "columnHeaders": [
+    "Opt",
+    "Field",
+    "Type",
+    "Length",
+    "Dec",
+    "Text"
+  ]
+}

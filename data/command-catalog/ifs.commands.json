@@ -1,0 +1,107 @@
+[
+  {
+    "name": "CPY",
+    "displayName": "Copy Entry",
+    "category": "ifs",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Copy. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogAction",
+    "mutatesState": true,
+    "implementationLevel": "stateful_implemented",
+    "promptable": true
+  },
+  {
+    "name": "DSPLNK",
+    "displayName": "Display Object Link",
+    "category": "ifs",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "displayObjectLink",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "ifsPath",
+        "required": true,
+        "label": "Object path"
+      }
+    ],
+    "helpText": "Displays an integrated file system object link or stream file path.",
+    "examples": [
+      "DSPLNK OBJ('/claims/claimmst.sym')"
+    ],
+    "groupMenu": "CMDIFS",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "MKDIR",
+    "displayName": "Make Directory",
+    "category": "ifs",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Make Directory. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "MOV",
+    "displayName": "Move Entry",
+    "category": "ifs",
+    "groupMenu": "CMDIFS",
+    "status": "implemented",
+    "promptable": false,
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "MOV. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "shortDescription": "MOV",
+    "handler": "catalogAction",
+    "mutatesState": true,
+    "implementationLevel": "stateful_implemented"
+  },
+  {
+    "name": "RMVLNK",
+    "displayName": "Remove Link",
+    "category": "ifs",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [],
+    "helpText": "Remove Link. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
+    "handler": "catalogAction",
+    "implementationLevel": "stateful_implemented",
+    "promptable": true,
+    "mutatesState": true,
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  },
+  {
+    "name": "WRKLNK",
+    "displayName": "Work with Object Links",
+    "category": "ifs",
+    "status": "implemented",
+    "allowLimitedUser": true,
+    "requiresAuthority": [],
+    "handler": "workWithObjectLinks",
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "ifsPath",
+        "required": false,
+        "default": "/",
+        "label": "Directory path"
+      }
+    ],
+    "helpText": "Work with object links under an IFS path. Option 5 displays link detail.",
+    "examples": [
+      "WRKLNK OBJ('/claims')"
+    ],
+    "groupMenu": "CMDIFS",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+  }
+]

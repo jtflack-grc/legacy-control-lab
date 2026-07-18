@@ -1,0 +1,26 @@
+{
+  "screenId": "DSPEVDDIFF",
+  "primarySource": "lab-native evidence diff (QSECOFR lane)",
+  "sources": [
+    {
+      "title": "Legacy Control Lab — operator evidence diff",
+      "url": "docs/runtime-realism-limits.md",
+      "type": "lab-spec"
+    },
+    {
+      "title": "Legacy Control Lab — QSECOFR privileged lane",
+      "url": "docs/privileged-operator-lane.md",
+      "type": "lab-spec"
+    }
+  ],
+  "requiredText": [
+    "Display Evidence Changes",
+    "Type . . . . . . . . . . . . . . . . . . . :",
+    "Mission . . . . . . . . . . . . . . . . . :",
+    "Date/Time           Type    Entity       Change summary",
+    "Session user",
+    "F3=Exit   F5=Refresh   F12=Cancel"
+  ],
+  "notes": "Synthetic lab screen — no stock IBM command. Correlates QSECOFR mutations (CHGUSRPRF, CHGSYSVAL, GRTOBJAUT) with runtime state-change rows for Path B evidence review.",
+  "asciiPanel": " DSPEVDDIFF                       Display Evidence Changes                CLAIMS400\n\n      Type . . . . . . . . . . . . . . . . . . . : *USRPRF\n      Mission . . . . . . . . . . . . . . . . . : CLAIMS-001\n      Session user . . . . . . . . . . . . . . . : QSECOFR\n\n      Date/Time           Type    Entity       Change summary\n      06/13/26 14:22:01   USRPRF  OLDVENDOR    status: *ENABLED -> *DISABLED\n\n      Bottom\nF3=Exit   F5=Refresh   F12=Cancel"
+}

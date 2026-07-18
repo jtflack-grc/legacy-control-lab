@@ -1,0 +1,25 @@
+{
+  "screenId": "DSPFD",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-file-description-dspfd",
+  "sources": [
+    {
+      "title": "IBM i 7.4 — DSPFD command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-display-file-description-dspfd",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — Display file description",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=files-displaying-file-description",
+      "type": "ibm-documentation"
+    }
+  ],
+  "requiredText": [
+    "Display File Description",
+    "Record format",
+    "Field list",
+    "SSN",
+    "F3=Exit"
+  ],
+  "notes": "TYPE(*RCDFMT) or field list for sensitive PAYMST columns — ISO 27701 clause 8 evidence path. Lab annotates SSN with *PII tag.",
+  "asciiPanel": " DSPFD                            Display File Description                CLAIMS400\n\n      File . . . . . . . . . . . . . . . . . . . . : PAYROLL/PAYMST\n      File type . . . . . . . . . . . . . . . . . . : *PF\n      Record format . . . . . . . . . . . . . . . . : PAYMSTR\n      Member . . . . . . . . . . . . . . . . . . . : PAYMST\n      Record length . . . . . . . . . . . . . . . . : 128\n      Number of fields . . . . . . . . . . . . . . : 5\n      Field list (privacy / PII review):\n      Field       Type     Len  Dec  Text\n      EMPNO       CHAR      10    0  Employee number\n      EMPNAME     CHAR      30    0  Employee name\n      SSN         CHAR      11    0  Social security number  *PII\n      PAYRATE     PACKED     7    2  Pay rate\n      DEPT        CHAR       5    0  Department\n\nF1=Help   F3=Exit   F12=Cancel"
+}

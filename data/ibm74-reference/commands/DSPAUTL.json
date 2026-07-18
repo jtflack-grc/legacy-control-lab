@@ -1,0 +1,25 @@
+{
+  "name": "DSPAUTL",
+  "displayName": "Display Authorization List",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dspautl",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "Object",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    }
+  ],
+  "examples": [
+    "DSPAUTL AUTL(PAYROLL)"
+  ],
+  "helpText": "Displays an authorization list and secured object summary.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDAUT"
+}

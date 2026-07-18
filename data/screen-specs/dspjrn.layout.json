@@ -1,0 +1,29 @@
+{
+  "screenId": "DSPJRN",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "ibm-i-7.4-display-journal",
+  "requiredText": [
+    "DSPJRN",
+    "Display Journal",
+    "Journal  . . . . . . . . . . . . . . . . . . . : QAUDJRN",
+    "Entry type . . . . . . . . . . . . . . . . . . : PW AF CP",
+    "5=Display entry details",
+    "Opt  Date      Time      Type  User        Job        Message",
+    "F7=Page up",
+    "F8=Page down"
+  ],
+  "forbiddenText": ["Evidence note", "Welcome!"],
+  "fieldRules": [
+    { "id": "JOPT0", "row": 10, "col": 6 },
+    { "id": "ENT0", "col": 10 }
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 10,
+    "lastDataRow": 16,
+    "commandLineRow": 22,
+    "optionIdPattern": "^JOPT\\d+$"
+  },
+  "render": { "type": "sample", "sample": "DSPJRN_AUDIT" }
+}

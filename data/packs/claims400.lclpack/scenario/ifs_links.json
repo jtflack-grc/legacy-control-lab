@@ -1,0 +1,56 @@
+[
+  {
+    "directory": "/",
+    "name": "claims",
+    "linkType": "*DIR",
+    "target": "/claims",
+    "owner": "QSECOFR",
+    "dataAuthority": "*RWX",
+    "textDescription": "Claims application root"
+  },
+  {
+    "directory": "/",
+    "name": "payroll",
+    "linkType": "*DIR",
+    "target": "/payroll",
+    "owner": "PAYADMIN",
+    "dataAuthority": "*RWX",
+    "textDescription": "Payroll integration directory"
+  },
+  {
+    "directory": "/claims",
+    "name": "claimmst.sym",
+    "linkType": "*SYMLNK",
+    "target": "/QSYS.LIB/CLAIMS400.LIB/CLAIMMST.FILE",
+    "owner": "APCLERK",
+    "dataAuthority": "*RW",
+    "textDescription": "Symlink to claims master file"
+  },
+  {
+    "directory": "/claims",
+    "name": "export",
+    "linkType": "*DIR",
+    "target": "/claims/export",
+    "owner": "APCLERK",
+    "dataAuthority": "*RWX",
+    "textDescription": "Claims export folder"
+  },
+  {
+    "directory": "/claims/export",
+    "name": "daily.csv",
+    "linkType": "*STMF",
+    "target": "/claims/export/daily.csv",
+    "owner": "APCLERK",
+    "dataAuthority": "*RW",
+    "textDescription": "Daily claims extract"
+  },
+  {
+    "directory": "/payroll",
+    "name": "paymst.sym",
+    "linkType": "*SYMLNK",
+    "target": "/QSYS.LIB/PAYROLL.LIB/PAYMST.FILE",
+    "owner": "PAYADMIN",
+    "dataAuthority": "*RW",
+    "textDescription": "Symlink to payroll master"
+  }
+]

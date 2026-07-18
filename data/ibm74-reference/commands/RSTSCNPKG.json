@@ -1,0 +1,34 @@
+{
+  "name": "RSTSCNPKG",
+  "displayName": "Restore Scenario Package",
+  "category": "range",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-rstscnpkg",
+  "parameters": [
+    {
+      "name": "PACKAGE",
+      "label": "Package file",
+      "required": true,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "claims400"
+      ]
+    },
+    {
+      "name": "FORCE",
+      "label": "FORCE",
+      "required": false,
+      "type": "genericName",
+      "supportsSpecialValues": [
+        "*YES",
+        "*NO"
+      ]
+    }
+  ],
+  "examples": [
+    "RSTSCNPKG PACKAGE(claims400.lclpack)"
+  ],
+  "helpText": "Restores scenario pack files from a .lclpack archive into data/scenarios/.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDLAB"
+}

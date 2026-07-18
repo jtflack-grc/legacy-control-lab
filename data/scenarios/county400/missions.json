@@ -1,0 +1,75 @@
+{
+  "missions": [
+    {
+      "id": "COUNTY-001",
+      "title": "Public Records Access Review",
+      "briefing": "Determine whether access to public records and tax roll objects is restricted, reviewed, and evidenced.",
+      "persona": "IT auditor / GRC analyst"
+    },
+    {
+      "id": "COUNTY-002",
+      "title": "Vendor Account Exposure",
+      "briefing": "Identify whether stale vendor access creates operational or security risk.",
+      "persona": "IT auditor / GRC analyst"
+    },
+    {
+      "id": "COUNTY-003",
+      "title": "Batch Job Evidence Gap",
+      "briefing": "Determine whether batch jobs supporting county reporting have sufficient operational evidence.",
+      "persona": "IT auditor / operator"
+    }
+  ],
+  "missionEvidenceRequirements": [
+    {
+      "missionId": "COUNTY-001",
+      "key": "user_profiles",
+      "description": "Review user profiles (WRKUSRPRF or DSPUSRPRF)",
+      "commandPattern": "WRKUSRPRF|DSPUSRPRF",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "COUNTY-001",
+      "key": "object_authority",
+      "description": "Review sensitive object authority",
+      "commandPattern": "DSPOBJAUT|WRKOBJ",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "COUNTY-001",
+      "key": "audit_journal",
+      "description": "Review audit journal entries",
+      "commandPattern": "DSPJRN|DSPAUDJRNE",
+      "optional": false,
+      "weight": 1
+    }
+  ],
+  "missionExpectedFindings": [
+    {
+      "missionId": "COUNTY-001",
+      "key": "excessive_public_authority",
+      "description": "Sensitive object has excessive public authority.",
+      "matchPatterns": [
+        "public",
+        "authority",
+        "change",
+        "excessive"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "COUNTY-001",
+      "key": "stale_vendor",
+      "description": "Dormant vendor or interface account remains enabled.",
+      "matchPatterns": [
+        "vendor",
+        "old",
+        "stale",
+        "enabled",
+        "interface"
+      ],
+      "weight": 1
+    }
+  ]
+}

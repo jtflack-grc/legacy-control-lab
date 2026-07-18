@@ -1,0 +1,24 @@
+{
+  "name": "CRTSBSD",
+  "displayName": "Create Subsystem D",
+  "category": "job_batch",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-crtsbsd",
+  "parameters": [
+    {
+      "name": "SBS",
+      "label": "Subsystem",
+      "required": true,
+      "type": "name",
+      "supportsSpecialValues": [
+        "*ALL",
+        "*ACTIVE",
+        "*ENDED"
+      ]
+    }
+  ],
+  "examples": [],
+  "helpText": "CRTSBSD. Interactive IBM i command implemented in IBM i Control Lab with standard 5250 screens, options, and parameter prompts.",
+  "requiresAuthority": [],
+  "mutatesState": true,
+  "groupMenu": "CMDJOB"
+}

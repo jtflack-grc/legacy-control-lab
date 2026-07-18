@@ -1,0 +1,31 @@
+{
+  "screenId": "DSPSYSVAL",
+  "primarySource": "https://laservault.com/wp-content/uploads/2023/03/IBMi_System_Values_Guide.pdf",
+  "sources": [
+    {
+      "title": "IBM i System Values Guide",
+      "url": "https://laservault.com/wp-content/uploads/2023/03/IBMi_System_Values_Guide.pdf",
+      "type": "third-party-guide"
+    },
+    {
+      "title": "IBM i 7.4 — DSPSYSVAL command reference",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=ssw_ibm_i_74/cl/dspsysval.html",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — System values",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=management-system-values",
+      "type": "ibm-documentation"
+    }
+  ],
+  "requiredText": [
+    "Display System Value",
+    "System value",
+    "Description",
+    "Current value",
+    "QSECURITY",
+    "F3=Exit"
+  ],
+  "notes": "DSPSYSVAL SYSVAL(QSECURITY) shows single-value detail, not the WRKSYSVAL subfile.",
+  "asciiPanel": " DSPSYSVAL                        Display System Value                    CLAIMS400\n\nSystem value . . . . . . . . . . . . . . . . . : QSECURITY\nDescription  . . . . . . . . . . . . . . . . . : Security level\n\nCurrent value  . . . . . . . . . . . . . . . . : 40\n\nF3=Exit   F12=Cancel"
+}

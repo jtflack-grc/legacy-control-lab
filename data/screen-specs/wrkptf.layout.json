@@ -1,0 +1,24 @@
+{
+  "screenId": "WRKPTF",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=fixes-working-with-ptfs",
+  "goldenFile": "wrkptf.golden.json",
+  "requiredText": [
+    "WRKPTF",
+    "Work with PTFs",
+    "Type options, press Enter.",
+    "5=Display PTF details",
+    "SI76195",
+    "F3=Exit"
+  ],
+  "subfile": {
+    "maxVisibleRows": 7,
+    "firstDataRow": 8,
+    "lastDataRow": 14,
+    "commandLineRow": 22,
+    "optionIdPattern": "^WPTOPT\\d+$"
+  },
+  "render": { "type": "command", "command": "WRKPTF" }
+}

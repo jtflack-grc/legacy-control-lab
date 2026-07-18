@@ -1,0 +1,14 @@
+{
+  "name": "DSPLOG",
+  "displayName": "Display Log",
+  "category": "message_queue",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dsplog",
+  "parameters": [],
+  "examples": [
+    "DSPLOG"
+  ],
+  "helpText": "Displays history log messages including security and application events.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDMSG"
+}

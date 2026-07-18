@@ -1,0 +1,25 @@
+{
+  "screenId": "CMDPROMPT",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "enforceInCi": true,
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-using-command-prompt-display",
+  "goldenFile": "cmdprompt.golden.json",
+  "requiredText": [
+    "Create Library (CRTLIB)",
+    "Type choices, press Enter.",
+    "Library",
+    "Bottom",
+    "F4=Prompt",
+    "F9=",
+    "F24=More keys"
+  ],
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=Add program   F12=Cancel   F24=More keys",
+  "promptVariant": "cmdprompt",
+  "fieldRules": [
+    { "id": "HEADER", "row": 1, "valueContains": "Create Library (CRTLIB)" },
+    { "id": "HINT", "row": 3, "valueContains": "Type choices" },
+    { "id": "BOTTOM", "row": 20, "valueContains": "Bottom" }
+  ],
+  "render": { "type": "sample", "sample": "CMDPROMPT_CRTLIB" }
+}

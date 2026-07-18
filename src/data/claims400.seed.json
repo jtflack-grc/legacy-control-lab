@@ -1,0 +1,589 @@
+{
+  "system": {
+    "name": "CLAIMS400",
+    "description": "Healthcare claims operations training scenario — production-like governance lab"
+  },
+  "libraries": ["QSYS", "QGPL", "QTEMP", "CLAIMS400", "PAYROLL", "AUDITLAB", "LABCTL"],
+  "subsystems": [
+    { "name": "QBASE", "status": "*ACTIVE", "description": "System library subsystem" },
+    { "name": "QINTER", "status": "*ACTIVE", "description": "Interactive subsystem" },
+    { "name": "QBATCH", "status": "*ACTIVE", "description": "Batch subsystem" },
+    { "name": "QSERVER", "status": "*ACTIVE", "description": "Server jobs subsystem" },
+    { "name": "QSPL", "status": "*ACTIVE", "description": "Spool subsystem" },
+    { "name": "QHTTPSVR", "status": "*ACTIVE", "description": "HTTP server subsystem" }
+  ],
+  "userProfiles": [
+    {
+      "userName": "QSECOFR",
+      "status": "*ENABLED",
+      "userClass": "*SECOFR",
+      "text": "Security officer",
+      "groupProfile": "*NONE",
+      "specialAuthorities": "*ALLOBJ *SAVSYS *JOBCTL *SERVICE *SPLCTL *SECADM *AUDIT *IOSYSCFG",
+      "initialMenu": "SECURITY",
+      "initialProgram": "*NONE",
+      "currentLibrary": "*CRTDFT",
+      "limitCapabilities": "*NO",
+      "password": "TRAIN",
+      "lastSignon": "05/12/26"
+    },
+    {
+      "userName": "AUDIT",
+      "status": "*ENABLED",
+      "userClass": "*USER",
+      "text": "IT auditor / GRC analyst training profile",
+      "groupProfile": "AUDITGRP",
+      "specialAuthorities": "*AUDIT",
+      "initialMenu": "AUDIT",
+      "password": "TRAIN",
+      "lastSignon": "06/02/26"
+    },
+    {
+      "userName": "BACKUPADM",
+      "status": "*ENABLED",
+      "userClass": "*USER",
+      "text": "Backup administrator — stale privileged access",
+      "groupProfile": "ITOPS",
+      "specialAuthorities": "*ALLOBJ *SAVSYS",
+      "initialMenu": "AUDIT",
+      "lastSignon": "11/03/24"
+    },
+    {
+      "userName": "OLDVENDOR",
+      "status": "*ENABLED",
+      "userClass": "*USER",
+      "text": "Former vendor account — should be disabled",
+      "groupProfile": "*NONE",
+      "specialAuthorities": "*JOBCTL",
+      "initialMenu": "AUDIT",
+      "lastSignon": "01/17/23"
+    },
+    {
+      "userName": "APCLERK",
+      "status": "*ENABLED",
+      "userClass": "*USER",
+      "text": "Accounts payable clerk — limited capabilities",
+      "groupProfile": "APGRP",
+      "specialAuthorities": "*NONE",
+      "limitCapabilities": "*YES",
+      "initialMenu": "AUDIT",
+      "lastSignon": "05/29/26"
+    },
+    {
+      "userName": "PAYADMIN",
+      "status": "*ENABLED",
+      "userClass": "*USER",
+      "text": "Payroll administrator",
+      "groupProfile": "PAYGRP",
+      "specialAuthorities": "*SECADM",
+      "initialMenu": "AUDIT",
+      "lastSignon": "04/18/26"
+    },
+    {
+      "userName": "QPGMR",
+      "status": "*DISABLED",
+      "userClass": "*USER",
+      "text": "Disabled programmer profile",
+      "groupProfile": "*NONE",
+      "specialAuthorities": "*JOBCTL",
+      "initialMenu": "AUDIT",
+      "lastSignon": "08/14/22"
+    }
+  ],
+  "systemValues": [
+    {
+      "name": "QSECURITY",
+      "value": "40",
+      "category": "Security",
+      "description": "System security level"
+    },
+    {
+      "name": "QAUDCTL",
+      "value": "*AUDLVL *OBJAUD",
+      "category": "Audit",
+      "description": "Audit control"
+    },
+    {
+      "name": "QAUDLVL",
+      "value": "*AUTFAIL *PGMFAIL *SECURITY",
+      "category": "Audit",
+      "description": "Audit level"
+    },
+    {
+      "name": "QCRTAUT",
+      "value": "*CHANGE",
+      "category": "Authority",
+      "description": "Create authority"
+    },
+    {
+      "name": "QMAXSIGN",
+      "value": "3",
+      "category": "Security",
+      "description": "Maximum sign-on attempts"
+    },
+    {
+      "name": "QPWDEXPITV",
+      "value": "90",
+      "category": "Security",
+      "description": "Password expiration interval"
+    },
+    {
+      "name": "QLMTSECOFR",
+      "value": "0",
+      "category": "Security",
+      "description": "Limit security officer access"
+    },
+    {
+      "name": "QALWOBJRST",
+      "value": "*ALL",
+      "category": "Security",
+      "description": "Allow object restore"
+    },
+    {
+      "name": "QRMTSIGN",
+      "value": "*VERIFY",
+      "category": "Security",
+      "description": "Remote sign-on control"
+    }
+  ],
+  "objects": [
+    {
+      "library": "CLAIMS400",
+      "name": "APPMENU",
+      "objectType": "*MENU",
+      "owner": "QSECOFR",
+      "textDescription": "Application menu",
+      "publicAuthority": "*USE"
+    },
+    {
+      "library": "CLAIMS400",
+      "name": "QCLSRC",
+      "objectType": "*FILE",
+      "owner": "QSECOFR",
+      "textDescription": "CL source file",
+      "publicAuthority": "*CHANGE"
+    },
+    {
+      "library": "CLAIMS400",
+      "name": "QRPGLESRC",
+      "objectType": "*FILE",
+      "owner": "QPGMR",
+      "textDescription": "RPGLE source file",
+      "publicAuthority": "*CHANGE"
+    },
+    {
+      "library": "CLAIMS400",
+      "name": "QDDSSRC",
+      "objectType": "*FILE",
+      "owner": "QPGMR",
+      "textDescription": "DDS source file",
+      "publicAuthority": "*EXCLUDE"
+    },
+    {
+      "library": "CLAIMS400",
+      "name": "CLMMAINT",
+      "objectType": "*PGM",
+      "owner": "APCLERK",
+      "textDescription": "Claims maintenance RPG program",
+      "publicAuthority": "*USE"
+    },
+    {
+      "library": "CLAIMS400",
+      "name": "NIGHTRUN",
+      "objectType": "*PGM",
+      "owner": "BACKUPADM",
+      "textDescription": "Nightly batch CL program",
+      "publicAuthority": "*USE"
+    },
+    {
+      "library": "CLAIMS400",
+      "name": "CLAIMMST",
+      "objectType": "*FILE",
+      "owner": "APCLERK",
+      "textDescription": "Claims master data file",
+      "publicAuthority": "*USE"
+    },
+    {
+      "library": "PAYROLL",
+      "name": "PAYMST",
+      "objectType": "*FILE",
+      "owner": "PAYADMIN",
+      "textDescription": "Payroll master — excessive public authority",
+      "publicAuthority": "*CHANGE"
+    },
+    {
+      "library": "CLAIMS400",
+      "name": "CLAIMOUTQ",
+      "objectType": "*OUTQ",
+      "owner": "QSECOFR",
+      "textDescription": "Claims output queue",
+      "publicAuthority": "*USE"
+    },
+    {
+      "library": "CLAIMS400",
+      "name": "QBATCHCLM",
+      "objectType": "*JOBD",
+      "owner": "QSECOFR",
+      "textDescription": "Claims batch job description",
+      "publicAuthority": "*USE"
+    },
+    {
+      "library": "QSYS",
+      "name": "QAUDJRN",
+      "objectType": "*JRN",
+      "owner": "QSYS",
+      "textDescription": "System audit journal",
+      "publicAuthority": "*EXCLUDE"
+    }
+  ],
+  "objectAuthorities": [
+    {
+      "library": "PAYROLL",
+      "object": "PAYMST",
+      "userName": "BACKUPADM",
+      "authority": "*ALL"
+    },
+    {
+      "library": "CLAIMS400",
+      "object": "QCLSRC",
+      "userName": "OLDVENDOR",
+      "authority": "*CHANGE"
+    }
+  ],
+  "auditJournalEntries": [
+    {
+      "entryTime": "2026-06-08 07:42:11",
+      "userName": "BACKUPADM",
+      "entryType": "PW",
+      "objectRef": "BACKUPADM",
+      "message": "Invalid password attempt for BACKUPADM"
+    },
+    {
+      "entryTime": "2026-06-08 09:15:33",
+      "userName": "OLDVENDOR",
+      "entryType": "AF",
+      "objectRef": "CLAIMS400/CLMMAINT",
+      "message": "Authority failure for OLDVENDOR"
+    },
+    {
+      "entryTime": "2026-06-08 10:02:07",
+      "userName": "OLDVENDOR",
+      "entryType": "CP",
+      "objectRef": "WRKACTJOB",
+      "message": "Command WRKACTJOB run by OLDVENDOR"
+    },
+    {
+      "entryTime": "2026-06-08 11:30:44",
+      "userName": "PAYADMIN",
+      "entryType": "SV",
+      "objectRef": "QSECURITY",
+      "message": "System value QSECURITY displayed"
+    },
+    {
+      "entryTime": "2026-06-08 14:18:02",
+      "userName": "OLDVENDOR",
+      "entryType": "DO",
+      "objectRef": "CLAIMS400/QCLSRC",
+      "message": "Object delete attempt by OLDVENDOR"
+    },
+    {
+      "entryTime": "2026-06-09 08:15:02",
+      "userName": "AUDIT",
+      "entryType": "SV",
+      "objectRef": "QAUDCTL",
+      "message": "System value QAUDCTL displayed by auditor"
+    }
+  ],
+  "jobs": [
+    {
+      "jobNumber": "123456",
+      "userName": "AUDIT",
+      "jobName": "QPADEV0001",
+      "jobType": "INTERACTIVE",
+      "subsystem": "QINTER",
+      "status": "ACTIVE",
+      "jobDescription": "QDFTJOBD",
+      "outputQueue": "QPRINT"
+    },
+    {
+      "jobNumber": "123457",
+      "userName": "QSECOFR",
+      "jobName": "QPADEV0002",
+      "jobType": "INTERACTIVE",
+      "subsystem": "QINTER",
+      "status": "ACTIVE",
+      "jobDescription": "QSECOFRJOBD",
+      "outputQueue": "QPRINT"
+    },
+    {
+      "jobNumber": "123458",
+      "userName": "PAYADMIN",
+      "jobName": "QPADEV0003",
+      "jobType": "INTERACTIVE",
+      "subsystem": "QINTER",
+      "status": "ACTIVE",
+      "jobDescription": "QDFTJOBD",
+      "outputQueue": "QPRINT"
+    },
+    {
+      "jobNumber": "230145",
+      "userName": "BACKUPADM",
+      "jobName": "BACKUPJOB",
+      "jobType": "BATCH",
+      "subsystem": "QBATCH",
+      "status": "HELD",
+      "jobDescription": "QATCHJOBD",
+      "outputQueue": "QPRINT"
+    },
+    {
+      "jobNumber": "230188",
+      "userName": "QSPLJOB",
+      "jobName": "QSPL",
+      "jobType": "BATCH",
+      "subsystem": "QSPL",
+      "status": "ACTIVE",
+      "jobDescription": "QCTLJOBD",
+      "outputQueue": "QPRINT"
+    },
+    {
+      "jobNumber": "230201",
+      "userName": "QUSER",
+      "jobName": "QZDASOINIT",
+      "jobType": "BATCH",
+      "subsystem": "QSERVER",
+      "status": "ACTIVE",
+      "jobDescription": "QSERVER",
+      "outputQueue": "QPRINT"
+    },
+    {
+      "jobNumber": "230215",
+      "userName": "QTMHHTTP",
+      "jobName": "QHTTPSVR",
+      "jobType": "BATCH",
+      "subsystem": "QHTTPSVR",
+      "status": "ACTIVE",
+      "jobDescription": "QHTTPSVR",
+      "outputQueue": "QPRINT"
+    },
+    {
+      "jobNumber": "230220",
+      "userName": "OLDVENDOR",
+      "jobName": "VENDORJOB",
+      "jobType": "BATCH",
+      "subsystem": "QBATCH",
+      "status": "ACTIVE",
+      "jobDescription": "QDFTJOBD",
+      "outputQueue": "QPRINT"
+    }
+  ],
+  "spooledFiles": [
+    {
+      "fileName": "QAUDRPT",
+      "userName": "AUDIT",
+      "spoolNumber": "000014",
+      "status": "READY"
+    },
+    {
+      "fileName": "USRPRFREV",
+      "userName": "PAYADMIN",
+      "spoolNumber": "000021",
+      "status": "READY"
+    },
+    {
+      "fileName": "PAYAUTH",
+      "userName": "PAYADMIN",
+      "spoolNumber": "000032",
+      "status": "READY"
+    },
+    {
+      "fileName": "JOBLOG",
+      "userName": "BACKUPADM",
+      "spoolNumber": "000045",
+      "status": "HELD"
+    }
+  ],
+  "physicalFiles": [
+    {
+      "library": "CLAIMS400",
+      "name": "CLAIMMST",
+      "recordFormat": "CLAIMR",
+      "fileType": "*PF",
+      "member": "*FIRST",
+      "textDescription": "Claims master data file",
+      "recordLength": 256,
+      "fields": [
+        { "name": "CLMNO", "type": "CHAR", "length": 10, "decimals": 0, "text": "Claim number" },
+        { "name": "MEMBER", "type": "CHAR", "length": 12, "decimals": 0, "text": "Member ID" },
+        { "name": "SVCDate", "type": "DEC", "length": 8, "decimals": 0, "text": "Service date" },
+        { "name": "AMOUNT", "type": "PACKED", "length": 9, "decimals": 2, "text": "Claim amount" },
+        { "name": "STATUS", "type": "CHAR", "length": 2, "decimals": 0, "text": "Claim status" }
+      ]
+    },
+    {
+      "library": "PAYROLL",
+      "name": "PAYMST",
+      "recordFormat": "PAYR",
+      "fileType": "*PF",
+      "member": "*FIRST",
+      "textDescription": "Payroll master file",
+      "recordLength": 192,
+      "fields": [
+        { "name": "EMPNO", "type": "CHAR", "length": 8, "decimals": 0, "text": "Employee number" },
+        { "name": "SSN", "type": "CHAR", "length": 9, "decimals": 0, "text": "Social security number" },
+        { "name": "PAYRATE", "type": "PACKED", "length": 7, "decimals": 2, "text": "Hourly pay rate" },
+        { "name": "DEPT", "type": "CHAR", "length": 4, "decimals": 0, "text": "Department code" }
+      ]
+    }
+  ],
+  "ifsLinks": [
+    {
+      "directory": "/",
+      "name": "claims",
+      "linkType": "*DIR",
+      "target": "/claims",
+      "owner": "QSECOFR",
+      "dataAuthority": "*RWX",
+      "textDescription": "Claims application root"
+    },
+    {
+      "directory": "/",
+      "name": "payroll",
+      "linkType": "*DIR",
+      "target": "/payroll",
+      "owner": "PAYADMIN",
+      "dataAuthority": "*RWX",
+      "textDescription": "Payroll integration directory"
+    },
+    {
+      "directory": "/claims",
+      "name": "claimmst.sym",
+      "linkType": "*SYMLNK",
+      "target": "/QSYS.LIB/CLAIMS400.LIB/CLAIMMST.FILE",
+      "owner": "APCLERK",
+      "dataAuthority": "*RW",
+      "textDescription": "Symlink to claims master file"
+    },
+    {
+      "directory": "/claims",
+      "name": "export",
+      "linkType": "*DIR",
+      "target": "/claims/export",
+      "owner": "APCLERK",
+      "dataAuthority": "*RWX",
+      "textDescription": "Claims export folder"
+    },
+    {
+      "directory": "/claims/export",
+      "name": "daily.csv",
+      "linkType": "*STMF",
+      "target": "/claims/export/daily.csv",
+      "owner": "APCLERK",
+      "dataAuthority": "*RW",
+      "textDescription": "Daily claims extract"
+    },
+    {
+      "directory": "/payroll",
+      "name": "paymst.sym",
+      "linkType": "*SYMLNK",
+      "target": "/QSYS.LIB/PAYROLL.LIB/PAYMST.FILE",
+      "owner": "PAYADMIN",
+      "dataAuthority": "*RW",
+      "textDescription": "Symlink to payroll master"
+    }
+  ],
+  "missions": [
+    {
+      "id": "CLAIMS-001",
+      "title": "Can You Prove IBM i Security?",
+      "persona": "IT auditor / GRC analyst",
+      "briefing": "The control owner claims privileged access on CLAIMS400 is reviewed quarterly, restricted to approved administrators, and monitored through audit logging. Sign on as AUDIT, inspect the available evidence, and determine whether the control claim is defensible."
+    }
+  ],
+  "missionEvidenceRequirements": [
+    {
+      "missionId": "CLAIMS-001",
+      "key": "user_profiles",
+      "description": "Review user profiles (WRKUSRPRF or DSPUSRPRF)",
+      "commandPattern": "WRKUSRPRF|DSPUSRPRF",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "qsecurity",
+      "description": "Display system value QSECURITY",
+      "commandPattern": "DSPSYSVAL:QSECURITY",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "qaudctl",
+      "description": "Display system value QAUDCTL",
+      "commandPattern": "DSPSYSVAL:QAUDCTL",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "paymst_authority",
+      "description": "Review PAYROLL/PAYMST object authority",
+      "commandPattern": "DSPOBJAUT:PAYROLL/PAYMST|WRKOBJ",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "audit_journal",
+      "description": "Review QAUDJRN audit journal entries",
+      "commandPattern": "DSPJRN|DSPAUDJRNE|DSPSECAUD",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "optional_ops",
+      "description": "Optional: DSPJOBLOG or DSPMSG QSYSOPR",
+      "commandPattern": "DSPJOBLOG|DSPMSG",
+      "optional": true,
+      "weight": 1
+    }
+  ],
+  "missionExpectedFindings": [
+    {
+      "missionId": "CLAIMS-001",
+      "key": "backupadm_stale",
+      "description": "BACKUPADM remains enabled with *ALLOBJ and *SAVSYS despite stale last signon.",
+      "matchPatterns": ["backupadm", "allobj", "savsys", "stale", "privileged"],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "oldvendor_enabled",
+      "description": "OLDVENDOR remains enabled with *JOBCTL and authority failure activity.",
+      "matchPatterns": ["oldvendor", "vendor", "jobctl", "enabled", "authority failure"],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "paymst_public_auth",
+      "description": "PAYROLL/PAYMST has excessive public authority.",
+      "matchPatterns": ["paymst", "payroll", "public authority", "excessive", "change"],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "qsecurity_insufficient",
+      "description": "QSECURITY=40 is not sufficient proof of effective access governance.",
+      "matchPatterns": ["qsecurity", "security level", "40", "not sufficient", "governance"],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-001",
+      "key": "audit_no_review_proof",
+      "description": "Audit evidence exists but does not prove quarterly review/recertification.",
+      "matchPatterns": ["quarterly", "review", "recertification", "does not prove", "audit evidence"],
+      "weight": 1
+    }
+  ]
+}

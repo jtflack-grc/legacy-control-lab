@@ -1,0 +1,18 @@
+{
+  "screenId": "WRKFINDING",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "lab-native work-with-findings summary",
+  "requiredText": [
+    "WRKFINDING",
+    "Work with Findings",
+    "coach panel",
+    "Title",
+    "Severity",
+    "Decision impact",
+    "SUBMITMSN",
+    "F6"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu"],
+  "render": { "type": "sample", "sample": "WRKFINDING" }
+}

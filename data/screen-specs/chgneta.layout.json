@@ -1,0 +1,18 @@
+{
+  "screenId": "CHGNETA",
+  "tier": "A",
+  "verificationStatus": "layout-audited",
+  "referenceSource": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-change-network-attributes-chgneta",
+  "goldenFile": "chgneta.golden.json",
+  "promptVariant": "cmdprompt",
+  "functionKeys": "F3=Exit   F4=Prompt   F5=Refresh   F9=All parameters   F12=Cancel   F24=More keys",
+  "requiredText": [
+    "CHGNETA",
+    "Change Network Attributes",
+    "Domain",
+    "Host name",
+    "F4=Prompt"
+  ],
+  "forbiddenText": ["Welcome!", "mission menu", "Evidence note"],
+  "render": { "type": "sample", "sample": "CHGNETA_PROMPT" }
+}

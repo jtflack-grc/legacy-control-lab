@@ -1,0 +1,56 @@
+{
+  "screenId": "WRKOBJOWN",
+  "primarySource": "https://www.ibm.com/docs/en/i/7.5.0?topic=authority-working-object-ownership",
+  "sources": [
+    {
+      "title": "IBM i 7.5 — Working with object ownership",
+      "url": "https://www.ibm.com/docs/en/i/7.5.0?topic=authority-working-object-ownership",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i 7.4 — WRKOBJOWN command",
+      "url": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-work-with-objects-by-owner-wrkobjown",
+      "type": "ibm-documentation"
+    },
+    {
+      "title": "IBM i Security reference — object ownership (SC41-5302 appendix)",
+      "url": "https://www.ibm.com/docs/it/ssw_ibm_i_73/pdf/sc415302.pdf",
+      "type": "redbook"
+    },
+    {
+      "title": "IBM i object ownership chains",
+      "url": "https://theqsecofr.com/ibm-i/ibm-i-object-ownership-chains/",
+      "type": "vendor-documentation"
+    }
+  ],
+  "asciiPanel": "                          Work with Objects by Owner\n\nUser profile . . . . . . . . . . :   PAYADMIN\n\nType options, press Enter.\n  2=Edit authority        4=Delete   5=Display authority\n  8=Display description   9=Change owner\n                                                             ASP\nOpt  Object        Library       Type      Attribute         Device\n     PAYMST        PAYROLL       *FILE     PF                *SYSBAS\n\nParameters or command\n===>\nF3=Exit   F4=Prompt   F5=Refresh   F9=Retrieve\nF18=Bottom",
+  "requiredText": [
+    "WRKOBJOWN",
+    "Work with Objects by Owner",
+    "User profile",
+    "Type options, press Enter.",
+    "2=Edit authority",
+    "9=Change owner",
+    "Parameters or command",
+    "F3=Exit",
+    "F18=Bottom",
+    "F9=Retrieve",
+    "8=Display description"
+  ],
+  "columnHeaders": [
+    "Opt",
+    "Object",
+    "Library",
+    "Type",
+    "Attribute",
+    "Device"
+  ],
+  "commandLineLabel": "Parameters or command",
+  "notes": "Option 2 routes to EDTOBJAUT; option 9 runs CHGOBJOWN from command line. Subfile paging uses F7/F8; F18=Bottom per IBM work-with-object panels.",
+  "auditNotes": "Ownership chain analysis — option 9 CHGOBJOWN, option 2 EDTOBJAUT. QMGTOOLS SCTMNU RTVOBJLST complements WRKOBJOWN for support-driven ownership reports.",
+  "grcMapping": [
+    "SOC2 CC6.1",
+    "SoD / privilege escalation review"
+  ],
+  "qmgtoolsRelation": "GO MG → 22 → 7 (SCTMNU) → RTVOBJLST for owned-object list export."
+}

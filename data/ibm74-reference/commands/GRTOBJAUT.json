@@ -1,0 +1,54 @@
+{
+  "name": "GRTOBJAUT",
+  "displayName": "Grant Object Authority",
+  "category": "authority",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-grtobjaut",
+  "parameters": [
+    {
+      "name": "OBJ",
+      "label": "OBJ",
+      "required": true,
+      "type": "qualifiedName",
+      "supportsSpecialValues": [
+        "*LIBL",
+        "*CURLIB"
+      ]
+    },
+    {
+      "name": "USER",
+      "label": "USER",
+      "required": true,
+      "type": "profileName",
+      "supportsSpecialValues": [
+        "*PUBLIC",
+        "*CURRENT"
+      ]
+    },
+    {
+      "name": "AUT",
+      "label": "AUT",
+      "required": true,
+      "type": "authorityValue",
+      "supportsSpecialValues": [
+        "*USE",
+        "*CHANGE",
+        "*EXCLUDE",
+        "*AUTL",
+        "*OBJOPR",
+        "*OBJEXIST",
+        "*OBJMGT",
+        "*OBJREF",
+        "*ALL"
+      ]
+    }
+  ],
+  "examples": [
+    "GRTOBJAUT OBJ(PAYROLL/PAYMST) USER(APCLERK) AUT(*USE)"
+  ],
+  "helpText": "Grants object authority to a user in the lab runtime.",
+  "requiresAuthority": [
+    "*OBJMGT"
+  ],
+  "mutatesState": true,
+  "groupMenu": "CMDAUT"
+}

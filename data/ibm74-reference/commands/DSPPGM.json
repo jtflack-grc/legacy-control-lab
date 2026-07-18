@@ -1,0 +1,14 @@
+{
+  "name": "DSPPGM",
+  "displayName": "Display Program",
+  "category": "source_pdm",
+  "ibm74Topic": "https://www.ibm.com/docs/en/i/7.4.0?topic=commands-dsppgm",
+  "parameters": [],
+  "examples": [
+    "DSPPGM PGM(PAYROLL/PAYCALC)"
+  ],
+  "helpText": "Displays program attributes including source file, create date, and user profile.",
+  "requiresAuthority": [],
+  "mutatesState": false,
+  "groupMenu": "CMDPDM"
+}
