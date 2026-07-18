@@ -23,16 +23,10 @@ cd legacy-control-lab
 3. Start the lab:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
-```
-
-Or:
-
-```powershell
 docker compose up -d --build
 ```
 
-The first build may take **3–5 minutes**. Open **http://localhost:8080/lab/** when ready.
+The first build may take **3–5 minutes**. Then open **http://localhost:8080/lab/**.
 
 | Lane | User | Password |
 |------|------|----------|

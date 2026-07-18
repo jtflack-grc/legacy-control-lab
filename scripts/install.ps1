@@ -4,7 +4,13 @@
 # Usage (from anywhere):
 #   powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 
-$ErrorActionPreference = "Stop"
+# Prefer `docker compose up -d --build` directly. This helper is optional.
+# Docker often prints harmless warnings to stderr (e.g. blkio throttle); do not
+# treat stderr as a terminating PowerShell error.
+$ErrorActionPreference = "Continue"
+if (Get-Variable -Name PSNativeCommandUseErrorActionPreference -ErrorAction SilentlyContinue) {
+  $PSNativeCommandUseErrorActionPreference = $false
+}
 
 function Test-Docker {
   return [bool](Get-Command docker -ErrorAction SilentlyContinue)

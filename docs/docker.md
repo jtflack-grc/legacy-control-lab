@@ -70,25 +70,16 @@ is not fully started yet.
 
 ### 5. Start the lab
 
-The easiest Windows command is:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
-```
-
-The helper builds the container, waits for the health check, and opens the lab
-in your default browser.
-
-You can also start it directly:
-
 ```powershell
 docker compose up -d --build
 ```
 
 The first build commonly takes **3–5 minutes** and downloads a Linux base image.
-Later starts are faster.
+Later starts are faster. You may see harmless Docker Desktop warnings (for example
+about `blkio throttle`); those are noise if the command finishes and the
+container starts.
 
-Open **http://localhost:8080/lab/**
+Then open **http://localhost:8080/lab/**
 
 ### 6. Confirm the install
 

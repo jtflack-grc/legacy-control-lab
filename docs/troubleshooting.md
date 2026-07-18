@@ -8,6 +8,7 @@ Prefer Docker for first run. See [docker.md](./docker.md) and [quickstart.md](./
 |---------|-----|
 | Docker not running | Start Docker Desktop; wait for **Engine running** |
 | `docker` not recognized | Restart Windows, start Docker Desktop, open a **new** PowerShell window |
+| `blkio throttle` warning | Harmless Docker Desktop noise — ignore if `docker compose up -d --build` finishes |
 | Port already in use | `docker compose down` · change host port in `docker-compose.yml` |
 | Stale volume data | `docker compose down -v` then `docker compose up -d --build` |
 | Rebuild after code change | `docker compose up -d --build` |

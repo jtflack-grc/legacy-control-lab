@@ -13,14 +13,14 @@ git clone https://github.com/jtflack-grc/legacy-control-lab.git
 cd legacy-control-lab
 ```
 
-4. Run:
+4. Start the lab:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
+docker compose up -d --build
 ```
 
-The first build takes **3–5 minutes**. The helper opens
-**http://localhost:8080/lab/** when the lab is healthy.
+The first build takes **3–5 minutes**. When it finishes, open
+**http://localhost:8080/lab/**.
 
 No Git? On GitHub select **Code → Download ZIP**, extract it, open the extracted
 folder, click File Explorer's address bar, type `powershell`, and press Enter.
