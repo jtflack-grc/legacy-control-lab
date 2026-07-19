@@ -10,23 +10,32 @@ Run it locally. **No IBM i required. No cloud required. No Node install required
 
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** (Windows or Mac)
 
-## Quick start
+Git is optional. The Download ZIP instructions below require only Docker Desktop.
+
+## Quick start — no Git required
 
 1. Install and open **Docker Desktop**; wait for **Engine running**.
-2. Clone the repository:
-
-```powershell
-git clone https://github.com/jtflack-grc/legacy-control-lab.git
-cd legacy-control-lab
-```
-
-3. Start the lab:
+2. On this GitHub repository, select **Code → Download ZIP**.
+3. Extract the downloaded ZIP completely. Do not run the lab from inside the ZIP preview.
+4. Open the extracted `legacy-control-lab-main` folder in File Explorer.
+5. Click the File Explorer address bar, type `powershell`, and press **Enter**.
+6. Start the lab:
 
 ```powershell
 docker compose up -d --build
 ```
 
 The first build may take **3–5 minutes**. Then open **http://localhost:8080/lab/**.
+
+## Alternative — clone with Git
+
+If Git is already installed:
+
+```powershell
+git clone https://github.com/jtflack-grc/legacy-control-lab.git
+cd legacy-control-lab
+docker compose up -d --build
+```
 
 | Lane | User | Password |
 |------|------|----------|
