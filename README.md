@@ -12,6 +12,26 @@ Run it locally. **No IBM i required. No cloud required. No Node install required
 
 Git is optional. The Download ZIP instructions below require only Docker Desktop.
 
+### Windows Home or virtualization disabled
+
+Docker Desktop can run this lab on **Windows 11 Home or Pro** by using the WSL 2 backend. Hyper-V is not required for the Linux containers used by Legacy Control Lab.
+
+Before installing Docker Desktop:
+
+1. Open **Task Manager → Performance → CPU** and check **Virtualization**.
+2. If it says **Disabled**, restart the computer, enter its BIOS/UEFI setup, enable **Virtualization Technology**, **Intel VT-x**, **AMD-V**, or **SVM**, save, and restart. The name and menu location vary by manufacturer.
+3. Open **PowerShell as Administrator** and run:
+
+```powershell
+wsl --install
+```
+
+4. Restart Windows when prompted.
+5. Install Docker Desktop and use its **WSL 2 backend**.
+6. Start Docker Desktop and wait for **Engine running** before continuing.
+
+Microsoft: [Install WSL](https://learn.microsoft.com/windows/wsl/install) · Docker: [Install Docker Desktop on Windows](https://docs.docker.com/desktop/setup/install/windows-install/)
+
 ## Quick start — no Git required
 
 1. Install and open **Docker Desktop**; wait for **Engine running**.
