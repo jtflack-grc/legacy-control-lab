@@ -47,6 +47,12 @@ docker compose up -d --build
 
 The first build may take **3–5 minutes**. Then open **http://localhost:8080/lab/**.
 
+### Keyboard and function keys
+
+Legacy Control Lab uses IBM i-style function keys such as **F3**, **F4**, and **F12**. On some laptops, the physical function-key row controls volume, brightness, or other media features by default.
+
+If a physical function key does not work, use the **virtual function-key buttons displayed in the terminal**. You do not need to change the laptop's keyboard or Fn-lock settings to complete the lab.
+
 ## Alternative — clone with Git
 
 If Git is already installed:
