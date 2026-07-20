@@ -4,7 +4,7 @@
 
 A local **training range** — not a toy quiz, not a cloud platform — where GRC, audit, and IBM i security learners practice collecting control evidence the way it actually appears: on a 5250-style green screen, with coach guidance beside it.
 
-**For:** IT auditors, GRC practitioners, IBM i / midrange security learners, and hiring managers who want to see system-shaped judgment.  
+**For:** IT auditors, GRC practitioners, IBM i / midrange security learners, and managers who want to see system-shaped judgment.  
 **Not for:** replacing a real IBM i LPAR, production operations, exploit practice, or “dashboard GRC” coursework that never touches a system.
 
 Runs on your machine with Docker. **No IBM i required. No cloud required. No Node install required.**
