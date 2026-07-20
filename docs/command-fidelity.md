@@ -20,6 +20,9 @@ drift as the catalog grows).
 
 - Real-looking CL names (`WRKUSRPRF`, `DSPOBJAUT`, `DSPSYSVAL`) are **inspired by
   IBM i** and implemented to training depth — not a substitute for a live partition.
+- After the Five-Minute Demo, practitioners should poke those familiar verbs first.
+  That is the credibility check: inquiry patterns and evidence trails on synthetic
+  data — not bit-identical IBM behavior.
 - Lab-only verbs such as **`WRKFINDING`**, **`SUBMITMSN`**, and **`STRMSN`** are
   deliberately invented for GRC workflow. Treat them as coach/mission tooling.
 - Menus and help text may cover a wider surface than the deeply simulated core.

@@ -2,21 +2,24 @@
 
 **Control evidence, from the green screen out.**
 
-Community Edition — a local **IBM i-style governance and security range** for learning how control evidence, privileged access, object authority, audit journals, job logs, spooled files, system values, and QSECOFR-like authority work in legacy environments.
+A local **training range** — not a toy quiz, not a cloud platform — where GRC, audit, and IBM i security learners practice collecting control evidence the way it actually appears: on a 5250-style green screen, with coach guidance beside it.
 
-Run it locally. **No IBM i required. No cloud required. No Node install required.**
+**For:** IT auditors, GRC practitioners, IBM i / midrange security learners, and hiring managers who want to see system-shaped judgment.  
+**Not for:** replacing a real IBM i LPAR, production operations, exploit practice, or “dashboard GRC” coursework that never touches a system.
+
+Runs on your machine with Docker. **No IBM i required. No cloud required. No Node install required.**
 
 ![Launcher](public/assets/screenshots/01-launcher.png)
 
 ## What you will experience in five minutes
 
-1. Open the lab in your browser and pick **Five-Minute Demo**.
-2. Sign on as `DEMO` / `TRAIN` on a green-screen terminal (5250-style).
-3. Follow the coach panel: **why the step matters**, then the command to run.
+1. Open the lab and pick **Five-Minute Demo**.
+2. Sign on as `DEMO` / `TRAIN` on the green screen.
+3. Read **why the step matters**, then run the command the coach shows.
 4. Inspect synthetic profiles, authority, or journal-style evidence on `CLAIMS400`.
-5. Capture a finding path and finish with `SUBMITMSN` — then try another lane.
+5. Finish the demo path (`SUBMITMSN`) — then try Prove, Practice, or Operate.
 
-You leave knowing what “control evidence from the green screen” feels like — not another dashboard screenshot tour.
+You leave knowing what control evidence feels like from the green screen out — not another framework slideshow.
 
 | Lane | User | Password |
 |------|------|----------|
@@ -29,56 +32,69 @@ These are public training passwords, not real credentials.
 
 ![Demo coach + terminal](public/assets/screenshots/02-demo-coach.png)
 
+## Credibility check (for IBM i folks)
+
+After the demo, poke commands you already know. Training depth varies by design:
+
+| Try | What you should feel |
+|-----|----------------------|
+| `WRKUSRPRF`, `DSPOBJAUT`, `DSPSYSVAL` | Familiar inquiry patterns on synthetic data |
+| `DSPJRN` / job-log style review | Evidence trail for access and change |
+| Privileged change as `QSECOFR` | Side effects in audit/job-log style output |
+| `WRKFINDING`, `SUBMITMSN` | **Lab-only** — not IBM CL; mission/coach tooling |
+
+Honest labels: [docs/command-fidelity.md](docs/command-fidelity.md). This is a **synthetic training partition**, not a substitute for a live system.
+
 ## Community Edition
 
-This public repository is a **Docker-first runtime distribution**: enough to build and run all four lanes. See [docs/community-edition.md](docs/community-edition.md).
+This repository is **Community Edition 1.0.0**: a Docker-first **local training artifact** you can clone, run, and revisit. It is not a SaaS product, shared hosted demo, or “GRC platform.”
+
+See [docs/community-edition.md](docs/community-edition.md).
 
 ## Requirements
 
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** (Windows or Mac)
 
-Git is optional. The Download ZIP instructions below require only Docker Desktop.
+Git is optional. The Download ZIP path needs only Docker Desktop.
 
 ### Windows Home or virtualization disabled
 
-Docker Desktop can run this lab on **Windows 11 Home or Pro** by using the WSL 2 backend. Hyper-V is not required for the Linux containers used by Legacy Control Lab.
+Docker Desktop can run this lab on **Windows 11 Home or Pro** with the **WSL 2** backend. Hyper-V is not required for these Linux containers.
 
 Before installing Docker Desktop:
 
 1. Open **Task Manager → Performance → CPU** and check **Virtualization**.
-2. If it says **Disabled**, restart the computer, enter its BIOS/UEFI setup, enable **Virtualization Technology**, **Intel VT-x**, **AMD-V**, or **SVM**, save, and restart. The name and menu location vary by manufacturer.
+2. If it says **Disabled**, enable **Virtualization Technology** / **Intel VT-x** / **AMD-V** / **SVM** in BIOS/UEFI, save, and restart.
 3. Open **PowerShell as Administrator** and run:
 
 ```powershell
 wsl --install
 ```
 
-4. Restart Windows when prompted.
-5. Install Docker Desktop and use its **WSL 2 backend**.
-6. Start Docker Desktop and wait for **Engine running** before continuing.
+4. Restart when prompted.
+5. Install Docker Desktop with the **WSL 2 backend**.
+6. Wait for **Engine running** before continuing.
 
-Microsoft: [Install WSL](https://learn.microsoft.com/windows/wsl/install) · Docker: [Install Docker Desktop on Windows](https://docs.docker.com/desktop/setup/install/windows-install/)
+Microsoft: [Install WSL](https://learn.microsoft.com/windows/wsl/install) · Docker: [Windows install](https://docs.docker.com/desktop/setup/install/windows-install/)
 
 ## Quick start — no Git required
 
 1. Install and open **Docker Desktop**; wait for **Engine running**.
 2. On this GitHub repository, select **Code → Download ZIP**.
-3. Extract the downloaded ZIP completely. Do not run the lab from inside the ZIP preview.
-4. Open the extracted `legacy-control-lab-main` folder in File Explorer.
-5. Click the File Explorer address bar, type `powershell`, and press **Enter**.
-6. Start the lab:
+3. Extract completely (do not run from inside the ZIP preview).
+4. Open the extracted `legacy-control-lab-main` folder.
+5. Click the File Explorer address bar, type `powershell`, press **Enter**.
+6. Start:
 
 ```powershell
 docker compose up -d --build
 ```
 
-The first build may take **3–5 minutes**. Then open **http://localhost:8080/lab/**.
+First build often takes **3–5 minutes**. Then open **http://localhost:8080/lab/**.
 
 ### Keyboard and function keys
 
-Legacy Control Lab uses IBM i-style function keys such as **F3**, **F4**, and **F12**. On some laptops, the physical function-key row controls volume, brightness, or other media features by default.
-
-If a physical function key does not work, use the **virtual function-key buttons displayed in the terminal**. You do not need to change the laptop's keyboard or Fn-lock settings to complete the lab.
+IBM i-style keys such as **F3**, **F4**, and **F12** matter here. On many laptops the function row is media-first. If a physical key does nothing useful, use the **virtual function-key buttons in the terminal** — no Fn-lock change required.
 
 ## Alternative — clone with Git
 
@@ -88,16 +104,16 @@ cd legacy-control-lab
 docker compose up -d --build
 ```
 
-New to Docker? [docs/docker.md](docs/docker.md) · [docs/quickstart.md](docs/quickstart.md) · [SECURITY.md](SECURITY.md)
+More detail: [docs/docker.md](docs/docker.md) · [docs/quickstart.md](docs/quickstart.md) · [SECURITY.md](SECURITY.md)
 
-## Architecture (Community Edition)
+## How it runs (local only)
 
 ```mermaid
 flowchart LR
   browser[Browser lab UI]
   coach[Coach panel]
   iron[IronTerm 5250 client]
-  api[Node lab host]
+  api[Lab host]
   db[(SQLite seed + runtime)]
   tn[TN5250 + websockify]
 
@@ -109,7 +125,7 @@ flowchart LR
   api --> db
 ```
 
-Everything runs on your machine via Docker. Nothing is sent to a shared cloud demo.
+Everything stays on your machine. No shared cloud demo.
 
 ## Crawl, walk, run
 
@@ -119,16 +135,6 @@ Everything runs on your machine via Docker. Nothing is sent to a shared cloud de
 | **Walk — Prove** | Governance, Blue Team, or Red Team | `AUDIT` / `TRAIN` or `APCLERK` / `TRAIN` |
 | **Walk — Practice** | i on GRC articles | `IONGRC` / `IONGRC` |
 | **Run** | Operate privileged | `QSECOFR` / `TRAIN` |
-
-## Command honesty
-
-Not every verb is “real IBM i CL at production depth.”
-
-- **Stateful / deep** — synthetic mutation with journals, authorities, job logs
-- **Display / representative** — credible inquiry screens and navigation
-- **Lab-native** — training-only commands such as `WRKFINDING` and `SUBMITMSN` (not IBM CL)
-
-Details: [docs/command-fidelity.md](docs/command-fidelity.md).
 
 ## Everyday commands
 
@@ -141,10 +147,10 @@ docker compose logs --tail 100
 
 ## What this is not
 
-- Not IBM i, DB2 for i, or an IBM product
-- Not affiliated with IBM
-- Not a production emulator or real service tools
+- Not IBM i, DB2 for i, or an IBM product — and not affiliated with IBM
+- Not a production emulator, service tools, or a live LPAR replacement
 - Not an exploit lab
+- Not a hosted multi-tenant “platform”
 
 ## Ports
 
@@ -156,9 +162,8 @@ docker compose logs --tail 100
 
 ## Version
 
-**1.0.0** Community Edition — see [CHANGELOG.md](CHANGELOG.md).  
-Public release ops: [docs/public-release-checklist.md](docs/public-release-checklist.md).
+**1.0.0** Community Edition — [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-See [LICENSE](LICENSE) (MIT). Browser terminal uses IronTerm (GPL-3.0) under `external/IronTerm-main/` — see [NOTICE](NOTICE) and [docs/licensing.md](docs/licensing.md).
+[LICENSE](LICENSE) (MIT). Browser terminal: IronTerm (GPL-3.0) in `external/IronTerm-main/` — [NOTICE](NOTICE) · [docs/licensing.md](docs/licensing.md).
