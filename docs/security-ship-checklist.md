@@ -69,19 +69,3 @@ curl -sf http://127.0.0.1:8080/api/health
 - [ ] Sign-on row 24: `(C) COPYRIGHT LCL IONGRC. 1974, 2026.`
 - [ ] Mission API returns 401 without green-screen sign-on (try curl without token)
 
-## Explicitly out of scope
-
-- Training passwords `TRAIN` / `IONGRC` (public by design)
-- TLS on loopback TN5250
-- Rate limiting (single-user local range)
-- CSP without `unsafe-inline` (lab UI requires inline scripts)
-
-## Before public push
-
-- [x] Confirm GitHub URLs point at `jtflack-grc/legacy-control-lab`
-- [x] Community Edition packaging decision documented
-- [x] Command fidelity honesty documented
-- [x] IronTerm MIT+GPL arrangement documented in NOTICE / docs/licensing.md
-- [x] Version aligned to 1.0.0 in package.json + CHANGELOG
-- [ ] No `data/*.db`, `data/security-saves/`, `.env` tracked
-- [ ] `npm run check:release-hygiene` passes
