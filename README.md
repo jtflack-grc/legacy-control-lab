@@ -31,7 +31,7 @@ These are public training passwords, not real credentials.
 
 ## Community Edition
 
-This public repository is a **Docker-first runtime distribution**: enough to build and run all four lanes. It is not a dump of every internal authoring script, deep fidelity notebook, or marketing pack. See [docs/community-edition.md](docs/community-edition.md).
+This public repository is a **Docker-first runtime distribution**: enough to build and run all four lanes. See [docs/community-edition.md](docs/community-edition.md).
 
 ## Requirements
 
