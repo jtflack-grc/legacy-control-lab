@@ -2,9 +2,36 @@
 
 **Control evidence, from the green screen out.**
 
-A local **IBM i-style governance and security range** for learning how control evidence, privileged access, object authority, audit journals, job logs, spooled files, system values, and QSECOFR-like authority work in legacy environments.
+Community Edition — a local **IBM i-style governance and security range** for learning how control evidence, privileged access, object authority, audit journals, job logs, spooled files, system values, and QSECOFR-like authority work in legacy environments.
 
-Run it locally. **No IBM i required. No cloud required. No Node install required** (Docker path).
+Run it locally. **No IBM i required. No cloud required. No Node install required.**
+
+![Launcher](public/assets/screenshots/01-launcher.png)
+
+## What you will experience in five minutes
+
+1. Open the lab in your browser and pick **Five-Minute Demo**.
+2. Sign on as `DEMO` / `TRAIN` on a green-screen terminal (5250-style).
+3. Follow the coach panel: **why the step matters**, then the command to run.
+4. Inspect synthetic profiles, authority, or journal-style evidence on `CLAIMS400`.
+5. Capture a finding path and finish with `SUBMITMSN` — then try another lane.
+
+You leave knowing what “control evidence from the green screen” feels like — not another dashboard screenshot tour.
+
+| Lane | User | Password |
+|------|------|----------|
+| Five-Minute Demo | `DEMO` | `TRAIN` |
+| i on GRC | `IONGRC` | `IONGRC` |
+| Prove (auditor) | `AUDIT` | `TRAIN` |
+| Operate privileged | `QSECOFR` | `TRAIN` |
+
+These are public training passwords, not real credentials.
+
+![Demo coach + terminal](public/assets/screenshots/02-demo-coach.png)
+
+## Community Edition
+
+This public repository is a **Docker-first runtime distribution**: enough to build and run all four lanes. It is not a dump of every internal authoring script, deep fidelity notebook, or marketing pack. See [docs/community-edition.md](docs/community-edition.md).
 
 ## Requirements
 
@@ -55,25 +82,34 @@ If a physical function key does not work, use the **virtual function-key buttons
 
 ## Alternative — clone with Git
 
-If Git is already installed:
-
 ```powershell
 git clone https://github.com/jtflack-grc/legacy-control-lab.git
 cd legacy-control-lab
 docker compose up -d --build
 ```
 
-| Lane | User | Password |
-|------|------|----------|
-| Five-Minute Demo | `DEMO` | `TRAIN` |
-| i on GRC | `IONGRC` | `IONGRC` |
-| Prove (auditor) | `AUDIT` | `TRAIN` |
-| Operate privileged | `QSECOFR` | `TRAIN` |
+New to Docker? [docs/docker.md](docs/docker.md) · [docs/quickstart.md](docs/quickstart.md) · [SECURITY.md](SECURITY.md)
 
-These are public training passwords, not real credentials.
+## Architecture (Community Edition)
 
-New to Docker? Follow the [step-by-step Docker Desktop install guide](docs/docker.md).  
-Also: [docs/quickstart.md](docs/quickstart.md) · [SECURITY.md](SECURITY.md)
+```mermaid
+flowchart LR
+  browser[Browser lab UI]
+  coach[Coach panel]
+  iron[IronTerm 5250 client]
+  api[Node lab host]
+  db[(SQLite seed + runtime)]
+  tn[TN5250 + websockify]
+
+  browser --> coach
+  browser --> iron
+  iron --> tn
+  tn --> api
+  coach --> api
+  api --> db
+```
+
+Everything runs on your machine via Docker. Nothing is sent to a shared cloud demo.
 
 ## Crawl, walk, run
 
@@ -83,6 +119,16 @@ Also: [docs/quickstart.md](docs/quickstart.md) · [SECURITY.md](SECURITY.md)
 | **Walk — Prove** | Governance, Blue Team, or Red Team | `AUDIT` / `TRAIN` or `APCLERK` / `TRAIN` |
 | **Walk — Practice** | i on GRC articles | `IONGRC` / `IONGRC` |
 | **Run** | Operate privileged | `QSECOFR` / `TRAIN` |
+
+## Command honesty
+
+Not every verb is “real IBM i CL at production depth.”
+
+- **Stateful / deep** — synthetic mutation with journals, authorities, job logs
+- **Display / representative** — credible inquiry screens and navigation
+- **Lab-native** — training-only commands such as `WRKFINDING` and `SUBMITMSN` (not IBM CL)
+
+Details: [docs/command-fidelity.md](docs/command-fidelity.md).
 
 ## Everyday commands
 
@@ -108,6 +154,11 @@ docker compose logs --tail 100
 | websockify bridge | 6080 |
 | TN5250 TCP host (internal) | 8023 |
 
+## Version
+
+**1.0.0** Community Edition — see [CHANGELOG.md](CHANGELOG.md).  
+Public release ops: [docs/public-release-checklist.md](docs/public-release-checklist.md).
+
 ## License
 
-See [LICENSE](LICENSE) (MIT). Browser terminal uses IronTerm (GPL-3.0) under `external/IronTerm-main/` — see [NOTICE](NOTICE).
+See [LICENSE](LICENSE) (MIT). Browser terminal uses IronTerm (GPL-3.0) under `external/IronTerm-main/` — see [NOTICE](NOTICE) and [docs/licensing.md](docs/licensing.md).

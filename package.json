@@ -1,6 +1,6 @@
 {
   "name": "legacy-control-lab",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0",
   "description": "A local IBM i-style governance and security range.",
   "type": "module",
   "main": "dist/server.js",

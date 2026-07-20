@@ -22,7 +22,8 @@ SOFTWARE.
 
 ---
 
-IronTerm (GPL-3.0) in external/IronTerm-main/ is a separate work. See docs/legal-clean-room.md.
+IronTerm (GPL-3.0) in `external/IronTerm-main/` is a separate work. See NOTICE
+and docs/licensing.md.
 
 Legacy Control Lab is a synthetic IBM i-style training simulation. It is not IBM i,
 not affiliated with IBM, and does not provide real system authority.

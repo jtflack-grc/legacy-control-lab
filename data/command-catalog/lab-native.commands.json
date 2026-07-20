@@ -21,9 +21,9 @@
       "CHGMODE MODE(EXAM)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
+    "implementationLevel": "lab_native",
     "mutatesState": true,
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "CHGPERS",
@@ -47,9 +47,9 @@
       "CHGPERS PERSONA(ADMIN)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
+    "implementationLevel": "lab_native",
     "mutatesState": true,
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "CHGVARIANT",
@@ -72,9 +72,9 @@
       "CHGVARIANT VARIANT(CLAIMS-001-A)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
+    "implementationLevel": "lab_native",
     "mutatesState": true,
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPBLD",
@@ -89,8 +89,8 @@
       "DSPBLD"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPCMDCOV",
@@ -106,8 +106,8 @@
     "examples": [
       "DSPCMDCOV"
     ],
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPCMDHLP",
@@ -132,8 +132,8 @@
       "DSPCMDHLP CMD(DSPOBJAUT)",
       "DSPCMDHLP CMD(CHGUSRPRF)"
     ],
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPCMDHST",
@@ -149,8 +149,8 @@
     "examples": [
       "DSPCMDHST"
     ],
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPCTRL",
@@ -173,8 +173,8 @@
       "DSPCTRL CTRL(LCL-AC-01)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPEVDDIFF",
@@ -202,8 +202,8 @@
       "DSPEVDDIFF TYPE(*USRPRF)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPEVID",
@@ -218,8 +218,8 @@
       "DSPEVID"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPHLP",
@@ -244,8 +244,8 @@
       "DSPHLP",
       "DSPHLP TOPIC(SPECIAL_AUTHORITY)"
     ],
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPMISSION",
@@ -260,8 +260,8 @@
       "DSPMISSION"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPMODE",
@@ -276,8 +276,8 @@
       "DSPMODE"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPMSGHLP",
@@ -302,8 +302,8 @@
       "DSPMSGHLP MSGID(LCL0901)",
       "DSPMSGHLP MSGID(CPF0001)"
     ],
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPPERS",
@@ -318,8 +318,8 @@
       "DSPPERS"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPSCN",
@@ -341,8 +341,8 @@
       "DSPSCN SCENARIO(CLAIMS400)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "DSPVARIANT",
@@ -357,8 +357,8 @@
       "DSPVARIANT"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "GENRPT",
@@ -383,8 +383,8 @@
       "GENRPT TYPE(*PRIV)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "HELP",
@@ -399,8 +399,8 @@
       "HELP"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "MAPCTRL",
@@ -429,8 +429,8 @@
       "MAPCTRL FINDING(1) CTRL(LCL-AC-02)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "RESETLAB",
@@ -462,8 +462,8 @@
     ],
     "mutatesState": true,
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "RSTCFG",
@@ -477,9 +477,9 @@
     "helpText": "RSTCFG. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
     "shortDescription": "RSTCFG",
     "handler": "catalogBackup",
-    "implementationLevel": "stateful_implemented",
+    "implementationLevel": "lab_native",
     "mutatesState": true,
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "RSTLABPKG",
@@ -495,8 +495,8 @@
     ],
     "mutatesState": true,
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "RSTLIB",
@@ -522,8 +522,8 @@
     ],
     "mutatesState": true,
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "RSTOBJ",
@@ -537,9 +537,9 @@
     "helpText": "RSTOBJ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
     "shortDescription": "RSTOBJ",
     "handler": "catalogBackup",
-    "implementationLevel": "stateful_implemented",
+    "implementationLevel": "lab_native",
     "mutatesState": true,
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "RSTSCNPKG",
@@ -567,9 +567,9 @@
       "RSTSCNPKG PACKAGE(claims400.lclpack)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
+    "implementationLevel": "lab_native",
     "mutatesState": true,
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "RUNBUILD",
@@ -585,8 +585,8 @@
     ],
     "mutatesState": true,
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "SAVCFG",
@@ -600,9 +600,9 @@
     "helpText": "SAVCFG. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
     "shortDescription": "SAVCFG",
     "handler": "catalogBackup",
-    "implementationLevel": "stateful_implemented",
+    "implementationLevel": "lab_native",
     "mutatesState": true,
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "SAVLIB",
@@ -628,8 +628,8 @@
     ],
     "mutatesState": true,
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "SAVOBJ",
@@ -643,9 +643,9 @@
     "helpText": "SAVOBJ. Interactive IBM i command implemented in Legacy Control Lab with standard 5250 screens, options, and parameter prompts.",
     "shortDescription": "SAVOBJ",
     "handler": "catalogBackup",
-    "implementationLevel": "stateful_implemented",
+    "implementationLevel": "lab_native",
     "mutatesState": true,
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "SAVSCNPKG",
@@ -674,8 +674,8 @@
     ],
     "mutatesState": true,
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "STRMSN",
@@ -699,8 +699,8 @@
     ],
     "mutatesState": true,
     "groupMenu": "CMDLAB",
-    "implementationLevel": "stateful_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "SUBMITMSN",
@@ -715,8 +715,8 @@
       "SUBMITMSN"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "WRKCMPGN",
@@ -734,8 +734,8 @@
       "WRKCMPGN"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "WRKCMPMSN",
@@ -750,8 +750,8 @@
       "WRKCMPMSN CAMPAIGN(IBM-I-ACCESS-GOVERNANCE)"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "WRKCTRL",
@@ -766,8 +766,8 @@
       "WRKCTRL"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "WRKFINDING",
@@ -782,8 +782,8 @@
       "WRKFINDING"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "WRKRANGE",
@@ -799,8 +799,8 @@
       "GO RANGE"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "WRKSCN",
@@ -815,8 +815,8 @@
       "WRKSCN"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "WRKSCORE",
@@ -831,8 +831,8 @@
       "WRKSCORE"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   },
   {
     "name": "WRKVARIANT",
@@ -847,7 +847,7 @@
       "WRKVARIANT"
     ],
     "groupMenu": "CMDLAB",
-    "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
+    "implementationLevel": "lab_native",
+    "realismLimits": "Lab-native command (not IBM i CL). Synthetic training only — SQLite-backed state, audit journal, and job log side effects."
   }
 ]

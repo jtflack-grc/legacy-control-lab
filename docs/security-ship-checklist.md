@@ -78,6 +78,10 @@ curl -sf http://127.0.0.1:8080/api/health
 
 ## Before public push
 
-- [ ] Confirm GitHub URLs point at `jtflack-grc/legacy-control-lab`
+- [x] Confirm GitHub URLs point at `jtflack-grc/legacy-control-lab`
+- [x] Community Edition packaging decision documented
+- [x] Command fidelity honesty documented
+- [x] IronTerm MIT+GPL arrangement documented in NOTICE / docs/licensing.md
+- [x] Version aligned to 1.0.0 in package.json + CHANGELOG
 - [ ] No `data/*.db`, `data/security-saves/`, `.env` tracked
 - [ ] `npm run check:release-hygiene` passes

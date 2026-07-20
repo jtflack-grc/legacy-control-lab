@@ -23,7 +23,8 @@ The first build takes **3–5 minutes**. When it finishes, open
 **http://localhost:8080/lab/**.
 
 No Git? On GitHub select **Code → Download ZIP**, extract it, open the extracted
-folder, click File Explorer's address bar, type `powershell`, and press Enter.
+`legacy-control-lab-main` folder, click File Explorer's address bar, type
+`powershell`, and press Enter.
 
 Full beginner instructions and everyday start/stop: [docker.md](./docker.md).
 

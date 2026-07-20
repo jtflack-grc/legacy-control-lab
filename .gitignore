@@ -40,14 +40,25 @@ scripts/*
 !scripts/copyRuntimeAssets.mjs
 !scripts/checkReleaseHygiene.ts
 
-# Deep docs stay local; ship install + security support only
+# Deep docs stay local; ship install + honesty/support docs only
 docs/*
 !docs/docker.md
 !docs/quickstart.md
 !docs/security-ship-checklist.md
 !docs/troubleshooting.md
+!docs/community-edition.md
+!docs/command-fidelity.md
+!docs/licensing.md
+!docs/public-release-checklist.md
 
 # Tests are not required for Docker run
 tests/
 vitest.config.ts
 vitest.config.*
+
+# Local maintainer scrap (not Community Edition)
+.github/ISSUE_TEMPLATE/
+.github/PULL_REQUEST_TEMPLATE.md
+.github/workflows/screenshots.yml
+external/IronTerm.zip
+external/*.zip

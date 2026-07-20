@@ -31,7 +31,8 @@ Choose one method:
 1. On the GitHub repository page, select **Code → Download ZIP**.
 2. Open your Downloads folder.
 3. Right-click the ZIP and select **Extract All**.
-4. Open the extracted `legacy-control-lab` folder.
+4. Open the extracted `legacy-control-lab-main` folder (GitHub names ZIP extracts
+   with a `-main` suffix on the default branch).
 
 **Git (if already installed)**
 
@@ -46,7 +47,7 @@ Do not run the lab from inside the ZIP preview. Extract it first.
 
 In File Explorer:
 
-1. Open the extracted `legacy-control-lab` folder.
+1. Open the extracted `legacy-control-lab-main` folder (or `legacy-control-lab` if you cloned).
 2. Click the address bar.
 3. Type `powershell` and press **Enter**.
 

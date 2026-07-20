@@ -1,12 +1,26 @@
 Legacy Control Lab
 
-Copyright (c) contributors to this project. See LICENSE.
+Copyright (c) contributors to this project. See LICENSE (MIT).
 
-IBM, IBM i, AS/400, OS/400, DB2 for i, and related marks are trademarks of International Business Machines Corporation. This project is not affiliated with, endorsed by, or sponsored by IBM.
+IBM, IBM i, AS/400, OS/400, DB2 for i, and related marks are trademarks of
+International Business Machines Corporation. This project is not affiliated with,
+endorsed by, or sponsored by IBM.
 
-This software is a clean-room, synthetic training environment inspired by IBM i administration concepts. It does not include IBM proprietary code.
+This software is a clean-room, synthetic training environment inspired by IBM i
+administration and GRC evidence concepts. It does not include IBM proprietary code.
 
-Terminal emulation in the browser uses **IronTerm** (GPL-3.0), vendored under
-`external/IronTerm-main/` and served as static assets. IronTerm is not compiled
-into the Node host runtime. See `external/IronTerm-main/LICENSE` (or the
-upstream IronTerm license file in that tree) for GPL terms.
+---------------------------------------------------------------------------
+IronTerm (GPL-3.0) — separate work
+---------------------------------------------------------------------------
+
+The browser terminal uses **IronTerm**, vendored under `external/IronTerm-main/`
+and served as **static web assets** to the browser. IronTerm is **not** compiled
+or linked into the Node.js lab host.
+
+- IronTerm license: GPL-3.0 — see `external/IronTerm-main/LICENSE`
+- Lab host and project-authored content: MIT — see `LICENSE`
+- Distribution notes: `docs/licensing.md`
+
+Recipients of this repository receive IronTerm source with the tree. Downstream
+redistributors must preserve IronTerm's GPL notices for that component and must
+not describe the combined drop as "MIT-only."
