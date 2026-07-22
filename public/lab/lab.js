@@ -535,7 +535,7 @@ function renderIongrcContext(payload) {
         "Read-only essay — open the LinkedIn article. No green-screen mechanics in this lab path.";
       gap.hidden = false;
     } else if (primary && !primary.hasExcerpt && !primary.indexed) {
-      gap.textContent = "Excerpt pending — run npm run ingest:grc-corpus to pull this article from LinkedIn.";
+      gap.textContent = "Excerpt not included in this Community Edition release. Use the linked article for the full context.";
       gap.hidden = false;
     } else {
       gap.hidden = true;
@@ -3255,7 +3255,7 @@ async function loadLab() {
   }
 
   el("setup-hint")?.addEventListener("click", () => {
-    window.open("/docs/setup-trainer.md", "_blank", "noopener");
+    window.open("/docs/troubleshooting.md", "_blank", "noopener");
   });
 
   try {
