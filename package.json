@@ -12,7 +12,6 @@
     "start": "node dist/server.js",
     "db:seed": "tsx src/db/seed.ts",
     "check:audit": "npm audit --omit=dev --audit-level=high",
-    "check:release-hygiene": "tsx scripts/checkReleaseHygiene.ts",
     "docker:up": "docker compose up --build"
   },
   "keywords": [
