@@ -8,11 +8,11 @@ coverage/
 .DS_Store
 Thumbs.db
 
-# Local export archives (not part of the product)
+# Local export archives
 /*.zip
 
-# Internal planning notes (not for public release)
-/A ChatGPT assessment*.txt
+# Maintainer-local notes
+/*assessment*.txt
 /ibm-i-phase*.md
 
 # Generated runtime artifacts
@@ -28,35 +28,32 @@ data/scorebook/*
 data/qopensys/
 data/security-saves/
 
-# Marketing / portfolio / capture (not required to run)
+# Maintainer-local assets
 launch/
 examples/
 dev/
 vendor/
 
-# Most scripts are local authoring tools; keep only install/build/hygiene
+# Community Edition build/install scripts
 scripts/*
 !scripts/install.ps1
 !scripts/copyRuntimeAssets.mjs
-!scripts/checkReleaseHygiene.ts
 
-# Deep docs stay local; ship install + honesty/support docs only
+# Community Edition documentation
 docs/*
 !docs/docker.md
 !docs/quickstart.md
-!docs/security-ship-checklist.md
 !docs/troubleshooting.md
 !docs/community-edition.md
 !docs/command-fidelity.md
 !docs/licensing.md
-!docs/public-release-checklist.md
 
-# Tests are not required for Docker run
+# Tests are maintained outside the Community Edition package
 tests/
 vitest.config.ts
 vitest.config.*
 
-# Local maintainer scrap (not Community Edition)
+# Local contribution templates and capture workflows
 .github/ISSUE_TEMPLATE/
 .github/PULL_REQUEST_TEMPLATE.md
 .github/workflows/screenshots.yml
