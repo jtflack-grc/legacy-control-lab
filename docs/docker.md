@@ -209,7 +209,7 @@ those host bindings or expose this container on a public network.
 - Compose publishes **127.0.0.1:8080** and **127.0.0.1:6080** only — do not expose them on a public network.
 - Coach/mission mutating APIs require **`X-Lab-Session-Token`** (issued when the green-screen session heartbeats; the lab UI sends it automatically).
 - HTTP responses include baseline security headers (`nosniff`, `X-Frame-Options`, CSP, `Referrer-Policy`, `Permissions-Policy`).
-- `npm run check:audit` (`--audit-level=high`) is part of `npm run preflight`.
+- Source maintainers can run `npm run check:audit` to check production dependencies at high severity.
 - Training passwords (`TRAIN`, `IONGRC`) are public by design — never load real credentials.
 
 ## Image size
