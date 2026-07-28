@@ -3,7 +3,7 @@
 **Mission:** Can You Prove Privacy Risk Planning?  
 **Sign-on:** `AUDIT` / `TRAIN`
 
-**Lab path from:** [i on GRC: ISO 27701, Clause 6 & the IBM i](https://lnkd.in/emjXqDrM)
+**Lab path from:** [i on GRC: ISO 27701, Clause 6 & the IBM i](https://www.linkedin.com/posts/john-flack_i-on-grc-iso-27701-clause-6-the-ibm-i-activity-7438270345012248576-TDQI)
 
 ## Control claim
 

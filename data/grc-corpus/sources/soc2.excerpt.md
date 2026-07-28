@@ -428,7 +428,7 @@ So, we're not pretending to perform an audit here, but showing what honest scopi
 
 Take a look here for some general SOC 2 beats for the platform:
 
-https://www.linkedin.com/posts/john-flack_fictional-soc2-for-ibm-i-ugcPost-7464112582363373568-0ev9/?utm_source=share&utm_medium=member_desktop&rcm=ACoAACKv3jsBAVHcve2dwGUu8QFWndvtWp2byyQ
+https://www.linkedin.com/posts/john-flack_fictional-soc2-for-ibm-i-ugcPost-7464112582363373568-0ev9
 
 (again, not exact here, but this is for exposure for those IBM i folks who may have never seen this out in the wild).
 

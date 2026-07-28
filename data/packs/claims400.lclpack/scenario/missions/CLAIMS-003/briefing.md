@@ -4,7 +4,7 @@
 **Persona:** IT auditor / GRC analyst  
 **Sign-on:** `AUDIT` / `TRAIN`
 
-**Lab path from:** [i on GRC: ISO 27701, Clause 8 & the IBM i](https://lnkd.in/eQHhYwdu)
+**Lab path from:** [i on GRC: ISO 27701, Clause 8 & the IBM i](https://www.linkedin.com/posts/john-flack_i-on-grc-iso-27701-clause-8-the-ibm-i-activity-7441139584916180992-Tfia)
 
 ## Control claim under review
 

@@ -284,7 +284,8 @@ const PRODUCT_DEMO_STEPS: DemoStep[] = [
     exitHint: "Press F3 to return to the prior screen.",
     commandMatch: /DSPFD.*PAYMST/i,
     screenHint: "DSPFD",
-    articleUrl: "https://lnkd.in/eQHhYwdu",
+    articleUrl:
+      "https://www.linkedin.com/posts/john-flack_i-on-grc-iso-27701-clause-8-the-ibm-i-activity-7441139584916180992-Tfia",
     labMission: "CLAIMS-003",
     frameworkRefs: ["ISO 27701 Clause 8"],
   },
@@ -312,7 +313,8 @@ const PRODUCT_DEMO_STEPS: DemoStep[] = [
     exitHint: "Press F3 to step back from WRKJOBSCDE.",
     commandMatch: /^WRKJOBSCDE/i,
     screenHint: "WRKJOBSCDE",
-    articleUrl: "https://lnkd.in/eQHhYwdu",
+    articleUrl:
+      "https://www.linkedin.com/posts/john-flack_i-on-grc-iso-27701-clause-8-the-ibm-i-activity-7441139584916180992-Tfia",
     labMission: "CLAIMS-003",
     frameworkRefs: ["ISO 27701 Clause 8", "Batch processing"],
   },
@@ -340,7 +342,8 @@ const PRODUCT_DEMO_STEPS: DemoStep[] = [
     exitHint: "Press F3 to return to the prior screen.",
     commandMatch: /WRKLNK.*payroll/i,
     screenHint: "WRKLNK",
-    articleUrl: "https://lnkd.in/eQHhYwdu",
+    articleUrl:
+      "https://www.linkedin.com/posts/john-flack_i-on-grc-iso-27701-clause-8-the-ibm-i-activity-7441139584916180992-Tfia",
     labMission: "CLAIMS-003",
     frameworkRefs: ["ISO 27701 Clause 8", "IFS integration"],
   },
