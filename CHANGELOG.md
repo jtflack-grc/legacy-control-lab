@@ -8,16 +8,15 @@
 - Install docs for Windows Home / WSL 2 virtualization and ZIP (no-Git) path
 - Command fidelity honesty guide (`docs/command-fidelity.md`)
 - Licensing note for MIT host + GPL IronTerm (`docs/licensing.md`)
-- Public release checklist (`docs/public-release-checklist.md`)
 - README five-minute preview, architecture diagram, and product screenshots
-- docker-smoke GitHub Actions workflow
+- Docker smoke-test GitHub Actions workflow
 
 ### Changed
 
-- Default install path is `docker compose up -d --build` (not the PowerShell helper)
-- Coach panels: understand first, act second (demo / i on GRC / auditor / operator)
-- Lab-native commands (for example `WRKFINDING`) marked `implementationLevel: lab_native`
-- Brand mark links to maintainer LinkedIn
+- Default install path is `docker compose up -d --build`
+- Coach panels: understand first, act second across all training lanes
+- Lab-native commands such as `WRKFINDING` marked `implementationLevel: lab_native`
+- Brand mark links to the maintainer page
 
 ### Notes
 
@@ -28,21 +27,17 @@
 
 ### Added
 
-- Phase 8 signature polish: brand assets, tagline lock, launcher wordmark
-- Structured coach insights (auditor + operator lanes)
-- Automated screenshot capture (`npm run capture:screenshots`)
-- Architecture doc set and portfolio case study
-- Launch package markdown (`launch/linkedin/`, video scripts)
-- `npm run copy:audit` and `npm run release:candidate`
-- SECURITY.md, NOTICE, GitHub issue/PR templates
+- Brand assets, tagline, and launcher wordmark
+- Structured coach guidance for auditor and operator lanes
+- Security policy, trademark notice, and Docker packaging foundation
 
 ### Changed
 
-- README: tagline, two-lane story, screenshot embeds
-- Example reports aligned with GENRPT title-block pattern
-- CI: `validate:range` and `command:coverage` steps
+- README and launcher presentation
+- Scenario-backed reports and command-catalog coverage
+- Synthetic evidence workflows and training-lane navigation
 
 ### Notes
 
 - Synthetic training runtime only — not IBM i, not affiliated with IBM
-- Credentials: `AUDIT`/`TRAIN`, `QSECOFR`/`TRAIN`
+- Training credentials use non-production synthetic profiles
