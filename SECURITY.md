@@ -25,8 +25,7 @@ Legacy Control Lab is a **local, synthetic IBM i-style training runtime**. It is
 - **HTTP security headers** including CSP (`unsafe-inline` retained for the lab UI; WebSocket connect limited to localhost/127.0.0.1).
 - **64 KB** JSON body limit on mutating APIs.
 - Static file serving rejects path traversal via `path.relative` root checks.
-- **`npm run check:release-hygiene`** scans for local path leaks and accidental secrets before public release.
-- **`npm run check:audit`** (`--omit=dev --audit-level=high`) gates runtime dependencies.
+- **`npm run check:audit`** (`--omit=dev --audit-level=high`) checks runtime dependencies.
 
 ## Documented limits (not bugs)
 
@@ -62,4 +61,3 @@ If you discover a security issue in this repository (for example, unsafe default
 - Run locally or in an isolated container (`docker compose` publishes `127.0.0.1:8080` and `127.0.0.1:6080` only)
 - Set `HTTP_BIND_HOST=0.0.0.0` only when you understand the risk (Compose already uses it *inside* the container so Docker can publish; the host mapping stays loopback)
 - Do not place production secrets in `.env` or scenario packs
-- Run `npm run check:release-hygiene` before publishing the repository
