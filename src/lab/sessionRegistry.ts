@@ -81,6 +81,17 @@ export function verifyLabSessionToken(
   return matches[0];
 }
 
+/** Resolve a token to its exact fresh session without trusting a caller-supplied user name. */
+export function verifyLabSessionTokenForSystem(systemName:string,token:string|undefined):LabSessionSnapshot|undefined {
+  if(!token?.trim()) return undefined;
+  const provided=token.trim();const now=Date.now();const system=normalizeSystemName(systemName);
+  return [...sessions.values()]
+    .filter((session)=>normalizeSystemName(session.systemName)===system)
+    .filter((session)=>isLabSessionFresh(session,now))
+    .filter((session)=>session.sessionToken!==undefined&&tokensMatch(session.sessionToken,provided))
+    .sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt))[0];
+}
+
 export function authorizeLabSessionMutation(
   systemName: string,
   userName: string,

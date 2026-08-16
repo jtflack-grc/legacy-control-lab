@@ -43,6 +43,14 @@ export function getProposal(db: SqliteDatabase, id: string): ProposalRecord | un
   return row ? proposalFromRow(row) : undefined;
 }
 
+export function listProposals(db:SqliteDatabase,input:{status?:ProposalStatus;limit:number}):ProposalRecord[] {
+  const limit=Math.max(1,Math.min(100,Math.trunc(input.limit)));
+  const rows=input.status
+    ? db.prepare("SELECT * FROM agent_authority_proposals WHERE status=? ORDER BY created_at DESC,id DESC LIMIT ?").all(input.status,limit)
+    : db.prepare("SELECT * FROM agent_authority_proposals ORDER BY created_at DESC,id DESC LIMIT ?").all(limit);
+  return (rows as Record<string,unknown>[]).map(proposalFromRow);
+}
+
 export function getApprovalForProposal(db: SqliteDatabase, proposalId: string): ApprovalRecord | undefined {
   const row = db.prepare("SELECT * FROM agent_authority_approvals WHERE proposal_id = ?").get(proposalId) as Record<string, unknown> | undefined;
   if (!row) return undefined;
@@ -120,6 +128,21 @@ export function finalizeProposalExecution(
 
 export function listReceipts(db: SqliteDatabase): ReceiptRecord[] {
   return (db.prepare("SELECT * FROM agent_authority_receipts ORDER BY sequence").all() as Record<string, unknown>[]).map(receiptFromRow);
+}
+
+export function getReceipt(db:SqliteDatabase,id:string):ReceiptRecord|undefined {
+  const row=db.prepare("SELECT * FROM agent_authority_receipts WHERE id=?").get(id) as Record<string,unknown>|undefined;
+  return row?receiptFromRow(row):undefined;
+}
+
+export function listReceiptsBounded(db:SqliteDatabase,input:{limit:number;afterSequence?:number}):ReceiptRecord[] {
+  const limit=Math.max(1,Math.min(100,Math.trunc(input.limit)));
+  const after=Math.max(0,Math.trunc(input.afterSequence??0));
+  return (db.prepare("SELECT * FROM agent_authority_receipts WHERE sequence>? ORDER BY sequence LIMIT ?").all(after,limit) as Record<string,unknown>[]).map(receiptFromRow);
+}
+
+export function listReceiptIdsForProposal(db:SqliteDatabase,proposalId:string):string[] {
+  return (db.prepare("SELECT id FROM agent_authority_receipts WHERE proposal_id=? ORDER BY sequence").all(proposalId) as {id:string}[]).map((row)=>row.id);
 }
 
 export type ReceiptAppendInput = Omit<ReceiptRecord, "sequence" | "previousHash" | "payloadHash">;

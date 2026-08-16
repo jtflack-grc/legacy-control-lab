@@ -1,14 +1,11 @@
-import { randomUUID } from "node:crypto";
 import type http from "node:http";
 import { CLIENT_INFO_META_KEY, createMcpHandler, McpServer, type ServerContext } from "@modelcontextprotocol/server";
 import { localhostHostValidation, localhostOriginValidation, toNodeHandler } from "@modelcontextprotocol/node";
 import { z } from "zod/v4";
-import { getDatabase } from "../../db/sqlite.js";
-import { LclTargetAdapter } from "../adapters/lclTargetAdapter.js";
 import { AuthorityBroker, type BrokerResult, type ObservedProvenanceReference } from "../broker/authorityBroker.js";
-import { loadPolicy } from "../policy/policyLoader.js";
 import { authorityToolRegistry } from "../toolRegistry.js";
 import type { ActionContext, Clock, IdGenerator } from "../types.js";
+import { createAgentAuthorityRuntime, type AgentAuthorityRuntime } from "../runtime.js";
 
 const TOOL_NAMES=["inspect_user_profile","inspect_object_authority","list_recent_audit_events","read_operational_messages","grant_object_authority","get_action_status"] as const;
 const source=z.object({source_id:z.string().min(1),content_hash:z.string().min(1).optional()}).strict();
@@ -21,14 +18,11 @@ const schemas={
   get_action_status:z.object({proposal_id:z.string().min(1)}).strict(),
 } as const;
 
-export type McpRuntimeOptions={target:string;clock?:Clock;ids?:IdGenerator;principalId?:string;rateLimit?:number;rateWindowMs?:number};
-export function createAgentAuthorityMcpRuntime(options:McpRuntimeOptions) {
-  if(options.target!=="lcl") throw new Error(`Unsupported LCL_AGENT_TARGET: ${options.target}`);
-  const clock=options.clock??{now:()=>new Date()};
-  const ids=options.ids??{id:(prefix:string)=>`${prefix}_${randomUUID()}`,nonce:()=>randomUUID()};
-  const principalId=options.principalId??`mcp-principal-${randomUUID()}`;
-  const adapter=new LclTargetAdapter();
-  const broker=new AuthorityBroker({db:getDatabase(),adapter,policy:loadPolicy("data/agent-authority/policy.v1.json"),clock,ids});
+export type McpRuntimeOptions={target?:string;clock?:Clock;ids?:IdGenerator;principalId?:string;rateLimit?:number;rateWindowMs?:number;runtime?:AgentAuthorityRuntime};
+export type AgentAuthorityMcpRuntime={nodeHandler:(req:http.IncomingMessage,res:http.ServerResponse)=>Promise<void>;toolNames:string[];principalId:string;runtime:AgentAuthorityRuntime;close:()=>Promise<void>};
+export function createAgentAuthorityMcpRuntime(options:McpRuntimeOptions):AgentAuthorityMcpRuntime {
+  const runtime=options.runtime??createAgentAuthorityRuntime({target:options.target??"lcl",clock:options.clock,ids:options.ids,principalId:options.principalId});
+  const {clock,ids,principalId,broker}=runtime;
   const mcp=createMcpHandler(()=>buildServer(broker,clock,ids,principalId));
   const node=toNodeHandler(mcp);
   const validateHost=localhostHostValidation();const validateOrigin=localhostOriginValidation();
@@ -38,7 +32,7 @@ export function createAgentAuthorityMcpRuntime(options:McpRuntimeOptions) {
     if(!guard.take()) {res.writeHead(429,{"Content-Type":"application/json","Retry-After":"60"});res.end('{"error":"MCP rate limit exceeded"}');return;}
     await node(req,res);
   };
-  return {nodeHandler,toolNames:[...TOOL_NAMES],principalId,close:()=>mcp.close()};
+  return {nodeHandler,toolNames:[...TOOL_NAMES],principalId,runtime,close:()=>mcp.close()};
 }
 
 function buildServer(broker:AuthorityBroker,clock:Clock,ids:IdGenerator,principalId:string):McpServer {

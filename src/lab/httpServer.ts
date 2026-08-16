@@ -44,6 +44,8 @@ export type LabHttpServerOptions = {
   systemName: string;
   websockifyPort: number;
   mcpHandler?: (req:http.IncomingMessage,res:http.ServerResponse)=>void|Promise<void>;
+  authorityDeskHandler?: (req:http.IncomingMessage,res:http.ServerResponse,url:URL)=>Promise<{handled:boolean}>;
+  authorityDeskPublicDir?: string;
 };
 
 const MIME: Record<string, string> = {
@@ -588,6 +590,21 @@ export function createLabHttpServer(options: LabHttpServerOptions): http.Server 
       if (options.mcpHandler) await options.mcpHandler(req,res);
       else sendJson(res,404,{error:"Not found"});
       return;
+    }
+
+    if(url.pathname.startsWith("/api/agent-authority/")) {
+      if(options.authorityDeskHandler) await options.authorityDeskHandler(req,res,url);
+      else sendJson(res,404,{error:"Not found"});
+      return;
+    }
+
+    if(url.pathname==="/lab/authority"||url.pathname.startsWith("/lab/authority/")) {
+      if(!options.authorityDeskPublicDir){sendJson(res,404,{error:"Not found"});return;}
+      const root=path.resolve(options.authorityDeskPublicDir);
+      if(url.pathname==="/lab/authority"){res.writeHead(302,responseHeaders({Location:"/lab/authority/"}));res.end();return;}
+      const relative=url.pathname.slice("/lab/authority/".length)||"index.html";
+      if(serveStaticFile(res,path.join(root,relative),root))return;
+      sendJson(res,404,{error:"Not found"});return;
     }
 
     if (await handleApi(req, res, url, options.systemName, options.websockifyPort)) {

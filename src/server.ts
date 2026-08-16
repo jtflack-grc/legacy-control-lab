@@ -13,6 +13,8 @@ import { startWebsockifyBridge } from "./websockifyBridge.js";
 import { guardHostQshMode } from "./ibmi-runtime/pase/qshMode.js";
 import { resolveBindHost } from "./bindHost.js";
 import { createAgentAuthorityMcpRuntime } from "./agent-authority/mcp/mcpRuntime.js";
+import { createAgentAuthorityRuntime } from "./agent-authority/runtime.js";
+import { createAuthorityDeskApi } from "./agent-authority/http/authorityDeskApi.js";
 
 export type ServerConfig = {
   tn5250Port: number;
@@ -81,7 +83,9 @@ export function startServer(config: ServerConfig = loadConfig()) {
   });
   console.log(`${APP_NAME} — ${RUNTIME_NAME}`);
   console.log(`System: ${config.systemName}`);
-  const agentAuthority=config.agentAuthorityEnabled?createAgentAuthorityMcpRuntime({target:config.agentTarget}):undefined;
+  const authorityRuntime=config.agentAuthorityEnabled?createAgentAuthorityRuntime({target:config.agentTarget}):undefined;
+  const agentAuthority=authorityRuntime?createAgentAuthorityMcpRuntime({runtime:authorityRuntime}):undefined;
+  const authorityDesk=authorityRuntime?createAuthorityDeskApi(authorityRuntime,config.systemName):undefined;
 
   const servers = startHostServers({
     tn5250Port: config.tn5250Port,
@@ -103,6 +107,7 @@ export function startServer(config: ServerConfig = loadConfig()) {
       systemName: config.systemName,
       websockifyPort: config.websockifyPort,
       ...(agentAuthority?{mcpHandler:agentAuthority.nodeHandler}:{}),
+      ...(authorityDesk?{authorityDeskHandler:authorityDesk,authorityDeskPublicDir:path.resolve("public/authority-desk")}:{})
     });
     websockify = startWebsockifyBridge({
       listenPort: config.websockifyPort,

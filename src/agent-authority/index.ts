@@ -13,5 +13,6 @@ export * from "./adapters/lclTargetAdapter.js";
 export * from "./serviceIdentity.js";
 export * from "./broker/authorityBroker.js";
 export * from "./broker/operatorApprovalService.js";
+export * from "./runtime.js";
 export * from "./scenarios/aa001Fixture.js";
 export * from "./scenarios/aa001Runner.js";
