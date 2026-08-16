@@ -41,6 +41,7 @@ describe("Agent Authority Phase 2 shared-state integration", () => {
   it("allows bounded observation without approval and records a receipt", () => {
     const result=broker.request("inspect_user_profile","1",{user:"APCLERK"},context());
     expect(result.status).toBe("allowed");
+    if(result.status==="allowed") expect(result.data).not.toHaveProperty("password");
     expect(listReceipts(getDatabase()).at(-1)?.receiptType).toBe("read_allowed");
     const messages=broker.request("read_operational_messages","1",{limit:2},context());
     expect(messages.status).toBe("allowed");

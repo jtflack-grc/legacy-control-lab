@@ -43,6 +43,7 @@ export type LabHttpServerOptions = {
   ironTermPublicDir: string;
   systemName: string;
   websockifyPort: number;
+  mcpHandler?: (req:http.IncomingMessage,res:http.ServerResponse)=>void|Promise<void>;
 };
 
 const MIME: Record<string, string> = {
@@ -582,6 +583,12 @@ export function createLabHttpServer(options: LabHttpServerOptions): http.Server 
 
   return http.createServer(async (req, res) => {
     const url = new URL(req.url ?? "/", `http://${req.headers.host ?? "localhost"}`);
+
+    if (url.pathname === "/mcp") {
+      if (options.mcpHandler) await options.mcpHandler(req,res);
+      else sendJson(res,404,{error:"Not found"});
+      return;
+    }
 
     if (await handleApi(req, res, url, options.systemName, options.websockifyPort)) {
       return;

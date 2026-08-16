@@ -33,7 +33,7 @@ export class LclTargetAdapter implements TargetAdapter {
   read(operation: string, args: Record<string, unknown>, _context: ActionContext): TargetReadResult {
     switch (operation) {
       case "inspect_user_profile":
-        return { data: requireFound(getUserProfile(args.user as string, this.system), "USER_NOT_FOUND"), provenance: [trustedSystem("user_profile")] };
+        return { data: safeUserProfile(requireFound(getUserProfile(args.user as string, this.system), "USER_NOT_FOUND")), provenance: [trustedSystem("user_profile")] };
       case "inspect_object_authority":
         return { data: requireFound(getObjectAuthorityDisplay(this.system, args.library as string, args.object as string, args.user as string), "OBJECT_NOT_FOUND"), provenance: [trustedSystem("object_authority")] };
       case "list_recent_audit_events": {
@@ -126,3 +126,9 @@ export class LclTargetAdapter implements TargetAdapter {
 
 function requireFound<T>(value:T|undefined,error:string):T { if (!value) throw new Error(error); return value; }
 function trustedSystem(sourceType:string) { return {sourceId:`CLAIMS400:${sourceType}`,sourceType,trustClass:"trusted_system" as const}; }
+function safeUserProfile(profile:NonNullable<ReturnType<typeof getUserProfile>>):Record<string,unknown> {
+  return {userName:profile.userName,status:profile.status,userClass:profile.userClass,text:profile.text,
+    groupProfile:profile.groupProfile,specialAuthorities:profile.specialAuthorities,initialMenu:profile.initialMenu,
+    lastSignon:profile.lastSignon,limitCapabilities:profile.limitCapabilities??null,
+    activityProfileExempt:profile.activityProfileExempt??false,businessOwner:profile.businessOwner??null};
+}

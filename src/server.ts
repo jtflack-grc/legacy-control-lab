@@ -12,6 +12,7 @@ import { preloadAllActiveRangeScenarios } from "./range/scenarioLoadService.js";
 import { startWebsockifyBridge } from "./websockifyBridge.js";
 import { guardHostQshMode } from "./ibmi-runtime/pase/qshMode.js";
 import { resolveBindHost } from "./bindHost.js";
+import { createAgentAuthorityMcpRuntime } from "./agent-authority/mcp/mcpRuntime.js";
 
 export type ServerConfig = {
   tn5250Port: number;
@@ -24,6 +25,8 @@ export type ServerConfig = {
   httpBindHost: string;
   tn5250BindHost: string;
   websockifyBindHost: string;
+  agentAuthorityEnabled: boolean;
+  agentTarget: string;
 };
 
 export function loadConfig(): ServerConfig {
@@ -38,6 +41,8 @@ export function loadConfig(): ServerConfig {
     httpBindHost: resolveBindHost("HTTP_BIND_HOST"),
     tn5250BindHost: resolveBindHost("TN5250_BIND_HOST"),
     websockifyBindHost: resolveBindHost("WEBSOCKIFY_BIND_HOST"),
+    agentAuthorityEnabled:(process.env.LCL_AGENT_AUTHORITY_ENABLED??"false").toLowerCase()==="true",
+    agentTarget:process.env.LCL_AGENT_TARGET??"lcl",
   };
 }
 
@@ -76,6 +81,7 @@ export function startServer(config: ServerConfig = loadConfig()) {
   });
   console.log(`${APP_NAME} — ${RUNTIME_NAME}`);
   console.log(`System: ${config.systemName}`);
+  const agentAuthority=config.agentAuthorityEnabled?createAgentAuthorityMcpRuntime({target:config.agentTarget}):undefined;
 
   const servers = startHostServers({
     tn5250Port: config.tn5250Port,
@@ -96,6 +102,7 @@ export function startServer(config: ServerConfig = loadConfig()) {
       ironTermPublicDir: ironTermDir,
       systemName: config.systemName,
       websockifyPort: config.websockifyPort,
+      ...(agentAuthority?{mcpHandler:agentAuthority.nodeHandler}:{}),
     });
     websockify = startWebsockifyBridge({
       listenPort: config.websockifyPort,
@@ -117,6 +124,7 @@ export function startServer(config: ServerConfig = loadConfig()) {
     if (httpServer) {
       await new Promise<void>((resolve) => httpServer!.close(() => resolve()));
     }
+    if(agentAuthority) await agentAuthority.close();
     if (websockify) {
       await new Promise<void>((resolve) => websockify!.close(() => resolve()));
     }
