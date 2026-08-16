@@ -8,3 +8,8 @@ export * from "./policy/policyLoader.js";
 export * from "./policy/policyEngine.js";
 export * from "./evidence/receiptIntegrity.js";
 export * from "./evidence/receiptVerifier.js";
+export * from "./adapters/targetAdapter.js";
+export * from "./adapters/lclTargetAdapter.js";
+export * from "./serviceIdentity.js";
+export * from "./broker/authorityBroker.js";
+export * from "./broker/operatorApprovalService.js";

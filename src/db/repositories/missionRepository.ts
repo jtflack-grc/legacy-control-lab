@@ -61,6 +61,19 @@ export function getDefaultMission(systemName: string): MissionRow | undefined {
   return listMissions(systemName)[0];
 }
 
+/** Ensure a server-owned internal mission definition exists without replacing scenario content. */
+export function ensureInternalMission(
+  systemName: string,
+  mission: { id: string; title: string; briefing: string; persona: string },
+): MissionRow {
+  const systemId = getSystemIdByName(systemName);
+  getDatabase().prepare(`INSERT OR IGNORE INTO missions (id,title,briefing,system_id,persona)
+    VALUES (@id,@title,@briefing,@systemId,@persona)`).run({ ...mission, systemId });
+  const stored = getMission(systemName, mission.id);
+  if (!stored) throw new Error(`Mission ${mission.id} exists outside ${systemName}`);
+  return stored;
+}
+
 export function listEvidenceRequirements(missionId: string): EvidenceRequirementRow[] {
   const rows = getDatabase()
     .prepare(

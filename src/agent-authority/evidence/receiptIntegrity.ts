@@ -5,11 +5,11 @@ import { appendReceipt, type ReceiptRecord } from "../../db/repositories/agentAu
 
 export type ReceiptPayload = Record<string, unknown>;
 export function createReceipt(db: SqliteDatabase, deps: { clock: Clock; ids: IdGenerator }, input: {
-  type: string; payload: ReceiptPayload; proposalId?: string;
+  type: string; payload: ReceiptPayload; proposalId?: string; receiptId?: string;
 }): ReceiptRecord {
   const payloadJson = canonicalize(input.payload);
   return appendReceipt(db, {
-    id: deps.ids.id("rcpt"), createdAt: deps.clock.now().toISOString(),
+    id: input.receiptId ?? deps.ids.id("rcpt"), createdAt: deps.clock.now().toISOString(),
     ...(input.proposalId ? { proposalId: input.proposalId } : {}),
     receiptType: input.type, payloadJson,
   });

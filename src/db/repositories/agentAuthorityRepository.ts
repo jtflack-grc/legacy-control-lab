@@ -43,6 +43,17 @@ export function getProposal(db: SqliteDatabase, id: string): ProposalRecord | un
   return row ? proposalFromRow(row) : undefined;
 }
 
+export function getApprovalForProposal(db: SqliteDatabase, proposalId: string): ApprovalRecord | undefined {
+  const row = db.prepare("SELECT * FROM agent_authority_approvals WHERE proposal_id = ?").get(proposalId) as Record<string, unknown> | undefined;
+  if (!row) return undefined;
+  return {
+    id:row.id as string, proposalId:row.proposal_id as string, actionHash:row.action_hash as string,
+    approverUser:row.approver_user as string, issuedAt:row.issued_at as string,
+    expiresAt:row.expires_at as string, nonce:row.nonce as string, status:row.status as ApprovalStatus,
+    ...optional(row,{approverSessionId:"approver_session_id",consumedAt:"consumed_at",reason:"reason"}),
+  } as ApprovalRecord;
+}
+
 type PendingDecision = "approved" | "denied" | "expired" | "invalidated";
 
 function transitionPendingProposal(db: SqliteDatabase, input: {
@@ -92,6 +103,19 @@ export function consumeBoundApproval(db: SqliteDatabase, proposalId: string, act
     if (proposal.changes !== 1) throw new Error("APPROVAL_CONSUMPTION_CONFLICT");
     return true;
   }).immediate();
+}
+
+export function finalizeProposalExecution(
+  db: SqliteDatabase,
+  proposalId: string,
+  status: ExecutionStatus,
+  receiptId: string,
+): boolean {
+  const result = db.prepare(`UPDATE agent_authority_proposals
+    SET execution_status=@status, execution_receipt_id=@receiptId
+    WHERE id=@proposalId AND status='consumed' AND execution_status IS NULL`)
+    .run({ proposalId, status, receiptId });
+  return result.changes === 1;
 }
 
 export function listReceipts(db: SqliteDatabase): ReceiptRecord[] {
