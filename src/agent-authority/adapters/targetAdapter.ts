@@ -1,4 +1,4 @@
-import type { ActionContext, CanonicalAction, ProvenanceRef } from "../types.js";
+import type { ActionContext, CanonicalAction, ExecutionStatus, ProvenanceRef, TargetKind } from "../types.js";
 
 export type TargetReadResult = {
   data: unknown;
@@ -11,7 +11,7 @@ export type TargetEvidenceRef = {
 };
 
 export type TargetMutationResult = {
-  status: "succeeded" | "failed";
+  status: ExecutionStatus;
   actor: string;
   attemptId: string;
   before: Record<string, unknown>;
@@ -22,7 +22,7 @@ export type TargetMutationResult = {
 };
 
 export interface TargetAdapter {
-  readonly kind: "lcl";
+  readonly kind: TargetKind;
   readonly system: string;
   read(operation: string, args: Record<string, unknown>, context: ActionContext): TargetReadResult;
   snapshot(action: CanonicalAction): Record<string, unknown>;

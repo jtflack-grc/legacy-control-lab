@@ -13,7 +13,7 @@ import {
 } from "../../db/repositories/agentAuthorityRepository.js";
 
 export type ApprovalDecisionResult =
-  | {status:"succeeded"|"failed";proposalId:string;receiptId:string;execution?:TargetMutationResult}
+  | {status:ExecutionStatus;proposalId:string;receiptId:string;execution?:TargetMutationResult}
   | {status:"denied"|"expired"|"invalidated"|"rejected";proposalId:string;receiptId?:string;reason:string};
 
 export class OperatorApprovalService {
@@ -23,6 +23,7 @@ export class OperatorApprovalService {
     const proposal=this.requireProposal(proposalId);
     if (!this.isAuthorizedOperator(session,proposal.targetSystem)) return {status:"rejected",proposalId,reason:"APPROVER_NOT_AUTHORIZED"};
     const now=this.deps.clock.now().toISOString();
+    if (proposal.status!=="pending") return {status:"rejected",proposalId,reason:"PROPOSAL_ALREADY_DECIDED"};
     if (proposal.expiresAt<=now) {
       expireProposal(this.deps.db,proposalId,now,"proposal_ttl_elapsed");
       const receipt=createReceipt(this.deps.db,this.deps,{type:"proposal_expired",proposalId,payload:{proposal_id:proposalId,decided_by:session.userName}});
@@ -34,8 +35,13 @@ export class OperatorApprovalService {
   }
 
   approve(proposalId:string,session:IbmiSession,reason?:string):ApprovalDecisionResult {
+    const initial=this.requireProposal(proposalId);
+    if (!this.isAuthorizedOperator(session,initial.targetSystem)) return {status:"rejected",proposalId,reason:"APPROVER_NOT_AUTHORIZED"};
+    return this.deps.db.transaction(() => this.approveProtected(proposalId,session,reason)).immediate();
+  }
+
+  private approveProtected(proposalId:string,session:IbmiSession,reason?:string):ApprovalDecisionResult {
     const proposal=this.requireProposal(proposalId);
-    if (!this.isAuthorizedOperator(session,proposal.targetSystem)) return {status:"rejected",proposalId,reason:"APPROVER_NOT_AUTHORIZED"};
     const now=this.deps.clock.now().toISOString();
     if (proposal.status!=="pending") return {status:"rejected",proposalId,reason:"PROPOSAL_ALREADY_DECIDED"};
     if (proposal.expiresAt<=now) {
@@ -53,7 +59,16 @@ export class OperatorApprovalService {
       const receipt=createReceipt(this.deps.db,this.deps,{type:"proposal_invalidated",proposalId,payload:{proposal_id:proposalId,reason:"ACTION_OR_TOOL_INVALID"}});
       return {status:"invalidated",proposalId,receiptId:receipt.id,reason:"ACTION_OR_TOOL_INVALID"};
     }
-    const current=this.deps.adapter.snapshot(action);
+    let current:Record<string,unknown>;
+    try { current=this.deps.adapter.snapshot(action); }
+    catch (error) {
+      const detail=error instanceof Error?error.message:String(error);
+      invalidateProposal(this.deps.db,proposalId,now,"target_precondition_unavailable");
+      const receipt=createReceipt(this.deps.db,this.deps,{type:"target_precondition_failure",proposalId,payload:{
+        proposal_id:proposalId,action_hash:proposal.actionHash,reason:"TARGET_PRECONDITION_UNAVAILABLE",detail,
+      }});
+      return {status:"invalidated",proposalId,receiptId:receipt.id,reason:"TARGET_PRECONDITION_UNAVAILABLE"};
+    }
     const currentIdentity=fingerprint(current);
     if (currentIdentity.hash!==proposal.preconditionHash) {
       invalidateProposal(this.deps.db,proposalId,now,"stale_precondition");
@@ -61,13 +76,10 @@ export class OperatorApprovalService {
       return {status:"invalidated",proposalId,receiptId:receipt.id,reason:"STALE_PRECONDITION"};
     }
     const approvalId=this.deps.ids.id("apr");
-    const approved=this.deps.db.transaction(()=>{
-      if (!approvePendingProposal(this.deps.db,proposalId,now,session.userName!,reason)) return false;
-      insertApproval(this.deps.db,{id:approvalId,proposalId,actionHash:proposal.actionHash,approverUser:session.userName!,approverSessionId:session.id,
-        issuedAt:now,expiresAt:proposal.expiresAt,nonce:this.deps.ids.nonce(),status:"active",reason});
-      return true;
-    }).immediate();
+    const approved=approvePendingProposal(this.deps.db,proposalId,now,session.userName!,reason);
     if (!approved) return {status:"rejected",proposalId,reason:"PROPOSAL_ALREADY_DECIDED"};
+    insertApproval(this.deps.db,{id:approvalId,proposalId,actionHash:proposal.actionHash,approverUser:session.userName!,approverSessionId:session.id,
+      issuedAt:now,expiresAt:proposal.expiresAt,nonce:this.deps.ids.nonce(),status:"active",reason});
     if (!consumeBoundApproval(this.deps.db,proposalId,proposal.actionHash,now)) return {status:"rejected",proposalId,reason:"APPROVAL_CONSUMPTION_FAILED"};
 
     let execution:TargetMutationResult;

@@ -30,20 +30,20 @@ export class AuthorityBroker {
     try { args=tool.normalizeArguments(rawArgs); }
     catch { return this.denied("INVALID_ARGUMENTS",context,{toolName,toolVersion}); }
 
-    if (tool.name==="get_action_status") {
-      const proposal=getProposal(this.deps.db,args.proposal_id as string);
-      const receipt=createReceipt(this.deps.db,this.deps,{type:"read_allowed",proposalId:proposal?.id,payload:{
-        request:context,tool:{name:tool.name,version:tool.version},policy:{decision:"allow",risk_class:tool.riskClass},
-        result:{found:Boolean(proposal),status:proposal?.status,execution_status:proposal?.executionStatus},
-      }});
-      return {status:"found",proposal,receiptId:receipt.id};
-    }
-
     const action=buildCanonicalAction({targetKind:this.deps.adapter.kind,targetSystem:this.deps.adapter.system,
       toolName:tool.name,toolVersion:tool.version,arguments:args});
     const actionIdentity=fingerprint(action);
     const policy=evaluatePolicy(this.deps.policy,tool.riskClass);
     if (policy.decision==="deny") return this.denied("POLICY_DENIED",context,{action,actionHash:actionIdentity.hash,policy});
+
+    if (tool.name==="get_action_status") {
+      const proposal=getProposal(this.deps.db,args.proposal_id as string);
+      const receipt=createReceipt(this.deps.db,this.deps,{type:"read_allowed",proposalId:proposal?.id,payload:{
+        request:context,action,action_hash:actionIdentity.hash,policy:{...policy,risk_class:tool.riskClass},
+        result:{found:Boolean(proposal),status:proposal?.status??null,execution_status:proposal?.executionStatus??null},
+      }});
+      return {status:"found",proposal,receiptId:receipt.id};
+    }
 
     if (!tool.mutating && policy.decision==="allow") {
       const result=this.deps.adapter.read(tool.adapterOperation,args,context);

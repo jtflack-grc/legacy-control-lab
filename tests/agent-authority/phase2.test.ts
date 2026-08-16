@@ -2,15 +2,17 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { closeDatabase, getDatabase, initTestDatabase } from "../../src/db/sqlite.js";
 import { loadPolicy } from "../../src/agent-authority/policy/policyLoader.js";
 import { LclTargetAdapter } from "../../src/agent-authority/adapters/lclTargetAdapter.js";
+import type { TargetAdapter, TargetMutationResult } from "../../src/agent-authority/adapters/targetAdapter.js";
 import { AuthorityBroker } from "../../src/agent-authority/broker/authorityBroker.js";
 import { OperatorApprovalService } from "../../src/agent-authority/broker/operatorApprovalService.js";
-import type { ActionContext, Clock, IdGenerator } from "../../src/agent-authority/types.js";
+import type { ActionContext, CanonicalAction, Clock, IdGenerator } from "../../src/agent-authority/types.js";
+import type { AuthorityPolicy } from "../../src/agent-authority/policy/types.js";
 import { createSession, hydrateSessionFromProfile, type IbmiSession } from "../../src/ibmi-runtime/sessionService.js";
 import { getObjectAuthorityDisplay, grantObjectAuthority } from "../../src/ibmi-runtime/authorityService.js";
 import { getUserProfile } from "../../src/db/repositories/userProfileRepository.js";
 import { listObjectAuthorities } from "../../src/db/repositories/objectAuthorityRepository.js";
 import { listGeneratedAudit, listRuntimeJobLog, listStateChanges } from "../../src/db/repositories/runtimeRepository.js";
-import { listReceipts } from "../../src/db/repositories/agentAuthorityRepository.js";
+import { getApprovalForProposal, getProposal, listReceipts } from "../../src/db/repositories/agentAuthorityRepository.js";
 import { getMissionAttempt } from "../../src/db/repositories/missionRepository.js";
 
 describe("Agent Authority Phase 2 shared-state integration", () => {
@@ -43,6 +45,22 @@ describe("Agent Authority Phase 2 shared-state integration", () => {
     const messages=broker.request("read_operational_messages","1",{limit:2},context());
     expect(messages.status).toBe("allowed");
     if (messages.status==="allowed") expect(messages.provenance.every((p)=>p.trustClass==="untrusted_operational_data")).toBe(true);
+  });
+
+  it("governs get_action_status through canonical action hashing and evaluated policy", () => {
+    const requested=requestGrant(); if(requested.status!=="approval_required") throw new Error("proposal expected");
+    const allowed=broker.request("get_action_status","1",{proposal_id:requested.proposalId},context());
+    expect(allowed.status).toBe("found");
+    const payload=JSON.parse(listReceipts(getDatabase()).at(-1)!.payloadJson) as Record<string,unknown>;
+    expect(payload).toMatchObject({
+      action:{tool_name:"get_action_status",tool_version:"1",arguments:{proposal_id:requested.proposalId}},
+      action_hash:expect.any(String),policy:{decision:"allow",risk_class:"observe",policyId:"lcl-agent-authority-default"},
+    });
+
+    const denyObserve:AuthorityPolicy={schemaVersion:"1",policyId:"deny-observe",version:"1",defaultDecision:"deny",rules:[]};
+    const deniedBroker=new AuthorityBroker({db:getDatabase(),adapter,clock,ids,policy:denyObserve});
+    expect(deniedBroker.request("get_action_status","1",{proposal_id:requested.proposalId},context()))
+      .toMatchObject({status:"denied",reason:"POLICY_DENIED"});
   });
 
   it("creates a pending privilege proposal without changing CLAIMS400", () => {
@@ -112,6 +130,66 @@ describe("Agent Authority Phase 2 shared-state integration", () => {
     expect(approvals.approve(requested.proposalId,operator())).toMatchObject({status:"invalidated",reason:"STALE_PRECONDITION"});
     expect(privateAuthority("APCLERK")).toBe("*CHANGE");
     expect(listStateChanges(adapter.getServiceAttemptId(),"object_authority")).toHaveLength(0);
+  });
+
+  it("rechecks the final precondition before creating or consuming approval", () => {
+    let snapshots=0;
+    const intervening:TargetAdapter={
+      kind:adapter.kind,system:adapter.system,read:(...args)=>adapter.read(...args),
+      snapshot:(action)=>{
+        snapshots+=1;
+        if(snapshots===2) grantObjectAuthority("CLAIMS400","PAYROLL","PAYMST","APCLERK","*CHANGE");
+        return adapter.snapshot(action);
+      },
+      executeMutation:(action)=>adapter.executeMutation(action),collectEvidence:(...args)=>adapter.collectEvidence(...args),
+    };
+    const localBroker=new AuthorityBroker({db:getDatabase(),adapter:intervening,clock,ids,policy:loadPolicy("data/agent-authority/policy.v1.json")});
+    const localApprovals=new OperatorApprovalService({db:getDatabase(),adapter:intervening,clock,ids});
+    const requested=localBroker.request("grant_object_authority","1",grantArgs(),context());
+    if(requested.status!=="approval_required") throw new Error("proposal expected");
+    expect(localApprovals.approve(requested.proposalId,operator())).toMatchObject({status:"invalidated",reason:"STALE_PRECONDITION"});
+    expect(privateAuthority("APCLERK")).toBe("*CHANGE");
+    expect(getApprovalForProposal(getDatabase(),requested.proposalId)).toBeUndefined();
+    expect(listStateChanges(adapter.getServiceAttemptId(),"object_authority")).toHaveLength(0);
+  });
+
+  it("turns final snapshot disappearance into structured invalidation and a receipt", () => {
+    let snapshots=0;
+    const disappearing:TargetAdapter={
+      kind:adapter.kind,system:adapter.system,read:(...args)=>adapter.read(...args),
+      snapshot:(action)=>{ if(++snapshots===2) throw new Error("OBJECT_NOT_FOUND"); return adapter.snapshot(action); },
+      executeMutation:(action)=>adapter.executeMutation(action),collectEvidence:(...args)=>adapter.collectEvidence(...args),
+    };
+    const localBroker=new AuthorityBroker({db:getDatabase(),adapter:disappearing,clock,ids,policy:loadPolicy("data/agent-authority/policy.v1.json")});
+    const localApprovals=new OperatorApprovalService({db:getDatabase(),adapter:disappearing,clock,ids});
+    const requested=localBroker.request("grant_object_authority","1",grantArgs(),context());
+    if(requested.status!=="approval_required") throw new Error("proposal expected");
+    const result=localApprovals.approve(requested.proposalId,operator());
+    expect(result).toMatchObject({status:"invalidated",reason:"TARGET_PRECONDITION_UNAVAILABLE",receiptId:expect.any(String)});
+    expect(getProposal(getDatabase(),requested.proposalId)?.status).toBe("invalidated");
+    expect(getApprovalForProposal(getDatabase(),requested.proposalId)).toBeUndefined();
+    expect(listReceipts(getDatabase()).at(-1)?.receiptType).toBe("target_precondition_failure");
+    expect(privateAuthority("APCLERK")).toBeUndefined();
+  });
+
+  it("does not reinterpret a consumed proposal as expired on late denial", () => {
+    const requested=requestGrant(); if(requested.status!=="approval_required") throw new Error("proposal expected");
+    expect(approvals.approve(requested.proposalId,operator()).status).toBe("succeeded");
+    now=new Date("2026-08-16T12:10:00.000Z");
+    expect(approvals.deny(requested.proposalId,operator())).toMatchObject({status:"rejected",reason:"PROPOSAL_ALREADY_DECIDED"});
+    expect(getProposal(getDatabase(),requested.proposalId)?.status).toBe("consumed");
+  });
+
+  it("keeps target kinds and indeterminate outcomes target-neutral while LCL stays deterministic", () => {
+    const remoteShape:TargetAdapter={
+      kind:"ibmi-mcp",system:"FUTURE",read:()=>({data:null,provenance:[]}),snapshot:()=>({}),
+      executeMutation:():TargetMutationResult=>({status:"indeterminate",actor:"future",attemptId:"future",before:{},after:{},evidence:[]}),
+      collectEvidence:()=>[],
+    };
+    expect(remoteShape.executeMutation({} as CanonicalAction).status).toBe("indeterminate");
+    const requested=requestGrant(); if(requested.status!=="approval_required") throw new Error("proposal expected");
+    const result=approvals.approve(requested.proposalId,operator());
+    expect(["succeeded","failed"]).toContain(result.status);
   });
 
   it("denies unknown tools and ignores caller attempts to override risk", () => {

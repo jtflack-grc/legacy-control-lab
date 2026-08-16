@@ -11,6 +11,8 @@ import { createAgentServiceSession, AGENT_SERVICE_USER } from "../serviceIdentit
 import type { ActionContext, CanonicalAction } from "../types.js";
 import type { TargetAdapter, TargetEvidenceRef, TargetMutationResult, TargetReadResult } from "./targetAdapter.js";
 
+export type LclMutationResult = Omit<TargetMutationResult, "status"> & { status: "succeeded" | "failed" };
+
 const ALLOWED_SYSTEM = "CLAIMS400";
 const MUTATION_ALLOWLIST = new Set(["PAYROLL/PAYMST"]);
 
@@ -60,7 +62,7 @@ export class LclTargetAdapter implements TargetAdapter {
     };
   }
 
-  executeMutation(action: CanonicalAction): TargetMutationResult {
+  executeMutation(action: CanonicalAction): LclMutationResult {
     if (action.tool_name !== "grant_object_authority") throw new Error("UNSUPPORTED_MUTATION_OPERATION");
     this.requireAllowedMutation(action);
     if (!sessionHasSpecialAuthority(this.serviceSession,["*OBJMGT"])) throw new Error("SERVICE_IDENTITY_NOT_AUTHORIZED");
