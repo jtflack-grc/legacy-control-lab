@@ -7,8 +7,8 @@ export type RiskClass =
   | "destructive";
 export type PolicyDecision = "allow" | "require_approval" | "deny";
 export type ProposalStatus =
-  | "pending" | "approved" | "denied" | "expired" | "invalidated"
-  | "consumed" | "failed" | "indeterminate";
+  | "pending" | "approved" | "denied" | "expired" | "invalidated" | "consumed";
+export type ExecutionStatus = "succeeded" | "failed" | "indeterminate";
 export type ApprovalStatus = "active" | "consumed" | "expired" | "revoked";
 
 export type ActionContext = {

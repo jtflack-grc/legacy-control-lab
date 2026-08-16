@@ -1,5 +1,7 @@
 import type { Database as SqliteDatabase } from "better-sqlite3";
-import type { ApprovalStatus, ProposalStatus, RiskClass, TargetKind } from "../../agent-authority/types.js";
+import { canonicalize } from "../../agent-authority/canonicalize.js";
+import { sha256 } from "../../agent-authority/fingerprint.js";
+import type { ApprovalStatus, ExecutionStatus, ProposalStatus, RiskClass, TargetKind } from "../../agent-authority/types.js";
 
 export type ProposalRecord = {
   id: string; createdAt: string; expiresAt: string; status: ProposalStatus;
@@ -8,7 +10,7 @@ export type ProposalRecord = {
   policyId: string; policyVersion: string; policyDecisionJson: string;
   preconditionJson: string; preconditionHash: string; requestContextJson: string;
   provenanceJson?: string; decidedAt?: string; decidedBy?: string; decisionReason?: string;
-  consumedAt?: string; executionStatus?: string; executionReceiptId?: string;
+  consumedAt?: string; executionStatus?: ExecutionStatus; executionReceiptId?: string;
 };
 export type ApprovalRecord = {
   id: string; proposalId: string; actionHash: string; approverUser: string;
@@ -21,7 +23,8 @@ export type ReceiptRecord = {
   signatureAlgorithm?: string; signature?: string; signingKeyId?: string;
 };
 
-export function insertProposal(db: SqliteDatabase, p: ProposalRecord): void {
+export function insertProposal(db: SqliteDatabase, p: ProposalRecord & { status: "pending" }): void {
+  if (p.status !== "pending") throw new Error("NEW_PROPOSAL_MUST_BE_PENDING");
   db.prepare(`INSERT INTO agent_authority_proposals (
     id, created_at, expires_at, status, target_kind, target_system, tool_name, tool_version,
     risk_class, arguments_json, canonical_action_json, action_hash, policy_id, policy_version,
@@ -40,43 +43,83 @@ export function getProposal(db: SqliteDatabase, id: string): ProposalRecord | un
   return row ? proposalFromRow(row) : undefined;
 }
 
-export function transitionProposal(db: SqliteDatabase, input: {
-  id: string; from: ProposalStatus; to: ProposalStatus; now: string;
-  decidedBy?: string; reason?: string;
+type PendingDecision = "approved" | "denied" | "expired" | "invalidated";
+
+function transitionPendingProposal(db: SqliteDatabase, input: {
+  id: string; to: PendingDecision; now: string; decidedBy?: string; reason?: string;
 }): boolean {
-  const decided = ["approved", "denied", "expired", "invalidated"].includes(input.to);
+  const expiryGuard = input.to === "approved" ? "AND expires_at > @now" : "";
   const result = db.prepare(`UPDATE agent_authority_proposals
-    SET status=@to, decided_at=CASE WHEN @decided=1 THEN @now ELSE decided_at END,
-        decided_by=COALESCE(@decidedBy, decided_by), decision_reason=COALESCE(@reason, decision_reason),
-        consumed_at=CASE WHEN @to='consumed' THEN @now ELSE consumed_at END
-    WHERE id=@id AND status=@from`).run({ ...input, decided: decided ? 1 : 0, decidedBy: input.decidedBy ?? null, reason: input.reason ?? null });
+    SET status=@to, decided_at=@now, decided_by=COALESCE(@decidedBy, decided_by),
+        decision_reason=COALESCE(@reason, decision_reason)
+    WHERE id=@id AND status='pending' ${expiryGuard}`)
+    .run({ ...input, decidedBy: input.decidedBy ?? null, reason: input.reason ?? null });
   return result.changes === 1;
 }
 
-export function insertApproval(db: SqliteDatabase, a: ApprovalRecord): void {
+export function approveProposal(db: SqliteDatabase, id: string, now: string, decidedBy: string, reason?: string): boolean {
+  return transitionPendingProposal(db, { id, to:"approved", now, decidedBy, reason });
+}
+export function denyProposal(db: SqliteDatabase, id: string, now: string, decidedBy: string, reason?: string): boolean {
+  return transitionPendingProposal(db, { id, to:"denied", now, decidedBy, reason });
+}
+export function expireProposal(db: SqliteDatabase, id: string, now: string, reason?: string): boolean {
+  return transitionPendingProposal(db, { id, to:"expired", now, reason });
+}
+export function invalidateProposal(db: SqliteDatabase, id: string, now: string, reason?: string): boolean {
+  return transitionPendingProposal(db, { id, to:"invalidated", now, reason });
+}
+
+export function insertApproval(db: SqliteDatabase, a: ApprovalRecord & { status: "active" }): void {
+  if (a.status !== "active") throw new Error("NEW_APPROVAL_MUST_BE_ACTIVE");
   db.prepare(`INSERT INTO agent_authority_approvals
     (id,proposal_id,action_hash,approver_user,approver_session_id,issued_at,expires_at,nonce,status,consumed_at,reason)
     VALUES (@id,@proposalId,@actionHash,@approverUser,@approverSessionId,@issuedAt,@expiresAt,@nonce,@status,@consumedAt,@reason)`)
     .run(nullable({ approverSessionId:null, consumedAt:null, reason:null, ...a }));
 }
 
-export function consumeApproval(db: SqliteDatabase, proposalId: string, actionHash: string, now: string): boolean {
-  const result = db.prepare(`UPDATE agent_authority_approvals SET status='consumed', consumed_at=@now
-    WHERE proposal_id=@proposalId AND action_hash=@actionHash AND status='active' AND expires_at>@now`)
-    .run({ proposalId, actionHash, now });
-  return result.changes === 1;
+export function consumeBoundApproval(db: SqliteDatabase, proposalId: string, actionHash: string, now: string): boolean {
+  return db.transaction(() => {
+    const approval = db.prepare(`UPDATE agent_authority_approvals SET status='consumed', consumed_at=@now
+      WHERE proposal_id=@proposalId AND action_hash=@actionHash AND status='active' AND expires_at>@now
+        AND EXISTS (SELECT 1 FROM agent_authority_proposals p
+          WHERE p.id=@proposalId AND p.status='approved' AND p.expires_at>@now AND p.action_hash=@actionHash)`)
+      .run({ proposalId, actionHash, now });
+    if (approval.changes !== 1) return false;
+    const proposal = db.prepare(`UPDATE agent_authority_proposals SET status='consumed', consumed_at=@now
+      WHERE id=@proposalId AND status='approved' AND expires_at>@now AND action_hash=@actionHash`)
+      .run({ proposalId, actionHash, now });
+    if (proposal.changes !== 1) throw new Error("APPROVAL_CONSUMPTION_CONFLICT");
+    return true;
+  }).immediate();
 }
 
 export function listReceipts(db: SqliteDatabase): ReceiptRecord[] {
   return (db.prepare("SELECT * FROM agent_authority_receipts ORDER BY sequence").all() as Record<string, unknown>[]).map(receiptFromRow);
 }
 
-export function appendReceipt(db: SqliteDatabase, receipt: Omit<ReceiptRecord, "sequence" | "previousHash">): ReceiptRecord {
+export type ReceiptAppendInput = Omit<ReceiptRecord, "sequence" | "previousHash" | "payloadHash">;
+
+export function receiptIntegrityMaterial(receipt: Pick<ReceiptRecord, "id" | "sequence" | "createdAt" | "receiptType" | "payloadJson"> & { proposalId?: string }): Record<string, unknown> {
+  return {
+    receipt_id: receipt.id,
+    sequence: receipt.sequence,
+    created_at: receipt.createdAt,
+    proposal_id: receipt.proposalId ?? null,
+    receipt_type: receipt.receiptType,
+    payload: JSON.parse(receipt.payloadJson) as unknown,
+  };
+}
+
+export function appendReceipt(db: SqliteDatabase, receipt: ReceiptAppendInput): ReceiptRecord {
   return db.transaction(() => {
     db.prepare(`INSERT OR IGNORE INTO agent_authority_chain_state(chain_id,last_sequence,last_hash,updated_at)
       VALUES ('default',0,NULL,@updatedAt)`).run({ updatedAt: receipt.createdAt });
     const head = db.prepare("SELECT last_sequence, last_hash FROM agent_authority_chain_state WHERE chain_id='default'").get() as { last_sequence: number; last_hash: string | null };
-    const stored: ReceiptRecord = { ...receipt, sequence: head.last_sequence + 1, ...(head.last_hash ? { previousHash: head.last_hash } : {}) };
+    const sequence = head.last_sequence + 1;
+    const material = receiptIntegrityMaterial({ ...receipt, sequence });
+    const stored: ReceiptRecord = { ...receipt, sequence, payloadHash: sha256(canonicalize(material)),
+      ...(head.last_hash ? { previousHash: head.last_hash } : {}) };
     db.prepare(`INSERT INTO agent_authority_receipts
       (id,sequence,created_at,proposal_id,receipt_type,payload_json,payload_hash,previous_hash,signature_algorithm,signature,signing_key_id)
       VALUES (@id,@sequence,@createdAt,@proposalId,@receiptType,@payloadJson,@payloadHash,@previousHash,@signatureAlgorithm,@signature,@signingKeyId)`)
