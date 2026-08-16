@@ -50,6 +50,10 @@ docs/*
 
 # Tests are maintained outside the Community Edition package
 tests/
+!tests/
+tests/*
+!tests/agent-authority/
+!tests/agent-authority/*.test.ts
 vitest.config.ts
 vitest.config.*
 
