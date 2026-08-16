@@ -89,7 +89,8 @@ export class AuthorityBroker {
   private resolveObservedProvenance(context:ActionContext,requested:readonly ObservedProvenanceReference[]):ProvenanceRef[] {
     return requested.flatMap((reference)=>{
       const issued=this.observedProvenance.get(this.provenanceKey(context,reference.sourceId));
-      if (!issued || (reference.contentHash!==undefined&&reference.contentHash!==issued.contentHash)) return [];
+      if (!issued) return [];
+      if (issued.contentHash!==undefined&&reference.contentHash!==issued.contentHash) return [];
       return [issued];
     });
   }

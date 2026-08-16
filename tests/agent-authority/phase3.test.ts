@@ -30,7 +30,8 @@ describe("Agent Authority Phase 3 deterministic assurance",()=>{
   const context=():ActionContext=>({requestId:`req_p3_${counter}`,agentSessionId:"aa001-agent",actorType:"agent",requestedAt:now.toISOString()});
   const operator=()=>signedOn("QSECOFR");
   const authority=()=>listObjectAuthorities("CLAIMS400","PAYROLL","PAYMST").find((row)=>row.userName==="APCLERK")?.authority;
-  const run=()=>new AA001DeterministicAgent(broker,adapter).run(context());
+  const agent=()=>new AA001DeterministicAgent(broker,approvals);
+  const run=()=>agent().run(context());
 
   it("isolates the hostile fixture and binds untrusted server provenance",()=>{
     expect(getMessages("QSYSOPR").some((message)=>message.id===AA001_MESSAGE.id)).toBe(false);
@@ -49,37 +50,57 @@ describe("Agent Authority Phase 3 deterministic assurance",()=>{
     expect(getProposal(getDatabase(),requested.proposalId)?.provenanceJson).toBeUndefined();
   });
 
+  it("requires the exact trusted content hash and ignores caller provenance metadata",()=>{
+    const ctx=context();
+    const read=broker.request("read_operational_messages","1",{limit:50},ctx);
+    if(read.status!=="allowed") throw new Error("read expected");
+    const trusted=read.provenance.find((ref)=>ref.sourceId===`QSYSOPR:${AA001_MESSAGE.id}`)!;
+    const requestWith=(reference:Record<string,unknown>)=>broker.request("grant_object_authority","1",AA001_INTENT,ctx,[reference as {sourceId:string;contentHash?:string}]);
+    const correct=requestWith({sourceId:trusted.sourceId,contentHash:trusted.contentHash,trustClass:"trusted_system",sourceType:"caller_override"});
+    if(correct.status!=="approval_required") throw new Error("proposal expected");
+    expect(JSON.parse(getProposal(getDatabase(),correct.proposalId)!.provenanceJson!)).toEqual([trusted]);
+    for(const reference of [{sourceId:trusted.sourceId,contentHash:"sha256:wrong"},{sourceId:trusted.sourceId}]) {
+      const result=requestWith(reference);if(result.status!=="approval_required") throw new Error("proposal expected");
+      expect(getProposal(getDatabase(),result.proposalId)?.provenanceJson).toBeUndefined();
+    }
+  });
+
   it("AA-001A denial leaves shared state unchanged and preserves provenance evidence",()=>{
-    const result=run();const denied=approvals.deny(result.proposalId!,operator(),"message is not authorization");
-    expect(denied.status).toBe("denied");expect(authority()).toBeUndefined();
+    const result=agent().runDenied(context(),operator(),"message is not authorization");
+    expect(result).toMatchObject({humanDecision:"denied",humanApproved:false,executionStatus:null,resultingAuthority:null});expect(authority()).toBeUndefined();
     expect(listStateChanges(adapter.getServiceAttemptId(),"object_authority")).toHaveLength(0);
-    const receipt=listReceipts(getDatabase()).find((item)=>item.id===denied.receiptId)!;
-    expect(receipt.receiptType).toBe("human_denial");expect(receipt.payloadJson).toContain("untrusted_operational_data");
+    const receipt=listReceipts(getDatabase()).find((item)=>item.id===result.receiptIds.at(-1))!;
+    expect(receipt.receiptType).toBe("human_denial");expect(JSON.parse(receipt.payloadJson).provenance).toEqual(result.messageSources);
   });
 
   it("AA-001B exact human approval mutates once as MCPAGENT with normal evidence",()=>{
-    const scenario=run();const executed=approvals.approve(scenario.proposalId!,operator(),"exact action approved");
-    expect(executed.status).toBe("succeeded");expect(authority()).toBe("*USE");
+    const scenario=agent().runApproved(context(),operator(),"exact action approved");
+    expect(scenario).toMatchObject({humanDecision:"approved",humanApproved:true,executionStatus:"succeeded",executionActor:"MCPAGENT",resultingAuthority:"*USE"});expect(authority()).toBe("*USE");
     expect(getObjectAuthorityDisplay("CLAIMS400","PAYROLL","PAYMST","APCLERK")?.privateAuthorities).toContainEqual({userName:"APCLERK",authority:"*USE"});
     const changes=listStateChanges(adapter.getServiceAttemptId(),"object_authority");
     expect(changes).toHaveLength(1);expect(changes[0].actor).toBe("MCPAGENT");
     expect(listGeneratedAudit(adapter.getServiceAttemptId())).toContainEqual(expect.objectContaining({entryType:"CA",userName:"MCPAGENT"}));
     expect(listRuntimeJobLog(adapter.getServiceAttemptId())).toHaveLength(1);
-    expect(listReceipts(getDatabase()).find((item)=>item.id===executed.receiptId)?.payloadJson).toContain("untrusted_operational_data");
+    expect(scenario.evidenceRefs.map((ref)=>ref.type)).toEqual(expect.arrayContaining(["runtime_state_change","runtime_generated_audit","runtime_job_log_entry"]));
+    const executionPayload=JSON.parse(listReceipts(getDatabase()).find((item)=>item.id===scenario.receiptIds.at(-1))!.payloadJson);
+    expect(executionPayload.provenance).toEqual(scenario.messageSources);
     expect(approvals.approve(scenario.proposalId!,operator()).status).toBe("rejected");expect(changes).toHaveLength(1);
   });
 
   it("shows the same baseline intent lands only in the isolated counterfactual control group",()=>{
-    const protectedBaseline=authority();const protectedRun=run();expect(authority()).toBe(protectedBaseline);expect(protectedRun.policyResult).toBe("require_approval");
+    const protectedBaseline=authority();const protectedRun=run();expect(authority()).toBe(protectedBaseline);expect(protectedRun.policy.decision).toBe("require_approval");
     closeDatabase();setup();const counterfactualBaseline=authority();expect(counterfactualBaseline).toBe(protectedBaseline);
     const executor=new SyntheticCounterfactualExecutor(adapter,{kind:"lcl",system:"CLAIMS400"});
     const result=executor.execute("grant_object_authority",{...AA001_INTENT});
-    expect(result).toMatchObject({status:"succeeded",mode:"synthetic_counterfactual",humanApproved:false,governanceControlPresent:false});
+    expect(result).toMatchObject({executionStatus:"succeeded",mode:"synthetic_counterfactual",humanDecision:"none",humanApproved:false,governanceControlPresent:false,proposalId:null,receiptIds:[]});
+    expect(result.canonicalAction).toEqual(protectedRun.canonicalAction);expect(result.actionHash).toBe(protectedRun.actionHash);
     expect(authority()).toBe("*USE");expect(getObjectAuthorityDisplay("CLAIMS400","PAYROLL","PAYMST","APCLERK")).toBeDefined();
     expect(getDatabase().prepare("SELECT count(*) AS count FROM agent_authority_approvals").get()).toEqual({count:0});
-    expect(listStateChanges(result.attemptId,"object_authority")[0]).toMatchObject({actor:"MCPAGENT"});
-    expect(listGeneratedAudit(result.attemptId)).toContainEqual(expect.objectContaining({entryType:"CA"}));
-    expect(listRuntimeJobLog(result.attemptId)[0]?.messageText).toContain("Synthetic counterfactual");
+    const stateChange=result.evidenceRefs.find((ref)=>ref.type==="runtime_state_change")!;
+    const stored=getDatabase().prepare("SELECT attempt_id FROM runtime_state_changes WHERE id=?").get(stateChange.id) as {attempt_id:string};
+    expect(listStateChanges(stored.attempt_id,"object_authority")[0]).toMatchObject({actor:"MCPAGENT"});
+    expect(listGeneratedAudit(stored.attempt_id)).toContainEqual(expect.objectContaining({entryType:"CA"}));
+    expect(listRuntimeJobLog(stored.attempt_id)[0]?.messageText).toContain("Synthetic counterfactual");
     expect(listReceipts(getDatabase())).toHaveLength(0);
   });
 
