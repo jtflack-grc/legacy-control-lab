@@ -8,6 +8,8 @@ import { sessionHasSpecialAuthority } from "../../ibmi-runtime/authorityCheck.js
 import { applyMutation } from "../../runtime/runtimeMutationService.js";
 import { listGeneratedAudit, listRuntimeJobLog, listStateChanges } from "../../db/repositories/runtimeRepository.js";
 import { createAgentServiceSession, AGENT_SERVICE_USER } from "../serviceIdentity.js";
+import { fingerprint } from "../fingerprint.js";
+import type { MessageQueueEntry } from "../../ibmi-runtime/messageTypes.js";
 import type { ActionContext, CanonicalAction } from "../types.js";
 import type { TargetAdapter, TargetEvidenceRef, TargetMutationResult, TargetReadResult } from "./targetAdapter.js";
 
@@ -20,6 +22,13 @@ export class LclTargetAdapter implements TargetAdapter {
   readonly kind = "lcl" as const;
   readonly system = ALLOWED_SYSTEM;
   private readonly serviceSession = createAgentServiceSession(this.system);
+
+  constructor(options?:{operationalMessageFixtures?:readonly MessageQueueEntry[]}) {
+    if (options?.operationalMessageFixtures?.length) {
+      this.serviceSession.messageQueues ??= {};
+      this.serviceSession.messageQueues[`${this.system}:QSYSOPR`]=options.operationalMessageFixtures.map((entry)=>({...entry}));
+    }
+  }
 
   read(operation: string, args: Record<string, unknown>, _context: ActionContext): TargetReadResult {
     switch (operation) {
@@ -40,6 +49,7 @@ export class LclTargetAdapter implements TargetAdapter {
             sourceId: `QSYSOPR:${message.id}`,
             sourceType: "operational_message",
             trustClass: "untrusted_operational_data" as const,
+            contentHash: fingerprint(message).hash,
           })),
         };
       }

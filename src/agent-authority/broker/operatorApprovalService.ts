@@ -30,7 +30,8 @@ export class OperatorApprovalService {
       return {status:"expired",proposalId,receiptId:receipt.id,reason:"PROPOSAL_EXPIRED"};
     }
     if (!denyPendingProposal(this.deps.db,proposalId,now,session.userName!,reason)) return {status:"rejected",proposalId,reason:"PROPOSAL_ALREADY_DECIDED"};
-    const receipt=createReceipt(this.deps.db,this.deps,{type:"human_denial",proposalId,payload:{proposal_id:proposalId,action_hash:proposal.actionHash,denied_by:session.userName,reason:reason??null}});
+    const receipt=createReceipt(this.deps.db,this.deps,{type:"human_denial",proposalId,payload:{proposal_id:proposalId,action_hash:proposal.actionHash,
+      denied_by:session.userName,reason:reason??null,provenance:proposal.provenanceJson?JSON.parse(proposal.provenanceJson):[]}});
     return {status:"denied",proposalId,receiptId:receipt.id,reason:"HUMAN_DENIED"};
   }
 
@@ -94,6 +95,7 @@ export class OperatorApprovalService {
         request:JSON.parse(proposal.requestContextJson),human_approver:{user:session.userName,session_id:session.id},
         executor:{user:execution.actor,attempt_id:execution.attemptId},action:JSON.parse(proposal.canonicalActionJson),action_hash:proposal.actionHash,
         precondition_hash:proposal.preconditionHash,policy:JSON.parse(proposal.policyDecisionJson),approval:{id:approval?.id,consumed_at:approval?.consumedAt},
+        provenance:proposal.provenanceJson?JSON.parse(proposal.provenanceJson):[],
         execution:{status:finalStatus,before:execution.before,after:execution.after,state_change_id:execution.stateChangeId??null,error:execution.error??null},
         system_evidence:execution.evidence,
       }});

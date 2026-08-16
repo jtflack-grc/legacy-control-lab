@@ -15,13 +15,16 @@ export type BrokerResult =
   | {status:"denied";reason:string;receiptId:string}
   | {status:"found";proposal:ReturnType<typeof getProposal>;receiptId:string};
 
+export type ObservedProvenanceReference = { sourceId:string; contentHash?:string };
+
 export class AuthorityBroker {
+  private readonly observedProvenance = new Map<string,ProvenanceRef>();
   constructor(private readonly deps:{
     db:SqliteDatabase; adapter:TargetAdapter; policy:AuthorityPolicy; clock:Clock; ids:IdGenerator;
     registry?:ToolRegistry; proposalTtlSeconds?:number;
   }) {}
 
-  request(toolName:string,toolVersion:string,rawArgs:unknown,context:ActionContext):BrokerResult {
+  request(toolName:string,toolVersion:string,rawArgs:unknown,context:ActionContext,usedSources:readonly ObservedProvenanceReference[]=[]):BrokerResult {
     const registry=this.deps.registry??authorityToolRegistry;
     let tool;
     try { tool=registry.require(toolName,toolVersion); }
@@ -34,12 +37,13 @@ export class AuthorityBroker {
       toolName:tool.name,toolVersion:tool.version,arguments:args});
     const actionIdentity=fingerprint(action);
     const policy=evaluatePolicy(this.deps.policy,tool.riskClass);
-    if (policy.decision==="deny") return this.denied("POLICY_DENIED",context,{action,actionHash:actionIdentity.hash,policy});
+    const provenance=this.resolveObservedProvenance(context,usedSources);
+    if (policy.decision==="deny") return this.denied("POLICY_DENIED",context,{action,actionHash:actionIdentity.hash,policy,provenance});
 
     if (tool.name==="get_action_status") {
       const proposal=getProposal(this.deps.db,args.proposal_id as string);
       const receipt=createReceipt(this.deps.db,this.deps,{type:"read_allowed",proposalId:proposal?.id,payload:{
-        request:context,action,action_hash:actionIdentity.hash,policy:{...policy,risk_class:tool.riskClass},
+        request:context,action,action_hash:actionIdentity.hash,policy:{...policy,risk_class:tool.riskClass},provenance,
         result:{found:Boolean(proposal),status:proposal?.status??null,execution_status:proposal?.executionStatus??null},
       }});
       return {status:"found",proposal,receiptId:receipt.id};
@@ -47,6 +51,7 @@ export class AuthorityBroker {
 
     if (!tool.mutating && policy.decision==="allow") {
       const result=this.deps.adapter.read(tool.adapterOperation,args,context);
+      this.rememberObservedProvenance(context,result.provenance);
       const receipt=createReceipt(this.deps.db,this.deps,{type:"read_allowed",payload:{
         request:context,action,action_hash:actionIdentity.hash,policy:{...policy,risk_class:tool.riskClass},
         result_digest:fingerprint(result.data).hash,provenance:result.provenance,
@@ -68,13 +73,25 @@ export class AuthorityBroker {
       riskClass:tool.riskClass,argumentsJson:canonicalize(args),canonicalActionJson:actionIdentity.canonicalJson,actionHash:actionIdentity.hash,
       policyId:policy.policyId,policyVersion:policy.policyVersion,policyDecisionJson:canonicalize(policy),
       preconditionJson:preconditionIdentity.canonicalJson,preconditionHash:preconditionIdentity.hash,
-      requestContextJson:canonicalize(context),
+      requestContextJson:canonicalize(context),provenanceJson:provenance.length?canonicalize(provenance):undefined,
     });
     const receipt=createReceipt(this.deps.db,this.deps,{type:"approval_required",proposalId,payload:{
-      request:context,action,action_hash:actionIdentity.hash,policy:{...policy,risk_class:tool.riskClass},
+      request:context,action,action_hash:actionIdentity.hash,policy:{...policy,risk_class:tool.riskClass},provenance,
       precondition:{digest:preconditionIdentity.hash,summary:precondition},expires_at:expiresAt,
     }});
     return {status:"approval_required",proposalId,actionHash:actionIdentity.hash,expiresAt,receiptId:receipt.id};
+  }
+
+  private provenanceKey(context:ActionContext,sourceId:string):string { return `${context.agentSessionId}\u0000${sourceId}`; }
+  private rememberObservedProvenance(context:ActionContext,refs:readonly ProvenanceRef[]):void {
+    for (const ref of refs) this.observedProvenance.set(this.provenanceKey(context,ref.sourceId),Object.freeze({...ref}));
+  }
+  private resolveObservedProvenance(context:ActionContext,requested:readonly ObservedProvenanceReference[]):ProvenanceRef[] {
+    return requested.flatMap((reference)=>{
+      const issued=this.observedProvenance.get(this.provenanceKey(context,reference.sourceId));
+      if (!issued || (reference.contentHash!==undefined&&reference.contentHash!==issued.contentHash)) return [];
+      return [issued];
+    });
   }
 
   private denied(reason:string,context:ActionContext,detail:Record<string,unknown>):BrokerResult {
