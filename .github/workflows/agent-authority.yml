@@ -1,0 +1,43 @@
+name: Agent Authority assurance
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - "feat/**"
+
+permissions:
+  contents: read
+
+jobs:
+  test-build-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Install Chromium for Authority Desk test
+        run: npx playwright install --with-deps chromium
+      - run: npm test
+      - run: npm run build
+      - name: Proof export and offline verification smoke
+        run: npx vitest run tests/agent-authority/phase6.test.ts -t "writes through the exporter CLI"
+      - name: Docker build and health smoke
+        run: |
+          docker compose up -d --build
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:8080/api/health; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose logs
+          exit 1
+      - name: Stop Docker services
+        if: always()
+        run: docker compose down -v

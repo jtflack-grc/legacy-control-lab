@@ -14,5 +14,8 @@ export * from "./serviceIdentity.js";
 export * from "./broker/authorityBroker.js";
 export * from "./broker/operatorApprovalService.js";
 export * from "./runtime.js";
+export * from "./proof/proofBundle.js";
+export * from "./proof/proofVerifier.js";
+export * from "./proof/proofBuilder.js";
 export * from "./scenarios/aa001Fixture.js";
 export * from "./scenarios/aa001Runner.js";

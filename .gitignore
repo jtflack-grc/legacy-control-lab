@@ -47,6 +47,8 @@ docs/*
 !docs/community-edition.md
 !docs/command-fidelity.md
 !docs/licensing.md
+!docs/agent-authority.md
+!docs/agent-authority-mcp.md
 
 # Tests are maintained outside the Community Edition package
 tests/

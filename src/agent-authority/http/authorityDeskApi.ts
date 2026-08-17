@@ -9,6 +9,7 @@ import { verifyReceiptChain } from "../evidence/receiptVerifier.js";
 import { fingerprint } from "../fingerprint.js";
 import type { AgentAuthorityRuntime } from "../runtime.js";
 import type { ProposalStatus } from "../types.js";
+import { buildProposalProofBundle } from "../proof/proofBuilder.js";
 
 const STATUSES=new Set<ProposalStatus>(["pending","approved","denied","expired","invalidated","consumed"]);
 type HandlerResult={handled:boolean};
@@ -21,6 +22,7 @@ export function createAuthorityDeskApi(runtime:AgentAuthorityRuntime,systemName:
     const proposalMatch=url.pathname.match(/^\/api\/agent-authority\/proposals\/([^/]+)$/);
     const receiptMatch=url.pathname.match(/^\/api\/agent-authority\/receipts\/([^/]+)$/);
     const decisionMatch=url.pathname.match(/^\/api\/agent-authority\/proposals\/([^/]+)\/(approve|deny)$/);
+    const proofMatch=url.pathname.match(/^\/api\/agent-authority\/proposals\/([^/]+)\/proof$/);
     try {
       if(req.method==="GET"&&url.pathname==="/api/agent-authority/status") {
         sendJson(res,200,{enabled:true,target:{kind:"lcl",system:runtime.adapter.system},pendingCount:countProposals(runtime.db,{status:"pending"}),principal:{type:"synthetic_agent",id:runtime.principalId},operator:{user:auth.session.userName,sessionId:auth.session.id}});
@@ -32,6 +34,9 @@ export function createAuthorityDeskApi(runtime:AgentAuthorityRuntime,systemName:
       } else if(req.method==="GET"&&proposalMatch) {
         const proposal=getProposal(runtime.db,decodeURIComponent(proposalMatch[1]!));
         if(!proposal) sendJson(res,404,{error:"Proposal not found"}); else sendJson(res,200,{proposal:projectProposal(runtime,proposal)});
+      } else if(req.method==="GET"&&proofMatch) {
+        const id=decodeURIComponent(proofMatch[1]!);const bundle=buildProposalProofBundle(runtime.db,id,runtime);
+        sendProofJson(res,bundle,`agent-authority-proof-${safeFilePart(id)}.json`);
       } else if(req.method==="POST"&&decisionMatch) {
         const id=decodeURIComponent(decisionMatch[1]!);const operation=decisionMatch[2]!;
         const proposal=getProposal(runtime.db,id);
@@ -92,6 +97,8 @@ function projectProposal(runtime:AgentAuthorityRuntime,p:ProposalRecord):Record<
 
 function projectReceipt(r:ReceiptRecord):Record<string,unknown> {return {id:r.id,sequence:r.sequence,createdAt:r.createdAt,proposalId:r.proposalId??null,receiptType:r.receiptType,payload:JSON.parse(r.payloadJson),payloadHash:r.payloadHash,previousHash:r.previousHash??null};}
 function sendJson(res:http.ServerResponse,status:number,body:unknown):void {res.writeHead(status,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff"});res.end(JSON.stringify(body));}
+function sendProofJson(res:http.ServerResponse,body:unknown,fileName:string):void {res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Content-Disposition":`attachment; filename="${fileName}"`,"Cache-Control":"no-store","X-Content-Type-Options":"nosniff"});res.end(JSON.stringify(body));}
+function safeFilePart(value:string):string{return value.replace(/[^A-Za-z0-9._-]/g,"_").slice(0,100)||"proposal";}
 function boundedInt(value:string|null,fallback:number,min=1):number {if(value===null)return fallback;const n=Number(value);if(!Number.isInteger(n)||n<min)return fallback;return Math.min(100,n);}
 async function readBody(req:http.IncomingMessage):Promise<Record<string,unknown>> {const chunks:Buffer[]=[];let size=0;for await(const chunk of req){const b=Buffer.from(chunk);size+=b.length;if(size>16_384)throw new Error("INVALID_REQUEST: body too large");chunks.push(b);}if(!chunks.length)return {};try{const value=JSON.parse(Buffer.concat(chunks).toString("utf8"));if(!value||typeof value!=="object"||Array.isArray(value))throw new Error();return value;}catch{throw new Error("INVALID_REQUEST: JSON object required");}}
 function rejectExtra(body:Record<string,unknown>,allowed:Set<string>):void {if(Object.keys(body).some((key)=>!allowed.has(key)))throw new Error("INVALID_REQUEST: unsupported decision field");}
