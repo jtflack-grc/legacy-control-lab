@@ -1,5 +1,7 @@
 import path from "node:path";
+import {existsSync} from "node:fs";
 import {afterEach,beforeEach,describe,expect,it} from "vitest";
+import {chromium,type Request as PlaywrightRequest} from "playwright";
 import {Client,StreamableHTTPClientTransport} from "@modelcontextprotocol/client";
 import {closeDatabase,initTestDatabase} from "../../src/db/sqlite.js";
 import {createAgentAuthorityRuntime} from "../../src/agent-authority/runtime.js";
@@ -11,6 +13,7 @@ import {registerLiveSession,unregisterLiveSession} from "../../src/lab/liveSessi
 import {removeLabSession,upsertLabSession} from "../../src/lab/sessionRegistry.js";
 import {grantObjectAuthority,listObjectAuthorities} from "../../src/db/repositories/objectAuthorityRepository.js";
 import {getApprovalForProposal,getProposal} from "../../src/db/repositories/agentAuthorityRepository.js";
+import {listStateChanges} from "../../src/db/repositories/runtimeRepository.js";
 import type {Clock,IdGenerator} from "../../src/agent-authority/types.js";
 
 const EXPECTED=["get_action_status","grant_object_authority","inspect_object_authority","inspect_user_profile","list_recent_audit_events","read_operational_messages"];
@@ -42,6 +45,7 @@ describe("Agent Authority Phase 5 Authority Desk",()=>{
   it("rejects wrong displayed hashes and replay without mutation",async()=>{
     const enabled=await mountEnabled();const operator=liveSession("QSECOFR");const client=await connect(enabled.url);
     const proposal=structured(await client.callTool({name:"grant_object_authority",arguments:grantArgs("*USE")}));
+    const injected=await authFetch(enabled.url,`/api/agent-authority/proposals/${proposal.proposal_id}/approve`,operator.token,{method:"POST",body:JSON.stringify({action_hash:proposal.action_hash,approvedBy:"QSECOFR"})});expect(injected.status).toBe(400);expect(getProposal(enabled.runtime.db,proposal.proposal_id as string)?.status).toBe("pending");expect(privateAuthority()).toBeUndefined();
     const wrong=await authFetch(enabled.url,`/api/agent-authority/proposals/${proposal.proposal_id}/approve`,operator.token,{method:"POST",body:JSON.stringify({action_hash:"sha256:wrong"})});
     expect(wrong.status).toBe(409);expect(privateAuthority()).toBeUndefined();expect(getProposal(enabled.runtime.db,proposal.proposal_id as string)?.status).toBe("pending");
     const approved=await decide(enabled.url,proposal,"approve",operator.token);expect(approved.status).toBe("succeeded");expect(privateAuthority()).toBe("*USE");
@@ -69,8 +73,17 @@ describe("Agent Authority Phase 5 Authority Desk",()=>{
     await client.callTool({name:"inspect_user_profile",arguments:{user:"APCLERK"}});await client.callTool({name:"read_operational_messages",arguments:{limit:1}});
     const receipts=await json(await authFetch(enabled.url,"/api/agent-authority/receipts?limit=1",operator.token));expect(receipts.receipts).toHaveLength(1);expect(receipts.limit).toBe(1);const detail=await json(await authFetch(enabled.url,`/api/agent-authority/receipts/${receipts.receipts[0].id}`,operator.token));expect(detail.receipt.id).toBe(receipts.receipts[0].id);
     expect((await fetch(`${enabled.url}/api/agent-authority/receipts?limit=100`)).status).toBe(401);
+    expect((await fetch(`${enabled.url}/api/agent-authority/receipts/${receipts.receipts[0].id}`)).status).toBe(401);
+    expect((await fetch(`${enabled.url}/api/agent-authority/verify`)).status).toBe(401);
     const verified=await json(await authFetch(enabled.url,"/api/agent-authority/verify",operator.token));expect(verified).toMatchObject({ok:true,checked:2});
-    expect((await authFetch(enabled.url,"/api/agent-authority/counterfactual",operator.token)).status).toBe(404);
+    for(const route of ["execute","force","bypass","counterfactual"])expect((await authFetch(enabled.url,`/api/agent-authority/${route}`,operator.token)).status).toBe(404);
+  });
+
+  it("reports the true pending count independently of the bounded list",async()=>{
+    const enabled=await mountEnabled();const operator=liveSession("QSECOFR");
+    for(let i=0;i<101;i++)enabled.runtime.broker.request("grant_object_authority","1",grantArgs("*USE"),{requestId:`count-${i}`,agentSessionId:"count-principal",actorType:"agent",requestedAt:clock.now().toISOString()});
+    const status=await json(await authFetch(enabled.url,"/api/agent-authority/status",operator.token));const proposals=await json(await authFetch(enabled.url,"/api/agent-authority/proposals?status=pending&limit=100",operator.token));
+    expect(status.pendingCount).toBe(101);expect(proposals.proposals).toHaveLength(100);
   });
 
   it("proves MCP request to human approval to MCP completion on shared state",async()=>{
@@ -83,15 +96,28 @@ describe("Agent Authority Phase 5 Authority Desk",()=>{
     const deniedPoll=structured(await client.callTool({name:"get_action_status",arguments:{proposal_id:deniedRequest.proposal_id}}));expect(deniedPoll.proposal_status).toBe("denied");
   });
 
-  it("serves a framework-free Desk that renders untrusted values as text",async()=>{
+  it("serves a framework-free Desk with exact operator discovery and safe DOM construction",async()=>{
     const enabled=await mountEnabled();const html=await (await fetch(`${enabled.url}/lab/authority/`)).text();const js=await (await fetch(`${enabled.url}/lab/authority/authority.js`)).text();
-    expect(html).toContain("Authority Desk");expect(js).toContain("textContent");expect(js).toContain("replaceChildren");expect(js).not.toContain("innerHTML");expect(js).toContain("action_hash:proposal.actionHash");expect(js).toContain("await refresh()");expect(js).not.toMatch(/approvedBy|approverUser|counterfactual/);
+    expect(html).toContain("Authority Desk");expect(html).toContain("Recent decisions");expect(js).toContain("user=QSECOFR");expect(js).not.toContain("Sec-Fetch-Site");expect(js).toContain("textContent");expect(js).toContain("replaceChildren");expect(js).not.toMatch(/innerHTML|insertAdjacentHTML|\beval\s*\(/);expect(js).toContain("action_hash:proposal.actionHash");expect(js).toContain("await refresh()");expect(js).not.toMatch(/approvedBy|approverUser|counterfactual/);
   });
+
+  it("renders hostile metadata inert and performs approval and denial through the real Desk",async()=>{
+    const enabled=await mountEnabled();const operator=liveSession("QSECOFR");liveSession("AUDIT");
+    const hostile='<img id="aa001-xss" src=x onerror="window.__AA001_XSS__=true">';const client=await connect(enabled.url,hostile);
+    const requested=structured(await client.callTool({name:"grant_object_authority",arguments:grantArgs("*USE")}));
+    const executable=browserPath();const browser=await chromium.launch({headless:true,...(executable?{executablePath:executable}:{}),args:["--no-sandbox"]});cleanup.push(()=>browser.close());const page=await browser.newPage();
+    const decisionRequests:PlaywrightRequest[]=[];page.on("request",(request)=>{if(/\/proposals\/[^/]+\/(approve|deny)$/.test(new URL(request.url()).pathname))decisionRequests.push(request);});page.on("dialog",(dialog)=>dialog.accept(dialog.message().includes("approve")?"browser approved":"browser denied"));
+    await page.goto(`${enabled.url}/lab/authority/`);const pending=page.locator(`#proposals [data-proposal-id="${requested.proposal_id}"]`);await expect.poll(()=>pending.count()).toBe(1);await expect.poll(()=>pending.textContent()).toContain(hostile);expect(await pending.locator("#aa001-xss,img,script").count()).toBe(0);expect(await page.evaluate(()=>Reflect.get(window,"__AA001_XSS__"))).toBeUndefined();
+    await pending.getByRole("button",{name:"Approve"}).click();const history=page.locator(`#history [data-proposal-id="${requested.proposal_id}"]`);await expect.poll(()=>history.textContent()).toContain("consumed");await expect.poll(()=>history.textContent()).toContain("succeeded");expect(await pending.count()).toBe(0);expect(privateAuthority()).toBe("*USE");expect(listStateChanges(enabled.runtime.adapter.getServiceAttemptId(),"object_authority")).toHaveLength(1);
+    const approvalRequest=decisionRequests.find((request)=>request.url().endsWith("/approve"))!;expect(approvalRequest.headers()["x-lab-session-token"]).toBe(operator.token);expect(approvalRequest.postDataJSON()).toEqual({action_hash:requested.action_hash,reason:"browser approved"});
+    const execution=getProposal(enabled.runtime.db,requested.proposal_id as string)!;expect(execution).toMatchObject({status:"consumed",executionStatus:"succeeded"});
+    const deniedRequest=structured(await client.callTool({name:"grant_object_authority",arguments:grantArgs("*ALL")}));await page.getByRole("button",{name:"Refresh"}).click();const pendingDenial=page.locator(`#proposals [data-proposal-id="${deniedRequest.proposal_id}"]`);await expect.poll(()=>pendingDenial.count()).toBe(1);await pendingDenial.getByRole("button",{name:"Deny"}).click();const deniedHistory=page.locator(`#history [data-proposal-id="${deniedRequest.proposal_id}"]`);await expect.poll(()=>deniedHistory.textContent()).toContain("denied");expect(privateAuthority()).toBe("*USE");expect(listStateChanges(enabled.runtime.adapter.getServiceAttemptId(),"object_authority")).toHaveLength(1);const denialRequest=decisionRequests.find((request)=>request.url().endsWith("/deny"))!;expect(denialRequest.postDataJSON()).toEqual({reason:"browser denied"});
+  },30_000);
 
   async function mountEnabled(){const runtime=createAgentAuthorityRuntime({target:"lcl",clock,ids,principalId:"phase5-principal"});const mcp=createAgentAuthorityMcpRuntime({runtime,rateLimit:500});cleanup.push(()=>mcp.close());const authorityDeskHandler=createAuthorityDeskApi(runtime,"CLAIMS400");const mounted=await mount({mcpHandler:mcp.nodeHandler,authorityDeskHandler,authorityDeskPublicDir:path.resolve("public/authority-desk")});return {...mounted,runtime};}
   async function mount(extra:Partial<Parameters<typeof createLabHttpServer>[0]>={}){const server=createLabHttpServer({port:0,host:"127.0.0.1",ironTermPublicDir:path.resolve("public"),systemName:"CLAIMS400",websockifyPort:6080,...extra});await new Promise<void>((resolve)=>server.listen(0,"127.0.0.1",resolve));cleanup.push(()=>new Promise<void>((resolve)=>server.close(()=>resolve())));return {url:`http://127.0.0.1:${(server.address() as {port:number}).port}`};}
   function liveSession(user:string){const session=createSession("CLAIMS400");session.signedOn=true;session.userName=user;session.job.user=user;hydrateSessionFromProfile(session,user,"CLAIMS400");registerLiveSession(session);const snapshot=upsertLabSession({sessionId:session.id,systemName:session.systemName,userName:user,screenId:"MAIN",lane:session.lane,updatedAt:new Date().toISOString()});cleanup.push(()=>{unregisterLiveSession(session.id);removeLabSession(session.id);});return {session,token:snapshot.sessionToken!};}
-  async function connect(url:string){const client=new Client({name:"phase5-client",version:"1"},{versionNegotiation:{mode:{pin:"2026-07-28"}}});await client.connect(new StreamableHTTPClientTransport(new URL(`${url}/mcp`)));cleanup.push(()=>client.close());return client;}
+  async function connect(url:string,name="phase5-client"){const client=new Client({name,version:"1"},{versionNegotiation:{mode:{pin:"2026-07-28"}}});await client.connect(new StreamableHTTPClientTransport(new URL(`${url}/mcp`)));cleanup.push(()=>client.close());return client;}
 });
 
 function grantArgs(authority:string){return {library:"PAYROLL",object:"PAYMST",user:"APCLERK",authority};}
@@ -101,3 +127,4 @@ function authFetch(url:string,pathName:string,token:string,init:RequestInit={}){
 async function decideResponse(url:string,p:Record<string,unknown>,decision:"approve"|"deny",token:string){return authFetch(url,`/api/agent-authority/proposals/${p.proposal_id}/${decision}`,token,{method:"POST",body:JSON.stringify(decision==="approve"?{action_hash:p.action_hash,reason:"reviewed"}:{reason:"not approved"})});}
 async function decide(url:string,p:Record<string,unknown>,decision:"approve"|"deny",token:string){return json(await decideResponse(url,p,decision,token));}
 async function json(response:Response){return await response.json() as any;}
+function browserPath():string|undefined {const configured=process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;if(configured)return configured;const managed=chromium.executablePath();if(existsSync(managed))return undefined;if(existsSync("/tmp/chromium"))return "/tmp/chromium";throw new Error("A Playwright-compatible Chromium binary is required for the Authority Desk browser test");}

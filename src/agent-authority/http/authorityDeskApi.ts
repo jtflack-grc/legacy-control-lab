@@ -3,7 +3,7 @@ import { sessionLane } from "../../ibmi-runtime/sessionLane.js";
 import { getLiveSession } from "../../lab/liveSessionRegistry.js";
 import { verifyLabSessionTokenForSystem } from "../../lab/sessionRegistry.js";
 import {
-  getProposal,getReceipt,listProposals,listReceiptIdsForProposal,listReceiptsBounded,type ProposalRecord,type ReceiptRecord,
+  countProposals,getProposal,getReceipt,listProposals,listReceiptIdsForProposal,listReceiptsBounded,type ProposalRecord,type ReceiptRecord,
 } from "../../db/repositories/agentAuthorityRepository.js";
 import { verifyReceiptChain } from "../evidence/receiptVerifier.js";
 import { fingerprint } from "../fingerprint.js";
@@ -23,8 +23,7 @@ export function createAuthorityDeskApi(runtime:AgentAuthorityRuntime,systemName:
     const decisionMatch=url.pathname.match(/^\/api\/agent-authority\/proposals\/([^/]+)\/(approve|deny)$/);
     try {
       if(req.method==="GET"&&url.pathname==="/api/agent-authority/status") {
-        const pending=listProposals(runtime.db,{status:"pending",limit:100});
-        sendJson(res,200,{enabled:true,target:{kind:"lcl",system:runtime.adapter.system},pendingCount:pending.length,principal:{type:"synthetic_agent",id:runtime.principalId},operator:{user:auth.session.userName,sessionId:auth.session.id}});
+        sendJson(res,200,{enabled:true,target:{kind:"lcl",system:runtime.adapter.system},pendingCount:countProposals(runtime.db,{status:"pending"}),principal:{type:"synthetic_agent",id:runtime.principalId},operator:{user:auth.session.userName,sessionId:auth.session.id}});
       } else if(req.method==="GET"&&url.pathname==="/api/agent-authority/proposals") {
         const statusValue=url.searchParams.get("status")??undefined;
         if(statusValue&&!STATUSES.has(statusValue as ProposalStatus)){sendJson(res,400,{error:"Invalid proposal status"});return {handled:true};}

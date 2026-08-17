@@ -51,6 +51,13 @@ export function listProposals(db:SqliteDatabase,input:{status?:ProposalStatus;li
   return (rows as Record<string,unknown>[]).map(proposalFromRow);
 }
 
+export function countProposals(db:SqliteDatabase,input:{status?:ProposalStatus}={}):number {
+  const row=input.status
+    ? db.prepare("SELECT COUNT(*) AS count FROM agent_authority_proposals WHERE status=?").get(input.status)
+    : db.prepare("SELECT COUNT(*) AS count FROM agent_authority_proposals").get();
+  return (row as {count:number}).count;
+}
+
 export function getApprovalForProposal(db: SqliteDatabase, proposalId: string): ApprovalRecord | undefined {
   const row = db.prepare("SELECT * FROM agent_authority_approvals WHERE proposal_id = ?").get(proposalId) as Record<string, unknown> | undefined;
   if (!row) return undefined;
