@@ -10,6 +10,7 @@ const DEMO_AUTO_SIGNOFF_SEC = 60;
 const IONGRC_STEP_KEY = "lab.iongrc.step";
 const IONGRC_PACK_KEY = "lab.iongrc.pack";
 const IONGRC_ACTIVE_KEY = "lab.iongrc.active";
+const AGENT_AUTHORITY_ACTIVE_KEY = "lab.agent-authority.active";
 const PLAYBOOK_PATH_KEY = "lab.playbook.path";
 const MISSION_NOTES_PREFIX = "lab.mission.notes.";
 
@@ -53,6 +54,12 @@ const SKILL_PATHS = {
     password: "IONGRC",
     storageLane: "auditor",
     label: "i on GRC practice desk",
+  },
+  agentauthority: {
+    user: "QSECOFR",
+    missionId: "AA-001",
+    storageLane: "operator",
+    label: "Agent Authority",
   },
 };
 
@@ -838,6 +845,9 @@ function resolveSignOnProfile(userName, creds) {
 
 function defaultSignOnHint(creds) {
   const skillPath = readStoredSkillPath();
+  if (skillPath === "agentauthority") {
+    return `User ${creds.operator.user} / Password ${creds.operator.password} · Human review remains in Authority Desk`;
+  }
   if (skillPath === "iongrc") {
     const iongrc = creds.iongrc ?? SKILL_PATHS.iongrc;
     return `User ${iongrc.user} / Password ${iongrc.password ?? "IONGRC"} · Model IBM-5292-2`;
@@ -1063,6 +1073,7 @@ function resetSessionSkillPathState() {
     sessionStorage.removeItem(DEMO_PATH_KEY);
     sessionStorage.removeItem(DEMO_STEP_KEY);
     sessionStorage.removeItem(PLAYBOOK_PATH_KEY);
+    sessionStorage.removeItem(AGENT_AUTHORITY_ACTIVE_KEY);
   } catch {
     /* private mode */
   }
@@ -1118,21 +1129,24 @@ function setPanelMode(mode) {
   const operator = el("operator-panel");
   const demo = el("demo-panel");
   const iongrc = el("iongrc-panel");
+  const agentAuthority = el("agent-authority-panel");
   const badge = el("lane-badge");
   const demoActive = sessionStorage.getItem(DEMO_ACTIVE_KEY) === "1";
   const iongrcActive = sessionStorage.getItem(IONGRC_ACTIVE_KEY) === "1";
+  const agentAuthorityActive = sessionStorage.getItem(AGENT_AUTHORITY_ACTIVE_KEY) === "1";
   const signedOn = mode === "auditor" || mode === "operator" || mode === "demo" || mode === "iongrc";
 
   if (split) {
-    split.classList.toggle("coach-open", signedOn || demoActive || iongrcActive);
+    split.classList.toggle("coach-open", signedOn || demoActive || iongrcActive || agentAuthorityActive);
     split.classList.toggle("demo-coach-open", demoActive);
     split.classList.toggle("iongrc-coach-open", iongrcActive);
   }
-  if (rail) rail.hidden = !(signedOn || demoActive || iongrcActive);
+  if (rail) rail.hidden = !(signedOn || demoActive || iongrcActive || agentAuthorityActive);
   if (demo) demo.hidden = !demoActive;
   if (iongrc) iongrc.hidden = !iongrcActive;
-  if (auditor) auditor.hidden = demoActive || iongrcActive || !(mode === "auditor" || mode === "demo");
-  if (operator) operator.hidden = demoActive || iongrcActive || mode !== "operator";
+  if (agentAuthority) agentAuthority.hidden = !agentAuthorityActive;
+  if (auditor) auditor.hidden = demoActive || iongrcActive || agentAuthorityActive || !(mode === "auditor" || mode === "demo");
+  if (operator) operator.hidden = demoActive || iongrcActive || agentAuthorityActive || mode !== "operator";
   if (badge) {
     badge.hidden = !signedOn;
     const skillPath = readStoredSkillPath();
@@ -1149,6 +1163,106 @@ function setPanelMode(mode) {
               : expectedUser ?? "AUDIT";
     badge.classList.toggle("operator", mode === "operator");
   }
+}
+
+const AA_STAGE_ORDER = ["OBSERVED", "REQUESTED", "HELD", "REVIEWED", "EXECUTED", "VERIFIED"];
+
+function setAgentAuthorityActive(active) {
+  if (active) sessionStorage.setItem(AGENT_AUTHORITY_ACTIVE_KEY, "1");
+  else sessionStorage.removeItem(AGENT_AUTHORITY_ACTIVE_KEY);
+}
+
+async function loadAgentAuthorityWalkthrough() {
+  if (sessionStorage.getItem(AGENT_AUTHORITY_ACTIVE_KEY) !== "1") return;
+  const payload = await loadJson("/api/agent-authority/walkthrough");
+  renderAgentAuthorityWalkthrough(payload);
+}
+
+function renderAgentAuthorityWalkthrough(payload) {
+  const proposal = payload.proposal;
+  const stage = payload.stage ?? "OBSERVED";
+  const stageIndex = AA_STAGE_ORDER.indexOf(stage);
+  for (const item of document.querySelectorAll("[data-aa-stage]")) {
+    const itemIndex = AA_STAGE_ORDER.indexOf(item.dataset.aaStage);
+    item.classList.toggle("complete", itemIndex <= stageIndex);
+    item.classList.toggle("current", itemIndex === stageIndex);
+  }
+  if (el("aa-message-text")) el("aa-message-text").textContent = payload.message?.text ?? "Operational message unavailable.";
+  if (el("aa-status")) el("aa-status").textContent = displayAgentStage(payload);
+  const narrative = agentNarrative(payload);
+  if (el("aa-story-title")) el("aa-story-title").textContent = narrative.title;
+  if (el("aa-story-copy")) el("aa-story-copy").textContent = narrative.copy;
+  if (el("aa-start-request")) el("aa-start-request").hidden = Boolean(proposal);
+  if (el("aa-request-summary")) el("aa-request-summary").hidden = !proposal;
+  if (el("aa-handoff")) el("aa-handoff").hidden = !proposal || proposal.status !== "pending";
+  if (el("aa-terminal-check")) el("aa-terminal-check").hidden = !proposal;
+  if (el("aa-proposal-id")) el("aa-proposal-id").textContent = proposal?.id ?? "—";
+  if (el("aa-decision")) el("aa-decision").textContent = humanDecisionLabel(payload);
+  if (el("aa-current-authority")) el("aa-current-authority").textContent = payload.currentAuthority ?? "No private authority";
+  if (el("aa-executor")) el("aa-executor").textContent = payload.executor ?? "Not executed";
+  if (el("aa-action-hash")) el("aa-action-hash").textContent = proposal?.actionHash ?? "Created with the request";
+  const terminalCopy = el("aa-terminal-explanation");
+  if (terminalCopy) terminalCopy.textContent = payload.currentAuthority === "*USE"
+    ? "CLAIMS400 now records APCLERK with *USE private authority. Confirm the shared-state result in the terminal."
+    : "CLAIMS400 still has no APCLERK private authority on this object. Confirm the unchanged state in the terminal.";
+  const evidenceCard = el("aa-evidence-card");
+  if (evidenceCard) evidenceCard.hidden = !payload.proof?.available;
+  const evidenceList = el("aa-evidence-list");
+  if (evidenceList) {
+    evidenceList.replaceChildren();
+    const refs = Array.isArray(payload.evidence) ? payload.evidence : [];
+    const labels = {runtime_state_change:"Authority state change",runtime_generated_audit:"CA-style generated audit entry",runtime_job_log_entry:"MCPAGENT runtime job log",evidence_tag:"Evidence tag"};
+    for (const ref of refs) {
+      const item = document.createElement("li");
+      item.textContent = `${labels[ref.type] ?? ref.type}: ${ref.id}`;
+      evidenceList.append(item);
+    }
+    for (const id of proposal?.receiptIds ?? []) {
+      const item = document.createElement("li");item.textContent = `Agent Authority receipt: ${id}`;evidenceList.append(item);
+    }
+    if (!evidenceList.childElementCount) {
+      const item = document.createElement("li");item.textContent = "Decision receipt recorded; no mutation evidence was created.";evidenceList.append(item);
+    }
+  }
+  const proof = el("aa-proof-state");
+  if (proof) {proof.textContent = payload.proof?.verified ? "Proof verified. The exported bundle agrees with its integrity-protected receipt chain." : "Proof verification is not complete.";proof.classList.toggle("verified",Boolean(payload.proof?.verified));}
+  if (el("aa-download-proof")) el("aa-download-proof").hidden = !payload.proof?.verified || !cachedLabSessionToken;
+}
+
+function displayAgentStage(payload) {
+  if (payload.proposal?.status === "denied") return "Denied · unchanged";
+  if (payload.proposal?.status === "invalidated") return "Invalidated · unchanged";
+  if (payload.proposal?.status === "consumed") return `${payload.proposal.executionStatus ?? "consumed"} · proof ${payload.proof?.verified ? "verified" : "pending"}`;
+  if (payload.proposal?.status === "pending") return "Awaiting decision";
+  return "Observed";
+}
+
+function humanDecisionLabel(payload) {
+  if (!payload.proposal) return "None";
+  if (payload.humanDecision === "approved") return `Approved by ${payload.approver ?? "operator"}`;
+  if (payload.humanDecision === "denied") return `Denied by ${payload.approver ?? "operator"}`;
+  return "Awaiting QSECOFR";
+}
+
+function agentNarrative(payload) {
+  if (!payload.proposal) return {title:"The message is data. It is not permission.",copy:"The deterministic agent observed the isolated AA-001 message. It has not requested or changed authority yet."};
+  if (payload.proposal.status === "pending") return {title:"The request is held for a human decision.",copy:"Server-owned policy classified this exact action as a privilege change. CLAIMS400 remains unchanged while QSECOFR reviews it."};
+  if (payload.proposal.status === "denied") return {title:"The human denied the request.",copy:"No broker mutation occurred. CLAIMS400 remains unchanged, and the denial is preserved in an integrity-linked receipt and proof bundle."};
+  if (payload.proposal.status === "invalidated") return {title:"The approved starting state no longer matched.",copy:"Agent Authority invalidated the request before mutation. The protected object state remains authoritative."};
+  if (payload.proposal.status === "consumed") return {title:"MCPAGENT executed the exact approved change.",copy:"The ordinary LCL authority state changed once. CLAIMS400 produced state-change, CA-style audit and job-log evidence, and the proof verifier checked the portable bundle."};
+  return {title:"The request was reviewed.",copy:"The persisted proposal records the human decision and resulting state."};
+}
+
+async function startAgentAuthorityRequest() {
+  const button = el("aa-start-request");if (button) button.disabled = true;
+  try {const response=await fetch("/api/agent-authority/walkthrough",{method:"POST"});if(!response.ok)throw new Error("Request could not be created");renderAgentAuthorityWalkthrough(await response.json());}
+  finally {if(button)button.disabled=false;}
+}
+
+async function downloadAgentAuthorityProof() {
+  const payload=await loadJson("/api/agent-authority/walkthrough");const proposalId=payload.proposal?.id;if(!proposalId||!cachedLabSessionToken)return;
+  const response=await fetch(`/api/agent-authority/proposals/${encodeURIComponent(proposalId)}/proof`,{headers:{"X-Lab-Session-Token":cachedLabSessionToken}});if(!response.ok)return;
+  const blob=await response.blob();const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download=`agent-authority-proof-${proposalId.replace(/[^A-Za-z0-9._-]/g,"_")}.json`;document.body.append(link);link.click();link.remove();URL.revokeObjectURL(link.href);
 }
 
 function renderMissionArticle(article, missionId) {
@@ -2897,6 +3011,7 @@ async function loadLab() {
   function diveIntoSkillPath(skillPathId) {
     stopDemoMode();
     stopIongrcMode();
+    setAgentAuthorityActive(skillPathId === "agentauthority");
     const config = SKILL_PATHS[skillPathId];
     if (!config) return;
     markLauncherIntroduced();
@@ -2919,6 +3034,7 @@ async function loadLab() {
     } else {
       setPanelMode("disconnected");
     }
+    if (skillPathId === "agentauthority") loadAgentAuthorityWalkthrough().catch(() => undefined);
     startTerminal();
     if (skillPathId !== "demo" && skillPathId !== "iongrc") {
       preloadShellForLane(
@@ -2947,19 +3063,23 @@ async function loadLab() {
     scheduleTerminalFocus(frame);
     el("lane-switch").hidden = false;
     if (skillPathId === "demo") {
+      setAgentAuthorityActive(false);
       startDemoMode();
       stopIongrcMode();
       setPanelMode("disconnected");
     } else if (skillPathId === "iongrc") {
+      setAgentAuthorityActive(false);
       stopDemoMode();
       startIongrcMode();
       applySessionSignOnHint("IONGRC", cachedLaneCredentials);
       setPanelMode("disconnected");
     } else {
+      setAgentAuthorityActive(skillPathId === "agentauthority");
       stopDemoMode();
       stopIongrcMode();
       setPanelMode("disconnected");
     }
+    if (skillPathId === "agentauthority") loadAgentAuthorityWalkthrough().catch(() => undefined);
     startTerminal();
     if (terminalConfig.systemName && skillPathId !== "demo" && skillPathId !== "iongrc") {
       preloadShellForLane(
@@ -3021,6 +3141,7 @@ async function loadLab() {
       ["pick-demo", "demo"],
       ["pick-demo-intro", "demo"],
       ["pick-iongrc", "iongrc"],
+      ["pick-agent-authority", "agentauthority"],
     ];
 
     el("launcher-skip-intro")?.addEventListener("click", () => {
@@ -3056,6 +3177,12 @@ async function loadLab() {
     resetSessionSkillPathState();
     if (rememberBox) {
       rememberBox.checked = isSkillPathRemembered();
+    }
+    const requestedPath = new URLSearchParams(window.location.search).get("path");
+    if (requestedPath === "agentauthority" && terminalConfig.agentAuthorityEnabled) {
+      beginSkillPath("agentauthority", false);
+      onReady(SKILL_PATHS.agentauthority.storageLane);
+      return;
     }
     showLaneChooser();
   }
@@ -3217,6 +3344,7 @@ async function loadLab() {
         } else {
           renderAuditorContext(payload);
         }
+        if (skillPath === "agentauthority") await loadAgentAuthorityWalkthrough();
       } catch {
         /* terminal may not be signed on yet */
       }
@@ -3270,11 +3398,17 @@ async function loadLab() {
       el("launcher-subtitle").textContent = config.appSubtitle;
     }
     applyLaneCredentials(config.laneCredentials);
+    if (el("agent-authority-entry")) el("agent-authority-entry").hidden = !config.agentAuthorityEnabled;
+    if (!config.agentAuthorityEnabled && readStoredSkillPath() === "agentauthority") {
+      sessionStorage.removeItem(SKILL_PATH_KEY);setAgentAuthorityActive(false);
+    }
     initNarrowBanner();
     initHealthPill();
     initFindingComposer();
     setPanelMode("disconnected");
     initDemoControls();
+    el("aa-start-request")?.addEventListener("click",()=>startAgentAuthorityRequest().catch(()=>undefined));
+    el("aa-download-proof")?.addEventListener("click",()=>downloadAgentAuthorityProof().catch(()=>undefined));
 
     initLaneChooser((lane) => {
       preferredLane = lane;

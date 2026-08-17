@@ -32,6 +32,29 @@ These are public training passwords, not real credentials.
 
 ![Demo coach + terminal](public/assets/screenshots/02-demo-coach.png)
 
+## Agent Authority in the same lab
+
+**LCL is the environment. Agent Authority governs an agent interacting with that environment.** Human users work through the 5250-style terminal, while the deterministic demonstration agent uses six structured MCP tools. Both paths reach the same synthetic `CLAIMS400` state, and ordinary LCL state-change, audit and job-log records remain authoritative.
+
+The guided `AA-001` path tells the story without requiring protocol knowledge:
+
+1. The agent observes an operational message. The message is data, not permission.
+2. It requests one exact change: `APCLERK → PAYROLL/PAYMST → *USE`.
+3. Policy holds the privilege change for a separately authenticated human decision.
+4. `QSECOFR` reviews the request in Authority Desk; the agent cannot approve itself.
+5. If approved, `MCPAGENT` executes once against ordinary LCL state.
+6. The terminal confirms the authority, and the rail explains the resulting audit, job-log, receipt and independently verified proof evidence.
+
+The standard Compose quick start enables this local deterministic path by default. Set `LCL_AGENT_AUTHORITY_ENABLED=false` before starting Compose to hide Agent Authority while leaving ordinary LCL unchanged. No model, API key, cloud service or IBM i is involved.
+
+![Agent Authority guided rail](public/assets/screenshots/03-agent-authority-overview.png)
+
+![Pending request awaiting a human decision](public/assets/screenshots/04-agent-authority-pending.png)
+
+![Completed Agent Authority evidence](public/assets/screenshots/05-agent-authority-complete.png)
+
+Walkthrough detail: [docs/agent-authority-guide.md](docs/agent-authority-guide.md).
+
 ## Credibility check (for IBM i folks)
 
 After the demo, poke commands you already know. Training depth varies by design:

@@ -3,13 +3,17 @@ import { sessionLane } from "../../ibmi-runtime/sessionLane.js";
 import { getLiveSession } from "../../lab/liveSessionRegistry.js";
 import { verifyLabSessionTokenForSystem } from "../../lab/sessionRegistry.js";
 import {
-  countProposals,getProposal,getReceipt,listProposals,listReceiptIdsForProposal,listReceiptsBounded,type ProposalRecord,type ReceiptRecord,
+  countProposals,getApprovalForProposal,getProposal,getReceipt,listProposals,listReceiptIdsForProposal,listReceiptsBounded,type ProposalRecord,type ReceiptRecord,
 } from "../../db/repositories/agentAuthorityRepository.js";
+import { listObjectAuthorities } from "../../db/repositories/objectAuthorityRepository.js";
 import { verifyReceiptChain } from "../evidence/receiptVerifier.js";
 import { fingerprint } from "../fingerprint.js";
 import type { AgentAuthorityRuntime } from "../runtime.js";
 import type { ProposalStatus } from "../types.js";
 import { buildProposalProofBundle } from "../proof/proofBuilder.js";
+import { verifyProofBundle } from "../proof/proofVerifier.js";
+import { AA001DeterministicAgent } from "../scenarios/aa001Runner.js";
+import { AA001_INTENT,AA001_MESSAGE,AA001_SCENARIO_ID } from "../scenarios/aa001Fixture.js";
 
 const STATUSES=new Set<ProposalStatus>(["pending","approved","denied","expired","invalidated","consumed"]);
 type HandlerResult={handled:boolean};
@@ -17,6 +21,19 @@ type HandlerResult={handled:boolean};
 export function createAuthorityDeskApi(runtime:AgentAuthorityRuntime,systemName:string) {
   return async(req:http.IncomingMessage,res:http.ServerResponse,url:URL):Promise<HandlerResult>=>{
     if(!url.pathname.startsWith("/api/agent-authority/")) return {handled:false};
+    if(url.pathname==="/api/agent-authority/walkthrough") {
+      try {
+        if(req.method==="POST") {
+          const existing=guidedProposal(runtime);
+          if(!existing) {
+            const agent=new AA001DeterministicAgent(runtime.broker,runtime.approvals);
+            agent.run({requestId:runtime.ids.id("walkthrough"),agentSessionId:runtime.principalId,actorType:"agent",requestedAt:runtime.clock.now().toISOString(),clientName:"lcl-guided-walkthrough",clientVersion:"1"});
+          }
+        } else if(req.method!=="GET") {sendJson(res,405,{error:"Method not allowed"});return {handled:true};}
+        sendJson(res,200,projectWalkthrough(runtime));
+      } catch {sendJson(res,409,{error:"Guided walkthrough could not be started"});}
+      return {handled:true};
+    }
     const auth=authenticate(req,systemName);
     if(!auth.ok){sendJson(res,auth.status,{error:auth.error});return {handled:true};}
     const proposalMatch=url.pathname.match(/^\/api\/agent-authority\/proposals\/([^/]+)$/);
@@ -67,6 +84,22 @@ export function createAuthorityDeskApi(runtime:AgentAuthorityRuntime,systemName:
     }
     return {handled:true};
   };
+}
+
+function guidedProposal(runtime:AgentAuthorityRuntime):ProposalRecord|undefined {
+  return listProposals(runtime.db,{limit:100}).find((proposal)=>{try{return (JSON.parse(proposal.requestContextJson) as Record<string,unknown>).clientName==="lcl-guided-walkthrough";}catch{return false;}});
+}
+
+function projectWalkthrough(runtime:AgentAuthorityRuntime):Record<string,unknown> {
+  const proposal=guidedProposal(runtime);const current=listObjectAuthorities("CLAIMS400","PAYROLL","PAYMST").find((row)=>row.userName==="APCLERK")?.authority??null;
+  if(!proposal)return {scenarioId:AA001_SCENARIO_ID,stage:"OBSERVED",message:AA001_MESSAGE,requestedAction:AA001_INTENT,proposal:null,currentAuthority:current,proof:{available:false,verified:false}};
+  const projected=projectProposal(runtime,proposal);const approval=getApprovalForProposal(runtime.db,proposal.id);let evidence:unknown[]=[];
+  if(proposal.executionReceiptId){const receipt=getReceipt(runtime.db,proposal.executionReceiptId);try{const payload=JSON.parse(receipt?.payloadJson??"{}");evidence=Array.isArray(payload.system_evidence)?payload.system_evidence:[];}catch{evidence=[];}}
+  let proofVerified=false;if(["denied","expired","invalidated","consumed"].includes(proposal.status)){try{proofVerified=verifyProofBundle(buildProposalProofBundle(runtime.db,proposal.id,runtime)).ok;}catch{proofVerified=false;}}
+  const stage=proposal.status==="pending"?"HELD":proposal.status==="consumed"&&proposal.executionStatus==="succeeded"?"VERIFIED":"REVIEWED";
+  return {scenarioId:AA001_SCENARIO_ID,stage,message:AA001_MESSAGE,requestedAction:AA001_INTENT,proposal:projected,currentAuthority:current,
+    humanDecision:proposal.status==="denied"?"denied":proposal.status==="consumed"||proposal.status==="approved"?"approved":"none",
+    approver:approval?.approverUser??proposal.decidedBy??null,executor:proposal.executionStatus?"MCPAGENT":null,evidence,proof:{available:["denied","expired","invalidated","consumed"].includes(proposal.status),verified:proofVerified}};
 }
 
 function authenticate(req:http.IncomingMessage,systemName:string):{ok:true;session:NonNullable<ReturnType<typeof getLiveSession>>}|{ok:false;status:number;error:string} {

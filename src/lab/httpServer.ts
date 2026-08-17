@@ -140,6 +140,7 @@ async function handleApi(
   url: URL,
   systemName: string,
   websockifyPort: number,
+  agentAuthorityEnabled: boolean,
 ): Promise<boolean> {
   if (!url.pathname.startsWith("/api/")) {
     return false;
@@ -354,6 +355,7 @@ async function handleApi(
       showQuickstart: labConfig.showQuickstart,
       defaultScenario: labConfig.defaultScenario,
       laneCredentials: getPublicLaneCredentialsForApi(systemName),
+      agentAuthorityEnabled,
     });
     return true;
   }
@@ -607,7 +609,7 @@ export function createLabHttpServer(options: LabHttpServerOptions): http.Server 
       sendJson(res,404,{error:"Not found"});return;
     }
 
-    if (await handleApi(req, res, url, options.systemName, options.websockifyPort)) {
+    if (await handleApi(req, res, url, options.systemName, options.websockifyPort,Boolean(options.authorityDeskHandler))) {
       return;
     }
 

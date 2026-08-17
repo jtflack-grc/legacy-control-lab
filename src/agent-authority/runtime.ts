@@ -6,8 +6,9 @@ import { AuthorityBroker } from "./broker/authorityBroker.js";
 import { OperatorApprovalService } from "./broker/operatorApprovalService.js";
 import { loadPolicy } from "./policy/policyLoader.js";
 import type { Clock, IdGenerator } from "./types.js";
+import { AA001_MESSAGE } from "./scenarios/aa001Fixture.js";
 
-export type AgentAuthorityRuntimeOptions={target:string;clock?:Clock;ids?:IdGenerator;principalId?:string};
+export type AgentAuthorityRuntimeOptions={target:string;clock?:Clock;ids?:IdGenerator;principalId?:string;guidedAa001?:boolean};
 
 /** One process-owned domain runtime shared by every enabled transport. */
 export type AgentAuthorityRuntime={db:SqliteDatabase;adapter:LclTargetAdapter;broker:AuthorityBroker;approvals:OperatorApprovalService;clock:Clock;ids:IdGenerator;principalId:string;target:"lcl"};
@@ -18,7 +19,7 @@ export function createAgentAuthorityRuntime(options:AgentAuthorityRuntimeOptions
   const ids=options.ids??{id:(prefix:string)=>`${prefix}_${randomUUID()}`,nonce:()=>randomUUID()};
   const principalId=options.principalId??`mcp-principal-${randomUUID()}`;
   const db=getDatabase();
-  const adapter=new LclTargetAdapter();
+  const adapter=new LclTargetAdapter(options.guidedAa001?{operationalMessageFixtures:[AA001_MESSAGE]}:undefined);
   const broker=new AuthorityBroker({db,adapter,policy:loadPolicy("data/agent-authority/policy.v1.json"),clock,ids});
   const approvals=new OperatorApprovalService({db,adapter,clock,ids});
   return {db,adapter,broker,approvals,clock,ids,principalId,target:"lcl" as const};

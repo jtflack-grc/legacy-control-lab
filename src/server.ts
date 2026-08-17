@@ -83,7 +83,7 @@ export function startServer(config: ServerConfig = loadConfig()) {
   });
   console.log(`${APP_NAME} — ${RUNTIME_NAME}`);
   console.log(`System: ${config.systemName}`);
-  const authorityRuntime=config.agentAuthorityEnabled?createAgentAuthorityRuntime({target:config.agentTarget}):undefined;
+  const authorityRuntime=config.agentAuthorityEnabled?createAgentAuthorityRuntime({target:config.agentTarget,guidedAa001:true}):undefined;
   const agentAuthority=authorityRuntime?createAgentAuthorityMcpRuntime({runtime:authorityRuntime}):undefined;
   const authorityDesk=authorityRuntime?createAuthorityDeskApi(authorityRuntime,config.systemName):undefined;
 
