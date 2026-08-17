@@ -7,14 +7,15 @@ import {closeDatabase,initDatabase,initTestDatabase} from "../../src/db/sqlite.j
 import {createAgentAuthorityRuntime,type AgentAuthorityRuntime} from "../../src/agent-authority/runtime.js";
 import {buildProposalProofBundle} from "../../src/agent-authority/proof/proofBuilder.js";
 import {calculateProofBundleHash,verifyProofBundle} from "../../src/agent-authority/proof/proofVerifier.js";
+import {fingerprint} from "../../src/agent-authority/fingerprint.js";
 import type {AgentAuthorityProofBundleV1} from "../../src/agent-authority/proof/proofBundle.js";
 import {createSession,hydrateSessionFromProfile,type IbmiSession} from "../../src/ibmi-runtime/sessionService.js";
 import {grantObjectAuthority} from "../../src/db/repositories/objectAuthorityRepository.js";
 import type {Clock,IdGenerator} from "../../src/agent-authority/types.js";
 
 describe("Agent Authority Phase 6 portable proof",()=>{
-  let runtime:AgentAuthorityRuntime;let clock:Clock;let ids:IdGenerator;let n:number;const dirs:string[]=[];
-  beforeEach(()=>{initTestDatabase();n=0;clock={now:()=>new Date("2026-08-17T00:30:00.000Z")};ids={id:(prefix)=>`${prefix}_p6_${++n}`,nonce:()=>`nonce_p6_${++n}`};runtime=createAgentAuthorityRuntime({target:"lcl",clock,ids,principalId:"proof-principal"});});
+  let runtime:AgentAuthorityRuntime;let clock:Clock;let ids:IdGenerator;let n:number;let instant:string;const dirs:string[]=[];
+  beforeEach(()=>{initTestDatabase();n=0;instant="2026-08-17T00:30:00.000Z";clock={now:()=>new Date(instant)};ids={id:(prefix)=>`${prefix}_p6_${++n}`,nonce:()=>`nonce_p6_${++n}`};runtime=createAgentAuthorityRuntime({target:"lcl",clock,ids,principalId:"proof-principal"});});
   afterEach(()=>{closeDatabase();while(dirs.length)rmSync(dirs.pop()!,{recursive:true,force:true});});
 
   it("exports and independently verifies approved execution with ordinary LCL evidence",()=>{
@@ -30,6 +31,7 @@ describe("Agent Authority Phase 6 portable proof",()=>{
     const denied=request("*USE");expect(runtime.approvals.deny(denied,operator(),"not justified").status).toBe("denied");expect(verifyProofBundle(build(denied)).ok).toBe(true);
     const pending=request("*USE");expect(build(pending).proposal).toMatchObject({status:"pending",approval:null,execution:null});expect(verifyProofBundle(build(pending)).ok).toBe(true);
     const invalidated=request("*ALL");grantObjectAuthority("CLAIMS400","PAYROLL","PAYMST","APCLERK","*CHANGE");expect(runtime.approvals.approve(invalidated,operator()).status).toBe("invalidated");const stale=build(invalidated);expect(stale.proposal).toMatchObject({status:"invalidated",execution:null});expect(verifyProofBundle(stale).ok).toBe(true);
+    const expired=request("*ALL");instant="2026-08-17T00:40:01.000Z";expect(runtime.approvals.deny(expired,operator()).status).toBe("expired");expect(verifyProofBundle(build(expired)).ok).toBe(true);
   });
 
   it("detects every required in-memory tamper even when the outer hash is recomputed",()=>{
@@ -38,8 +40,22 @@ describe("Agent Authority Phase 6 portable proof",()=>{
       ["canonical action argument",b=>{b.proposal.canonicalAction.arguments.authority="*ALL";}],
       ["action hash",b=>{b.proposal.actionHash="sha256:changed";}],
       ["precondition",b=>{b.proposal.precondition.material.owner="ATTACKER";}],
+      ["precondition material and recomputed digest",b=>{b.proposal.precondition.material.owner="ATTACKER";b.proposal.precondition.hash=fingerprint(b.proposal.precondition.material).hash;}],
       ["precondition hash",b=>{b.proposal.precondition.hash="sha256:changed";}],
+      ["policy decision",b=>{b.proposal.policy.decision="deny";}],
+      ["risk class",b=>{b.proposal.riskClass="observe";}],
+      ["provenance",b=>{b.proposal.provenance=[{sourceId:"forged",sourceType:"operational_message",trustClass:"untrusted_operational_data",contentHash:"sha256:forged"}];}],
+      ["requester client metadata",b=>{b.proposal.requester.clientName="forged-client";}],
+      ["proposal expiry",b=>{b.proposal.expiresAt="2099-01-01T00:00:00.000Z";}],
+      ["human decision type",b=>{b.proposal.humanDecision.decision="denied";}],
+      ["human decision user",b=>{b.proposal.humanDecision.by="ATTACKER";}],
       ["approval action hash",b=>{b.proposal.approval!.actionHash="sha256:changed";}],
+      ["approval ID",b=>{b.proposal.approval!.id="approval_forged";}],
+      ["approval approver user",b=>{b.proposal.approval!.approverUser="ATTACKER";}],
+      ["approval approver session",b=>{b.proposal.approval!.approverSessionId="session_forged";}],
+      ["approval consumed time",b=>{b.proposal.approval!.consumedAt="2099-01-01T00:00:00.000Z";}],
+      ["execution before",b=>{b.proposal.execution!.before.owner="ATTACKER";}],
+      ["execution after",b=>{b.proposal.execution!.after.owner="ATTACKER";}],
       ["receipt payload",b=>{(b.receipts.at(-1)!.payload as any).action_hash="sha256:changed";}],
       ["receipt ID",b=>{b.receipts[0]!.id="changed";}],
       ["receipt removed",b=>{b.receipts.splice(0,1);}],
@@ -53,7 +69,20 @@ describe("Agent Authority Phase 6 portable proof",()=>{
       ["proposal status",b=>{b.proposal.status="denied";}],
     ];
     for(const [name,mutate] of cases){const tampered=clone(valid);mutate(tampered);tampered.bundleHash=calculateProofBundleHash(tampered);expect(verifyProofBundle(tampered).ok,name).toBe(false);}
+    const deniedId=request("*ALL");runtime.approvals.deny(deniedId,operator(),"not justified");const denied=build(deniedId);
+    for(const [name,mutate] of [
+      ["denial decision type",(b:AgentAuthorityProofBundleV1)=>{b.proposal.humanDecision.decision="approved";}],
+      ["denial decision user",(b:AgentAuthorityProofBundleV1)=>{b.proposal.humanDecision.by="ATTACKER";}],
+      ["denial decision reason",(b:AgentAuthorityProofBundleV1)=>{b.proposal.humanDecision.reason="forged reason";}],
+    ] as Array<[string,(b:AgentAuthorityProofBundleV1)=>void]>){const tampered=clone(denied);mutate(tampered);tampered.bundleHash=calculateProofBundleHash(tampered);expect(verifyProofBundle(tampered).ok,name).toBe(false);}
     const hash=clone(valid);hash.bundleHash="sha256:changed";expect(verifyProofBundle(hash).errors).toContain("bundle hash mismatch");
+  });
+
+  it("fails cleanly on malformed receipt-bound projections",()=>{
+    const id=request("*USE");runtime.approvals.approve(id,operator());const valid=build(id);
+    for(const mutate of [(b:any)=>{b.receipts[0].payload.policy=[];},(b:any)=>{b.proposal.provenance={bad:true};},(b:any)=>{b.proposal.approval="bad";},(b:any)=>{b.proposal.humanDecision=null;},(b:any)=>{b.proposal.execution.before=()=>undefined;}]){
+      const malformed=clone(valid) as any;mutate(malformed);expect(()=>verifyProofBundle(malformed)).not.toThrow();expect(verifyProofBundle(malformed).ok).toBe(false);
+    }
   });
 
   it("writes through the exporter CLI and verifies offline without creating a database",()=>{

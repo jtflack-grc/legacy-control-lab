@@ -35,7 +35,7 @@ export function createAuthorityDeskApi(runtime:AgentAuthorityRuntime,systemName:
         const proposal=getProposal(runtime.db,decodeURIComponent(proposalMatch[1]!));
         if(!proposal) sendJson(res,404,{error:"Proposal not found"}); else sendJson(res,200,{proposal:projectProposal(runtime,proposal)});
       } else if(req.method==="GET"&&proofMatch) {
-        const id=decodeURIComponent(proofMatch[1]!);const bundle=buildProposalProofBundle(runtime.db,id,runtime);
+        const id=decodeURIComponent(proofMatch[1]!);if(!getProposal(runtime.db,id)){sendJson(res,404,{error:"Proposal not found"});return {handled:true};}const bundle=buildProposalProofBundle(runtime.db,id,runtime);
         sendProofJson(res,bundle,`agent-authority-proof-${safeFilePart(id)}.json`);
       } else if(req.method==="POST"&&decisionMatch) {
         const id=decodeURIComponent(decisionMatch[1]!);const operation=decisionMatch[2]!;

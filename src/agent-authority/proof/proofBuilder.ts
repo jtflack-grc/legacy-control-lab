@@ -19,6 +19,7 @@ export function buildProposalProofBundle(db:SqliteDatabase,proposalId:string,dep
   const policy=JSON.parse(proposal.policyDecisionJson) as {decision:PolicyDecision;matchedRuleIds?:string[]};
   const request=JSON.parse(proposal.requestContextJson) as Record<string,unknown>;
   const attempt=execution?getMissionAttempt(execution.attemptId):undefined;
+  const decision=decisionProjection(proposal,directReceipts);
   const bundle:AgentAuthorityProofBundleV1={
     schema:PROOF_BUNDLE_SCHEMA,bundleId:deps.ids.id("proof"),generatedAt:deps.clock.now().toISOString(),
     target:{kind:proposal.targetKind,system:proposal.targetSystem},selectedProposalId:proposal.id,
@@ -27,7 +28,7 @@ export function buildProposalProofBundle(db:SqliteDatabase,proposalId:string,dep
       policy:{id:proposal.policyId,version:proposal.policyVersion,decision:policy.decision,matchedRuleIds:policy.matchedRuleIds??[]},
       provenance:proposal.provenanceJson?JSON.parse(proposal.provenanceJson):[],precondition:{material:JSON.parse(proposal.preconditionJson),hash:proposal.preconditionHash},
       requester:{requestId:text(request.requestId),agentSessionId:text(request.agentSessionId),actorType:text(request.actorType),requestedAt:text(request.requestedAt),clientName:text(request.clientName),clientVersion:text(request.clientVersion)},
-      humanDecision:{decision:humanDecision(proposal.status),at:proposal.decidedAt??null,by:proposal.decidedBy??null,reason:proposal.decisionReason??null},
+      humanDecision:decision,
       approval:approval?{id:approval.id,proposalId:approval.proposalId,actionHash:approval.actionHash,approverUser:approval.approverUser,approverSessionId:approval.approverSessionId??null,issuedAt:approval.issuedAt,expiresAt:approval.expiresAt,status:approval.status,consumedAt:approval.consumedAt??null,reason:approval.reason??null}:null,
       execution,receiptIds:directReceipts.map((r)=>r.id)},
     evidence:{missionAttempt:attempt?{id:attempt.id,missionId:attempt.missionId,systemId:attempt.systemId,userName:attempt.userName,startedAt:attempt.startedAt}:null,
@@ -42,6 +43,11 @@ export function buildProposalProofBundle(db:SqliteDatabase,proposalId:string,dep
 
 function executionFromReceipt(payload:unknown,receiptId:string):PortableExecution {if(!record(payload)||!record(payload.execution)||!record(payload.executor))throw new Error("EXECUTION_RECEIPT_MALFORMED");const refs=Array.isArray(payload.system_evidence)?payload.system_evidence:[];return {status:payload.execution.status as PortableExecution["status"],actor:String(payload.executor.user),attemptId:String(payload.executor.attempt_id),receiptId,evidenceRefs:refs as TargetEvidenceRef[],before:record(payload.execution.before)?payload.execution.before:{},after:record(payload.execution.after)?payload.execution.after:{}};}
 function humanDecision(status:string):AgentAuthorityProofBundleV1["proposal"]["humanDecision"]["decision"] {if(status==="consumed"||status==="approved")return "approved";if(status==="denied"||status==="expired"||status==="invalidated")return status;return "none";}
+function decisionProjection(proposal:ReturnType<typeof getProposal> & {},receipts:Array<{receiptType:string;payload:unknown}>):AgentAuthorityProofBundleV1["proposal"]["humanDecision"] {
+  let by=proposal.decidedBy??null;
+  if(proposal.status==="expired"&&!by){const receipt=receipts.find((r)=>r.receiptType==="proposal_expired");if(record(receipt?.payload)&&typeof receipt.payload.decided_by==="string")by=receipt.payload.decided_by;}
+  return {decision:humanDecision(proposal.status),at:proposal.decidedAt??null,by,reason:proposal.decisionReason??null};
+}
 function text(value:unknown):string|null{return typeof value==="string"?value:null;}
 function record(value:unknown):value is Record<string,any>{return Boolean(value)&&typeof value==="object"&&!Array.isArray(value);}
 function clean<T>(value:T):T{return JSON.parse(JSON.stringify(value)) as T;}
