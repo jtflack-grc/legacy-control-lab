@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: agent-authority-screenshots
-          path: public/assets/screenshots/0*-agent-authority-*.png
+          path: public/assets/screenshots/*-agent-authority-*.png
       - name: Proof export and offline verification smoke
         run: npx vitest run tests/agent-authority/phase6.test.ts -t "writes through the exporter CLI"
       - name: Docker build and health smoke
