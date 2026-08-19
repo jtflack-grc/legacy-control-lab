@@ -25,6 +25,7 @@ describe("Agent Authority Phase 6.6 scenario pack",()=>{
   it("AA-002 denies immutable *ALL then creates and executes a distinct *USE proposal",()=>{
     const first=scenarios.act("AA-002","create_initial_request");const all=first.proposals[0];expect(all.action.arguments.authority).toBe("*ALL");
     expect(runtime.approvals.deny(all.id,operator(),"Too broad").status).toBe("denied");
+    expect(scenarios.project("AA-002").status).toBe("in_progress");expect(scenarios.catalog().scenarios.find((scenario)=>scenario.id==="AA-002")?.status).toBe("in_progress");
     const second=scenarios.act("AA-002","submit_narrower_request");const use=second.proposals.find((p:any)=>p.action.arguments.authority==="*USE")!;
     expect(use.id).not.toBe(all.id);expect(use.actionHash).not.toBe(all.actionHash);expect(second.proposals.find((p:any)=>p.id===all.id)?.status).toBe("denied");
     expect(runtime.approvals.approve(use.id,operator(),"Least privilege").status).toBe("succeeded");expect(authority("AUDIT")).toBe("*USE");
