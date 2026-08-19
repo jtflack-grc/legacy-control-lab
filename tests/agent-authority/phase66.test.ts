@@ -60,6 +60,16 @@ describe("Agent Authority Phase 6.6 scenario pack",()=>{
     expect(listProposals(runtime.db,{limit:100})).toHaveLength(0);expect(listReceiptsBounded(runtime.db,{limit:100,afterSequence:0})).toContainEqual(expect.objectContaining({receiptType:"request_denied"}));
   });
 
+  it("runs AA-001 through AA-005 once in one clean CLAIMS400 volume",()=>{
+    const aa1=scenarios.act("AA-001","create_initial_request");expect(runtime.approvals.approve(aa1.proposals[0].id,operator(),"AA-001 exact approval").status).toBe("succeeded");
+    const aa2=scenarios.act("AA-002","create_initial_request");expect(runtime.approvals.deny(aa2.proposals[0].id,operator(),"AA-002 too broad").status).toBe("denied");const aa2n=scenarios.act("AA-002","submit_narrower_request");expect(runtime.approvals.approve(aa2n.proposals.find((p:any)=>p.action.arguments.authority==="*USE")!.id,operator(),"AA-002 least privilege").status).toBe("succeeded");
+    const aa3=scenarios.act("AA-003","create_initial_request");grantObjectAuthority("CLAIMS400","PAYROLL","PAYMST","OLDVENDOR","*EXCLUDE");expect(runtime.approvals.approve(aa3.proposals[0].id,operator(),"AA-003 stale demonstration").status).toBe("invalidated");
+    scenarios.act("AA-004","run_investigation");const aa4=scenarios.act("AA-004","create_mutation_request");expect(runtime.approvals.approve(aa4.proposals[0].id,operator(),"AA-004 narrow stale access").status).toBe("succeeded");
+    expect(scenarios.act("AA-005","attempt_out_of_scope_request").denial?.payload.reason).toBe("TARGET_NOT_ALLOWED");
+    expect(["AA-001","AA-002","AA-003","AA-004","AA-005"].map((id)=>scenarios.project(id as any).status)).toEqual(["complete","complete","complete","complete","complete"]);
+    expect(authority("APCLERK")).toBe("*USE");expect(authority("AUDIT")).toBe("*USE");expect(authority("OLDVENDOR")).toBe("*EXCLUDE");expect(authority("BACKUPADM")).toBe("*USE");
+  });
+
   function operator(){const s=createSession("CLAIMS400");s.signedOn=true;s.userName="QSECOFR";s.job.user="QSECOFR";hydrateSessionFromProfile(s,"QSECOFR","CLAIMS400");return s;}
   function authority(user:string){return authorityOn("PAYROLL","PAYMST",user);}
   function authorityOn(library:string,object:string,user:string){return listObjectAuthorities("CLAIMS400",library,object).find((r)=>r.userName===user)?.authority;}
