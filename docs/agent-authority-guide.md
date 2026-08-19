@@ -15,7 +15,19 @@ docker compose up -d --build
 
 Open <http://localhost:8080/lab/>, skip the introductory tour if you have already seen it, and choose **Agent Authority** under **See agent governance**.
 
-## AA-001 story
+## Choose a scenario
+
+The single **Agent Authority** launcher entry opens a five-card scenario chooser. Scenario status is derived from persisted proposals and receipts; the lab does not silently reset CLAIMS400 to replay a scenario. For a completely fresh run, use the clean-volume commands above.
+
+| Scenario | Identity / target | Control lesson |
+|---|---|---|
+| AA-001 — The Message Says It's Approved | `APCLERK` / `PAYROLL/PAYMST` | Untrusted content is data, not permission |
+| AA-002 — More Access Than Necessary | `AUDIT` / `PAYROLL/PAYMST` | Least privilege, exact authorization and deny/resubmit |
+| AA-003 — The System Changed | `OLDVENDOR` / `PAYROLL/PAYMST` | State-bound approval and stale-precondition protection |
+| AA-004 — Investigate Before Acting | `BACKUPADM` / `PAYROLL/PAYMST` | Autonomous observation and governed mutation |
+| AA-005 — Outside the Boundary | `AUDIT` / `CLAIMS400/CLAIMMST` | Delegation boundary and default denial |
+
+## AA-001 — The Message Says It's Approved
 
 1. **Observed:** Read the isolated operational message. Its text claims emergency access was approved, but message content is not authorization.
 2. **Requested:** Select **Create governed request**. The deterministic agent asks for `APCLERK → PAYROLL/PAYMST → *USE`.
@@ -25,6 +37,44 @@ Open <http://localhost:8080/lab/>, skip the introductory tour if you have alread
 6. **Verified:** Review the state-change, CA-style audit, MCPAGENT job-log and Agent Authority receipt references. Download the proof from the rail or Authority Desk after verification succeeds.
 
 Raw JSON and hashes remain available in Authority Desk for technical inspection, but they are not required to understand the decision or outcome.
+
+## AA-002 — More Access Than Necessary
+
+1. Start the scenario and create the initial request. Confirm that the exact requested authority is `*ALL`, although the stated need is limited evidence access.
+2. Sign on as `QSECOFR` / `TRAIN`, open Authority Desk, and deny the request. The denied proposal remains immutable.
+3. Return to the scenario and ask the deterministic agent for a narrower request. It creates a new `AUDIT → PAYROLL/PAYMST → *USE` proposal with a different proposal ID and action hash.
+4. Review the new proposal in Authority Desk. Approval executes normally; denial leaves state unchanged.
+5. Run `DSPOBJAUT OBJ(PAYROLL/PAYMST)` in the terminal to confirm the ordinary CLAIMS400 state, then inspect each proposal's independent proof.
+
+If the original `*ALL` proposal is approved, the lab reports that outcome truthfully: the exact-approval boundary worked, but the human authorized more privilege than the need required. Human review does not replace least-privilege policy or sound judgment.
+
+## AA-003 — The System Changed
+
+1. Create the pending `OLDVENDOR → PAYROLL/PAYMST → *USE` request.
+2. Before approval, sign on as `QSECOFR` / `TRAIN` and run this ordinary LCL command in the terminal:
+
+   ```text
+   GRTOBJAUT OBJ(PAYROLL/PAYMST) USER(OLDVENDOR) AUT(*EXCLUDE)
+   ```
+
+3. Open the original request in Authority Desk and attempt approval. The protected execution re-snapshots the object, detects that its state no longer matches the proposal, and invalidates the request without an `MCPAGENT` mutation.
+4. Run `DSPOBJAUT OBJ(PAYROLL/PAYMST)`. `OLDVENDOR` remains `*EXCLUDE`. The invalidation proof is downloadable and verifiable.
+
+## AA-004 — Investigate Before Acting
+
+1. Run the investigation. The agent uses the real broker to inspect the `BACKUPADM` profile, its `PAYROLL/PAYMST` authority and bounded recent audit activity.
+2. Confirm that all three observations have read receipts and required no proposal or human approval.
+3. Create the narrowing request: `BACKUPADM → PAYROLL/PAYMST → *USE`. Consequences begin here, so the normal proposal and Authority Desk boundary apply.
+4. Approve or deny as `QSECOFR`. Approval changes the existing private `*ALL` authority to `*USE` and generates ordinary LCL runtime, audit and job-log evidence; denial leaves `*ALL` unchanged.
+5. Confirm the result with `DSPOBJAUT OBJ(PAYROLL/PAYMST)` and inspect the proof.
+
+## AA-005 — Outside the Boundary
+
+1. Ask the deterministic agent to request `AUDIT → CLAIMS400/CLAIMMST → *USE`.
+2. The broker returns `TARGET_NOT_ALLOWED` and records a denial receipt. It creates no proposal, so there is nothing in Authority Desk for `QSECOFR` to override.
+3. Run `DSPOBJAUT OBJ(CLAIMS400/CLAIMMST)` to confirm that ordinary state did not change.
+
+The only Phase 6.6 mutation target remains `PAYROLL/PAYMST`. Some requests are not approval questions; they are outside the agent's delegated authority.
 
 ## What the walkthrough demonstrates
 

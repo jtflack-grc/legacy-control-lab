@@ -11,6 +11,7 @@ const IONGRC_STEP_KEY = "lab.iongrc.step";
 const IONGRC_PACK_KEY = "lab.iongrc.pack";
 const IONGRC_ACTIVE_KEY = "lab.iongrc.active";
 const AGENT_AUTHORITY_ACTIVE_KEY = "lab.agent-authority.active";
+const AGENT_AUTHORITY_SCENARIO_KEY = "lab.agent-authority.scenario";
 const PLAYBOOK_PATH_KEY = "lab.playbook.path";
 const MISSION_NOTES_PREFIX = "lab.mission.notes.";
 
@@ -1175,9 +1176,90 @@ function setAgentAuthorityActive(active) {
 
 async function loadAgentAuthorityWalkthrough() {
   if (sessionStorage.getItem(AGENT_AUTHORITY_ACTIVE_KEY) !== "1") return;
+  const selected=sessionStorage.getItem(AGENT_AUTHORITY_SCENARIO_KEY);
+  if (!selected) {await renderAgentAuthorityChooser();return;}
+  showAgentAuthorityExperience(selected);
+  if(selected!=="AA-001") {renderScenarioPack(await loadJson(`/api/agent-authority/scenarios/${selected}`));return;}
   const payload = await loadJson("/api/agent-authority/walkthrough");
   renderAgentAuthorityWalkthrough(payload);
 }
+
+async function renderAgentAuthorityChooser() {
+  const payload=await loadJson("/api/agent-authority/scenarios");
+  el("aa-scenario-chooser").hidden=false;el("aa-scenario-experience").hidden=true;
+  el("aa-panel-kicker").textContent="Agent Authority Lab";el("aa-panel-title").textContent="Choose a scenario";
+  const cards=el("aa-scenario-cards");cards.replaceChildren();
+  for(const scenario of payload.scenarios??[]){
+    const article=document.createElement("article");article.className="agent-scenario-card";
+    const status=document.createElement("span");status.className="agent-scenario-status";status.textContent=String(scenario.status).replaceAll("_"," ");
+    const id=document.createElement("span");id.className="agent-kicker mono";id.textContent=scenario.id;
+    const title=document.createElement("h3");title.textContent=scenario.title;
+    const situation=document.createElement("p");situation.textContent=scenario.situation;
+    const concept=document.createElement("p");concept.className="agent-scenario-concept";concept.textContent=scenario.controlConcept;
+    const button=document.createElement("button");button.type="button";button.className="lane-card";button.dataset.scenarioId=scenario.id;button.textContent=scenario.status==="not_started"?"Start scenario":"Open scenario";
+    article.append(status,id,title,situation,concept,button);cards.append(article);
+  }
+}
+
+function showAgentAuthorityExperience(id) {
+  el("aa-scenario-chooser").hidden=true;el("aa-scenario-experience").hidden=false;
+  el("aa-panel-kicker").textContent=`Guided scenario · ${id}`;
+  if(id==="AA-001")el("aa-panel-title").textContent="The Message Says It's Approved";
+  for(const node of document.querySelectorAll(".agent-relationship-card,.agent-story-card,.agent-message-card,.agent-action-card,.agent-handoff-card"))node.hidden=id!=="AA-001";
+}
+
+function selectAgentAuthorityScenario(id){sessionStorage.setItem(AGENT_AUTHORITY_SCENARIO_KEY,id);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
+function leaveAgentAuthorityScenario(){sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
+
+function renderScenarioPack(payload){
+  const scenario=payload.scenario;el("aa-panel-title").textContent=scenario.title;
+  const strip=el("agent-authority-panel").querySelector(".agent-state-strip");strip.replaceChildren();
+  for(const label of scenario.lifecycle){const item=document.createElement("li");item.textContent=label;strip.append(item);}
+  const proposals=payload.proposals??[];const pending=proposals.find((p)=>p.status==="pending");const final=proposals.find((p)=>["consumed","denied","invalidated","expired"].includes(p.status));
+  el("aa-request-summary").hidden=!proposals.length;el("aa-proposal-id").textContent=pending?.id??proposals[0]?.id??"—";el("aa-decision").textContent=final?.status??(pending?"Awaiting QSECOFR":"None");el("aa-current-authority").textContent=payload.currentAuthority??"No private authority";el("aa-executor").textContent=final?.executionStatus?"MCPAGENT":"Not executed";el("aa-action-hash").textContent=pending?.actionHash??proposals[0]?.actionHash??"Created with the request";
+  const guidance=scenarioPackGuidance(payload);renderPackGuidance(guidance);
+  const terminal=el("aa-terminal-check");terminal.hidden=!guidance.command;el("aa-terminal-explanation").textContent=guidance.expected;
+  const commandNode=terminal.querySelector(".demo-command");if(commandNode)commandNode.textContent=guidance.command??"";
+  const evidence=el("aa-evidence-card");evidence.hidden=!final&&scenario.id!=="AA-005"&&!(payload.observations??[]).length;
+  const list=el("aa-evidence-list");list.replaceChildren();
+  for(const observation of payload.observations??[]){const item=document.createElement("li");item.textContent=`${observation.summary} No human approval required. Receipt: ${observation.receiptId}`;list.append(item);}
+  for(const proposal of proposals){const item=document.createElement("li");item.textContent=`Proposal ${proposal.id}: ${proposal.status}; action ${proposal.actionHash}`;list.append(item);}
+  if(payload.denial){const item=document.createElement("li");item.textContent=`Boundary denial receipt: ${payload.denial.id}`;list.append(item);}
+  const proofProposal=proposals.find((p)=>p.proof?.available);const proof=el("aa-proof-state");proof.textContent=proofProposal?.proof?.verified?"Proof verified. The exported record matches the protected decision and execution receipts.":"Proof is available after a proposal decision.";proof.classList.toggle("verified",Boolean(proofProposal?.proof?.verified));
+  el("aa-download-proof").hidden=!proofProposal?.proof?.verified||!cachedLabSessionToken;
+}
+
+function scenarioPackGuidance(payload){
+  const id=payload.scenario.id,p=payload.proposals??[],pending=p.find((x)=>x.status==="pending"),final=p.find((x)=>["consumed","denied","invalidated","expired"].includes(x.status));
+  if(id==="AA-002"){
+    const initial=p.find((x)=>x.action?.arguments?.authority==="*ALL"),narrow=p.find((x)=>x.action?.arguments?.authority==="*USE");
+    if(!initial)return {step:1,total:8,title:"Submit the overbroad request",instruction:"The business need calls for limited payroll evidence access, but the deterministic agent is asking for *ALL.",expected:"A new pending request for AUDIT → PAYROLL/PAYMST → *ALL.",action:"Create *ALL request",kind:"scenario",scenarioAction:"create_initial_request"};
+    if(initial.status==="pending")return approvalGuidance(2,8,"Confirm the exact overbroad action","The agent's requested authority is broader than the stated need. Inspect *ALL, then sign on as QSECOFR and deny it in Authority Desk.","The original proposal remains immutable and pending until the human decision.");
+    if(initial.status==="denied"&&!narrow)return {step:5,total:8,title:"Submit a new narrower request",instruction:"The *ALL proposal remains denied. The agent must submit a genuinely new *USE request; the old request is never edited.",expected:"A different proposal ID and action hash for AUDIT → PAYROLL/PAYMST → *USE.",action:"Submit new *USE request",kind:"scenario",scenarioAction:"submit_narrower_request"};
+    if(narrow?.status==="pending")return approvalGuidance(6,8,"Review the new least-privilege request","Compare the new proposal ID and action hash to the denied *ALL request, then decide in Authority Desk.","Only the new *USE request is eligible for this decision.");
+    const over=initial.status==="consumed";return {step:8,total:8,title:over?"Debrief the overprivilege decision":"Confirm least privilege",instruction:over?"The control bound approval exactly, but the human approved more authority than the stated need required.":"Return to the terminal and inspect AUDIT's resulting private authority.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:over?"Exact approval does not guarantee a good decision. Human-in-the-loop does not replace least-privilege judgment.":`AUDIT should show ${payload.currentAuthority??"no"} private authority.`,kind:"none"};
+  }
+  if(id==="AA-003"){
+    if(!p.length)return {step:1,total:5,title:"Capture the starting state",instruction:"Create OLDVENDOR's governed *USE request. Agent Authority will bind it to the current PAYMST state.",expected:"A pending proposal with a protected precondition digest.",action:"Create governed request",kind:"scenario",scenarioAction:"create_initial_request"};
+    if(pending&&payload.currentAuthority!=="*EXCLUDE")return {step:2,total:5,title:"Change the system before approval",instruction:"As QSECOFR, change ordinary CLAIMS400 state before reviewing the request. In the terminal, run:",command:"GRTOBJAUT OBJ(PAYROLL/PAYMST) USER(OLDVENDOR) AUT(*EXCLUDE)",expected:"OLDVENDOR's current private authority becomes *EXCLUDE, which differs from the proposal's recorded starting state.",kind:"none"};
+    if(pending)return approvalGuidance(3,5,"Attempt the original approval","Open the unchanged pending request. Agent Authority will re-snapshot PAYMST inside the protected execution transaction.","The proposal should invalidate as stale; MCPAGENT must not execute *USE.");
+    return {step:5,total:5,title:"Confirm the stale request did not win",instruction:"Return to the terminal and inspect the actual object authority.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:"OLDVENDOR remains *EXCLUDE. The requested *USE action was invalidated before execution.",kind:"none"};
+  }
+  if(id==="AA-004"){
+    if(!(payload.observations??[]).length)return {step:1,total:6,title:"Investigate autonomously",instruction:"Let the deterministic agent inspect BACKUPADM's profile, PAYMST authority and recent audit activity through the three existing read tools.",expected:"Three bounded observations and read receipts, with no proposals and no human approval.",action:"Run safe investigation",kind:"scenario",scenarioAction:"run_investigation"};
+    if(!p.length)return {step:4,total:6,title:"Propose where consequences begin",instruction:"The reads established that BACKUPADM has stale *ALL access. Now the agent proposes narrowing it to *USE.",expected:"A sensitive-change proposal appears only for the mutation.",action:"Propose *ALL → *USE",kind:"scenario",scenarioAction:"create_mutation_request"};
+    if(pending)return approvalGuidance(5,6,"Make the human decision","The investigation needed no approval. Changing BACKUPADM's authority does.","Authority Desk shows BACKUPADM → PAYROLL/PAYMST → *USE.");
+    return {step:6,total:6,title:"Confirm proportional autonomy",instruction:"Inspect the underlying PAYMST authority after the decision.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:final?.status==="consumed"?"BACKUPADM changed from *ALL to *USE and normal LCL evidence was recorded.":"The denial left BACKUPADM's *ALL authority unchanged.",kind:"none"};
+  }
+  if(id==="AA-005"){
+    if(!payload.denial)return {step:1,total:3,title:"Attempt an out-of-bound request",instruction:"The deterministic agent will request AUDIT → CLAIMS400/CLAIMMST → *USE, outside its single delegated mutation target.",expected:"TARGET_NOT_ALLOWED, a denial receipt, and no proposal for Authority Desk.",action:"Attempt request",kind:"scenario",scenarioAction:"attempt_out_of_scope_request"};
+    return {step:3,total:3,title:"Confirm the boundary held",instruction:"There is nothing for QSECOFR to approve. Inspect the real out-of-bound target in the terminal.",command:"DSPOBJAUT OBJ(CLAIMS400/CLAIMMST)",expected:"CLAIMMST is unchanged. Some actions are not approval questions; they are outside the agent's authority.",kind:"none"};
+  }
+  return {step:1,total:1,title:"Scenario unavailable",instruction:"Return to the chooser.",expected:"No state changed.",kind:"none"};
+}
+
+function approvalGuidance(step,total,title,instruction,expected){if(!agentAuthorityOperatorReady)return {step,total,title:"Become the human approver",instruction:"Sign on to the terminal as the separate human security officer.\n\nUser: QSECOFR\nPassword: TRAIN",expected:"The requesting agent cannot create this approval for itself.",kind:"none",readiness:"Authority Desk is not ready yet."};return {step,total,title,instruction,expected,action:"Review request in Authority Desk",kind:"desk"};}
+function renderPackGuidance(g){el("aa-step-count").textContent=`Step ${g.step} of ${g.total}`;el("aa-step-title").textContent=g.title;el("aa-step-instruction").textContent=g.instruction;el("aa-step-expected").querySelector("span").textContent=g.expected;const command=el("aa-step-command");command.hidden=!g.command;command.textContent=g.command??"";const readiness=el("aa-step-readiness");readiness.hidden=!g.readiness;readiness.textContent=g.readiness??"";const action=el("aa-step-action");action.hidden=!g.action;action.textContent=g.action??"";action.dataset.action=g.kind??"";action.dataset.scenarioAction=g.scenarioAction??"";}
 
 function renderAgentAuthorityWalkthrough(payload) {
   const proposal = payload.proposal;
@@ -1238,13 +1320,13 @@ function agentGuidance(payload) {
   const proposal = payload.proposal;
   if (!proposal) return {step:1,title:"Understand the message",instruction:"The agent found an operational message claiming payroll access was already approved. Read the message below. When you are ready, create the agent's governed request.",expected:"The message can influence a request, but it cannot grant authority.",action:"Create governed request",kind:"request"};
   const beforeConfirmed = sessionStorage.getItem(agentConfirmationKey("before-confirmed",proposal.id)) === "1";
-  if (proposal.status === "pending" && !beforeConfirmed) return {step:2,title:"Confirm that nothing changed",instruction:"Agent Authority stopped the privilege change. Before a human decides anything, confirm that CLAIMS400 is still unchanged. In the terminal on the left, run:\n\nDSPOBJAUT OBJ(PAYROLL/PAYMST)\n\nFind APCLERK.",expected:"APCLERK should NOT have *USE private authority yet.",action:"Done — I confirmed it",kind:"confirm-before"};
+  if (proposal.status === "pending" && !beforeConfirmed) return {step:2,title:"Confirm that nothing changed",instruction:"Agent Authority stopped the privilege change. Before a human decides anything, confirm that CLAIMS400 is still unchanged. In the terminal on the left, run:",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:"Find APCLERK. It should NOT have *USE private authority yet.",action:"Done — I confirmed it",kind:"confirm-before"};
   if (proposal.status === "pending" && !agentAuthorityOperatorReady) return {step:3,title:"Become the human approver",instruction:"Now sign on to the terminal as the human security officer.\n\nUser: QSECOFR\nPassword: TRAIN\n\nThis creates the separate human operator session Agent Authority requires. The requesting agent cannot create this approval for itself.",expected:"This step completes when LCL detects the exact live QSECOFR operator session.",readiness:"Authority Desk is not ready yet. Sign on as QSECOFR in the terminal."};
   if (proposal.status === "pending") return {step:4,title:"Review the request",instruction:"Authority Desk opens separately because approval is a human control boundary, not an agent function. Inspect APCLERK, PAYROLL/PAYMST, *USE and the exact action, then approve or deny.",expected:"Authority Desk will bind the human decision to this exact action hash.",action:"Review request in Authority Desk",kind:"desk"};
   const afterConfirmed = sessionStorage.getItem(agentConfirmationKey("after-confirmed",proposal.id)) === "1";
   if (!afterConfirmed) {
     const approved = proposal.status === "consumed";
-    return {step:5,title:"Confirm the outcome in CLAIMS400",instruction:`Return to the LCL terminal and run the same command again:\n\nDSPOBJAUT OBJ(PAYROLL/PAYMST)${approved ? "\n\nQSECOFR approved the action. MCPAGENT performed it." : ""}`,expected:approved ? "APCLERK now has *USE private authority. Executed by: MCPAGENT." : "APCLERK should still have no *USE private authority because the request was denied or invalidated.",action:"Done — I confirmed the outcome",kind:"confirm-after"};
+    return {step:5,title:"Confirm the outcome in CLAIMS400",instruction:`Return to the LCL terminal and run the same command again.${approved ? " QSECOFR approved the action. MCPAGENT performed it." : ""}`,command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:approved ? "APCLERK now has *USE private authority. Executed by: MCPAGENT." : "APCLERK should still have no *USE private authority because the request was denied or invalidated.",action:"Done — I confirmed the outcome",kind:"confirm-after"};
   }
   return {step:6,title:"Inspect the evidence",instruction:"The decision is finished. Now inspect what the system recorded: CLAIMS400 authority state, state-change evidence, CA-style audit entry, MCPAGENT job log, Agent Authority receipts and proof verification.",expected:payload.proof?.verified ? "Proof verified. The exported record matches the protected decision and execution receipts." : "The decision evidence is recorded; proof verification is pending.",action:payload.proof?.verified && cachedLabSessionToken ? "Download verified proof" : null,kind:"proof"};
 }
@@ -1254,6 +1336,7 @@ function renderAgentAuthorityGuidance(payload) {
   el("aa-step-count").textContent = `Step ${guide.step} of 6`;
   el("aa-step-title").textContent = guide.title;
   el("aa-step-instruction").textContent = guide.instruction;
+  const command=el("aa-step-command");command.hidden=!guide.command;command.textContent=guide.command??"";
   el("aa-step-expected").querySelector("span").textContent = guide.expected;
   const readiness = el("aa-step-readiness");
   readiness.hidden = !guide.readiness;
@@ -1266,6 +1349,8 @@ function renderAgentAuthorityGuidance(payload) {
 
 async function handleAgentGuidanceAction() {
   const action = el("aa-step-action")?.dataset.action;
+  const selected=sessionStorage.getItem(AGENT_AUTHORITY_SCENARIO_KEY);
+  if(action==="scenario"&&selected){const scenarioAction=el("aa-step-action").dataset.scenarioAction;const response=await fetch(`/api/agent-authority/scenarios/${selected}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:scenarioAction})});if(!response.ok)throw new Error("Scenario action failed");renderScenarioPack(await response.json());return;}
   if (action === "request") return startAgentAuthorityRequest();
   const payload = await loadJson("/api/agent-authority/walkthrough");
   const proposalId = payload.proposal?.id;
@@ -3458,6 +3543,8 @@ async function loadLab() {
     setPanelMode("disconnected");
     initDemoControls();
     el("aa-step-action")?.addEventListener("click",()=>handleAgentGuidanceAction().catch(()=>undefined));
+    el("aa-scenario-cards")?.addEventListener("click",(event)=>{const button=event.target.closest?.("button[data-scenario-id]");if(button)selectAgentAuthorityScenario(button.dataset.scenarioId);});
+    el("aa-back-to-scenarios")?.addEventListener("click",leaveAgentAuthorityScenario);
     el("aa-download-proof")?.addEventListener("click",()=>downloadAgentAuthorityProof().catch(()=>undefined));
 
     initLaneChooser((lane) => {

@@ -14,13 +14,32 @@ import { buildProposalProofBundle } from "../proof/proofBuilder.js";
 import { verifyProofBundle } from "../proof/proofVerifier.js";
 import { AA001DeterministicAgent } from "../scenarios/aa001Runner.js";
 import { AA001_INTENT,AA001_MESSAGE,AA001_SCENARIO_ID } from "../scenarios/aa001Fixture.js";
+import {ScenarioPackService} from "../scenarios/scenarioPackService.js";
+import {requireScenario,type AgentAuthorityScenarioId} from "../scenarios/scenarioCatalog.js";
 
 const STATUSES=new Set<ProposalStatus>(["pending","approved","denied","expired","invalidated","consumed"]);
 type HandlerResult={handled:boolean};
 
 export function createAuthorityDeskApi(runtime:AgentAuthorityRuntime,systemName:string) {
+  const scenarios=new ScenarioPackService(runtime);
   return async(req:http.IncomingMessage,res:http.ServerResponse,url:URL):Promise<HandlerResult>=>{
     if(!url.pathname.startsWith("/api/agent-authority/")) return {handled:false};
+    if(url.pathname==="/api/agent-authority/scenarios"&&req.method==="GET") {
+      sendJson(res,200,scenarios.catalog());return {handled:true};
+    }
+    const scenarioMatch=url.pathname.match(/^\/api\/agent-authority\/scenarios\/(AA-\d{3})$/);
+    if(scenarioMatch) {
+      try {
+        const id=scenarioMatch[1] as AgentAuthorityScenarioId;requireScenario(id);
+        if(req.method==="GET")sendJson(res,200,scenarios.project(id));
+        else if(req.method==="POST"){
+          const body=await readBody(req);rejectExtra(body,new Set(["action"]));
+          if(typeof body.action!=="string")throw new Error("INVALID_REQUEST: action required");
+          sendJson(res,200,scenarios.act(id,body.action as Parameters<ScenarioPackService["act"]>[1]));
+        } else sendJson(res,405,{error:"Method not allowed"});
+      } catch(error){const message=error instanceof Error?error.message:"Scenario request failed";sendJson(res,message.startsWith("INVALID_REQUEST")?400:409,{error:message});}
+      return {handled:true};
+    }
     if(url.pathname==="/api/agent-authority/walkthrough") {
       try {
         if(req.method==="POST") {

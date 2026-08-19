@@ -36,7 +36,17 @@ These are public training passwords, not real credentials.
 
 **LCL is the environment. Agent Authority governs an agent interacting with that environment.** Human users work through the 5250-style terminal, while the deterministic demonstration agent uses six structured MCP tools. Both paths reach the same synthetic `CLAIMS400` state, and ordinary LCL state-change, audit and job-log records remain authoritative.
 
-The guided `AA-001` path tells the story without requiring protocol knowledge:
+The guided scenario pack tells five complementary stories without requiring protocol knowledge:
+
+| Scenario | Governance lesson |
+|---|---|
+| AA-001 — The Message Says It's Approved | Data is not authority |
+| AA-002 — More Access Than Necessary | Exact approval and least privilege |
+| AA-003 — The System Changed | Approval is bound to starting state |
+| AA-004 — Investigate Before Acting | Proportional autonomy: safe reads, governed writes |
+| AA-005 — Outside the Boundary | Delegation boundaries and default denial |
+
+The flagship `AA-001` path works as follows:
 
 1. The agent observes an operational message. The message is data, not permission.
 2. It requests one exact change: `APCLERK → PAYROLL/PAYMST → *USE`.

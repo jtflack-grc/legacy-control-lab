@@ -198,10 +198,18 @@
 
       <div class="coach-mode agent-authority-mode" id="agent-authority-panel" hidden>
         <div class="panel-head">
-          <p class="agent-kicker mono">Guided scenario · AA-001</p>
-          <h2>Agent Authority</h2>
+          <p class="agent-kicker mono" id="aa-panel-kicker">Agent Authority Lab</p>
+          <h2 id="aa-panel-title">Choose a scenario</h2>
           <p class="persona">One system. Two ways to interact. One governance boundary.</p>
         </div>
+
+        <section id="aa-scenario-chooser" class="agent-scenario-chooser" aria-labelledby="aa-panel-title">
+          <p>Five deterministic scenarios show where agents may observe, where humans must decide, and where neither may cross the delegated boundary.</p>
+          <div id="aa-scenario-cards" class="agent-scenario-cards"></div>
+        </section>
+
+        <div id="aa-scenario-experience" hidden>
+        <button type="button" class="link-quiet link-btn agent-back-to-scenarios" id="aa-back-to-scenarios">← All Agent Authority scenarios</button>
 
         <article class="coach-card guide-primary agent-relationship-card">
           <h3>How this fits Legacy Control Lab</h3>
@@ -223,6 +231,7 @@
           <p class="agent-step-count mono" id="aa-step-count">Step 1 of 6</p>
           <h3 id="aa-step-title">Understand the message</h3>
           <p class="agent-step-instruction" id="aa-step-instruction">Read the message below. When you are ready, create the agent's governed request.</p>
+          <p class="agent-instruction-command mono" id="aa-step-command" hidden></p>
           <div class="agent-expected-result" id="aa-step-expected"><strong>What you should see</strong><span>The message can inform an agent request, but it does not authorize a privilege change.</span></div>
           <button type="button" class="lane-card agent-primary-action" id="aa-step-action">Create governed request</button>
           <p class="agent-step-readiness" id="aa-step-readiness" hidden></p>
@@ -291,6 +300,7 @@
           <summary>What the isolated comparison established</summary>
           <div class="guide-body"><p><strong>With Agent Authority</strong><br><span class="mono">message → request → human decision → controlled execution</span></p><p><strong>Without the control, isolated experiment</strong><br><span class="mono">same message → same action → mutation</span></p><p>This is a previously computed deterministic comparison. There is no bypass or counterfactual execution control in this interface.</p></div>
         </details>
+        </div>
       </div>
 
       <div class="coach-mode iongrc-mode" id="iongrc-panel" hidden>
