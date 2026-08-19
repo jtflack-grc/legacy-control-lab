@@ -14,6 +14,8 @@ jobs:
   test-build-smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: /usr/bin/google-chrome
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -21,10 +23,17 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Install Chromium for Authority Desk test
-        run: npx playwright install --with-deps chromium
+      - name: Verify hosted Chromium for browser tests
+        run: google-chrome --version
       - run: npm test
       - run: npm run build
+      - name: Capture Agent Authority presentation screenshots
+        run: node scripts/capture-agent-authority-screenshots.mjs
+      - name: Upload Agent Authority presentation screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-authority-screenshots
+          path: public/assets/screenshots/0*-agent-authority-*.png
       - name: Proof export and offline verification smoke
         run: npx vitest run tests/agent-authority/phase6.test.ts -t "writes through the exporter CLI"
       - name: Docker build and health smoke
