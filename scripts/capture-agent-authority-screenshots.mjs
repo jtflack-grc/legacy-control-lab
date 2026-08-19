@@ -45,7 +45,7 @@ try{
 
   await choose(page,"AA-002");
   await page.locator("#aa-step-action").click();
-  await wait(async()=>(await page.locator("#aa-step-expected").textContent())?.includes("Authority Desk"));
+  await wait(async()=>(await page.locator("#aa-proposal-id").textContent())!=="—");
   await shot(page,"07-agent-authority-aa002-overbroad.png");
 
   await choose(page,"AA-003");
@@ -56,7 +56,7 @@ try{
   const staleDecision=runtime.approvals.approve(stale.proposals[0].id,operator,"demonstrate stale state");
   if(staleDecision.status!=="invalidated")throw new Error(`Stale screenshot failed: ${staleDecision.status}`);
   await page.reload();
-  await wait(async()=>(await page.locator("#aa-step-title").textContent())?.includes("invalidated"));
+  await wait(async()=>(await page.locator("#aa-decision").textContent())==="invalidated");
   await shot(page,"08-agent-authority-aa003-stale.png");
 
   await choose(page,"AA-004");
@@ -66,7 +66,7 @@ try{
 
   await choose(page,"AA-005");
   await page.locator("#aa-step-action").click();
-  await wait(async()=>(await page.locator("#aa-step-title").textContent())?.includes("boundary rejected"));
+  await wait(async()=>(await page.locator("#aa-evidence-list").textContent())?.includes("Boundary denial receipt"));
   await shot(page,"10-agent-authority-aa005-boundary.png");
   closeDatabase();
   await browser.close();
