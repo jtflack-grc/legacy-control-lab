@@ -219,6 +219,15 @@
           <li data-aa-stage="REVIEWED">Reviewed</li><li data-aa-stage="EXECUTED">Executed</li><li data-aa-stage="VERIFIED">Verified</li>
         </ol>
 
+        <article class="coach-card agent-next-step" id="aa-next-step" aria-live="polite">
+          <p class="agent-step-count mono" id="aa-step-count">Step 1 of 6</p>
+          <h3 id="aa-step-title">Understand the message</h3>
+          <p class="agent-step-instruction" id="aa-step-instruction">Read the message below. When you are ready, create the agent's governed request.</p>
+          <div class="agent-expected-result" id="aa-step-expected"><strong>What you should see</strong><span>The message can inform an agent request, but it does not authorize a privilege change.</span></div>
+          <button type="button" class="lane-card agent-primary-action" id="aa-step-action">Create governed request</button>
+          <p class="agent-step-readiness" id="aa-step-readiness" hidden></p>
+        </article>
+
         <article class="coach-card agent-story-card">
           <span class="agent-status" id="aa-status">Observed</span>
           <h3 id="aa-story-title">The message is data. It is not permission.</h3>
@@ -235,7 +244,6 @@
           <h3>Exact requested change</h3>
           <div class="agent-action-flow mono"><span>APCLERK</span><span>→</span><span>PAYROLL/PAYMST</span><span>→</span><span>*USE</span></div>
           <p>The agent asks for this change. It does not directly execute it.</p>
-          <button type="button" class="lane-card agent-primary-action" id="aa-start-request">Create governed request</button>
           <dl class="agent-summary" id="aa-request-summary" hidden>
             <div><dt>Proposal</dt><dd id="aa-proposal-id">—</dd></div><div><dt>Decision</dt><dd id="aa-decision">Awaiting human review</dd></div>
             <div><dt>CLAIMS400 authority</dt><dd id="aa-current-authority">No private authority</dd></div><div><dt>Executed by</dt><dd id="aa-executor">Not executed</dd></div>
@@ -244,8 +252,7 @@
 
         <article class="coach-card agent-handoff-card" id="aa-handoff" hidden>
           <h3>Human review stays separate</h3>
-          <p>Sign on in the terminal as <span class="mono">QSECOFR / TRAIN</span>. Then review this one exact request in Authority Desk. The agent cannot approve itself.</p>
-          <a class="demo-article-link agent-desk-link" href="/lab/authority/" target="_blank" rel="noopener">Review request in Authority Desk</a>
+          <p>QSECOFR supplies the separate human decision. Authority Desk is a human control boundary, not an agent function.</p>
         </article>
 
         <article class="coach-card agent-terminal-card" id="aa-terminal-check" hidden>
@@ -261,6 +268,10 @@
           <p class="control-translation"><strong>The system creates the evidence.</strong> The agent does not write its own account of success.</p>
           <p class="agent-proof-state" id="aa-proof-state">Proof not available yet.</p>
           <button type="button" class="lane-card agent-proof-download" id="aa-download-proof" hidden>Download verified proof</button>
+          <div class="agent-debrief">
+            <h3>What just happened?</h3>
+            <p>The agent asked. Policy stopped the sensitive action. A human made one exact decision. MCPAGENT executed an approved change. CLAIMS400 recorded the outcome. The decision can be checked afterward.</p>
+          </div>
         </article>
 
         <details class="guide-secondary">

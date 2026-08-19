@@ -12,6 +12,7 @@
   --card: var(--oled);
   --coach-width: 24rem;
   --demo-coach-width: 30rem;
+  --agent-coach-width: clamp(34rem, 38vw, 42rem);
   --mono: "Cascadia Code", "Cascadia Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
   --sans: "Segoe UI", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
   --text-xs: 0.75rem;
@@ -56,6 +57,14 @@ body {
 }
 
 .agent-authority-mode { --aa-accent: #57f2a1; }
+.agent-next-step { position: sticky; top: 5.4rem; z-index: 1; border: 1px solid #216943; box-shadow: 0 10px 28px rgba(0,0,0,.7); background: #050b07; }
+.agent-step-count { margin: 0 0 .35rem; color: var(--aa-accent); font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.agent-next-step h3 { margin-bottom: .45rem; font-size: 1.1rem; }
+.agent-step-instruction { margin-bottom: .7rem; color: var(--text); font-size: .95rem; }
+.agent-expected-result { display: grid; grid-template-columns: 9rem minmax(0,1fr); gap: .75rem; padding: .65rem .75rem; border-left: 3px solid #ffc857; background: #11100a; color: var(--text-secondary); font-size: .8rem; }
+.agent-expected-result strong { color: #ffc857; text-transform: uppercase; letter-spacing: .04em; }
+.agent-step-readiness { margin: .65rem 0 0; color: #ffc857; font-size: .8rem; }
+.agent-debrief { margin-top: 1rem; padding-top: .85rem; border-top: 1px solid var(--border); }
 .agent-kicker { margin: 0 0 .35rem; color: var(--accent); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: var(--tracking-wide); }
 .agent-relationship-card { border-left: 3px solid var(--aa-accent); }
 .agent-state-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: .35rem; margin: 0 0 1rem; padding: 0; list-style: none; }
@@ -461,6 +470,10 @@ body.welcome-open {
 
 .split.coach-open {
   grid-template-columns: minmax(0, 1fr) var(--coach-width);
+}
+
+.split.coach-open:has(#agent-authority-panel:not([hidden])) {
+  grid-template-columns: minmax(32rem, 1fr) var(--agent-coach-width);
 }
 
 /* Evidence-engineering screens only — 50/50 terminal and coach rail */
@@ -2174,4 +2187,19 @@ body.welcome-open {
   .coach-rail:has(#operator-panel.evidence-focus-mode:not([hidden])) {
     max-height: none;
   }
+}
+
+@media (min-width: 961px) and (max-width: 1180px) {
+  .split.coach-open:has(#agent-authority-panel:not([hidden])) {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(55vh, 1fr) auto;
+  }
+
+  .coach-rail:has(#agent-authority-panel:not([hidden])) {
+    max-height: 45vh;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .agent-next-step { top: 0; }
 }

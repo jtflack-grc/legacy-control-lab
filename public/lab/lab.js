@@ -81,6 +81,7 @@ const LANE_PROFILES = {
 
 let cachedLaneCredentials = null;
 let cachedLabSessionToken = null;
+let agentAuthorityOperatorReady = false;
 let terminalFrameRef = null;
 let demoAutoSignoffTimer = null;
 let demoAutoSignoffTickTimer = null;
@@ -1192,7 +1193,6 @@ function renderAgentAuthorityWalkthrough(payload) {
   const narrative = agentNarrative(payload);
   if (el("aa-story-title")) el("aa-story-title").textContent = narrative.title;
   if (el("aa-story-copy")) el("aa-story-copy").textContent = narrative.copy;
-  if (el("aa-start-request")) el("aa-start-request").hidden = Boolean(proposal);
   if (el("aa-request-summary")) el("aa-request-summary").hidden = !proposal;
   if (el("aa-handoff")) el("aa-handoff").hidden = !proposal || proposal.status !== "pending";
   if (el("aa-terminal-check")) el("aa-terminal-check").hidden = !proposal;
@@ -1225,8 +1225,55 @@ function renderAgentAuthorityWalkthrough(payload) {
     }
   }
   const proof = el("aa-proof-state");
-  if (proof) {proof.textContent = payload.proof?.verified ? "Proof verified. The exported bundle agrees with its integrity-protected receipt chain." : "Proof verification is not complete.";proof.classList.toggle("verified",Boolean(payload.proof?.verified));}
+  if (proof) {proof.textContent = payload.proof?.verified ? "Proof verified. The exported record matches the protected decision and execution receipts." : "Proof verification is not complete.";proof.classList.toggle("verified",Boolean(payload.proof?.verified));}
   if (el("aa-download-proof")) el("aa-download-proof").hidden = !payload.proof?.verified || !cachedLabSessionToken;
+  renderAgentAuthorityGuidance(payload);
+}
+
+function agentConfirmationKey(kind, proposalId) {
+  return `lab.agent-authority.${kind}.${proposalId}`;
+}
+
+function agentGuidance(payload) {
+  const proposal = payload.proposal;
+  if (!proposal) return {step:1,title:"Understand the message",instruction:"The agent found an operational message claiming payroll access was already approved. Read the message below. When you are ready, create the agent's governed request.",expected:"The message can influence a request, but it cannot grant authority.",action:"Create governed request",kind:"request"};
+  const beforeConfirmed = sessionStorage.getItem(agentConfirmationKey("before-confirmed",proposal.id)) === "1";
+  if (proposal.status === "pending" && !beforeConfirmed) return {step:2,title:"Confirm that nothing changed",instruction:"Agent Authority stopped the privilege change. Before a human decides anything, confirm that CLAIMS400 is still unchanged. In the terminal on the left, run:\n\nDSPOBJAUT OBJ(PAYROLL/PAYMST)\n\nFind APCLERK.",expected:"APCLERK should NOT have *USE private authority yet.",action:"Done — I confirmed it",kind:"confirm-before"};
+  if (proposal.status === "pending" && !agentAuthorityOperatorReady) return {step:3,title:"Become the human approver",instruction:"Now sign on to the terminal as the human security officer.\n\nUser: QSECOFR\nPassword: TRAIN\n\nThis creates the separate human operator session Agent Authority requires. The requesting agent cannot create this approval for itself.",expected:"This step completes when LCL detects the exact live QSECOFR operator session.",readiness:"Authority Desk is not ready yet. Sign on as QSECOFR in the terminal."};
+  if (proposal.status === "pending") return {step:4,title:"Review the request",instruction:"Authority Desk opens separately because approval is a human control boundary, not an agent function. Inspect APCLERK, PAYROLL/PAYMST, *USE and the exact action, then approve or deny.",expected:"Authority Desk will bind the human decision to this exact action hash.",action:"Review request in Authority Desk",kind:"desk"};
+  const afterConfirmed = sessionStorage.getItem(agentConfirmationKey("after-confirmed",proposal.id)) === "1";
+  if (!afterConfirmed) {
+    const approved = proposal.status === "consumed";
+    return {step:5,title:"Confirm the outcome in CLAIMS400",instruction:`Return to the LCL terminal and run the same command again:\n\nDSPOBJAUT OBJ(PAYROLL/PAYMST)${approved ? "\n\nQSECOFR approved the action. MCPAGENT performed it." : ""}`,expected:approved ? "APCLERK now has *USE private authority. Executed by: MCPAGENT." : "APCLERK should still have no *USE private authority because the request was denied or invalidated.",action:"Done — I confirmed the outcome",kind:"confirm-after"};
+  }
+  return {step:6,title:"Inspect the evidence",instruction:"The decision is finished. Now inspect what the system recorded: CLAIMS400 authority state, state-change evidence, CA-style audit entry, MCPAGENT job log, Agent Authority receipts and proof verification.",expected:payload.proof?.verified ? "Proof verified. The exported record matches the protected decision and execution receipts." : "The decision evidence is recorded; proof verification is pending.",action:payload.proof?.verified && cachedLabSessionToken ? "Download verified proof" : null,kind:"proof"};
+}
+
+function renderAgentAuthorityGuidance(payload) {
+  const guide = agentGuidance(payload);
+  el("aa-step-count").textContent = `Step ${guide.step} of 6`;
+  el("aa-step-title").textContent = guide.title;
+  el("aa-step-instruction").textContent = guide.instruction;
+  el("aa-step-expected").querySelector("span").textContent = guide.expected;
+  const readiness = el("aa-step-readiness");
+  readiness.hidden = !guide.readiness;
+  readiness.textContent = guide.readiness ?? "";
+  const action = el("aa-step-action");
+  action.hidden = !guide.action;
+  action.textContent = guide.action ?? "";
+  action.dataset.action = guide.kind ?? "";
+}
+
+async function handleAgentGuidanceAction() {
+  const action = el("aa-step-action")?.dataset.action;
+  if (action === "request") return startAgentAuthorityRequest();
+  const payload = await loadJson("/api/agent-authority/walkthrough");
+  const proposalId = payload.proposal?.id;
+  if (action === "confirm-before" && proposalId) sessionStorage.setItem(agentConfirmationKey("before-confirmed",proposalId),"1");
+  if (action === "confirm-after" && proposalId) sessionStorage.setItem(agentConfirmationKey("after-confirmed",proposalId),"1");
+  if (action === "desk") {window.open("/lab/authority/","_blank","noopener");return;}
+  if (action === "proof") return downloadAgentAuthorityProof();
+  renderAgentAuthorityWalkthrough(payload);
 }
 
 function displayAgentStage(payload) {
@@ -1254,7 +1301,7 @@ function agentNarrative(payload) {
 }
 
 async function startAgentAuthorityRequest() {
-  const button = el("aa-start-request");if (button) button.disabled = true;
+  const button = el("aa-step-action");if (button) button.disabled = true;
   try {const response=await fetch("/api/agent-authority/walkthrough",{method:"POST"});if(!response.ok)throw new Error("Request could not be created");renderAgentAuthorityWalkthrough(await response.json());}
   finally {if(button)button.disabled=false;}
 }
@@ -3232,6 +3279,9 @@ async function loadLab() {
         }
         const session = await loadJson(`/api/lab/session?${sessionParams.toString()}`);
         cacheLabSessionToken(session);
+        if (skillPath === "agentauthority") {
+          agentAuthorityOperatorReady = Boolean(session.connected && session.userName?.toUpperCase() === "QSECOFR" && session.lane === "operator");
+        }
 
         if (!session.connected) {
           if (demoAutoSignoffTimer) {
@@ -3407,7 +3457,7 @@ async function loadLab() {
     initFindingComposer();
     setPanelMode("disconnected");
     initDemoControls();
-    el("aa-start-request")?.addEventListener("click",()=>startAgentAuthorityRequest().catch(()=>undefined));
+    el("aa-step-action")?.addEventListener("click",()=>handleAgentGuidanceAction().catch(()=>undefined));
     el("aa-download-proof")?.addEventListener("click",()=>downloadAgentAuthorityProof().catch(()=>undefined));
 
     initLaneChooser((lane) => {
