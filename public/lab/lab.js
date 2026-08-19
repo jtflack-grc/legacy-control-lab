@@ -1193,7 +1193,8 @@ async function renderAgentAuthorityChooser() {
   const payload=await loadJson("/api/agent-authority/scenarios");
   el("aa-scenario-chooser").hidden=false;el("aa-scenario-experience").hidden=true;
   const scenarios=payload.scenarios??[];const completed=scenarios.filter((scenario)=>["complete","complete_with_warning"].includes(scenario.status)).length;const allComplete=completed===5;
-  el("aa-panel-kicker").textContent="Agent Authority Lab";el("aa-panel-title").textContent=allComplete?"Lab complete":"Choose a scenario";el("aa-lab-progress").textContent=`Progress ${completed} / 5`;
+  const review=allComplete&&sessionStorage.getItem(AGENT_AUTHORITY_REVIEW_KEY)==="1";
+  el("aa-panel-kicker").textContent="Agent Authority Lab";el("aa-panel-title").textContent=review?"Review scenarios":allComplete?"Lab complete":"Choose a scenario";el("aa-lab-progress").textContent=`Progress ${completed} / 5`;el("aa-review-complete").hidden=!review;
   const cards=el("aa-scenario-cards");cards.replaceChildren();
   for(const scenario of scenarios){
     const article=document.createElement("article");article.className="agent-scenario-card";
@@ -1205,7 +1206,7 @@ async function renderAgentAuthorityChooser() {
     const button=document.createElement("button");button.type="button";button.className="lane-card";button.dataset.scenarioId=scenario.id;button.textContent=scenario.status==="not_started"?"Start scenario":"Open scenario";
     article.append(status,id,title,situation,concept,button);cards.append(article);
   }
-  const review=allComplete&&sessionStorage.getItem(AGENT_AUTHORITY_REVIEW_KEY)==="1";cards.hidden=allComplete&&!review;el("aa-lab-complete").hidden=!allComplete;
+  cards.hidden=allComplete&&!review;el("aa-lab-complete").hidden=!allComplete||review;
 }
 
 function showAgentAuthorityExperience(id) {
@@ -1218,6 +1219,7 @@ function showAgentAuthorityExperience(id) {
 function selectAgentAuthorityScenario(id){cancelAgentAuthorityReturn();sessionStorage.setItem(AGENT_AUTHORITY_SCENARIO_KEY,id);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
 function leaveAgentAuthorityScenario(){cancelAgentAuthorityReturn();sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
 function reviewCompletedAgentAuthorityScenarios(){sessionStorage.setItem(AGENT_AUTHORITY_REVIEW_KEY,"1");renderAgentAuthorityChooser().catch(()=>undefined);}
+function showAgentAuthorityCompletionSummary(){sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);renderAgentAuthorityChooser().catch(()=>undefined);}
 function returnToLclLauncher(){cancelAgentAuthorityReturn();setAgentAuthorityActive(false);sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);sessionStorage.removeItem(SKILL_PATH_KEY);localStorage.removeItem(SKILL_PATH_KEY);showLaneChooser("paths");}
 
 const AGENT_AUTHORITY_COMPLETIONS={
@@ -1233,7 +1235,7 @@ function scenarioStayKey(id){return `lab.agent-authority.completion-stay.${id}`;
 function cancelAgentAuthorityReturn(message){if(agentAuthorityReturnTimer!==null){window.clearInterval(agentAuthorityReturnTimer);agentAuthorityReturnTimer=null;}if(message&&el("aa-return-message")){el("aa-return-message").textContent=message;el("aa-return-seconds").hidden=true;}}
 function hideScenarioCompletion(){cancelAgentAuthorityReturn();agentAuthorityCompletionId=null;el("aa-scenario-complete").hidden=true;el("aa-next-step").hidden=false;}
 function showScenarioCompletion(id,title,status){const definition=AGENT_AUTHORITY_COMPLETIONS[id];if(!definition)return;const warning=status==="complete_with_warning";el("aa-next-step").hidden=true;el("aa-scenario-complete").hidden=false;el("aa-completion-kicker").textContent=warning?"Scenario complete with warning":"Scenario complete";el("aa-completion-title").textContent=`${id} — ${title}`;el("aa-completion-lesson").textContent=warning?definition.warningLesson:definition.lesson;const outcomes=warning?definition.warningOutcomes:definition.outcomes;const list=el("aa-completion-outcomes");list.replaceChildren();for(const value of outcomes){const item=document.createElement("li");item.textContent=value;list.append(item);}el("aa-completion-status").textContent=`Status · ${warning?"Complete with warning":"Complete"}`;
-  if(agentAuthorityCompletionId===id)return;cancelAgentAuthorityReturn();agentAuthorityCompletionId=id;const stayed=sessionStorage.getItem(scenarioStayKey(id))==="1";el("aa-stay-here").hidden=stayed;el("aa-return-countdown").hidden=false;el("aa-return-seconds").hidden=stayed;if(stayed){el("aa-return-message").textContent="Automatic return cancelled. Review the completed evidence when ready.";return;}agentAuthorityReturnSeconds=10;el("aa-return-seconds").textContent=String(agentAuthorityReturnSeconds);el("aa-return-message").textContent="Returning to Agent Authority Lab in 10 seconds.";agentAuthorityReturnTimer=window.setInterval(()=>{agentAuthorityReturnSeconds-=1;el("aa-return-seconds").textContent=String(Math.max(0,agentAuthorityReturnSeconds));if(agentAuthorityReturnSeconds<=0){cancelAgentAuthorityReturn("Returning to Agent Authority Lab now.");leaveAgentAuthorityScenario();}},1000);
+  const review=sessionStorage.getItem(AGENT_AUTHORITY_REVIEW_KEY)==="1";if(review){cancelAgentAuthorityReturn();agentAuthorityCompletionId=id;el("aa-return-countdown").hidden=true;el("aa-stay-here").hidden=true;return;}if(agentAuthorityCompletionId===id)return;cancelAgentAuthorityReturn();agentAuthorityCompletionId=id;const stayed=sessionStorage.getItem(scenarioStayKey(id))==="1";el("aa-stay-here").hidden=stayed;el("aa-return-countdown").hidden=false;el("aa-return-seconds").hidden=stayed;if(stayed){el("aa-return-message").textContent="Automatic return cancelled. Review the completed evidence when ready.";return;}agentAuthorityReturnSeconds=10;el("aa-return-seconds").textContent=String(agentAuthorityReturnSeconds);el("aa-return-message").textContent="Returning to Agent Authority Lab in 10 seconds.";agentAuthorityReturnTimer=window.setInterval(()=>{agentAuthorityReturnSeconds-=1;el("aa-return-seconds").textContent=String(Math.max(0,agentAuthorityReturnSeconds));if(agentAuthorityReturnSeconds<=0){cancelAgentAuthorityReturn("Returning to Agent Authority Lab now.");leaveAgentAuthorityScenario();}},1000);
 }
 function stayAtScenarioCompletion(){const id=agentAuthorityCompletionId;if(id)sessionStorage.setItem(scenarioStayKey(id),"1");el("aa-stay-here").hidden=true;cancelAgentAuthorityReturn("Automatic return cancelled. Review the completed evidence when ready.");}
 
@@ -1253,7 +1255,7 @@ function renderScenarioPack(payload){
   if(payload.denial){const item=document.createElement("li");item.textContent=`Boundary denial receipt: ${payload.denial.id}`;list.append(item);}
   const proofProposal=proposals.find((p)=>p.proof?.available);const proof=el("aa-proof-state");proof.textContent=proofProposal?.proof?.verified?"Proof verified. The exported record matches the protected decision and execution receipts.":"Proof is available after a proposal decision.";proof.classList.toggle("verified",Boolean(proofProposal?.proof?.verified));
   el("aa-download-proof").hidden=!proofProposal?.proof?.verified||!cachedLabSessionToken;
-  if(["complete","complete_with_warning"].includes(payload.status)&&sessionStorage.getItem(scenarioCompletionKey(scenario.id))==="1")showScenarioCompletion(scenario.id,scenario.title,payload.status);else hideScenarioCompletion();
+  if(["complete","complete_with_warning"].includes(payload.status)&&(sessionStorage.getItem(scenarioCompletionKey(scenario.id))==="1"||sessionStorage.getItem(AGENT_AUTHORITY_REVIEW_KEY)==="1"))showScenarioCompletion(scenario.id,scenario.title,payload.status);else hideScenarioCompletion();
 }
 
 function scenarioPackGuidance(payload){
@@ -3578,6 +3580,7 @@ async function loadLab() {
     el("aa-return-now")?.addEventListener("click",leaveAgentAuthorityScenario);
     el("aa-stay-here")?.addEventListener("click",stayAtScenarioCompletion);
     el("aa-review-scenarios")?.addEventListener("click",reviewCompletedAgentAuthorityScenarios);
+    el("aa-review-complete")?.addEventListener("click",showAgentAuthorityCompletionSummary);
     el("aa-return-launcher")?.addEventListener("click",returnToLclLauncher);
     el("aa-download-proof")?.addEventListener("click",()=>downloadAgentAuthorityProof().catch(()=>undefined));
 
