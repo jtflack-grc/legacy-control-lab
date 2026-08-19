@@ -1217,7 +1217,7 @@ function showAgentAuthorityExperience(id) {
 }
 
 function selectAgentAuthorityScenario(id){cancelAgentAuthorityReturn();sessionStorage.setItem(AGENT_AUTHORITY_SCENARIO_KEY,id);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
-function leaveAgentAuthorityScenario(){cancelAgentAuthorityReturn();sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
+function leaveAgentAuthorityScenario(){cancelAgentAuthorityReturn();sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
 function reviewCompletedAgentAuthorityScenarios(){sessionStorage.setItem(AGENT_AUTHORITY_REVIEW_KEY,"1");renderAgentAuthorityChooser().catch(()=>undefined);}
 function showAgentAuthorityCompletionSummary(){sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);renderAgentAuthorityChooser().catch(()=>undefined);}
 function returnToLclLauncher(){cancelAgentAuthorityReturn();setAgentAuthorityActive(false);sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);sessionStorage.removeItem(SKILL_PATH_KEY);localStorage.removeItem(SKILL_PATH_KEY);showLaneChooser("paths");}
