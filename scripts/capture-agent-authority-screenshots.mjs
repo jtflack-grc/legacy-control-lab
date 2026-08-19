@@ -42,11 +42,16 @@ try{
   await wait(async()=>(await page.locator("#aa-step-count").textContent())==="Step 6 of 6");
   await page.locator("#aa-evidence-card").scrollIntoViewIfNeeded();
   await shot(page,"05-agent-authority-complete.png");
+  await page.locator("#aa-scenario-complete").scrollIntoViewIfNeeded();
+  await shot(page,"11-agent-authority-scenario-complete.png");
 
   await choose(page,"AA-002");
   await page.locator("#aa-step-action").click();
   await wait(async()=>(await page.locator("#aa-proposal-id").textContent())!=="—");
   await shot(page,"07-agent-authority-aa002-overbroad.png");
+  const broad=await (await fetch(`${base}/api/agent-authority/scenarios/AA-002`)).json();
+  const broadDecision=runtime.approvals.approve(broad.proposals[0].id,operator,"presentation overprivilege lesson");
+  if(broadDecision.status!=="succeeded")throw new Error(`AA-002 screenshot approval failed: ${broadDecision.status}`);
 
   await choose(page,"AA-003");
   await page.locator("#aa-step-action").click();
@@ -61,13 +66,27 @@ try{
 
   await choose(page,"AA-004");
   await page.locator("#aa-step-action").click();
-  await wait(async()=>await page.locator("#aa-observation-list li").count()===3);
+  await wait(async()=>await page.locator("#aa-evidence-list li").count()===3);
   await shot(page,"09-agent-authority-aa004-investigation.png");
+  await page.locator("#aa-step-action").click();
+  const investigated=await (await fetch(`${base}/api/agent-authority/scenarios/AA-004`)).json();
+  const investigationDecision=runtime.approvals.approve(investigated.proposals[0].id,operator,"presentation proportional autonomy");
+  if(investigationDecision.status!=="succeeded")throw new Error(`AA-004 screenshot approval failed: ${investigationDecision.status}`);
 
   await choose(page,"AA-005");
   await page.locator("#aa-step-action").click();
   await wait(async()=>(await page.locator("#aa-evidence-list").textContent())?.includes("Boundary denial receipt"));
   await shot(page,"10-agent-authority-aa005-boundary.png");
+  await page.locator("#aa-back-to-scenarios").click();
+  await wait(async()=>await page.locator("#aa-lab-complete").isVisible());
+  await shot(page,"12-agent-authority-lab-complete.png");
+
+  let deskCompleted=false;
+  const deskProposal=()=>({id:"proposal_presentation",status:deskCompleted?"consumed":"pending",tool:{name:"grant_object_authority",version:"1"},canonicalAction:{arguments:{library:"PAYROLL",object:"PAYMST",user:"AUDIT",authority:"*USE"}},target:{system:"CLAIMS400"},riskClass:"privilege_change",policy:{id:"lcl-agent-authority",version:"1",decision:"require_approval",matchedRuleIds:["privilege-change-human-review"]},requester:{agentSessionId:"presentation-agent",clientName:"LCL scenario pack",clientVersion:"1"},actionHash:"sha256:5f401cf8a42327c43b380be9eb8c0fca559f9438cb7c8f68c33d86d2bfe84027",precondition:{currentAdvisory:{status:"matches"}},expiresAt:"2026-08-19T23:30:00.000Z",decision:{by:deskCompleted?"QSECOFR":null,reason:deskCompleted?"Least privilege":null},executionStatus:deskCompleted?"succeeded":null,provenance:[],receiptIds:deskCompleted?["receipt_approval","receipt_execution"]:["receipt_required"]});
+  const desk=await browser.newPage({viewport:{width:1600,height:1000},deviceScaleFactor:1});
+  await desk.route("**/api/lab/session?*",(route)=>route.fulfill({json:{connected:true,lane:"operator",sessionToken:"presentation-token",userName:"QSECOFR",systemName:"CLAIMS400"}}));
+  await desk.route("**/api/agent-authority/**",(route)=>{const url=new URL(route.request().url());if(url.pathname.endsWith("/status"))return route.fulfill({json:{target:{system:"CLAIMS400"},pendingCount:deskCompleted?0:1}});if(url.pathname.endsWith("/verify"))return route.fulfill({json:{ok:true,checked:deskCompleted?5:2}});if(url.pathname.endsWith("/receipts"))return route.fulfill({json:{receipts:[{id:"receipt_required",sequence:1,receiptType:"approval_required",createdAt:"2026-08-19T22:13:43.000Z"}]}});if(url.pathname.endsWith("/proposals")){const pendingOnly=url.searchParams.get("status")==="pending";return route.fulfill({json:{proposals:pendingOnly?(deskCompleted?[]:[deskProposal()]):[deskProposal()]}});}return route.fulfill({status:404,json:{error:"Not used by screenshot"}});});
+  await desk.goto(`${base}/lab/authority/`);await wait(async()=>await desk.locator("#proposals .proposal-card").count()===1);await shot(desk,"13-authority-desk-pending.png");deskCompleted=true;await desk.getByRole("button",{name:"Refresh"}).click();await wait(async()=>await desk.locator("#history .proposal-card").count()===1);await shot(desk,"14-authority-desk-completed.png");
   closeDatabase();
   await browser.close();
 } finally {server.kill("SIGTERM");}

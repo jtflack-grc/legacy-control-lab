@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Authority Desk | Legacy Control Lab</title><link rel="stylesheet" href="/lab/authority/authority.css"></head>
-<body><header><p class="eyebrow">LEGACY CONTROL LAB</p><h1>Authority Desk</h1><p>Human governance boundary for <strong>CLAIMS400</strong></p><span id="readiness" class="badge">Checking operator session…</span><p><a href="/lab/?path=agentauthority">← Back to Agent Authority walkthrough</a></p></header>
+<body><header class="app-header"><div class="header-inner"><div><p class="eyebrow">Legacy Control Lab <span>·</span> Agent Authority</p><h1>Authority Desk</h1><p class="subtitle">Human decision boundary for <strong>CLAIMS400</strong></p></div><div class="header-operations"><div id="readiness" class="readiness">Checking operator session…</div><a class="back-link" href="/lab/?path=agentauthority">← Back to Agent Authority Lab</a></div></div></header>
 <main>
-  <section class="metrics"><article><span>Target</span><strong id="target">CLAIMS400</strong></article><article><span>Pending</span><strong id="pending-count">—</strong></article><article><span>Receipt chain</span><strong id="chain">—</strong></article></section>
-  <section><div class="section-head"><h2>Pending proposals</h2><button id="refresh" type="button">Refresh</button></div><div id="locked" class="notice" hidden>Authority Desk is locked. Establish a signed-on operator session in the LCL terminal, then refresh.</div><div id="proposals" class="cards"></div></section>
-  <section><h2>Recent decisions</h2><div id="history" class="cards"></div></section>
-  <section><h2>Receipt history</h2><div id="receipts" class="cards"></div></section>
+  <section class="metrics" aria-label="Authority Desk operational status"><article><span>Target</span><strong id="target">CLAIMS400</strong></article><article><span>Pending</span><strong id="pending-count">—</strong></article><article><span>Receipt chain</span><strong id="chain">—</strong></article></section>
+  <section class="pending-section"><div class="section-head"><div><p class="section-kicker">Decision queue</p><h2>Pending proposals</h2></div><button id="refresh" class="quiet-action" type="button">Refresh</button></div><div id="locked" class="locked-state" hidden><strong>Authority Desk locked</strong><p>A signed-on LCL operator session is required.</p><span>Return to the terminal and sign on as:</span><code>QSECOFR</code><code>TRAIN</code><span>Then refresh.</span></div><div id="proposals" class="cards pending-cards"></div></section>
+  <section class="secondary-section"><div class="section-head"><div><p class="section-kicker">Persisted outcomes</p><h2>Recent decisions</h2></div></div><div id="history" class="cards history-cards"></div></section>
+  <section class="technical-section"><div class="section-head"><div><p class="section-kicker">Technical record</p><h2>Receipt history</h2></div></div><div id="receipts" class="cards receipt-cards"></div></section>
 </main><script src="/lab/authority/authority.js" defer></script></body></html>

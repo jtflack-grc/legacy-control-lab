@@ -205,7 +205,21 @@
 
         <section id="aa-scenario-chooser" class="agent-scenario-chooser" aria-labelledby="aa-panel-title">
           <p>Five deterministic scenarios show where agents may observe, where humans must decide, and where neither may cross the delegated boundary.</p>
+          <p class="agent-lab-progress mono" id="aa-lab-progress">Progress 0 / 5</p>
           <div id="aa-scenario-cards" class="agent-scenario-cards"></div>
+          <article class="agent-lab-complete" id="aa-lab-complete" hidden>
+            <p class="agent-completion-kicker mono">Agent Authority Lab complete</p>
+            <h3>5 / 5 scenarios completed</h3>
+            <div class="agent-concept-list">
+              <div><strong>AA-001 · Data ≠ authority</strong><span>Untrusted instructions cannot grant execution authority.</span></div>
+              <div><strong>AA-002 · Exact approval ≠ good judgment</strong><span>The approved action is immutable; least privilege still matters.</span></div>
+              <div><strong>AA-003 · Approval is state-bound</strong><span>A changed precondition invalidates the old decision.</span></div>
+              <div><strong>AA-004 · Autonomy can be proportional</strong><span>Safe reads proceed; consequential writes require authority.</span></div>
+              <div><strong>AA-005 · Delegation has a hard edge</strong><span>Out-of-bound actions never become approval requests.</span></div>
+            </div>
+            <div class="agent-lab-synthesis"><strong>What this lab demonstrated</strong><p>The agent observed CLAIMS400 through a constrained tool surface. Sensitive changes crossed deterministic policy and human authority boundaries bound to one exact action and starting state. Out-of-scope actions remained unavailable, and the resulting evidence stayed independently inspectable.</p></div>
+            <div class="agent-completion-actions"><button type="button" class="lane-card" id="aa-review-scenarios">Review scenarios</button><button type="button" class="link-quiet link-btn" id="aa-return-launcher">Return to LCL launcher</button></div>
+          </article>
         </section>
 
         <div id="aa-scenario-experience" hidden>
@@ -235,6 +249,16 @@
           <div class="agent-expected-result" id="aa-step-expected"><strong>What you should see</strong><span>The message can inform an agent request, but it does not authorize a privilege change.</span></div>
           <button type="button" class="lane-card agent-primary-action" id="aa-step-action">Create governed request</button>
           <p class="agent-step-readiness" id="aa-step-readiness" hidden></p>
+        </article>
+
+        <article class="coach-card agent-scenario-complete" id="aa-scenario-complete" hidden>
+          <p class="agent-completion-kicker mono" id="aa-completion-kicker">Scenario complete</p>
+          <h3 id="aa-completion-title"></h3>
+          <div class="agent-completion-lesson"><strong>You just proved</strong><p id="aa-completion-lesson"></p></div>
+          <div class="agent-completion-outcome"><strong>What happened</strong><ul id="aa-completion-outcomes"></ul></div>
+          <p class="agent-completion-status mono" id="aa-completion-status">Status · Complete</p>
+          <div class="agent-return-countdown" id="aa-return-countdown"><p id="aa-return-message" aria-live="polite">Returning to Agent Authority Lab in 10 seconds.</p><strong class="mono" id="aa-return-seconds" aria-hidden="true">10</strong></div>
+          <div class="agent-completion-actions"><button type="button" class="lane-card" id="aa-return-now">Return now</button><button type="button" class="link-quiet link-btn" id="aa-stay-here">Stay here</button></div>
         </article>
 
         <article class="coach-card agent-story-card">

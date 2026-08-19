@@ -76,6 +76,24 @@ If the original `*ALL` proposal is approved, the lab reports that outcome truthf
 
 The only Phase 6.6 mutation target remains `PAYROLL/PAYMST`. Some requests are not approval questions; they are outside the agent's delegated authority.
 
+## Completing and revisiting the lab
+
+Each scenario ends with an explicit professional debrief showing the governance lesson, the control behavior and the resulting system/evidence state. After the debrief appears, a visible ten-second client-side countdown returns to the Agent Authority Lab chooser.
+
+- **Return now** goes directly to the chooser.
+- **Stay here** cancels automatic navigation and leaves the completed evidence visible.
+- Starting or cancelling this navigation never resets CLAIMS400, receipts, proposals or evidence.
+- Starting a proof download pauses the automatic return so the download is not interrupted.
+
+The chooser derives progress from persisted scenario outcomes. `Complete with warning` counts toward the five-scenario curriculum because the overprivilege outcome still demonstrates its intended lesson. When all five scenarios are terminal, the chooser presents the **Agent Authority Lab complete** synthesis with options to review the completed scenario cards or return to the normal LCL launcher. Completed scenarios remain available for evidence review.
+
+Scenario completion does not make a completed mutation replayable. For a fresh end-to-end run from seeded starting state, reset the Docker volume:
+
+```powershell
+docker compose down -v
+docker compose up -d --build
+```
+
 ## What the walkthrough demonstrates
 
 - Prompt text can influence a request but cannot grant authority.

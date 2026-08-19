@@ -12,6 +12,7 @@ const IONGRC_PACK_KEY = "lab.iongrc.pack";
 const IONGRC_ACTIVE_KEY = "lab.iongrc.active";
 const AGENT_AUTHORITY_ACTIVE_KEY = "lab.agent-authority.active";
 const AGENT_AUTHORITY_SCENARIO_KEY = "lab.agent-authority.scenario";
+const AGENT_AUTHORITY_REVIEW_KEY = "lab.agent-authority.review-completed";
 const PLAYBOOK_PATH_KEY = "lab.playbook.path";
 const MISSION_NOTES_PREFIX = "lab.mission.notes.";
 
@@ -83,6 +84,9 @@ const LANE_PROFILES = {
 let cachedLaneCredentials = null;
 let cachedLabSessionToken = null;
 let agentAuthorityOperatorReady = false;
+let agentAuthorityReturnTimer = null;
+let agentAuthorityReturnSeconds = 0;
+let agentAuthorityCompletionId = null;
 let terminalFrameRef = null;
 let demoAutoSignoffTimer = null;
 let demoAutoSignoffTickTimer = null;
@@ -1185,13 +1189,15 @@ async function loadAgentAuthorityWalkthrough() {
 }
 
 async function renderAgentAuthorityChooser() {
+  cancelAgentAuthorityReturn();
   const payload=await loadJson("/api/agent-authority/scenarios");
   el("aa-scenario-chooser").hidden=false;el("aa-scenario-experience").hidden=true;
-  el("aa-panel-kicker").textContent="Agent Authority Lab";el("aa-panel-title").textContent="Choose a scenario";
+  const scenarios=payload.scenarios??[];const completed=scenarios.filter((scenario)=>["complete","complete_with_warning"].includes(scenario.status)).length;const allComplete=completed===5;
+  el("aa-panel-kicker").textContent="Agent Authority Lab";el("aa-panel-title").textContent=allComplete?"Lab complete":"Choose a scenario";el("aa-lab-progress").textContent=`Progress ${completed} / 5`;
   const cards=el("aa-scenario-cards");cards.replaceChildren();
-  for(const scenario of payload.scenarios??[]){
+  for(const scenario of scenarios){
     const article=document.createElement("article");article.className="agent-scenario-card";
-    const status=document.createElement("span");status.className="agent-scenario-status";status.textContent=String(scenario.status).replaceAll("_"," ");
+    const status=document.createElement("span");status.className="agent-scenario-status";status.dataset.status=scenario.status;status.textContent=String(scenario.status).replaceAll("_"," ");
     const id=document.createElement("span");id.className="agent-kicker mono";id.textContent=scenario.id;
     const title=document.createElement("h3");title.textContent=scenario.title;
     const situation=document.createElement("p");situation.textContent=scenario.situation;
@@ -1199,6 +1205,7 @@ async function renderAgentAuthorityChooser() {
     const button=document.createElement("button");button.type="button";button.className="lane-card";button.dataset.scenarioId=scenario.id;button.textContent=scenario.status==="not_started"?"Start scenario":"Open scenario";
     article.append(status,id,title,situation,concept,button);cards.append(article);
   }
+  const review=allComplete&&sessionStorage.getItem(AGENT_AUTHORITY_REVIEW_KEY)==="1";cards.hidden=allComplete&&!review;el("aa-lab-complete").hidden=!allComplete;
 }
 
 function showAgentAuthorityExperience(id) {
@@ -1208,8 +1215,27 @@ function showAgentAuthorityExperience(id) {
   for(const node of document.querySelectorAll(".agent-relationship-card,.agent-story-card,.agent-message-card,.agent-action-card,.agent-handoff-card"))node.hidden=id!=="AA-001";
 }
 
-function selectAgentAuthorityScenario(id){sessionStorage.setItem(AGENT_AUTHORITY_SCENARIO_KEY,id);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
-function leaveAgentAuthorityScenario(){sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
+function selectAgentAuthorityScenario(id){cancelAgentAuthorityReturn();sessionStorage.setItem(AGENT_AUTHORITY_SCENARIO_KEY,id);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
+function leaveAgentAuthorityScenario(){cancelAgentAuthorityReturn();sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
+function reviewCompletedAgentAuthorityScenarios(){sessionStorage.setItem(AGENT_AUTHORITY_REVIEW_KEY,"1");renderAgentAuthorityChooser().catch(()=>undefined);}
+function returnToLclLauncher(){cancelAgentAuthorityReturn();setAgentAuthorityActive(false);sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);sessionStorage.removeItem(SKILL_PATH_KEY);localStorage.removeItem(SKILL_PATH_KEY);showLaneChooser("paths");}
+
+const AGENT_AUTHORITY_COMPLETIONS={
+  "AA-001":{lesson:"Untrusted content cannot authorize its own execution.",outcomes:["The operational message remained untrusted data.","A separate human made the exact decision.","CLAIMS400 evidence and proof preserved the result."]},
+  "AA-002":{lesson:"Approval is bound to the exact request. An overbroad request must be denied and replaced, not silently edited.",warningLesson:"Exact approval worked, but human approval alone did not guarantee least privilege.",outcomes:["The original *ALL request remained immutable.","The narrower *USE request received its own proposal and action hash.","The final authority and independent proposal evidence remained inspectable."],warningOutcomes:["The exact *ALL request was approved without alteration.","The governance boundary worked mechanically.","The human decision granted more privilege than the stated need required."]},
+  "AA-003":{lesson:"Approval was valid only against the state that was reviewed. When the system changed, the stale request could not execute.",outcomes:["QSECOFR changed OLDVENDOR to *EXCLUDE through ordinary LCL.","The original proposal no longer matched its bound precondition.","Agent Authority invalidated it before MCPAGENT could execute *USE."]},
+  "AA-004":{lesson:"Safe observation can remain autonomous while consequential changes cross a human authority boundary.",outcomes:["Three bounded reads proceeded without approval.","Only the authority mutation entered human review.","The decision and resulting CLAIMS400 evidence remained inspectable." ]},
+  "AA-005":{lesson:"Some actions are not approval questions. They are outside the agent's delegated authority entirely.",outcomes:["The requested object was outside the mutation allowlist.","No proposal or human override path was created.","CLAIMMST remained unchanged and the denial receipt recorded the boundary."]},
+};
+
+function scenarioCompletionKey(id){return `lab.agent-authority.completion.${id}`;}
+function scenarioStayKey(id){return `lab.agent-authority.completion-stay.${id}`;}
+function cancelAgentAuthorityReturn(message){if(agentAuthorityReturnTimer!==null){window.clearInterval(agentAuthorityReturnTimer);agentAuthorityReturnTimer=null;}if(message&&el("aa-return-message")){el("aa-return-message").textContent=message;el("aa-return-seconds").hidden=true;}}
+function hideScenarioCompletion(){cancelAgentAuthorityReturn();agentAuthorityCompletionId=null;el("aa-scenario-complete").hidden=true;el("aa-next-step").hidden=false;}
+function showScenarioCompletion(id,title,status){const definition=AGENT_AUTHORITY_COMPLETIONS[id];if(!definition)return;const warning=status==="complete_with_warning";el("aa-next-step").hidden=true;el("aa-scenario-complete").hidden=false;el("aa-completion-kicker").textContent=warning?"Scenario complete with warning":"Scenario complete";el("aa-completion-title").textContent=`${id} — ${title}`;el("aa-completion-lesson").textContent=warning?definition.warningLesson:definition.lesson;const outcomes=warning?definition.warningOutcomes:definition.outcomes;const list=el("aa-completion-outcomes");list.replaceChildren();for(const value of outcomes){const item=document.createElement("li");item.textContent=value;list.append(item);}el("aa-completion-status").textContent=`Status · ${warning?"Complete with warning":"Complete"}`;
+  if(agentAuthorityCompletionId===id)return;cancelAgentAuthorityReturn();agentAuthorityCompletionId=id;const stayed=sessionStorage.getItem(scenarioStayKey(id))==="1";el("aa-stay-here").hidden=stayed;el("aa-return-countdown").hidden=false;el("aa-return-seconds").hidden=stayed;if(stayed){el("aa-return-message").textContent="Automatic return cancelled. Review the completed evidence when ready.";return;}agentAuthorityReturnSeconds=10;el("aa-return-seconds").textContent=String(agentAuthorityReturnSeconds);el("aa-return-message").textContent="Returning to Agent Authority Lab in 10 seconds.";agentAuthorityReturnTimer=window.setInterval(()=>{agentAuthorityReturnSeconds-=1;el("aa-return-seconds").textContent=String(Math.max(0,agentAuthorityReturnSeconds));if(agentAuthorityReturnSeconds<=0){cancelAgentAuthorityReturn("Returning to Agent Authority Lab now.");leaveAgentAuthorityScenario();}},1000);
+}
+function stayAtScenarioCompletion(){const id=agentAuthorityCompletionId;if(id)sessionStorage.setItem(scenarioStayKey(id),"1");el("aa-stay-here").hidden=true;cancelAgentAuthorityReturn("Automatic return cancelled. Review the completed evidence when ready.");}
 
 function renderScenarioPack(payload){
   const scenario=payload.scenario;el("aa-panel-title").textContent=scenario.title;
@@ -1227,6 +1253,7 @@ function renderScenarioPack(payload){
   if(payload.denial){const item=document.createElement("li");item.textContent=`Boundary denial receipt: ${payload.denial.id}`;list.append(item);}
   const proofProposal=proposals.find((p)=>p.proof?.available);const proof=el("aa-proof-state");proof.textContent=proofProposal?.proof?.verified?"Proof verified. The exported record matches the protected decision and execution receipts.":"Proof is available after a proposal decision.";proof.classList.toggle("verified",Boolean(proofProposal?.proof?.verified));
   el("aa-download-proof").hidden=!proofProposal?.proof?.verified||!cachedLabSessionToken;
+  if(["complete","complete_with_warning"].includes(payload.status)&&sessionStorage.getItem(scenarioCompletionKey(scenario.id))==="1")showScenarioCompletion(scenario.id,scenario.title,payload.status);else hideScenarioCompletion();
 }
 
 function scenarioPackGuidance(payload){
@@ -1237,23 +1264,23 @@ function scenarioPackGuidance(payload){
     if(initial.status==="pending")return approvalGuidance(2,8,"Confirm the exact overbroad action","The agent's requested authority is broader than the stated need. Inspect *ALL, then sign on as QSECOFR and deny it in Authority Desk.","The original proposal remains immutable and pending until the human decision.");
     if(initial.status==="denied"&&!narrow)return {step:5,total:8,title:"Submit a new narrower request",instruction:"The *ALL proposal remains denied. The agent must submit a genuinely new *USE request; the old request is never edited.",expected:"A different proposal ID and action hash for AUDIT → PAYROLL/PAYMST → *USE.",action:"Submit new *USE request",kind:"scenario",scenarioAction:"submit_narrower_request"};
     if(narrow?.status==="pending")return approvalGuidance(6,8,"Review the new least-privilege request","Compare the new proposal ID and action hash to the denied *ALL request, then decide in Authority Desk.","Only the new *USE request is eligible for this decision.");
-    const over=initial.status==="consumed";return {step:8,total:8,title:over?"Debrief the overprivilege decision":"Confirm least privilege",instruction:over?"The control bound approval exactly, but the human approved more authority than the stated need required.":"Return to the terminal and inspect AUDIT's resulting private authority.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:over?"Exact approval does not guarantee a good decision. Human-in-the-loop does not replace least-privilege judgment.":`AUDIT should show ${payload.currentAuthority??"no"} private authority.`,kind:"none"};
+    const over=initial.status==="consumed";return {step:8,total:8,title:over?"Debrief the overprivilege decision":"Confirm least privilege",instruction:over?"The control bound approval exactly, but the human approved more authority than the stated need required.":"Return to the terminal and inspect AUDIT's resulting private authority.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:over?"Exact approval does not guarantee a good decision. Human-in-the-loop does not replace least-privilege judgment.":`AUDIT should show ${payload.currentAuthority??"no"} private authority.`,action:"Finish scenario",kind:"finish-scenario"};
   }
   if(id==="AA-003"){
     if(!p.length)return {step:1,total:5,title:"Capture the starting state",instruction:"Create OLDVENDOR's governed *USE request. Agent Authority will bind it to the current PAYMST state.",expected:"A pending proposal with a protected precondition digest.",action:"Create governed request",kind:"scenario",scenarioAction:"create_initial_request"};
     if(pending&&payload.currentAuthority!=="*EXCLUDE")return {step:2,total:5,title:"Change the system before approval",instruction:"As QSECOFR, change ordinary CLAIMS400 state before reviewing the request. In the terminal, run:",command:"GRTOBJAUT OBJ(PAYROLL/PAYMST) USER(OLDVENDOR) AUT(*EXCLUDE)",expected:"OLDVENDOR's current private authority becomes *EXCLUDE, which differs from the proposal's recorded starting state.",kind:"none"};
     if(pending)return approvalGuidance(3,5,"Attempt the original approval","Open the unchanged pending request. Agent Authority will re-snapshot PAYMST inside the protected execution transaction.","The proposal should invalidate as stale; MCPAGENT must not execute *USE.");
-    return {step:5,total:5,title:"Confirm the stale request did not win",instruction:"Return to the terminal and inspect the actual object authority.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:"OLDVENDOR remains *EXCLUDE. The requested *USE action was invalidated before execution.",kind:"none"};
+    return {step:5,total:5,title:"Confirm the stale request did not win",instruction:"Return to the terminal and inspect the actual object authority.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:"OLDVENDOR remains *EXCLUDE. The requested *USE action was invalidated before execution.",action:"Finish scenario",kind:"finish-scenario"};
   }
   if(id==="AA-004"){
     if(!(payload.observations??[]).length)return {step:1,total:6,title:"Investigate autonomously",instruction:"Let the deterministic agent inspect BACKUPADM's profile, PAYMST authority and recent audit activity through the three existing read tools.",expected:"Three bounded observations and read receipts, with no proposals and no human approval.",action:"Run safe investigation",kind:"scenario",scenarioAction:"run_investigation"};
     if(!p.length)return {step:4,total:6,title:"Propose where consequences begin",instruction:"The reads established that BACKUPADM has stale *ALL access. Now the agent proposes narrowing it to *USE.",expected:"A sensitive-change proposal appears only for the mutation.",action:"Propose *ALL → *USE",kind:"scenario",scenarioAction:"create_mutation_request"};
     if(pending)return approvalGuidance(5,6,"Make the human decision","The investigation needed no approval. Changing BACKUPADM's authority does.","Authority Desk shows BACKUPADM → PAYROLL/PAYMST → *USE.");
-    return {step:6,total:6,title:"Confirm proportional autonomy",instruction:"Inspect the underlying PAYMST authority after the decision.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:final?.status==="consumed"?"BACKUPADM changed from *ALL to *USE and normal LCL evidence was recorded.":"The denial left BACKUPADM's *ALL authority unchanged.",kind:"none"};
+    return {step:6,total:6,title:"Confirm proportional autonomy",instruction:"Inspect the underlying PAYMST authority after the decision.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:final?.status==="consumed"?"BACKUPADM changed from *ALL to *USE and normal LCL evidence was recorded.":"The denial left BACKUPADM's *ALL authority unchanged.",action:"Finish scenario",kind:"finish-scenario"};
   }
   if(id==="AA-005"){
     if(!payload.denial)return {step:1,total:3,title:"Attempt an out-of-bound request",instruction:"The deterministic agent will request AUDIT → CLAIMS400/CLAIMMST → *USE, outside its single delegated mutation target.",expected:"TARGET_NOT_ALLOWED, a denial receipt, and no proposal for Authority Desk.",action:"Attempt request",kind:"scenario",scenarioAction:"attempt_out_of_scope_request"};
-    return {step:3,total:3,title:"Confirm the boundary held",instruction:"There is nothing for QSECOFR to approve. Inspect the real out-of-bound target in the terminal.",command:"DSPOBJAUT OBJ(CLAIMS400/CLAIMMST)",expected:"CLAIMMST is unchanged. Some actions are not approval questions; they are outside the agent's authority.",kind:"none"};
+    return {step:3,total:3,title:"Confirm the boundary held",instruction:"There is nothing for QSECOFR to approve. Inspect the real out-of-bound target in the terminal.",command:"DSPOBJAUT OBJ(CLAIMS400/CLAIMMST)",expected:"CLAIMMST is unchanged. Some actions are not approval questions; they are outside the agent's authority.",action:"Finish scenario",kind:"finish-scenario"};
   }
   return {step:1,total:1,title:"Scenario unavailable",instruction:"Return to the chooser.",expected:"No state changed.",kind:"none"};
 }
@@ -1345,11 +1372,13 @@ function renderAgentAuthorityGuidance(payload) {
   action.hidden = !guide.action;
   action.textContent = guide.action ?? "";
   action.dataset.action = guide.kind ?? "";
+  if(guide.step===6&&payload.proposal&&payload.proof?.available)showScenarioCompletion("AA-001","The Message Says It's Approved","complete");else hideScenarioCompletion();
 }
 
 async function handleAgentGuidanceAction() {
   const action = el("aa-step-action")?.dataset.action;
   const selected=sessionStorage.getItem(AGENT_AUTHORITY_SCENARIO_KEY);
+  if(action==="finish-scenario"&&selected){sessionStorage.setItem(scenarioCompletionKey(selected),"1");renderScenarioPack(await loadJson(`/api/agent-authority/scenarios/${selected}`));return;}
   if(action==="scenario"&&selected){const scenarioAction=el("aa-step-action").dataset.scenarioAction;const response=await fetch(`/api/agent-authority/scenarios/${selected}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:scenarioAction})});if(!response.ok)throw new Error("Scenario action failed");renderScenarioPack(await response.json());return;}
   if (action === "request") return startAgentAuthorityRequest();
   const payload = await loadJson("/api/agent-authority/walkthrough");
@@ -1392,6 +1421,7 @@ async function startAgentAuthorityRequest() {
 }
 
 async function downloadAgentAuthorityProof() {
+  cancelAgentAuthorityReturn("Automatic return paused while proof is downloaded. Use Return now when ready.");
   const payload=await loadJson("/api/agent-authority/walkthrough");const proposalId=payload.proposal?.id;if(!proposalId||!cachedLabSessionToken)return;
   const response=await fetch(`/api/agent-authority/proposals/${encodeURIComponent(proposalId)}/proof`,{headers:{"X-Lab-Session-Token":cachedLabSessionToken}});if(!response.ok)return;
   const blob=await response.blob();const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download=`agent-authority-proof-${proposalId.replace(/[^A-Za-z0-9._-]/g,"_")}.json`;document.body.append(link);link.click();link.remove();URL.revokeObjectURL(link.href);
@@ -3545,6 +3575,10 @@ async function loadLab() {
     el("aa-step-action")?.addEventListener("click",()=>handleAgentGuidanceAction().catch(()=>undefined));
     el("aa-scenario-cards")?.addEventListener("click",(event)=>{const button=event.target.closest?.("button[data-scenario-id]");if(button)selectAgentAuthorityScenario(button.dataset.scenarioId);});
     el("aa-back-to-scenarios")?.addEventListener("click",leaveAgentAuthorityScenario);
+    el("aa-return-now")?.addEventListener("click",leaveAgentAuthorityScenario);
+    el("aa-stay-here")?.addEventListener("click",stayAtScenarioCompletion);
+    el("aa-review-scenarios")?.addEventListener("click",reviewCompletedAgentAuthorityScenarios);
+    el("aa-return-launcher")?.addEventListener("click",returnToLclLauncher);
     el("aa-download-proof")?.addEventListener("click",()=>downloadAgentAuthorityProof().catch(()=>undefined));
 
     initLaneChooser((lane) => {

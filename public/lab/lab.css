@@ -58,14 +58,37 @@ body {
 
 .agent-authority-mode { --aa-accent: #57f2a1; }
 .agent-scenario-chooser>p { color: var(--text-secondary); }
+.agent-lab-progress { margin: .8rem 0; color: var(--aa-accent) !important; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
 .agent-scenario-cards { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
 .agent-scenario-card { display: flex; flex-direction: column; min-width: 0; padding: .9rem; border: 1px solid var(--border); border-radius: 7px; background: #030303; }
 .agent-scenario-card h3 { margin: .25rem 0 .45rem; color: var(--text); }
 .agent-scenario-card p { margin-bottom: .45rem; color: var(--text-secondary); font-size: .8rem; }
 .agent-scenario-card .agent-scenario-concept { color: var(--aa-accent); }
 .agent-scenario-card button { margin-top: auto; }
-.agent-scenario-status { color: #ffc857; font: 600 .68rem/1.2 var(--mono); text-transform: uppercase; }
+.agent-scenario-status { color: #ffc857; font: 600 .68rem/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.agent-scenario-status[data-status="complete"] { color: var(--aa-accent); }
+.agent-scenario-status[data-status="complete_with_warning"] { color: #ffc857; }
+.agent-scenario-status[data-status="not_started"] { color: var(--muted); }
 .agent-back-to-scenarios { margin: 0 0 .75rem; }
+.agent-scenario-complete,.agent-lab-complete { border: 1px solid #216943; background: linear-gradient(145deg,#07140d,#030706); box-shadow: 0 16px 36px rgba(0,0,0,.45); }
+.agent-scenario-complete { margin-bottom: 1rem; }
+.agent-completion-kicker { margin: 0 0 .35rem; color: var(--aa-accent); font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.agent-scenario-complete h3,.agent-lab-complete h3 { margin-bottom: 1rem; }
+.agent-completion-lesson,.agent-completion-outcome,.agent-lab-synthesis { margin-top: .85rem; padding-top: .8rem; border-top: 1px solid var(--border); }
+.agent-completion-lesson>strong,.agent-completion-outcome>strong,.agent-lab-synthesis>strong { color: #ffc857; font: 700 .68rem/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.agent-completion-lesson p,.agent-lab-synthesis p { margin: .45rem 0 0; color: var(--text); }
+.agent-completion-outcome ul { margin: .45rem 0 0; padding-left: 1.1rem; color: var(--text-secondary); }
+.agent-completion-status { margin: 1rem 0; color: var(--aa-accent); font-size: .72rem; text-transform: uppercase; }
+.agent-return-countdown { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .75rem; margin-top: 1rem; padding: .7rem .8rem; border-left: 3px solid var(--aa-accent); background: #050b07; }
+.agent-return-countdown p { margin: 0; color: var(--text-secondary); }
+.agent-return-countdown strong { color: var(--aa-accent); font-size: 1.25rem; }
+.agent-completion-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: .85rem; }
+.agent-completion-actions button { flex: 1 1 12rem; text-align: center; }
+.agent-lab-complete { padding: 1rem; }
+.agent-concept-list { display: grid; gap: .6rem; }
+.agent-concept-list div { display: grid; gap: .2rem; padding: .65rem .7rem; border-left: 2px solid #216943; background: #050b07; }
+.agent-concept-list strong { color: var(--aa-accent); font: 650 .7rem/1.35 var(--mono); text-transform: uppercase; }
+.agent-concept-list span { color: var(--text-secondary); font-size: .78rem; }
 .agent-next-step { position: sticky; top: 5.4rem; z-index: 1; border: 1px solid #216943; box-shadow: 0 10px 28px rgba(0,0,0,.7); background: #050b07; }
 .agent-step-count { margin: 0 0 .35rem; color: var(--aa-accent); font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .agent-next-step h3 { margin-bottom: .45rem; font-size: 1.1rem; }
