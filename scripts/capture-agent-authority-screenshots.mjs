@@ -87,6 +87,14 @@ try{
   await desk.route("**/api/lab/session?*",(route)=>route.fulfill({json:{connected:true,lane:"operator",sessionToken:"presentation-token",userName:"QSECOFR",systemName:"CLAIMS400"}}));
   await desk.route("**/api/agent-authority/**",(route)=>{const url=new URL(route.request().url());if(url.pathname.endsWith("/status"))return route.fulfill({json:{target:{system:"CLAIMS400"},pendingCount:deskCompleted?0:1}});if(url.pathname.endsWith("/verify"))return route.fulfill({json:{ok:true,checked:deskCompleted?5:2}});if(url.pathname.endsWith("/receipts"))return route.fulfill({json:{receipts:[{id:"receipt_required",sequence:1,receiptType:"approval_required",createdAt:"2026-08-19T22:13:43.000Z"}]}});if(url.pathname.endsWith("/proposals")){const pendingOnly=url.searchParams.get("status")==="pending";return route.fulfill({json:{proposals:pendingOnly?(deskCompleted?[]:[deskProposal()]):[deskProposal()]}});}return route.fulfill({status:404,json:{error:"Not used by screenshot"}});});
   await desk.goto(`${base}/lab/authority/`);await wait(async()=>await desk.locator("#proposals .proposal-card").count()===1);await shot(desk,"13-authority-desk-pending.png");deskCompleted=true;await desk.getByRole("button",{name:"Refresh"}).click();await wait(async()=>await desk.locator("#history .proposal-card").count()===1);await shot(desk,"14-authority-desk-completed.png");
+
+  const assessor=await browser.newPage({viewport:{width:1600,height:1100},deviceScaleFactor:1});
+  await assessor.goto(`${base}/scf-assessor/`);
+  await wait(async()=>await assessor.locator("#control-rows tr").count()===12);
+  await shot(assessor,"15-agent-authority-scf-assessor-overview.png");
+  await assessor.locator('[data-control-id="IAC-51"]').click();
+  await wait(async()=>(await assessor.locator("#dossier h2").textContent())?.includes("IAC-51"));
+  await shot(assessor,"16-agent-authority-scf-iac51-failure.png");
   closeDatabase();
   await browser.close();
 } finally {server.kill("SIGTERM");}
