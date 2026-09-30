@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1",
+  "policyId": "lcl-agent-authority-default",
+  "version": "1.0.0",
+  "defaultDecision": "deny",
+  "rules": [
+    { "id": "OBSERVE-ALLOW", "priority": 100, "when": { "riskClass": ["observe"] }, "decision": "allow" },
+    { "id": "PRIVILEGE-HUMAN", "priority": 200, "when": { "riskClass": ["privilege_change"] }, "decision": "require_approval", "approvalRole": "operator" },
+    { "id": "DESTRUCTIVE-DENY", "priority": 1000, "when": { "riskClass": ["destructive"] }, "decision": "deny" }
+  ]
+}

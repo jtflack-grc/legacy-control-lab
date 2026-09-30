@@ -6,7 +6,6 @@ function tableExists(database: SqliteDatabase, table: string): boolean {
     .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?")
     .get(table);
 }
-
 function tableHasColumn(database: SqliteDatabase, table: string, column: string): boolean {
   if (!tableExists(database, table)) return false;
   const columns = database.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>;
@@ -126,6 +125,42 @@ export function applySchemaMigrations(database: SqliteDatabase): void {
       evidence_packet_path TEXT,
       FOREIGN KEY (attempt_id) REFERENCES mission_attempts(id)
     );
+
+    CREATE TABLE IF NOT EXISTS agent_authority_proposals (
+      id TEXT PRIMARY KEY, created_at TEXT NOT NULL, expires_at TEXT NOT NULL,
+      status TEXT NOT NULL, target_kind TEXT NOT NULL, target_system TEXT NOT NULL,
+      tool_name TEXT NOT NULL, tool_version TEXT NOT NULL, risk_class TEXT NOT NULL,
+      arguments_json TEXT NOT NULL, canonical_action_json TEXT NOT NULL,
+      action_hash TEXT NOT NULL, policy_id TEXT NOT NULL, policy_version TEXT NOT NULL,
+      policy_decision_json TEXT NOT NULL, precondition_json TEXT NOT NULL,
+      precondition_hash TEXT NOT NULL, request_context_json TEXT NOT NULL,
+      provenance_json TEXT, decided_at TEXT, decided_by TEXT, decision_reason TEXT,
+      consumed_at TEXT, execution_status TEXT, execution_receipt_id TEXT
+    );
+    CREATE INDEX IF NOT EXISTS idx_agent_auth_proposals_status ON agent_authority_proposals(status);
+    CREATE INDEX IF NOT EXISTS idx_agent_auth_proposals_expires ON agent_authority_proposals(expires_at);
+
+    CREATE TABLE IF NOT EXISTS agent_authority_approvals (
+      id TEXT PRIMARY KEY, proposal_id TEXT NOT NULL UNIQUE, action_hash TEXT NOT NULL,
+      approver_user TEXT NOT NULL, approver_session_id TEXT, issued_at TEXT NOT NULL,
+      expires_at TEXT NOT NULL, nonce TEXT NOT NULL UNIQUE, status TEXT NOT NULL,
+      consumed_at TEXT, reason TEXT,
+      FOREIGN KEY (proposal_id) REFERENCES agent_authority_proposals(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS agent_authority_receipts (
+      id TEXT PRIMARY KEY, sequence INTEGER NOT NULL UNIQUE, created_at TEXT NOT NULL,
+      proposal_id TEXT, receipt_type TEXT NOT NULL, payload_json TEXT NOT NULL,
+      payload_hash TEXT NOT NULL, previous_hash TEXT, signature_algorithm TEXT,
+      signature TEXT, signing_key_id TEXT,
+      FOREIGN KEY (proposal_id) REFERENCES agent_authority_proposals(id)
+    );
+    CREATE INDEX IF NOT EXISTS idx_agent_auth_receipts_proposal ON agent_authority_receipts(proposal_id);
+
+    CREATE TABLE IF NOT EXISTS agent_authority_chain_state (
+      chain_id TEXT PRIMARY KEY, last_sequence INTEGER NOT NULL,
+      last_hash TEXT, updated_at TEXT NOT NULL
+    );
   `);
 
   if (tableExists(database, "user_profiles")) {
@@ -175,4 +210,3 @@ export function applySchemaMigrations(database: SqliteDatabase): void {
       ON lab_outfile_rows (system_id, library, file_name, member_name);
   `);
 }
-

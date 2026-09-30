@@ -9,6 +9,10 @@
     "trainer": "tsx src/trainer/cli.ts",
     "websockify": "tsx src/websockifyBridge.ts",
     "build": "tsc && node scripts/copyRuntimeAssets.mjs",
+    "test": "vitest run",
+    "agent:verify": "node dist/agent-authority/evidence/verifyCli.js",
+    "agent:proof:export": "node dist/agent-authority/proof/proofExportCli.js",
+    "agent:proof:verify": "node dist/agent-authority/proof/proofVerifyCli.js",
     "start": "node dist/server.js",
     "db:seed": "tsx src/db/seed.ts",
     "check:audit": "npm audit --omit=dev --audit-level=high",
@@ -26,11 +30,15 @@
     "node": ">=20"
   },
   "dependencies": {
+    "@modelcontextprotocol/node": "^2.0.0",
+    "@modelcontextprotocol/server": "^2.0.0",
     "better-sqlite3": "^12.10.0",
     "dotenv": "^16.4.7",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@modelcontextprotocol/client": "^2.0.0",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22.10.2",
     "@types/ws": "^8.5.13",

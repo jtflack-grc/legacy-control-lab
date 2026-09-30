@@ -10,6 +10,9 @@ const DEMO_AUTO_SIGNOFF_SEC = 60;
 const IONGRC_STEP_KEY = "lab.iongrc.step";
 const IONGRC_PACK_KEY = "lab.iongrc.pack";
 const IONGRC_ACTIVE_KEY = "lab.iongrc.active";
+const AGENT_AUTHORITY_ACTIVE_KEY = "lab.agent-authority.active";
+const AGENT_AUTHORITY_SCENARIO_KEY = "lab.agent-authority.scenario";
+const AGENT_AUTHORITY_REVIEW_KEY = "lab.agent-authority.review-completed";
 const PLAYBOOK_PATH_KEY = "lab.playbook.path";
 const MISSION_NOTES_PREFIX = "lab.mission.notes.";
 
@@ -54,6 +57,12 @@ const SKILL_PATHS = {
     storageLane: "auditor",
     label: "i on GRC practice desk",
   },
+  agentauthority: {
+    user: "QSECOFR",
+    missionId: "AA-001",
+    storageLane: "operator",
+    label: "Agent Authority",
+  },
 };
 
 const MISSION_IONGRC_PACK = {
@@ -74,6 +83,10 @@ const LANE_PROFILES = {
 
 let cachedLaneCredentials = null;
 let cachedLabSessionToken = null;
+let agentAuthorityOperatorReady = false;
+let agentAuthorityReturnTimer = null;
+let agentAuthorityReturnSeconds = 0;
+let agentAuthorityCompletionId = null;
 let terminalFrameRef = null;
 let demoAutoSignoffTimer = null;
 let demoAutoSignoffTickTimer = null;
@@ -838,6 +851,9 @@ function resolveSignOnProfile(userName, creds) {
 
 function defaultSignOnHint(creds) {
   const skillPath = readStoredSkillPath();
+  if (skillPath === "agentauthority") {
+    return `User ${creds.operator.user} / Password ${creds.operator.password} · Human review remains in Authority Desk`;
+  }
   if (skillPath === "iongrc") {
     const iongrc = creds.iongrc ?? SKILL_PATHS.iongrc;
     return `User ${iongrc.user} / Password ${iongrc.password ?? "IONGRC"} · Model IBM-5292-2`;
@@ -1063,6 +1079,7 @@ function resetSessionSkillPathState() {
     sessionStorage.removeItem(DEMO_PATH_KEY);
     sessionStorage.removeItem(DEMO_STEP_KEY);
     sessionStorage.removeItem(PLAYBOOK_PATH_KEY);
+    sessionStorage.removeItem(AGENT_AUTHORITY_ACTIVE_KEY);
   } catch {
     /* private mode */
   }
@@ -1118,21 +1135,24 @@ function setPanelMode(mode) {
   const operator = el("operator-panel");
   const demo = el("demo-panel");
   const iongrc = el("iongrc-panel");
+  const agentAuthority = el("agent-authority-panel");
   const badge = el("lane-badge");
   const demoActive = sessionStorage.getItem(DEMO_ACTIVE_KEY) === "1";
   const iongrcActive = sessionStorage.getItem(IONGRC_ACTIVE_KEY) === "1";
+  const agentAuthorityActive = sessionStorage.getItem(AGENT_AUTHORITY_ACTIVE_KEY) === "1";
   const signedOn = mode === "auditor" || mode === "operator" || mode === "demo" || mode === "iongrc";
 
   if (split) {
-    split.classList.toggle("coach-open", signedOn || demoActive || iongrcActive);
+    split.classList.toggle("coach-open", signedOn || demoActive || iongrcActive || agentAuthorityActive);
     split.classList.toggle("demo-coach-open", demoActive);
     split.classList.toggle("iongrc-coach-open", iongrcActive);
   }
-  if (rail) rail.hidden = !(signedOn || demoActive || iongrcActive);
+  if (rail) rail.hidden = !(signedOn || demoActive || iongrcActive || agentAuthorityActive);
   if (demo) demo.hidden = !demoActive;
   if (iongrc) iongrc.hidden = !iongrcActive;
-  if (auditor) auditor.hidden = demoActive || iongrcActive || !(mode === "auditor" || mode === "demo");
-  if (operator) operator.hidden = demoActive || iongrcActive || mode !== "operator";
+  if (agentAuthority) agentAuthority.hidden = !agentAuthorityActive;
+  if (auditor) auditor.hidden = demoActive || iongrcActive || agentAuthorityActive || !(mode === "auditor" || mode === "demo");
+  if (operator) operator.hidden = demoActive || iongrcActive || agentAuthorityActive || mode !== "operator";
   if (badge) {
     badge.hidden = !signedOn;
     const skillPath = readStoredSkillPath();
@@ -1149,6 +1169,264 @@ function setPanelMode(mode) {
               : expectedUser ?? "AUDIT";
     badge.classList.toggle("operator", mode === "operator");
   }
+}
+
+const AA_STAGE_ORDER = ["OBSERVED", "REQUESTED", "HELD", "REVIEWED", "EXECUTED", "VERIFIED"];
+
+function setAgentAuthorityActive(active) {
+  if (active) sessionStorage.setItem(AGENT_AUTHORITY_ACTIVE_KEY, "1");
+  else sessionStorage.removeItem(AGENT_AUTHORITY_ACTIVE_KEY);
+}
+
+async function loadAgentAuthorityWalkthrough() {
+  if (sessionStorage.getItem(AGENT_AUTHORITY_ACTIVE_KEY) !== "1") return;
+  const selected=sessionStorage.getItem(AGENT_AUTHORITY_SCENARIO_KEY);
+  if (!selected) {await renderAgentAuthorityChooser();return;}
+  showAgentAuthorityExperience(selected);
+  if(selected!=="AA-001") {renderScenarioPack(await loadJson(`/api/agent-authority/scenarios/${selected}`));return;}
+  const payload = await loadJson("/api/agent-authority/walkthrough");
+  renderAgentAuthorityWalkthrough(payload);
+}
+
+async function renderAgentAuthorityChooser() {
+  cancelAgentAuthorityReturn();
+  const payload=await loadJson("/api/agent-authority/scenarios");
+  el("aa-scenario-chooser").hidden=false;el("aa-scenario-experience").hidden=true;
+  const scenarios=payload.scenarios??[];const completed=scenarios.filter((scenario)=>["complete","complete_with_warning"].includes(scenario.status)).length;const allComplete=completed===5;
+  const review=allComplete&&sessionStorage.getItem(AGENT_AUTHORITY_REVIEW_KEY)==="1";
+  el("aa-panel-kicker").textContent="Agent Authority Lab";el("aa-panel-title").textContent=review?"Review scenarios":allComplete?"Lab complete":"Choose a scenario";el("aa-lab-progress").textContent=`Progress ${completed} / 5`;el("aa-review-complete").hidden=!review;
+  const cards=el("aa-scenario-cards");cards.replaceChildren();
+  for(const scenario of scenarios){
+    const article=document.createElement("article");article.className="agent-scenario-card";
+    const status=document.createElement("span");status.className="agent-scenario-status";status.dataset.status=scenario.status;status.textContent=String(scenario.status).replaceAll("_"," ");
+    const id=document.createElement("span");id.className="agent-kicker mono";id.textContent=scenario.id;
+    const title=document.createElement("h3");title.textContent=scenario.title;
+    const situation=document.createElement("p");situation.textContent=scenario.situation;
+    const concept=document.createElement("p");concept.className="agent-scenario-concept";concept.textContent=scenario.controlConcept;
+    const button=document.createElement("button");button.type="button";button.className="lane-card";button.dataset.scenarioId=scenario.id;button.textContent=scenario.status==="not_started"?"Start scenario":"Open scenario";
+    article.append(status,id,title,situation,concept,button);cards.append(article);
+  }
+  cards.hidden=allComplete&&!review;el("aa-lab-complete").hidden=!allComplete||review;
+}
+
+function showAgentAuthorityExperience(id) {
+  el("aa-scenario-chooser").hidden=true;el("aa-scenario-experience").hidden=false;
+  el("aa-panel-kicker").textContent=`Guided scenario · ${id}`;
+  if(id==="AA-001")el("aa-panel-title").textContent="The Message Says It's Approved";
+  for(const node of document.querySelectorAll(".agent-relationship-card,.agent-story-card,.agent-message-card,.agent-action-card,.agent-handoff-card"))node.hidden=id!=="AA-001";
+}
+
+function selectAgentAuthorityScenario(id){cancelAgentAuthorityReturn();sessionStorage.setItem(AGENT_AUTHORITY_SCENARIO_KEY,id);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
+function leaveAgentAuthorityScenario(){cancelAgentAuthorityReturn();sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);loadAgentAuthorityWalkthrough().catch(()=>undefined);}
+function reviewCompletedAgentAuthorityScenarios(){sessionStorage.setItem(AGENT_AUTHORITY_REVIEW_KEY,"1");renderAgentAuthorityChooser().catch(()=>undefined);}
+function showAgentAuthorityCompletionSummary(){sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);renderAgentAuthorityChooser().catch(()=>undefined);}
+function returnToLclLauncher(){cancelAgentAuthorityReturn();setAgentAuthorityActive(false);sessionStorage.removeItem(AGENT_AUTHORITY_SCENARIO_KEY);sessionStorage.removeItem(AGENT_AUTHORITY_REVIEW_KEY);sessionStorage.removeItem(SKILL_PATH_KEY);localStorage.removeItem(SKILL_PATH_KEY);showLaneChooser("paths");}
+
+const AGENT_AUTHORITY_COMPLETIONS={
+  "AA-001":{lesson:"Untrusted content cannot authorize its own execution.",outcomes:["The operational message remained untrusted data.","A separate human made the exact decision.","CLAIMS400 evidence and proof preserved the result."]},
+  "AA-002":{lesson:"Approval is bound to the exact request. An overbroad request must be denied and replaced, not silently edited.",warningLesson:"Exact approval worked, but human approval alone did not guarantee least privilege.",outcomes:["The original *ALL request remained immutable.","The narrower *USE request received its own proposal and action hash.","The final authority and independent proposal evidence remained inspectable."],warningOutcomes:["The exact *ALL request was approved without alteration.","The governance boundary worked mechanically.","The human decision granted more privilege than the stated need required."]},
+  "AA-003":{lesson:"Approval was valid only against the state that was reviewed. When the system changed, the stale request could not execute.",outcomes:["QSECOFR changed OLDVENDOR to *EXCLUDE through ordinary LCL.","The original proposal no longer matched its bound precondition.","Agent Authority invalidated it before MCPAGENT could execute *USE."]},
+  "AA-004":{lesson:"Safe observation can remain autonomous while consequential changes cross a human authority boundary.",outcomes:["Three bounded reads proceeded without approval.","Only the authority mutation entered human review.","The decision and resulting CLAIMS400 evidence remained inspectable." ]},
+  "AA-005":{lesson:"Some actions are not approval questions. They are outside the agent's delegated authority entirely.",outcomes:["The requested object was outside the mutation allowlist.","No proposal or human override path was created.","CLAIMMST remained unchanged and the denial receipt recorded the boundary."]},
+};
+
+function scenarioCompletionKey(id){return `lab.agent-authority.completion.${id}`;}
+function scenarioStayKey(id){return `lab.agent-authority.completion-stay.${id}`;}
+function cancelAgentAuthorityReturn(message){if(agentAuthorityReturnTimer!==null){window.clearInterval(agentAuthorityReturnTimer);agentAuthorityReturnTimer=null;}if(message&&el("aa-return-message")){el("aa-return-message").textContent=message;el("aa-return-seconds").hidden=true;}}
+function hideScenarioCompletion(){cancelAgentAuthorityReturn();agentAuthorityCompletionId=null;el("aa-scenario-complete").hidden=true;el("aa-next-step").hidden=false;}
+function showScenarioCompletion(id,title,status){const definition=AGENT_AUTHORITY_COMPLETIONS[id];if(!definition)return;const warning=status==="complete_with_warning";el("aa-next-step").hidden=true;el("aa-scenario-complete").hidden=false;el("aa-completion-kicker").textContent=warning?"Scenario complete with warning":"Scenario complete";el("aa-completion-title").textContent=`${id} — ${title}`;el("aa-completion-lesson").textContent=warning?definition.warningLesson:definition.lesson;const outcomes=warning?definition.warningOutcomes:definition.outcomes;const list=el("aa-completion-outcomes");list.replaceChildren();for(const value of outcomes){const item=document.createElement("li");item.textContent=value;list.append(item);}el("aa-completion-status").textContent=`Status · ${warning?"Complete with warning":"Complete"}`;
+  const review=sessionStorage.getItem(AGENT_AUTHORITY_REVIEW_KEY)==="1";if(review){cancelAgentAuthorityReturn();agentAuthorityCompletionId=id;el("aa-return-countdown").hidden=true;el("aa-stay-here").hidden=true;return;}if(agentAuthorityCompletionId===id)return;cancelAgentAuthorityReturn();agentAuthorityCompletionId=id;const stayed=sessionStorage.getItem(scenarioStayKey(id))==="1";el("aa-stay-here").hidden=stayed;el("aa-return-countdown").hidden=false;el("aa-return-seconds").hidden=stayed;if(stayed){el("aa-return-message").textContent="Automatic return cancelled. Review the completed evidence when ready.";return;}agentAuthorityReturnSeconds=10;el("aa-return-seconds").textContent=String(agentAuthorityReturnSeconds);el("aa-return-message").textContent="Returning to Agent Authority Lab in 10 seconds.";agentAuthorityReturnTimer=window.setInterval(()=>{agentAuthorityReturnSeconds-=1;el("aa-return-seconds").textContent=String(Math.max(0,agentAuthorityReturnSeconds));if(agentAuthorityReturnSeconds<=0){cancelAgentAuthorityReturn("Returning to Agent Authority Lab now.");leaveAgentAuthorityScenario();}},1000);
+}
+function stayAtScenarioCompletion(){const id=agentAuthorityCompletionId;if(id)sessionStorage.setItem(scenarioStayKey(id),"1");el("aa-stay-here").hidden=true;cancelAgentAuthorityReturn("Automatic return cancelled. Review the completed evidence when ready.");}
+
+function renderScenarioPack(payload){
+  const scenario=payload.scenario;el("aa-panel-title").textContent=scenario.title;
+  const strip=el("agent-authority-panel").querySelector(".agent-state-strip");strip.replaceChildren();
+  for(const label of scenario.lifecycle){const item=document.createElement("li");item.textContent=label;strip.append(item);}
+  const proposals=payload.proposals??[];const pending=proposals.find((p)=>p.status==="pending");const final=proposals.find((p)=>["consumed","denied","invalidated","expired"].includes(p.status));
+  el("aa-request-summary").hidden=!proposals.length;el("aa-proposal-id").textContent=pending?.id??proposals[0]?.id??"—";el("aa-decision").textContent=final?.status??(pending?"Awaiting QSECOFR":"None");el("aa-current-authority").textContent=payload.currentAuthority??"No private authority";el("aa-executor").textContent=final?.executionStatus?"MCPAGENT":"Not executed";el("aa-action-hash").textContent=pending?.actionHash??proposals[0]?.actionHash??"Created with the request";
+  const guidance=scenarioPackGuidance(payload);renderPackGuidance(guidance);
+  const terminal=el("aa-terminal-check");terminal.hidden=!guidance.command;el("aa-terminal-explanation").textContent=guidance.expected;
+  const commandNode=terminal.querySelector(".demo-command");if(commandNode)commandNode.textContent=guidance.command??"";
+  const evidence=el("aa-evidence-card");evidence.hidden=!final&&scenario.id!=="AA-005"&&!(payload.observations??[]).length;
+  const list=el("aa-evidence-list");list.replaceChildren();
+  for(const observation of payload.observations??[]){const item=document.createElement("li");item.textContent=`${observation.summary} No human approval required. Receipt: ${observation.receiptId}`;list.append(item);}
+  for(const proposal of proposals){const item=document.createElement("li");item.textContent=`Proposal ${proposal.id}: ${proposal.status}; action ${proposal.actionHash}`;list.append(item);}
+  if(payload.denial){const item=document.createElement("li");item.textContent=`Boundary denial receipt: ${payload.denial.id}`;list.append(item);}
+  const proofProposal=proposals.find((p)=>p.proof?.available);const proof=el("aa-proof-state");proof.textContent=proofProposal?.proof?.verified?"Proof verified. The exported record matches the protected decision and execution receipts.":"Proof is available after a proposal decision.";proof.classList.toggle("verified",Boolean(proofProposal?.proof?.verified));
+  el("aa-download-proof").hidden=!proofProposal?.proof?.verified||!cachedLabSessionToken;
+  if(["complete","complete_with_warning"].includes(payload.status)&&(sessionStorage.getItem(scenarioCompletionKey(scenario.id))==="1"||sessionStorage.getItem(AGENT_AUTHORITY_REVIEW_KEY)==="1"))showScenarioCompletion(scenario.id,scenario.title,payload.status);else hideScenarioCompletion();
+}
+
+function scenarioPackGuidance(payload){
+  const id=payload.scenario.id,p=payload.proposals??[],pending=p.find((x)=>x.status==="pending"),final=p.find((x)=>["consumed","denied","invalidated","expired"].includes(x.status));
+  if(id==="AA-002"){
+    const initial=p.find((x)=>x.action?.arguments?.authority==="*ALL"),narrow=p.find((x)=>x.action?.arguments?.authority==="*USE");
+    if(!initial)return {step:1,total:8,title:"Submit the overbroad request",instruction:"The business need calls for limited payroll evidence access, but the deterministic agent is asking for *ALL.",expected:"A new pending request for AUDIT → PAYROLL/PAYMST → *ALL.",action:"Create *ALL request",kind:"scenario",scenarioAction:"create_initial_request"};
+    if(initial.status==="pending")return approvalGuidance(2,8,"Confirm the exact overbroad action","The agent's requested authority is broader than the stated need. Inspect *ALL, then sign on as QSECOFR and deny it in Authority Desk.","The original proposal remains immutable and pending until the human decision.");
+    if(initial.status==="denied"&&!narrow)return {step:5,total:8,title:"Submit a new narrower request",instruction:"The *ALL proposal remains denied. The agent must submit a genuinely new *USE request; the old request is never edited.",expected:"A different proposal ID and action hash for AUDIT → PAYROLL/PAYMST → *USE.",action:"Submit new *USE request",kind:"scenario",scenarioAction:"submit_narrower_request"};
+    if(narrow?.status==="pending")return approvalGuidance(6,8,"Review the new least-privilege request","Compare the new proposal ID and action hash to the denied *ALL request, then decide in Authority Desk.","Only the new *USE request is eligible for this decision.");
+    const over=initial.status==="consumed";return {step:8,total:8,title:over?"Debrief the overprivilege decision":"Confirm least privilege",instruction:over?"The control bound approval exactly, but the human approved more authority than the stated need required.":"Return to the terminal and inspect AUDIT's resulting private authority.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:over?"Exact approval does not guarantee a good decision. Human-in-the-loop does not replace least-privilege judgment.":`AUDIT should show ${payload.currentAuthority??"no"} private authority.`,action:"Finish scenario",kind:"finish-scenario"};
+  }
+  if(id==="AA-003"){
+    if(!p.length)return {step:1,total:5,title:"Capture the starting state",instruction:"Create OLDVENDOR's governed *USE request. Agent Authority will bind it to the current PAYMST state.",expected:"A pending proposal with a protected precondition digest.",action:"Create governed request",kind:"scenario",scenarioAction:"create_initial_request"};
+    if(pending&&payload.currentAuthority!=="*EXCLUDE")return {step:2,total:5,title:"Change the system before approval",instruction:"As QSECOFR, change ordinary CLAIMS400 state before reviewing the request. In the terminal, run:",command:"GRTOBJAUT OBJ(PAYROLL/PAYMST) USER(OLDVENDOR) AUT(*EXCLUDE)",expected:"OLDVENDOR's current private authority becomes *EXCLUDE, which differs from the proposal's recorded starting state.",kind:"none"};
+    if(pending)return approvalGuidance(3,5,"Attempt the original approval","Open the unchanged pending request. Agent Authority will re-snapshot PAYMST inside the protected execution transaction.","The proposal should invalidate as stale; MCPAGENT must not execute *USE.");
+    return {step:5,total:5,title:"Confirm the stale request did not win",instruction:"Return to the terminal and inspect the actual object authority.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:"OLDVENDOR remains *EXCLUDE. The requested *USE action was invalidated before execution.",action:"Finish scenario",kind:"finish-scenario"};
+  }
+  if(id==="AA-004"){
+    if(!(payload.observations??[]).length)return {step:1,total:6,title:"Investigate autonomously",instruction:"Let the deterministic agent inspect BACKUPADM's profile, PAYMST authority and recent audit activity through the three existing read tools.",expected:"Three bounded observations and read receipts, with no proposals and no human approval.",action:"Run safe investigation",kind:"scenario",scenarioAction:"run_investigation"};
+    if(!p.length)return {step:4,total:6,title:"Propose where consequences begin",instruction:"The reads established that BACKUPADM has stale *ALL access. Now the agent proposes narrowing it to *USE.",expected:"A sensitive-change proposal appears only for the mutation.",action:"Propose *ALL → *USE",kind:"scenario",scenarioAction:"create_mutation_request"};
+    if(pending)return approvalGuidance(5,6,"Make the human decision","The investigation needed no approval. Changing BACKUPADM's authority does.","Authority Desk shows BACKUPADM → PAYROLL/PAYMST → *USE.");
+    return {step:6,total:6,title:"Confirm proportional autonomy",instruction:"Inspect the underlying PAYMST authority after the decision.",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:final?.status==="consumed"?"BACKUPADM changed from *ALL to *USE and normal LCL evidence was recorded.":"The denial left BACKUPADM's *ALL authority unchanged.",action:"Finish scenario",kind:"finish-scenario"};
+  }
+  if(id==="AA-005"){
+    if(!payload.denial)return {step:1,total:3,title:"Attempt an out-of-bound request",instruction:"The deterministic agent will request AUDIT → CLAIMS400/CLAIMMST → *USE, outside its single delegated mutation target.",expected:"TARGET_NOT_ALLOWED, a denial receipt, and no proposal for Authority Desk.",action:"Attempt request",kind:"scenario",scenarioAction:"attempt_out_of_scope_request"};
+    return {step:3,total:3,title:"Confirm the boundary held",instruction:"There is nothing for QSECOFR to approve. Inspect the real out-of-bound target in the terminal.",command:"DSPOBJAUT OBJ(CLAIMS400/CLAIMMST)",expected:"CLAIMMST is unchanged. Some actions are not approval questions; they are outside the agent's authority.",action:"Finish scenario",kind:"finish-scenario"};
+  }
+  return {step:1,total:1,title:"Scenario unavailable",instruction:"Return to the chooser.",expected:"No state changed.",kind:"none"};
+}
+
+function approvalGuidance(step,total,title,instruction,expected){if(!agentAuthorityOperatorReady)return {step,total,title:"Become the human approver",instruction:"Sign on to the terminal as the separate human security officer.\n\nUser: QSECOFR\nPassword: TRAIN",expected:"The requesting agent cannot create this approval for itself.",kind:"none",readiness:"Authority Desk is not ready yet."};return {step,total,title,instruction,expected,action:"Review request in Authority Desk",kind:"desk"};}
+function renderPackGuidance(g){el("aa-step-count").textContent=`Step ${g.step} of ${g.total}`;el("aa-step-title").textContent=g.title;el("aa-step-instruction").textContent=g.instruction;el("aa-step-expected").querySelector("span").textContent=g.expected;const command=el("aa-step-command");command.hidden=!g.command;command.textContent=g.command??"";const readiness=el("aa-step-readiness");readiness.hidden=!g.readiness;readiness.textContent=g.readiness??"";const action=el("aa-step-action");action.hidden=!g.action;action.textContent=g.action??"";action.dataset.action=g.kind??"";action.dataset.scenarioAction=g.scenarioAction??"";}
+
+function renderAgentAuthorityWalkthrough(payload) {
+  const proposal = payload.proposal;
+  const stage = payload.stage ?? "OBSERVED";
+  const stageIndex = AA_STAGE_ORDER.indexOf(stage);
+  for (const item of document.querySelectorAll("[data-aa-stage]")) {
+    const itemIndex = AA_STAGE_ORDER.indexOf(item.dataset.aaStage);
+    item.classList.toggle("complete", itemIndex <= stageIndex);
+    item.classList.toggle("current", itemIndex === stageIndex);
+  }
+  if (el("aa-message-text")) el("aa-message-text").textContent = payload.message?.text ?? "Operational message unavailable.";
+  if (el("aa-status")) el("aa-status").textContent = displayAgentStage(payload);
+  const narrative = agentNarrative(payload);
+  if (el("aa-story-title")) el("aa-story-title").textContent = narrative.title;
+  if (el("aa-story-copy")) el("aa-story-copy").textContent = narrative.copy;
+  if (el("aa-request-summary")) el("aa-request-summary").hidden = !proposal;
+  if (el("aa-handoff")) el("aa-handoff").hidden = !proposal || proposal.status !== "pending";
+  if (el("aa-terminal-check")) el("aa-terminal-check").hidden = !proposal;
+  if (el("aa-proposal-id")) el("aa-proposal-id").textContent = proposal?.id ?? "—";
+  if (el("aa-decision")) el("aa-decision").textContent = humanDecisionLabel(payload);
+  if (el("aa-current-authority")) el("aa-current-authority").textContent = payload.currentAuthority ?? "No private authority";
+  if (el("aa-executor")) el("aa-executor").textContent = payload.executor ?? "Not executed";
+  if (el("aa-action-hash")) el("aa-action-hash").textContent = proposal?.actionHash ?? "Created with the request";
+  const terminalCopy = el("aa-terminal-explanation");
+  if (terminalCopy) terminalCopy.textContent = payload.currentAuthority === "*USE"
+    ? "CLAIMS400 now records APCLERK with *USE private authority. Confirm the shared-state result in the terminal."
+    : "CLAIMS400 still has no APCLERK private authority on this object. Confirm the unchanged state in the terminal.";
+  const evidenceCard = el("aa-evidence-card");
+  if (evidenceCard) evidenceCard.hidden = !payload.proof?.available;
+  const evidenceList = el("aa-evidence-list");
+  if (evidenceList) {
+    evidenceList.replaceChildren();
+    const refs = Array.isArray(payload.evidence) ? payload.evidence : [];
+    const labels = {runtime_state_change:"Authority state change",runtime_generated_audit:"CA-style generated audit entry",runtime_job_log_entry:"MCPAGENT runtime job log",evidence_tag:"Evidence tag"};
+    for (const ref of refs) {
+      const item = document.createElement("li");
+      item.textContent = `${labels[ref.type] ?? ref.type}: ${ref.id}`;
+      evidenceList.append(item);
+    }
+    for (const id of proposal?.receiptIds ?? []) {
+      const item = document.createElement("li");item.textContent = `Agent Authority receipt: ${id}`;evidenceList.append(item);
+    }
+    if (!evidenceList.childElementCount) {
+      const item = document.createElement("li");item.textContent = "Decision receipt recorded; no mutation evidence was created.";evidenceList.append(item);
+    }
+  }
+  const proof = el("aa-proof-state");
+  if (proof) {proof.textContent = payload.proof?.verified ? "Proof verified. The exported record matches the protected decision and execution receipts." : "Proof verification is not complete.";proof.classList.toggle("verified",Boolean(payload.proof?.verified));}
+  if (el("aa-download-proof")) el("aa-download-proof").hidden = !payload.proof?.verified || !cachedLabSessionToken;
+  renderAgentAuthorityGuidance(payload);
+}
+
+function agentConfirmationKey(kind, proposalId) {
+  return `lab.agent-authority.${kind}.${proposalId}`;
+}
+
+function agentGuidance(payload) {
+  const proposal = payload.proposal;
+  if (!proposal) return {step:1,title:"Understand the message",instruction:"The agent found an operational message claiming payroll access was already approved. Read the message below. When you are ready, create the agent's governed request.",expected:"The message can influence a request, but it cannot grant authority.",action:"Create governed request",kind:"request"};
+  const beforeConfirmed = sessionStorage.getItem(agentConfirmationKey("before-confirmed",proposal.id)) === "1";
+  if (proposal.status === "pending" && !beforeConfirmed) return {step:2,title:"Confirm that nothing changed",instruction:"Agent Authority stopped the privilege change. Before a human decides anything, confirm that CLAIMS400 is still unchanged. In the terminal on the left, run:",command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:"Find APCLERK. It should NOT have *USE private authority yet.",action:"Done — I confirmed it",kind:"confirm-before"};
+  if (proposal.status === "pending" && !agentAuthorityOperatorReady) return {step:3,title:"Become the human approver",instruction:"Now sign on to the terminal as the human security officer.\n\nUser: QSECOFR\nPassword: TRAIN\n\nThis creates the separate human operator session Agent Authority requires. The requesting agent cannot create this approval for itself.",expected:"This step completes when LCL detects the exact live QSECOFR operator session.",readiness:"Authority Desk is not ready yet. Sign on as QSECOFR in the terminal."};
+  if (proposal.status === "pending") return {step:4,title:"Review the request",instruction:"Authority Desk opens separately because approval is a human control boundary, not an agent function. Inspect APCLERK, PAYROLL/PAYMST, *USE and the exact action, then approve or deny.",expected:"Authority Desk will bind the human decision to this exact action hash.",action:"Review request in Authority Desk",kind:"desk"};
+  const afterConfirmed = sessionStorage.getItem(agentConfirmationKey("after-confirmed",proposal.id)) === "1";
+  if (!afterConfirmed) {
+    const approved = proposal.status === "consumed";
+    return {step:5,title:"Confirm the outcome in CLAIMS400",instruction:`Return to the LCL terminal and run the same command again.${approved ? " QSECOFR approved the action. MCPAGENT performed it." : ""}`,command:"DSPOBJAUT OBJ(PAYROLL/PAYMST)",expected:approved ? "APCLERK now has *USE private authority. Executed by: MCPAGENT." : "APCLERK should still have no *USE private authority because the request was denied or invalidated.",action:"Done — I confirmed the outcome",kind:"confirm-after"};
+  }
+  return {step:6,title:"Inspect the evidence",instruction:"The decision is finished. Now inspect what the system recorded: CLAIMS400 authority state, state-change evidence, CA-style audit entry, MCPAGENT job log, Agent Authority receipts and proof verification.",expected:payload.proof?.verified ? "Proof verified. The exported record matches the protected decision and execution receipts." : "The decision evidence is recorded; proof verification is pending.",action:payload.proof?.verified && cachedLabSessionToken ? "Download verified proof" : null,kind:"proof"};
+}
+
+function renderAgentAuthorityGuidance(payload) {
+  const guide = agentGuidance(payload);
+  el("aa-step-count").textContent = `Step ${guide.step} of 6`;
+  el("aa-step-title").textContent = guide.title;
+  el("aa-step-instruction").textContent = guide.instruction;
+  const command=el("aa-step-command");command.hidden=!guide.command;command.textContent=guide.command??"";
+  el("aa-step-expected").querySelector("span").textContent = guide.expected;
+  const readiness = el("aa-step-readiness");
+  readiness.hidden = !guide.readiness;
+  readiness.textContent = guide.readiness ?? "";
+  const action = el("aa-step-action");
+  action.hidden = !guide.action;
+  action.textContent = guide.action ?? "";
+  action.dataset.action = guide.kind ?? "";
+  if(guide.step===6&&payload.proposal&&payload.proof?.available)showScenarioCompletion("AA-001","The Message Says It's Approved","complete");else hideScenarioCompletion();
+}
+
+async function handleAgentGuidanceAction() {
+  const action = el("aa-step-action")?.dataset.action;
+  const selected=sessionStorage.getItem(AGENT_AUTHORITY_SCENARIO_KEY);
+  if(action==="finish-scenario"&&selected){sessionStorage.setItem(scenarioCompletionKey(selected),"1");renderScenarioPack(await loadJson(`/api/agent-authority/scenarios/${selected}`));return;}
+  if(action==="scenario"&&selected){const scenarioAction=el("aa-step-action").dataset.scenarioAction;const response=await fetch(`/api/agent-authority/scenarios/${selected}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:scenarioAction})});if(!response.ok)throw new Error("Scenario action failed");renderScenarioPack(await response.json());return;}
+  if (action === "request") return startAgentAuthorityRequest();
+  const payload = await loadJson("/api/agent-authority/walkthrough");
+  const proposalId = payload.proposal?.id;
+  if (action === "confirm-before" && proposalId) sessionStorage.setItem(agentConfirmationKey("before-confirmed",proposalId),"1");
+  if (action === "confirm-after" && proposalId) sessionStorage.setItem(agentConfirmationKey("after-confirmed",proposalId),"1");
+  if (action === "desk") {window.open("/lab/authority/","_blank","noopener");return;}
+  if (action === "proof") return downloadAgentAuthorityProof();
+  renderAgentAuthorityWalkthrough(payload);
+}
+
+function displayAgentStage(payload) {
+  if (payload.proposal?.status === "denied") return "Denied · unchanged";
+  if (payload.proposal?.status === "invalidated") return "Invalidated · unchanged";
+  if (payload.proposal?.status === "consumed") return `${payload.proposal.executionStatus ?? "consumed"} · proof ${payload.proof?.verified ? "verified" : "pending"}`;
+  if (payload.proposal?.status === "pending") return "Awaiting decision";
+  return "Observed";
+}
+
+function humanDecisionLabel(payload) {
+  if (!payload.proposal) return "None";
+  if (payload.humanDecision === "approved") return `Approved by ${payload.approver ?? "operator"}`;
+  if (payload.humanDecision === "denied") return `Denied by ${payload.approver ?? "operator"}`;
+  return "Awaiting QSECOFR";
+}
+
+function agentNarrative(payload) {
+  if (!payload.proposal) return {title:"The message is data. It is not permission.",copy:"The deterministic agent observed the isolated AA-001 message. It has not requested or changed authority yet."};
+  if (payload.proposal.status === "pending") return {title:"The request is held for a human decision.",copy:"Server-owned policy classified this exact action as a privilege change. CLAIMS400 remains unchanged while QSECOFR reviews it."};
+  if (payload.proposal.status === "denied") return {title:"The human denied the request.",copy:"No broker mutation occurred. CLAIMS400 remains unchanged, and the denial is preserved in an integrity-linked receipt and proof bundle."};
+  if (payload.proposal.status === "invalidated") return {title:"The approved starting state no longer matched.",copy:"Agent Authority invalidated the request before mutation. The protected object state remains authoritative."};
+  if (payload.proposal.status === "consumed") return {title:"MCPAGENT executed the exact approved change.",copy:"The ordinary LCL authority state changed once. CLAIMS400 produced state-change, CA-style audit and job-log evidence, and the proof verifier checked the portable bundle."};
+  return {title:"The request was reviewed.",copy:"The persisted proposal records the human decision and resulting state."};
+}
+
+async function startAgentAuthorityRequest() {
+  const button = el("aa-step-action");if (button) button.disabled = true;
+  try {const response=await fetch("/api/agent-authority/walkthrough",{method:"POST"});if(!response.ok)throw new Error("Request could not be created");renderAgentAuthorityWalkthrough(await response.json());}
+  finally {if(button)button.disabled=false;}
+}
+
+async function downloadAgentAuthorityProof() {
+  cancelAgentAuthorityReturn("Automatic return paused while proof is downloaded. Use Return now when ready.");
+  const payload=await loadJson("/api/agent-authority/walkthrough");const proposalId=payload.proposal?.id;if(!proposalId||!cachedLabSessionToken)return;
+  const response=await fetch(`/api/agent-authority/proposals/${encodeURIComponent(proposalId)}/proof`,{headers:{"X-Lab-Session-Token":cachedLabSessionToken}});if(!response.ok)return;
+  const blob=await response.blob();const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download=`agent-authority-proof-${proposalId.replace(/[^A-Za-z0-9._-]/g,"_")}.json`;document.body.append(link);link.click();link.remove();URL.revokeObjectURL(link.href);
 }
 
 function renderMissionArticle(article, missionId) {
@@ -2897,6 +3175,7 @@ async function loadLab() {
   function diveIntoSkillPath(skillPathId) {
     stopDemoMode();
     stopIongrcMode();
+    setAgentAuthorityActive(skillPathId === "agentauthority");
     const config = SKILL_PATHS[skillPathId];
     if (!config) return;
     markLauncherIntroduced();
@@ -2919,6 +3198,7 @@ async function loadLab() {
     } else {
       setPanelMode("disconnected");
     }
+    if (skillPathId === "agentauthority") loadAgentAuthorityWalkthrough().catch(() => undefined);
     startTerminal();
     if (skillPathId !== "demo" && skillPathId !== "iongrc") {
       preloadShellForLane(
@@ -2947,19 +3227,23 @@ async function loadLab() {
     scheduleTerminalFocus(frame);
     el("lane-switch").hidden = false;
     if (skillPathId === "demo") {
+      setAgentAuthorityActive(false);
       startDemoMode();
       stopIongrcMode();
       setPanelMode("disconnected");
     } else if (skillPathId === "iongrc") {
+      setAgentAuthorityActive(false);
       stopDemoMode();
       startIongrcMode();
       applySessionSignOnHint("IONGRC", cachedLaneCredentials);
       setPanelMode("disconnected");
     } else {
+      setAgentAuthorityActive(skillPathId === "agentauthority");
       stopDemoMode();
       stopIongrcMode();
       setPanelMode("disconnected");
     }
+    if (skillPathId === "agentauthority") loadAgentAuthorityWalkthrough().catch(() => undefined);
     startTerminal();
     if (terminalConfig.systemName && skillPathId !== "demo" && skillPathId !== "iongrc") {
       preloadShellForLane(
@@ -3021,6 +3305,7 @@ async function loadLab() {
       ["pick-demo", "demo"],
       ["pick-demo-intro", "demo"],
       ["pick-iongrc", "iongrc"],
+      ["pick-agent-authority", "agentauthority"],
     ];
 
     el("launcher-skip-intro")?.addEventListener("click", () => {
@@ -3056,6 +3341,12 @@ async function loadLab() {
     resetSessionSkillPathState();
     if (rememberBox) {
       rememberBox.checked = isSkillPathRemembered();
+    }
+    const requestedPath = new URLSearchParams(window.location.search).get("path");
+    if (requestedPath === "agentauthority" && terminalConfig.agentAuthorityEnabled) {
+      beginSkillPath("agentauthority", false);
+      onReady(SKILL_PATHS.agentauthority.storageLane);
+      return;
     }
     showLaneChooser();
   }
@@ -3105,6 +3396,9 @@ async function loadLab() {
         }
         const session = await loadJson(`/api/lab/session?${sessionParams.toString()}`);
         cacheLabSessionToken(session);
+        if (skillPath === "agentauthority") {
+          agentAuthorityOperatorReady = Boolean(session.connected && session.userName?.toUpperCase() === "QSECOFR" && session.lane === "operator");
+        }
 
         if (!session.connected) {
           if (demoAutoSignoffTimer) {
@@ -3217,6 +3511,7 @@ async function loadLab() {
         } else {
           renderAuditorContext(payload);
         }
+        if (skillPath === "agentauthority") await loadAgentAuthorityWalkthrough();
       } catch {
         /* terminal may not be signed on yet */
       }
@@ -3270,11 +3565,24 @@ async function loadLab() {
       el("launcher-subtitle").textContent = config.appSubtitle;
     }
     applyLaneCredentials(config.laneCredentials);
+    if (el("agent-authority-entry")) el("agent-authority-entry").hidden = !config.agentAuthorityEnabled;
+    if (!config.agentAuthorityEnabled && readStoredSkillPath() === "agentauthority") {
+      sessionStorage.removeItem(SKILL_PATH_KEY);setAgentAuthorityActive(false);
+    }
     initNarrowBanner();
     initHealthPill();
     initFindingComposer();
     setPanelMode("disconnected");
     initDemoControls();
+    el("aa-step-action")?.addEventListener("click",()=>handleAgentGuidanceAction().catch(()=>undefined));
+    el("aa-scenario-cards")?.addEventListener("click",(event)=>{const button=event.target.closest?.("button[data-scenario-id]");if(button)selectAgentAuthorityScenario(button.dataset.scenarioId);});
+    el("aa-back-to-scenarios")?.addEventListener("click",leaveAgentAuthorityScenario);
+    el("aa-return-now")?.addEventListener("click",leaveAgentAuthorityScenario);
+    el("aa-stay-here")?.addEventListener("click",stayAtScenarioCompletion);
+    el("aa-review-scenarios")?.addEventListener("click",reviewCompletedAgentAuthorityScenarios);
+    el("aa-review-complete")?.addEventListener("click",showAgentAuthorityCompletionSummary);
+    el("aa-return-launcher")?.addEventListener("click",returnToLclLauncher);
+    el("aa-download-proof")?.addEventListener("click",()=>downloadAgentAuthorityProof().catch(()=>undefined));
 
     initLaneChooser((lane) => {
       preferredLane = lane;

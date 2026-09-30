@@ -23,6 +23,8 @@ services:
       SCENARIO_ID: claims400
       LCL_SHOW_QUICKSTART: "true"
       LCL_QSH_MODE: "synthetic"
+      # The guided Agent Authority path is local and deterministic; set false to hide it.
+      LCL_AGENT_AUTHORITY_ENABLED: "${LCL_AGENT_AUTHORITY_ENABLED:-true}"
     restart: unless-stopped
 
 volumes:

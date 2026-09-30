@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SCF Assessor Guidepost · Legacy Control Lab</title>
+  <link rel="stylesheet" href="/scf-assessor/scf-assessor.css" />
+</head>
+<body>
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">Legacy Control Lab · independent assessment surface</p>
+      <h1>SCF Assessor Guidepost</h1>
+      <p class="lede">A control-by-control view of what the Agent Authority workflow demonstrates, what it only approximates, and where the evidence fails.</p>
+    </div>
+    <nav aria-label="Assessor navigation">
+      <a href="/lab/">Lab launcher</a>
+      <a href="/lab/authority/">Authority Desk</a>
+      <a href="/api/scf-assessor/assessment" target="_blank" rel="noopener">Raw assessment JSON</a>
+      <button type="button" id="refresh">Refresh assessment</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="claim" aria-labelledby="claim-title">
+      <div>
+        <p class="section-label">Assessment profile</p>
+        <h2 id="claim-title">SCF 2026.3 · Agent Authority</h2>
+        <p id="claim-text">Implementation evidence, not an SCF certification or attestation.</p>
+      </div>
+      <dl class="boundary">
+        <div><dt>System</dt><dd id="boundary-system">Loading…</dd></div>
+        <div><dt>Target</dt><dd id="boundary-target">Loading…</dd></div>
+        <div><dt>Evidence interval</dt><dd id="boundary-interval">Loading…</dd></div>
+        <div><dt>Generated</dt><dd id="generated-at">Loading…</dd></div>
+      </dl>
+    </section>
+
+    <section class="status-grid" aria-label="Assessment summary">
+      <button class="status-card" data-filter="pass"><span>Pass</span><strong id="count-pass">0</strong></button>
+      <button class="status-card" data-filter="fail"><span>Fail</span><strong id="count-fail">0</strong></button>
+      <button class="status-card" data-filter="partial"><span>Partial</span><strong id="count-partial">0</strong></button>
+      <button class="status-card" data-filter="not_tested"><span>Not tested</span><strong id="count-not-tested">0</strong></button>
+      <button class="status-card" data-filter="no_evidence"><span>No evidence</span><strong id="count-no-evidence">0</strong></button>
+    </section>
+
+    <section class="workbench" aria-label="SCF control assessment workbench">
+      <div class="matrix-panel">
+        <div class="panel-head">
+          <div><p class="section-label">Control matrix</p><h2>Like for like, partial, or not demonstrated</h2></div>
+          <div class="filters">
+            <label for="search">Find</label>
+            <input id="search" type="search" placeholder="Control, scenario, evidence or gap" />
+            <button type="button" id="clear-filter">All rows</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>SCF control</th><th>Implementation fit</th><th>Result</th><th>Evidence</th></tr></thead>
+            <tbody id="control-rows"><tr><td colspan="4" class="loading">Loading live assessment…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <aside class="dossier" id="dossier" aria-live="polite">
+        <p class="section-label">Assessor dossier</p>
+        <h2>Select a control</h2>
+        <p class="muted">The dossier preserves the SCF intent, assessment question, LCL implementation claim, evidence references, and the exact gap that prevents a stronger conclusion.</p>
+      </aside>
+    </section>
+
+    <section class="contract" aria-labelledby="contract-title">
+      <div><p class="section-label">Evidence contract</p><h2 id="contract-title">What this assessment actually observed</h2></div>
+      <dl>
+        <div><dt>Population</dt><dd id="contract-population">Loading…</dd></div>
+        <div><dt>Integrity rule</dt><dd id="contract-integrity">Loading…</dd></div>
+        <div><dt>Sources</dt><dd><ul id="contract-sources"></ul></dd></div>
+        <div><dt>Known exclusions</dt><dd><ul id="contract-exclusions"></ul></dd></div>
+      </dl>
+    </section>
+  </main>
+
+  <footer><span>Legacy Control Lab Community Edition</span><span>Failure is an assessment result, not a rendering error.</span></footer>
+  <script type="module" src="/scf-assessor/scf-assessor.js"></script>
+</body>
+</html>

@@ -196,6 +196,138 @@
         </div>
       </div>
 
+      <div class="coach-mode agent-authority-mode" id="agent-authority-panel" hidden>
+        <div class="panel-head">
+          <p class="agent-kicker mono" id="aa-panel-kicker">Agent Authority Lab</p>
+          <h2 id="aa-panel-title">Choose a scenario</h2>
+          <p class="persona">One system. Two ways to interact. One governance boundary.</p>
+        </div>
+
+        <section id="aa-scenario-chooser" class="agent-scenario-chooser" aria-labelledby="aa-panel-title">
+          <p>Five deterministic scenarios show where agents may observe, where humans must decide, and where neither may cross the delegated boundary.</p>
+          <p class="agent-lab-progress mono" id="aa-lab-progress">Progress 0 / 5</p>
+          <button type="button" class="link-quiet link-btn agent-review-return" id="aa-review-complete" hidden>← Lab completion summary</button>
+          <div id="aa-scenario-cards" class="agent-scenario-cards"></div>
+          <article class="agent-lab-complete" id="aa-lab-complete" hidden>
+            <p class="agent-completion-kicker mono">Agent Authority Lab complete</p>
+            <h3>5 / 5 scenarios completed</h3>
+            <div class="agent-concept-list">
+              <div><strong>AA-001 · Data ≠ authority</strong><span>Untrusted instructions cannot grant execution authority.</span></div>
+              <div><strong>AA-002 · Exact approval ≠ good judgment</strong><span>The approved action is immutable; least privilege still matters.</span></div>
+              <div><strong>AA-003 · Approval is state-bound</strong><span>A changed precondition invalidates the old decision.</span></div>
+              <div><strong>AA-004 · Autonomy can be proportional</strong><span>Safe reads proceed; consequential writes require authority.</span></div>
+              <div><strong>AA-005 · Delegation has a hard edge</strong><span>Out-of-bound actions never become approval requests.</span></div>
+            </div>
+            <div class="agent-lab-synthesis"><strong>What this lab demonstrated</strong><p>The agent observed CLAIMS400 through a constrained tool surface. Sensitive changes crossed deterministic policy and human authority boundaries bound to one exact action and starting state. Out-of-scope actions remained unavailable, and the resulting evidence stayed independently inspectable.</p></div>
+            <div class="agent-completion-actions"><button type="button" class="lane-card" id="aa-review-scenarios">Review scenarios</button><button type="button" class="link-quiet link-btn" id="aa-return-launcher">Return to LCL launcher</button></div>
+          </article>
+        </section>
+
+        <div id="aa-scenario-experience" hidden>
+        <button type="button" class="link-quiet link-btn agent-back-to-scenarios" id="aa-back-to-scenarios">← All Agent Authority scenarios</button>
+
+        <article class="coach-card guide-primary agent-relationship-card">
+          <h3>How this fits Legacy Control Lab</h3>
+          <p><strong>Legacy Control Lab is the synthetic enterprise system. Agent Authority governs a new way of interacting with that same system.</strong></p>
+          <ul class="tips">
+            <li>People use the 5250-style terminal on the left.</li>
+            <li>Agents use six structured tools.</li>
+            <li>Both ultimately touch the same CLAIMS400 state.</li>
+            <li>Ordinary LCL evidence records what actually happened.</li>
+          </ul>
+        </article>
+
+        <ol class="agent-state-strip" aria-label="Walkthrough progress">
+          <li data-aa-stage="OBSERVED">Observed</li><li data-aa-stage="REQUESTED">Requested</li><li data-aa-stage="HELD">Held</li>
+          <li data-aa-stage="REVIEWED">Reviewed</li><li data-aa-stage="EXECUTED">Executed</li><li data-aa-stage="VERIFIED">Verified</li>
+        </ol>
+
+        <article class="coach-card agent-next-step" id="aa-next-step" aria-live="polite">
+          <p class="agent-step-count mono" id="aa-step-count">Step 1 of 6</p>
+          <h3 id="aa-step-title">Understand the message</h3>
+          <p class="agent-step-instruction" id="aa-step-instruction">Read the message below. When you are ready, create the agent's governed request.</p>
+          <p class="agent-instruction-command mono" id="aa-step-command" hidden></p>
+          <div class="agent-expected-result" id="aa-step-expected"><strong>What you should see</strong><span>The message can inform an agent request, but it does not authorize a privilege change.</span></div>
+          <button type="button" class="lane-card agent-primary-action" id="aa-step-action">Create governed request</button>
+          <p class="agent-step-readiness" id="aa-step-readiness" hidden></p>
+        </article>
+
+        <article class="coach-card agent-scenario-complete" id="aa-scenario-complete" hidden>
+          <p class="agent-completion-kicker mono" id="aa-completion-kicker">Scenario complete</p>
+          <h3 id="aa-completion-title"></h3>
+          <div class="agent-completion-lesson"><strong>You just proved</strong><p id="aa-completion-lesson"></p></div>
+          <div class="agent-completion-outcome"><strong>What happened</strong><ul id="aa-completion-outcomes"></ul></div>
+          <p class="agent-completion-status mono" id="aa-completion-status">Status · Complete</p>
+          <div class="agent-return-countdown" id="aa-return-countdown"><p id="aa-return-message" aria-live="polite">Returning to Agent Authority Lab in 10 seconds.</p><strong class="mono" id="aa-return-seconds" aria-hidden="true">10</strong></div>
+          <div class="agent-completion-actions"><button type="button" class="lane-card" id="aa-return-now">Return now</button><button type="button" class="link-quiet link-btn" id="aa-stay-here">Stay here</button></div>
+        </article>
+
+        <article class="coach-card agent-story-card">
+          <span class="agent-status" id="aa-status">Observed</span>
+          <h3 id="aa-story-title">The message is data. It is not permission.</h3>
+          <p id="aa-story-copy">The deterministic agent reads an operational message claiming emergency payroll access was already approved. Agent Authority treats that claim as untrusted operational data.</p>
+        </article>
+
+        <article class="coach-card agent-message-card">
+          <h3>Operational message observed</h3>
+          <blockquote id="aa-message-text">Loading the isolated AA-001 message…</blockquote>
+          <p class="control-translation"><strong>Prompt text is not permission.</strong> Content can influence a request, but it cannot grant authority.</p>
+        </article>
+
+        <article class="coach-card guide-primary agent-action-card">
+          <h3>Exact requested change</h3>
+          <div class="agent-action-flow mono"><span>APCLERK</span><span>→</span><span>PAYROLL/PAYMST</span><span>→</span><span>*USE</span></div>
+          <p>The agent asks for this change. It does not directly execute it.</p>
+          <dl class="agent-summary" id="aa-request-summary" hidden>
+            <div><dt>Proposal</dt><dd id="aa-proposal-id">—</dd></div><div><dt>Decision</dt><dd id="aa-decision">Awaiting human review</dd></div>
+            <div><dt>CLAIMS400 authority</dt><dd id="aa-current-authority">No private authority</dd></div><div><dt>Executed by</dt><dd id="aa-executor">Not executed</dd></div>
+          </dl>
+        </article>
+
+        <article class="coach-card agent-handoff-card" id="aa-handoff" hidden>
+          <h3>Human review stays separate</h3>
+          <p>QSECOFR supplies the separate human decision. Authority Desk is a human control boundary, not an agent function.</p>
+        </article>
+
+        <article class="coach-card agent-terminal-card" id="aa-terminal-check" hidden>
+          <h3>Confirm the shared CLAIMS400 state</h3>
+          <p id="aa-terminal-explanation">The requested authority has not changed. Confirm it in the terminal.</p>
+          <div class="demo-command-block"><p class="mono demo-command">DSPOBJAUT OBJ(PAYROLL/PAYMST)</p></div>
+          <p class="demo-command-note">Run this on the green screen. After approval, the APCLERK private authority appears as <span class="mono">*USE</span> in the same LCL object-authority display.</p>
+        </article>
+
+        <article class="coach-card agent-evidence-card" id="aa-evidence-card" hidden>
+          <h3>Evidence produced by the system</h3>
+          <ul class="agent-evidence-list" id="aa-evidence-list"></ul>
+          <p class="control-translation"><strong>The system creates the evidence.</strong> The agent does not write its own account of success.</p>
+          <p class="agent-proof-state" id="aa-proof-state">Proof not available yet.</p>
+          <button type="button" class="lane-card agent-proof-download" id="aa-download-proof" hidden>Download verified proof</button>
+          <div class="agent-debrief">
+            <h3>What just happened?</h3>
+            <p>The agent asked. Policy stopped the sensitive action. A human made one exact decision. MCPAGENT executed an approved change. CLAIMS400 recorded the outcome. The decision can be checked afterward.</p>
+          </div>
+        </article>
+
+        <details class="guide-secondary">
+          <summary>Why the controls matter</summary>
+          <div class="guide-body"><ul class="tips">
+            <li><strong>Approval is exact:</strong> only the displayed user, object, authority and action.</li>
+            <li><strong>Approval is state-bound:</strong> an intervening system change invalidates it.</li>
+            <li><strong>Approval is one-time:</strong> replay cannot cause a second mutation.</li>
+            <li><strong>The agent cannot approve itself:</strong> QSECOFR uses a separately authenticated operator session.</li>
+          </ul></div>
+        </details>
+        <details class="guide-secondary">
+          <summary>Technical evidence</summary>
+          <div class="guide-body agent-technical-grid"><p><strong>Canonical action</strong><br><span id="aa-action-hash" class="mono">Created with the request</span></p><p>SHA-256 action and precondition digests bind approval to exact arguments and starting state. Trusted provenance records bind the message content. Integrity-linked receipts support offline proof verification.</p></div>
+        </details>
+        <details class="guide-secondary">
+          <summary>What the isolated comparison established</summary>
+          <div class="guide-body"><p><strong>With Agent Authority</strong><br><span class="mono">message → request → human decision → controlled execution</span></p><p><strong>Without the control, isolated experiment</strong><br><span class="mono">same message → same action → mutation</span></p><p>This is a previously computed deterministic comparison. There is no bypass or counterfactual execution control in this interface.</p></div>
+        </details>
+        </div>
+      </div>
+
       <div class="coach-mode iongrc-mode" id="iongrc-panel" hidden>
         <div class="panel-head">
           <h2>i on GRC practice desk</h2>
@@ -741,6 +873,22 @@
           <span class="lane-card-creds welcome-mono" id="pick-operator-creds">QSECOFR / TRAIN</span>
           <span class="lane-card-desc">SECURITY menu · state changes · DSPEVDDIFF evidence</span>
         </button>
+      </section>
+
+      <section class="launcher-door launcher-door-numbered agent-authority-entry" id="agent-authority-entry" hidden aria-labelledby="door-agent-heading">
+        <h3 class="launcher-door-heading" id="door-agent-heading"><span class="launcher-door-num">4</span> See agent governance</h3>
+        <p class="launcher-door-desc">See how an AI agent can work with the same CLAIMS400 system as human users while sensitive actions remain behind an explicit governance boundary.</p>
+        <button type="button" class="lane-card lane-card-door lane-card-agent" id="pick-agent-authority" data-skill-path="agentauthority">
+          <span class="lane-card-kicker">Local deterministic walkthrough · AA-001</span>
+          <span class="lane-card-title">Agent Authority</span>
+          <span class="lane-card-creds welcome-mono">Terminal + guided rail + Authority Desk</span>
+          <span class="lane-card-desc">Observe → request → hold → human review → shared-state evidence → offline-verifiable proof.</span>
+        </button>
+        <a class="lane-card lane-card-secondary lane-card-link" href="/scf-assessor/">
+          <span class="lane-card-kicker">SCF 2026.3 · Independent view</span>
+          <span class="lane-card-title">Open the SCF Assessor Guidepost</span>
+          <span class="lane-card-desc">No teaching rail. Inspect like-for-like evidence, partial implementations, failures, and unclosed gaps.</span>
+        </a>
       </section>
 
       <details class="launcher-advanced">

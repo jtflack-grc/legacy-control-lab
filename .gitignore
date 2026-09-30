@@ -47,9 +47,17 @@ docs/*
 !docs/community-edition.md
 !docs/command-fidelity.md
 !docs/licensing.md
+!docs/agent-authority.md
+!docs/agent-authority-mcp.md
 
 # Tests are maintained outside the Community Edition package
 tests/
+!tests/
+tests/*
+!tests/agent-authority/
+!tests/agent-authority/*.test.ts
+!tests/scf-assessor/
+!tests/scf-assessor/*.test.ts
 vitest.config.ts
 vitest.config.*
 

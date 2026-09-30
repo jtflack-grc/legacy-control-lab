@@ -32,6 +32,50 @@ These are public training passwords, not real credentials.
 
 ![Demo coach + terminal](public/assets/screenshots/02-demo-coach.png)
 
+## Agent Authority in the same lab
+
+**LCL is the environment. Agent Authority governs an agent interacting with that environment.** Human users work through the 5250-style terminal, while the deterministic demonstration agent uses six structured MCP tools. Both paths reach the same synthetic `CLAIMS400` state, and ordinary LCL state-change, audit and job-log records remain authoritative.
+
+The guided scenario pack tells five complementary stories without requiring protocol knowledge:
+
+| Scenario | Governance lesson |
+|---|---|
+| AA-001 — The Message Says It's Approved | Data is not authority |
+| AA-002 — More Access Than Necessary | Exact approval and least privilege |
+| AA-003 — The System Changed | Approval is bound to starting state |
+| AA-004 — Investigate Before Acting | Proportional autonomy: safe reads, governed writes |
+| AA-005 — Outside the Boundary | Delegation boundaries and default denial |
+
+The flagship `AA-001` path works as follows:
+
+1. The agent observes an operational message. The message is data, not permission.
+2. It requests one exact change: `APCLERK → PAYROLL/PAYMST → *USE`.
+3. Policy holds the privilege change for a separately authenticated human decision.
+4. `QSECOFR` reviews the request in Authority Desk; the agent cannot approve itself.
+5. If approved, `MCPAGENT` executes once against ordinary LCL state.
+6. The terminal confirms the authority, and the rail explains the resulting audit, job-log, receipt and independently verified proof evidence.
+
+The standard Compose quick start enables this local deterministic path by default. Set `LCL_AGENT_AUTHORITY_ENABLED=false` before starting Compose to hide Agent Authority while leaving ordinary LCL unchanged. No model, API key, cloud service or IBM i is involved.
+
+![Agent Authority guided rail](public/assets/screenshots/03-agent-authority-overview.png)
+
+![Pending request awaiting a human decision](public/assets/screenshots/04-agent-authority-pending.png)
+
+![Completed Agent Authority evidence](public/assets/screenshots/05-agent-authority-complete.png)
+
+### SCF Assessor Guidepost
+
+When Agent Authority is enabled, open `http://localhost:8080/scf-assessor/` for the separate **SCF 2026.3 Assessor Guidepost**. This is deliberately not another training path and it does not use the lab's teaching rail. It reads the current Agent Authority scenario, proposal, receipt, proof-bundle and service-profile state, then reports each selected CAA/CAC control as:
+
+- **like for like**, **partial**, or **not demonstrated** for implementation fit; and
+- **pass**, **fail**, **partial**, **not tested**, or **no evidence** for the current assessment result.
+
+The guidepost does not turn design intent into evidence. For example, the broker's narrow allow-list does not conceal the synthetic `MCPAGENT` profile's `*SECADM` authority: the least-privilege row remains a failure until that profile-level gap is resolved. Likewise, the absence of a password is not promoted into evidence of an enterprise credential-lifecycle process.
+
+This surface is an assessor aid over a synthetic lab volume. It is not an SCF certification, attestation, or claim that the surrounding deployment satisfies every assessment objective.
+
+Walkthrough detail: [docs/agent-authority-guide.md](docs/agent-authority-guide.md).
+
 ## Credibility check (for IBM i folks)
 
 After the demo, poke commands you already know. Training depth varies by design:

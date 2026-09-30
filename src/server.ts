@@ -12,6 +12,10 @@ import { preloadAllActiveRangeScenarios } from "./range/scenarioLoadService.js";
 import { startWebsockifyBridge } from "./websockifyBridge.js";
 import { guardHostQshMode } from "./ibmi-runtime/pase/qshMode.js";
 import { resolveBindHost } from "./bindHost.js";
+import { createAgentAuthorityMcpRuntime } from "./agent-authority/mcp/mcpRuntime.js";
+import { createAgentAuthorityRuntime } from "./agent-authority/runtime.js";
+import { createAuthorityDeskApi } from "./agent-authority/http/authorityDeskApi.js";
+import { createScfAssessorApi } from "./scf-assessor/http/scfAssessorApi.js";
 
 export type ServerConfig = {
   tn5250Port: number;
@@ -24,6 +28,8 @@ export type ServerConfig = {
   httpBindHost: string;
   tn5250BindHost: string;
   websockifyBindHost: string;
+  agentAuthorityEnabled: boolean;
+  agentTarget: string;
 };
 
 export function loadConfig(): ServerConfig {
@@ -38,6 +44,8 @@ export function loadConfig(): ServerConfig {
     httpBindHost: resolveBindHost("HTTP_BIND_HOST"),
     tn5250BindHost: resolveBindHost("TN5250_BIND_HOST"),
     websockifyBindHost: resolveBindHost("WEBSOCKIFY_BIND_HOST"),
+    agentAuthorityEnabled:(process.env.LCL_AGENT_AUTHORITY_ENABLED??"false").toLowerCase()==="true",
+    agentTarget:process.env.LCL_AGENT_TARGET??"lcl",
   };
 }
 
@@ -76,6 +84,10 @@ export function startServer(config: ServerConfig = loadConfig()) {
   });
   console.log(`${APP_NAME} — ${RUNTIME_NAME}`);
   console.log(`System: ${config.systemName}`);
+  const authorityRuntime=config.agentAuthorityEnabled?createAgentAuthorityRuntime({target:config.agentTarget,guidedAa001:true}):undefined;
+  const agentAuthority=authorityRuntime?createAgentAuthorityMcpRuntime({runtime:authorityRuntime}):undefined;
+  const authorityDesk=authorityRuntime?createAuthorityDeskApi(authorityRuntime,config.systemName):undefined;
+  const scfAssessor=authorityRuntime?createScfAssessorApi(authorityRuntime,config.systemName):undefined;
 
   const servers = startHostServers({
     tn5250Port: config.tn5250Port,
@@ -96,6 +108,9 @@ export function startServer(config: ServerConfig = loadConfig()) {
       ironTermPublicDir: ironTermDir,
       systemName: config.systemName,
       websockifyPort: config.websockifyPort,
+      ...(agentAuthority?{mcpHandler:agentAuthority.nodeHandler}:{}),
+      ...(authorityDesk?{authorityDeskHandler:authorityDesk,authorityDeskPublicDir:path.resolve("public/authority-desk")}:{}),
+      ...(scfAssessor?{scfAssessorHandler:scfAssessor,scfAssessorPublicDir:path.resolve("public/scf-assessor")}:{})
     });
     websockify = startWebsockifyBridge({
       listenPort: config.websockifyPort,
@@ -107,6 +122,7 @@ export function startServer(config: ServerConfig = loadConfig()) {
     console.log("=== Lab ===");
     console.log(`  Coach + terminal: http://localhost:${config.httpPort}/lab/`);
     console.log(`  Terminal only:    http://localhost:${config.httpPort}/tn5250/`);
+    if(scfAssessor) console.log(`  SCF assessor:     http://localhost:${config.httpPort}/scf-assessor/`);
     console.log(`  Bridge URL:       ws://localhost:${config.websockifyPort}/`);
     console.log("  Model: IBM-5292-2 · Sign on: AUDIT / TRAIN");
     console.log("");
@@ -117,6 +133,7 @@ export function startServer(config: ServerConfig = loadConfig()) {
     if (httpServer) {
       await new Promise<void>((resolve) => httpServer!.close(() => resolve()));
     }
+    if(agentAuthority) await agentAuthority.close();
     if (websockify) {
       await new Promise<void>((resolve) => websockify!.close(() => resolve()));
     }

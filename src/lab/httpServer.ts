@@ -43,6 +43,11 @@ export type LabHttpServerOptions = {
   ironTermPublicDir: string;
   systemName: string;
   websockifyPort: number;
+  mcpHandler?: (req:http.IncomingMessage,res:http.ServerResponse)=>void|Promise<void>;
+  authorityDeskHandler?: (req:http.IncomingMessage,res:http.ServerResponse,url:URL)=>Promise<{handled:boolean}>;
+  authorityDeskPublicDir?: string;
+  scfAssessorHandler?: (req:http.IncomingMessage,res:http.ServerResponse,url:URL)=>Promise<{handled:boolean}>;
+  scfAssessorPublicDir?: string;
 };
 
 const MIME: Record<string, string> = {
@@ -137,6 +142,7 @@ async function handleApi(
   url: URL,
   systemName: string,
   websockifyPort: number,
+  agentAuthorityEnabled: boolean,
 ): Promise<boolean> {
   if (!url.pathname.startsWith("/api/")) {
     return false;
@@ -351,6 +357,7 @@ async function handleApi(
       showQuickstart: labConfig.showQuickstart,
       defaultScenario: labConfig.defaultScenario,
       laneCredentials: getPublicLaneCredentialsForApi(systemName),
+      agentAuthorityEnabled,
     });
     return true;
   }
@@ -583,7 +590,43 @@ export function createLabHttpServer(options: LabHttpServerOptions): http.Server 
   return http.createServer(async (req, res) => {
     const url = new URL(req.url ?? "/", `http://${req.headers.host ?? "localhost"}`);
 
-    if (await handleApi(req, res, url, options.systemName, options.websockifyPort)) {
+    if (url.pathname === "/mcp") {
+      if (options.mcpHandler) await options.mcpHandler(req,res);
+      else sendJson(res,404,{error:"Not found"});
+      return;
+    }
+
+    if(url.pathname.startsWith("/api/agent-authority/")) {
+      if(options.authorityDeskHandler) await options.authorityDeskHandler(req,res,url);
+      else sendJson(res,404,{error:"Not found"});
+      return;
+    }
+
+    if(url.pathname.startsWith("/api/scf-assessor/")) {
+      if(options.scfAssessorHandler) await options.scfAssessorHandler(req,res,url);
+      else sendJson(res,404,{error:"Not found"});
+      return;
+    }
+
+    if(url.pathname==="/lab/authority"||url.pathname.startsWith("/lab/authority/")) {
+      if(!options.authorityDeskPublicDir){sendJson(res,404,{error:"Not found"});return;}
+      const root=path.resolve(options.authorityDeskPublicDir);
+      if(url.pathname==="/lab/authority"){res.writeHead(302,responseHeaders({Location:"/lab/authority/"}));res.end();return;}
+      const relative=url.pathname.slice("/lab/authority/".length)||"index.html";
+      if(serveStaticFile(res,path.join(root,relative),root))return;
+      sendJson(res,404,{error:"Not found"});return;
+    }
+
+    if(url.pathname==="/scf-assessor"||url.pathname.startsWith("/scf-assessor/")) {
+      if(!options.scfAssessorPublicDir){sendJson(res,404,{error:"Not found"});return;}
+      const root=path.resolve(options.scfAssessorPublicDir);
+      if(url.pathname==="/scf-assessor"){res.writeHead(302,responseHeaders({Location:"/scf-assessor/"}));res.end();return;}
+      const relative=url.pathname.slice("/scf-assessor/".length)||"index.html";
+      if(serveStaticFile(res,path.join(root,relative),root))return;
+      sendJson(res,404,{error:"Not found"});return;
+    }
+
+    if (await handleApi(req, res, url, options.systemName, options.websockifyPort,Boolean(options.authorityDeskHandler))) {
       return;
     }
 
