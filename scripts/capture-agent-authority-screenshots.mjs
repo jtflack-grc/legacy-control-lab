@@ -1,11 +1,15 @@
 import {spawn} from "node:child_process";
-import {rmSync} from "node:fs";
+import {createHash} from "node:crypto";
+import {mkdirSync,readFileSync,rmSync,writeFileSync} from "node:fs";
 import {chromium} from "playwright";
 
 const root=new URL("..",import.meta.url).pathname;
 const database="/tmp/lcl-agent-authority-screenshots.db";
 const base="http://127.0.0.1:8080";
+const evidenceDirectory=`${root}/artifacts/agent-authority-assurance`;
 rmSync(database,{force:true});
+rmSync(evidenceDirectory,{recursive:true,force:true});
+mkdirSync(evidenceDirectory,{recursive:true});
 const server=spawn(process.execPath,["dist/server.js"],{cwd:root,env:{...process.env,DATABASE_PATH:database,LCL_AGENT_AUTHORITY_ENABLED:"true",HTTP_PORT:"8080",WEBSOCKIFY_PORT:"6080",TN5250_PORT:"8023"},stdio:"inherit"});
 const wait=async(test,timeout=20_000)=>{const end=Date.now()+timeout;while(Date.now()<end){try{if(await test())return;}catch{}await new Promise((resolve)=>setTimeout(resolve,250));}throw new Error("Timed out waiting for screenshot state");};
 const shot=(page,name)=>page.screenshot({path:`${root}/public/assets/screenshots/${name}`,fullPage:true});
@@ -30,7 +34,7 @@ try{
   await shot(page,"04-agent-authority-pending.png");
 
   const guided=await (await fetch(`${base}/api/agent-authority/walkthrough`)).json();
-  const [{initDatabase,closeDatabase},{createAgentAuthorityRuntime},{createSession,hydrateSessionFromProfile},{grantObjectAuthority}]=await Promise.all([import("../dist/db/sqlite.js"),import("../dist/agent-authority/runtime.js"),import("../dist/ibmi-runtime/sessionService.js"),import("../dist/ibmi-runtime/authorityService.js")]);
+  const [{initDatabase,closeDatabase},{createAgentAuthorityRuntime},{createSession,hydrateSessionFromProfile},{grantObjectAuthority},{buildProposalProofBundle},{verifyProofBundle},{canonicalize}]=await Promise.all([import("../dist/db/sqlite.js"),import("../dist/agent-authority/runtime.js"),import("../dist/ibmi-runtime/sessionService.js"),import("../dist/ibmi-runtime/authorityService.js"),import("../dist/agent-authority/proof/proofBuilder.js"),import("../dist/agent-authority/proof/proofVerifier.js"),import("../dist/agent-authority/canonicalize.js")]);
   initDatabase({path:database});
   const runtime=createAgentAuthorityRuntime({target:"lcl",principalId:"screenshot-agent"});
   const operator=createSession("CLAIMS400");operator.signedOn=true;operator.userName="QSECOFR";operator.job.user="QSECOFR";hydrateSessionFromProfile(operator,"QSECOFR","CLAIMS400");
@@ -95,6 +99,35 @@ try{
   await assessor.locator('[data-control-id="IAC-51"]').click();
   await wait(async()=>(await assessor.locator("#dossier h2").textContent())?.includes("IAC-51"));
   await shot(assessor,"16-agent-authority-scf-iac51-failure.png");
+
+  const assessment=await (await fetch(`${base}/api/scf-assessor/assessment`)).json();
+  const proof=buildProposalProofBundle(runtime.db,guided.proposal.id,runtime);
+  const verification=verifyProofBundle(proof);
+  if(!verification.ok)throw new Error(`Exported AA-001 proof did not verify: ${verification.errors.join(", ")}`);
+  const evidenceFiles={
+    "scf-2026.3-assessment.json":`${canonicalize(assessment)}\n`,
+    "aa-001-portable-proof.json":`${canonicalize(proof)}\n`,
+    "aa-001-offline-verification.json":`${canonicalize(verification)}\n`
+  };
+  const sha256=(value)=>`sha256:${createHash("sha256").update(value).digest("hex")}`;
+  for(const [name,contents] of Object.entries(evidenceFiles)){
+    writeFileSync(`${evidenceDirectory}/${name}`,contents);
+    writeFileSync(`${evidenceDirectory}/${name}.sha256`,`${sha256(contents)}\n`);
+  }
+  const screenshotNames=["05-agent-authority-complete.png","12-agent-authority-lab-complete.png","15-agent-authority-scf-assessor-overview.png","16-agent-authority-scf-iac51-failure.png"];
+  const manifest={
+    schema:"lcl-assurance-evidence-package/v1",
+    generatedAt:new Date().toISOString(),
+    source:{repository:process.env.GITHUB_REPOSITORY??"jtflack-grc/legacy-control-lab",commit:process.env.GITHUB_SHA??"local",workflowRunId:process.env.GITHUB_RUN_ID??"local"},
+    assessedSystem:"CLAIMS400",
+    assessmentProfile:"SCF 2026.3 CAA/CAC",
+    resultSummary:assessment.summary,
+    evidence:[...Object.entries(evidenceFiles).map(([name,contents])=>({name,sha256:sha256(contents)})),...screenshotNames.map((name)=>({name:`screenshots/${name}`,sha256:sha256(readFileSync(`${root}/public/assets/screenshots/${name}`))}))],
+    limitations:["Synthetic IBM i learning environment, not a production partition","Self-contained hashes detect modification relative to this package but do not provide an external signature or trusted timestamp","Enterprise ownership, credential rotation, quarterly access review and external immutable retention remain outside the demonstrated boundary"]
+  };
+  const manifestContents=`${canonicalize(manifest)}\n`;
+  writeFileSync(`${evidenceDirectory}/evidence-manifest.json`,manifestContents);
+  writeFileSync(`${evidenceDirectory}/evidence-manifest.json.sha256`,`${sha256(manifestContents)}\n`);
   closeDatabase();
   await browser.close();
 } finally {server.kill("SIGTERM");}
