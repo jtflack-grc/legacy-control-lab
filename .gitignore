@@ -27,6 +27,8 @@ data/scorebook/*
 !data/scorebook/.gitkeep
 data/qopensys/
 data/security-saves/
+/artifacts/jev-assurance/
+/public/jev-assurance/evidence.json
 
 # Maintainer-local assets
 launch/
@@ -38,6 +40,7 @@ vendor/
 scripts/*
 !scripts/install.ps1
 !scripts/copyRuntimeAssets.mjs
+!scripts/capture-jev-assurance-screenshots.mjs
 
 # Community Edition documentation
 docs/*
@@ -49,6 +52,7 @@ docs/*
 !docs/licensing.md
 !docs/agent-authority.md
 !docs/agent-authority-mcp.md
+!docs/jev-assurance.md
 
 # Tests are maintained outside the Community Edition package
 tests/
@@ -58,6 +62,8 @@ tests/*
 !tests/agent-authority/*.test.ts
 !tests/scf-assessor/
 !tests/scf-assessor/*.test.ts
+!tests/jev-assurance/
+!tests/jev-assurance/*.test.ts
 vitest.config.ts
 vitest.config.*
 
