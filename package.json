@@ -13,6 +13,8 @@
     "agent:verify": "node dist/agent-authority/evidence/verifyCli.js",
     "agent:proof:export": "node dist/agent-authority/proof/proofExportCli.js",
     "agent:proof:verify": "node dist/agent-authority/proof/proofVerifyCli.js",
+    "jev:assurance": "node dist/jev-assurance/cli.js",
+    "jev:screenshots": "node scripts/capture-jev-assurance-screenshots.mjs",
     "start": "node dist/server.js",
     "db:seed": "tsx src/db/seed.ts",
     "check:audit": "npm audit --omit=dev --audit-level=high",

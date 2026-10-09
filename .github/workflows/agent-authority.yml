@@ -16,6 +16,7 @@ jobs:
     timeout-minutes: 30
     env:
       PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: /usr/bin/google-chrome
+      TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -40,6 +41,23 @@ jobs:
         with:
           name: agent-authority-assurance-evidence
           path: artifacts/agent-authority-assurance/
+      - name: Run live Jev evidence-boundary experiment
+        if: ${{ env.TYPESAFE_API_KEY != '' }}
+        run: node scripts/capture-jev-assurance-screenshots.mjs
+      - name: Upload Jev screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jev-assurance-screenshots
+          path: public/assets/screenshots/*-jev-assurance-*.png
+          if-no-files-found: ignore
+      - name: Upload Jev machine-readable evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jev-assurance-evidence
+          path: artifacts/jev-assurance/
+          if-no-files-found: ignore
       - run: npm test
       - name: Proof export and offline verification smoke
         run: npx vitest run tests/agent-authority/phase6.test.ts -t "writes through the exporter CLI"
