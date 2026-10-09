@@ -28,7 +28,8 @@ await new Promise(resolve=>server.listen(8099,"127.0.0.1",resolve));
 try{
   const browser=await chromium.launch({headless:true,...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH?{executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH}:{}),args:["--no-sandbox"]});
   const page=await browser.newPage({viewport:{width:1600,height:1100},deviceScaleFactor:1});
-  await page.goto("http://127.0.0.1:8099/jev-assurance/",{waitUntil:"networkidle"});
+  await page.goto("http://127.0.0.1:8099/jev-assurance/index.html",{waitUntil:"networkidle"});
+  await page.locator("#states .state").first().waitFor();
   await page.screenshot({path:path.join(root,"public/assets/screenshots/17-jev-assurance-boundary-comparison.png"),fullPage:true});
   await page.locator("#states").screenshot({path:path.join(root,"public/assets/screenshots/18-jev-assurance-three-states.png")});
   await browser.close();
