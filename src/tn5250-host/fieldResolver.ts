@@ -166,5 +166,7 @@ export function isSubfileScreen(screenId: ScreenDefinition["id"]): boolean {
     "WRKSQLSVC",
     "WRKMBRPDM",
     "WRKOBJPDM",
+    "DSPLIBL",
+    "DSPLIB",
   ]).has(screenId);
 }

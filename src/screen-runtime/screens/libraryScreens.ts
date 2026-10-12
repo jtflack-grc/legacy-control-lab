@@ -2,6 +2,7 @@ import type { ScreenDefinition } from "../screen.js";
 import type { LibrarySummary } from "../../ibmi-runtime/libraryAdminService.js";
 import type { CatalogObject } from "../../ibmi-runtime/objectCatalogService.js";
 import { filterCatalogObjects } from "../../ibmi-runtime/objectCatalogService.js";
+import { listUserProfiles } from "../../ibmi-runtime/userProfileService.js";
 import {
   commandField,
   ibmColumnHeader,
@@ -117,7 +118,28 @@ export function createDisplayLibraryScreen(
 }
 
 export function listLibraryObjects(systemName: string, libraryName: string): CatalogObject[] {
-  return filterCatalogObjects(systemName, { library: libraryName });
+  const normalized = libraryName.trim().toUpperCase();
+  const objects = [...filterCatalogObjects(systemName, { library: normalized })];
+
+  // v1.1 training fidelity: user profiles are *USRPRF objects in QSYS.  This
+  // is a synthetic directory view for discovery exercises; the authority
+  // value below is not used as a claim about production QSYS object authority.
+  if (normalized === "QSYS") {
+    const seen = new Set(objects.map((obj) => obj.object.toUpperCase()));
+    for (const profile of listUserProfiles(systemName)) {
+      if (seen.has(profile.userName.toUpperCase())) continue;
+      objects.push({
+        library: "QSYS",
+        object: profile.userName,
+        type: "*USRPRF",
+        publicAuth: "*EXCLUDE",
+        owner: "QSYS",
+        text: profile.text || "User profile",
+      });
+    }
+  }
+
+  return objects.sort((a, b) => a.object.localeCompare(b.object));
 }
 
 export function createDisplayLibraryDescriptionScreen(

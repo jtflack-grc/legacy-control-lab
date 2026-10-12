@@ -46,7 +46,7 @@
       "id": "CLAIMS-007",
       "title": "Can You Red Team IBM i Boundaries?",
       "persona": "Adversarial simulation / internal audit",
-      "briefing": "You are simulating a limited insider (APCLERK with LMTCPB(*YES)). Sign on as APCLERK / TRAIN. Inspect your own profile, attempt privilege escalation on PAYROLL/PAYMST (GRTOBJAUT or EDTOBJAUT), and review network attributes. Document escape attempts as findings — the lab blocks exploits but should prove boundary controls."
+      "briefing": "You are simulating a limited insider (APCLERK with LMTCPB(*YES)). Sign on as APCLERK / TRAIN. Use DSPJOB and option 13 to explore what a restricted session can still discover without a general command line, then attempt privilege escalation on PAYROLL/PAYMST. Document the difference between command restriction, information exposure, and actual authority — the lab should deny the change while preserving evidence of both discovery and denial."
     },
     {
       "id": "CLAIMS-008",
@@ -65,6 +65,12 @@
       "title": "Can You Map COSO to the Control Atlas?",
       "persona": "IT auditor / GRC analyst",
       "briefing": "The control owner claims COSO control environment components are reflected in IBM i evidence and the lab control atlas. Sign on as AUDIT, open GO WORKSHOP, review WRKCTRL, collect green-screen evidence, MAPCTRL a finding to LCL-AC-01, and document decision impact in WRKFINDING."
+    },
+    {
+      "id": "CLAIMS-011",
+      "title": "The Profile That Shouldn't Exist",
+      "persona": "IT auditor / IBM i security analyst",
+      "briefing": "The control owner claims IBM-supplied Q profiles on CLAIMS400 are noninteractive and that Q-prefixed names can be treated as trusted system identities. Test that claim. Run the lab-only ANZSHPRF assurance helper, compare a compliant baseline profile with QSYSOPR, investigate QCLMSADM as a locally created Q-prefixed identity, trace provenance in QAUDJRN, document what the evidence proves, then use a separately authorized QSECOFR session to remediate and rerun the assessment."
     }
   ],
   "missionEvidenceRequirements": [
@@ -334,9 +340,9 @@
     },
     {
       "missionId": "CLAIMS-007",
-      "key": "limited_profile",
-      "description": "Display own profile (DSPUSRPRF) — LMTCPB(*YES)",
-      "commandPattern": "DSPUSRPRF",
+      "key": "indirect_discovery",
+      "description": "Use DSPJOB and option 13 to begin command-line-free discovery from the limited session",
+      "commandPattern": "DSPJOB",
       "optional": false,
       "weight": 1
     },
@@ -506,6 +512,70 @@
       "description": "WRKFINDING with COSO control environment narrative",
       "commandPattern": "WRKFINDING",
       "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "shipped_profile_analysis",
+      "description": "Run ANZSHPRF to assess the declared supplied-profile baseline",
+      "commandPattern": "ANZSHPRF",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "compliant_baseline",
+      "description": "Inspect QSYS as a noninteractive comparison profile",
+      "commandPattern": "DSPUSRPRF:QSYS",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "interactive_misconfig",
+      "description": "Inspect QSYSOPR and its interactive password state",
+      "commandPattern": "DSPUSRPRF:QSYSOPR",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "unexpected_q_profile",
+      "description": "Inspect locally created QCLMSADM rather than trusting the Q prefix",
+      "commandPattern": "DSPUSRPRF:QCLMSADM",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "provenance",
+      "description": "Trace QSYSOPR/QCLMSADM provenance in QAUDJRN",
+      "commandPattern": "DSPJRN|DSPAUDJRNE",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "finding",
+      "description": "Document claim boundary and decision impact in WRKFINDING",
+      "commandPattern": "WRKFINDING",
+      "optional": false,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "remove_interactive_password",
+      "description": "Optional QSECOFR remediation: CHGUSRPRF QSYSOPR PASSWORD(*NONE)",
+      "commandPattern": "CHGUSRPRF:QSYSOPR",
+      "optional": true,
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "remove_untrusted_identity",
+      "description": "Optional QSECOFR remediation: disable or delete QCLMSADM after provenance review",
+      "commandPattern": "CHGUSRPRF:QCLMSADM|DLTUSRPRF:QCLMSADM",
+      "optional": true,
       "weight": 1
     }
   ],
@@ -843,14 +913,15 @@
     {
       "missionId": "CLAIMS-007",
       "key": "recon_without_escalation",
-      "description": "Network recon possible but no path to payroll data authority.",
+      "description": "Restricted navigation still exposes useful system state even though authority-changing commands are denied.",
       "matchPatterns": [
-        "dspneta",
-        "recon",
-        "network",
-        "escape",
-        "finding",
-        "red team"
+        "dspjob",
+        "library list",
+        "qsys",
+        "discovery",
+        "lmtcpb",
+        "denied",
+        "boundary"
       ],
       "weight": 1
     },
@@ -1129,6 +1200,61 @@
         "impact",
         "must act",
         "by when"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "qsysopr_interactive",
+      "description": "QSYSOPR is part of the declared supplied-profile baseline but has interactive sign-on state where PASSWORD(*NONE) is expected.",
+      "matchPatterns": [
+        "qsysopr",
+        "password",
+        "interactive",
+        "*none",
+        "supplied profile"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "qclmsadm_provenance",
+      "description": "QCLMSADM is Q-prefixed but outside CLAIMS400's declared supplied-profile baseline; the name is not provenance.",
+      "matchPatterns": [
+        "qclmsadm",
+        "q-prefixed",
+        "baseline",
+        "provenance",
+        "trusted"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "claim_boundary",
+      "description": "A Q prefix or a successful configuration scan does not by itself prove identity legitimacy or lifecycle governance.",
+      "matchPatterns": [
+        "does not prove",
+        "claim",
+        "boundary",
+        "identity",
+        "lifecycle",
+        "evidence"
+      ],
+      "weight": 1
+    },
+    {
+      "missionId": "CLAIMS-011",
+      "key": "decision_impact_documented",
+      "description": "Finding identifies an owner and remediation decision for the interactive supplied profile and unexpected Q-prefixed identity.",
+      "matchPatterns": [
+        "decision",
+        "owner",
+        "remediate",
+        "qsysopr",
+        "qclmsadm",
+        "by when",
+        "impact"
       ],
       "weight": 1
     }

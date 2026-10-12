@@ -18,6 +18,8 @@ import {
   handleWorkshopInput,
   handleCatalogWorkInput,
   handleWorkLibrariesInput,
+  handleDisplayLibraryListInput,
+  handleDisplayLibraryInput,
   handleWorkLinkServersInput,
   handleWorkWithJobMenuInput,
   handleNetStatMenuInput,
@@ -142,6 +144,12 @@ export function handleSubfileScreenInput(
   }
   if (screenId === "WRKLIB") {
     return handleWorkLibrariesInput(session, values);
+  }
+  if (screenId === "DSPLIBL") {
+    return handleDisplayLibraryListInput(session, values);
+  }
+  if (screenId === "DSPLIB") {
+    return handleDisplayLibraryInput(session, values);
   }
   if (screenId === "DSPJOB") {
     return handleWorkWithJobMenuInput(session, values);

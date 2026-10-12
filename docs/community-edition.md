@@ -28,5 +28,5 @@ It is intentionally **not** a SaaS product, shared hosted demo, or GRC platform.
 ## Longevity
 
 Community Edition is meant to stay installable and honest as a **revisitable
-lab**, versioned with `package.json` / git tags (currently **1.0.0**). Expect
+lab**, versioned with `package.json` / git tags (currently **1.1.0**). Expect
 measured updates — not a product company roadmap.

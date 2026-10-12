@@ -64,7 +64,9 @@
     "handler": "changePassword",
     "helpText": "Change the password for the current user profile. Stock IBM i GO SECURITY paths route here from SECURITY option 20.",
     "secondLevelHelp": "Enter current, new, and verified new password on the CHGPWD panel. Training passwords remain uppercase like sign-on.",
-    "examples": ["CHGPWD"],
+    "examples": [
+      "CHGPWD"
+    ],
     "implementationLevel": "stateful_implemented",
     "mutatesState": true
   },
@@ -328,7 +330,7 @@
     "displayName": "Display User Profile",
     "category": "user_profile",
     "status": "implemented",
-    "allowLimitedUser": true,
+    "allowLimitedUser": false,
     "requiresAuthority": [],
     "handler": "displayUserProfile",
     "parameters": [
@@ -337,7 +339,10 @@
         "type": "profileName",
         "required": true,
         "label": "User profile",
-        "supportsSpecialValues": ["*CURRENT", "*ALL"]
+        "supportsSpecialValues": [
+          "*CURRENT",
+          "*ALL"
+        ]
       },
       {
         "name": "TYPE",
@@ -350,7 +355,11 @@
         "type": "name",
         "required": false,
         "label": "Output",
-        "supportsSpecialValues": ["*", "*PRINT", "*OUTFILE"]
+        "supportsSpecialValues": [
+          "*",
+          "*PRINT",
+          "*OUTFILE"
+        ]
       },
       {
         "name": "OUTFILE",
@@ -378,7 +387,7 @@
       "DSPJRN"
     ],
     "implementationLevel": "display_implemented",
-    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state. OUTPUT(*OUTFILE) writes qsys2.outfile_export rows."
+    "realismLimits": "Synthetic IBM i runtime with SQLite-backed state. OUTPUT(*OUTFILE) writes qsys2.outfile_export rows. LMTCPB(*YES) blocks direct command-line invocation; profile detail may still be reachable through authorized display/navigation paths."
   },
   {
     "name": "WRKJOBD",

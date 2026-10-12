@@ -4,7 +4,7 @@ import { listSecuritySystemValues } from "../../ibmi-runtime/systemValueService.
 import { createInfoScreen, menuHeader, outputField, standardFunctionKeys } from "./screenHelpers.js";
 
 export function createSecurityAnalysisScreen(
-  screenId: "ANZDFTPWD" | "ANZPRFACT",
+  screenId: "ANZDFTPWD" | "ANZPRFACT" | "ANZSHPRF",
   title: string,
   systemName: string,
   userName: string,

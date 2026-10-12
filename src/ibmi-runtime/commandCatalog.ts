@@ -7,7 +7,7 @@ import { formatLabMessage, getLabMessage } from "./messageCatalog.js";
 
 /** IBM i CL command catalog — metadata loaded from SQLite (Phase 5). */
 
-export const COMMAND_CATALOG_VERSION = "1.0.5";
+export const COMMAND_CATALOG_VERSION = "1.0.6";
 
 export type CommandStatus =
   | "implemented"

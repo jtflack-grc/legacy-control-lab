@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS user_profiles (
   initial_menu TEXT,
   last_signon TEXT,
   password TEXT,
+  password_configured INTEGER NOT NULL DEFAULT 0,
   activity_profile_exempt INTEGER NOT NULL DEFAULT 0,
   business_owner TEXT,
   limit_capabilities TEXT NOT NULL DEFAULT '*NO',

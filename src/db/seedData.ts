@@ -31,6 +31,7 @@ export type Claims400Seed = {
     specialAuthorities?: string;
     initialMenu?: string;
     password?: string;
+    passwordConfigured?: boolean;
     lastSignon?: string;
     businessOwner?: string;
     limitCapabilities?: string;
@@ -133,9 +134,9 @@ function insertSystemSeed(db: SqliteDatabase, systemId: string, seed: Claims400S
     const insertProfile = db.prepare(`
       INSERT INTO user_profiles (
         id, system_id, user_name, status, user_class, text_description,
-        group_profile, special_authorities, initial_menu, password, last_signon, business_owner,
+        group_profile, special_authorities, initial_menu, password, password_configured, last_signon, business_owner,
         limit_capabilities, activity_profile_exempt
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     for (const profile of seed.userProfiles) {
       insertProfile.run(
@@ -149,6 +150,7 @@ function insertSystemSeed(db: SqliteDatabase, systemId: string, seed: Claims400S
         profile.specialAuthorities ?? null,
         profile.initialMenu ?? "AUDIT",
         profile.password ?? null,
+        (profile.passwordConfigured ?? Boolean(profile.password)) ? 1 : 0,
         profile.lastSignon ?? null,
         profile.businessOwner ?? null,
         profile.limitCapabilities ?? "*NO",
@@ -356,7 +358,7 @@ export function seedClaims400(db: SqliteDatabase, seed: Claims400Seed = loadClai
   seedScenarioPack(db, "claims400", seed);
 }
 
-export const SCENARIO_VERSION = "0.5.3";
+export const SCENARIO_VERSION = "0.6.0";
 const SCENARIO_VERSION_KEY = "scenario_version";
 const RANGE_VERSION_KEY = "range_version";
 

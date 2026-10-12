@@ -164,6 +164,13 @@ export function applySchemaMigrations(database: SqliteDatabase): void {
   `);
 
   if (tableExists(database, "user_profiles")) {
+    const hadPasswordConfigured = tableHasColumn(database, "user_profiles", "password_configured");
+    addColumnIfMissing(database, "user_profiles", "password_configured", "INTEGER NOT NULL DEFAULT 0");
+    if (!hadPasswordConfigured) {
+      database.exec(
+        "UPDATE user_profiles SET password_configured = CASE WHEN password IS NOT NULL AND password <> '' THEN 1 ELSE 0 END",
+      );
+    }
     addColumnIfMissing(database, "user_profiles", "activity_profile_exempt", "INTEGER NOT NULL DEFAULT 0");
     addColumnIfMissing(database, "user_profiles", "business_owner", "TEXT");
     addColumnIfMissing(database, "user_profiles", "limit_capabilities", "TEXT NOT NULL DEFAULT '*NO'");
