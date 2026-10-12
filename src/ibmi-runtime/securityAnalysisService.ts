@@ -82,7 +82,7 @@ export function analyzeShippedProfiles(systemName = "CLAIMS400"): SecurityFindin
     // into synthetic production evidence.
     if (name === "QSECOFR") continue;
 
-    if (profile.password) {
+    if (profile.passwordConfigured) {
       findings.push({
         userName: name,
         finding:
