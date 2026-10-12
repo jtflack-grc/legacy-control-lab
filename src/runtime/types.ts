@@ -73,6 +73,11 @@ export type AttemptBaselineSnapshot = {
     groupProfile: string | null;
     specialAuthorities: string | null;
     initialMenu: string | null;
+    lastSignon: string | null;
+    businessOwner: string | null;
+    limitCapabilities: string;
+    activityProfileExempt: boolean;
+    passwordConfigured: boolean;
   }>;
   systemValues: Array<{ name: string; value: string }>;
   objectPublicAuthorities: Array<{ library: string; object: string; publicAuth: string }>;
