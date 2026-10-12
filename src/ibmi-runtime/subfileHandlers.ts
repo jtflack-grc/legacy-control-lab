@@ -7,6 +7,7 @@ import { createWorkObjectsScreen } from "../screen-runtime/screens/workObjects.j
 import { listWorkUserProfileNames } from "../screen-runtime/screens/workUserProfiles.js";
 import { createDisplayAuthorityScreen } from "../screen-runtime/screens/workAuthority.js";
 import { getUserProfile } from "./userProfileService.js";
+import { createDisplayUserProfileScreen } from "../screen-runtime/screens/displayUserProfile.js";
 import { listWorkSystemValueNames } from "../screen-runtime/screens/displaySystemValue.js";
 import { listWorkObjectRefs } from "../screen-runtime/screens/workObjects.js";
 import { listActiveJobs, listJobsBySubsystem, listJobsByUser } from "./jobService.js";
@@ -55,7 +56,9 @@ import { createDisplayPtfDetailScreen } from "../screen-runtime/screens/displayP
 import { getPtfDetail, getPtfGroup, listAllPtfs, listPtfGroups, listPtfsForGroup } from "./ptfService.js";
 import { getCommandHandler } from "./commandHandlers.js";
 import { openCommandPrompt } from "./commandPromptService.js";
-import { listLibrariesForWork } from "./libraryAdminService.js";
+import { getLibraryDescription, listLibrariesForWork } from "./libraryAdminService.js";
+import { displayLibraryList } from "./libraryListService.js";
+import { displayLibraryListRows } from "../screen-runtime/screens/displayLibraryList.js";
 import {
   createDisplayLibraryDescriptionScreen,
   createDisplayLibraryScreen,
@@ -697,6 +700,78 @@ export function handleWorkLibrariesInput(
     }
   }
   return runSubfileCommand(session, values);
+}
+
+export function handleDisplayLibraryListInput(
+  session: IbmiSession,
+  values: Record<string, string>,
+): MenuRouteResult | undefined {
+  const rows = displayLibraryListRows(displayLibraryList(session));
+  for (let index = 0; index < rows.length; index += 1) {
+    const option = values[`LOPT${index}`]?.trim();
+    if (!option) continue;
+    if (option !== "5") {
+      return { kind: "message", message: `CPF0006 - Option ${option} not valid for this entry.` };
+    }
+
+    const entry = rows[index]!;
+    const library =
+      getLibraryDescription(session.systemName, entry.name) ?? {
+        name: entry.name,
+        type: "PROD",
+        text: entry.name === "QSYS" ? "System library" : "Library",
+        aspDevice: "*SYSBAS",
+      };
+    resetSubfilePage(session, "DSPLIB");
+    const objects = listLibraryObjects(session.systemName, library.name);
+    session.libraryContext = {
+      name: library.name,
+      type: library.type,
+      text: library.text,
+      objectCount: objects.length,
+    };
+    return {
+      kind: "screen",
+      screen: createDisplayLibraryScreen(session.systemName, library, objects, 0),
+    };
+  }
+  return undefined;
+}
+
+export function handleDisplayLibraryInput(
+  session: IbmiSession,
+  values: Record<string, string>,
+): MenuRouteResult | undefined {
+  const context = session.libraryContext;
+  if (!context) return undefined;
+  const objects = listLibraryObjects(session.systemName, context.name);
+  const routed = eachVisibleSubfileOption(
+    session,
+    "DSPLIB",
+    objects,
+    "OOPT",
+    values,
+    (object, option) => {
+      if (option !== "5" && option !== "8") return undefined;
+
+      // The indirect discovery path deliberately does not execute DSPUSRPRF
+      // from the command line.  It navigates from QSYS's *USRPRF object.
+      if (object.type === "*USRPRF") {
+        return {
+          kind: "screen",
+          screen: createDisplayUserProfileScreen(session.systemName, object.object),
+        };
+      }
+
+      return executeCatalogCommand(
+        session,
+        "DSPOBJD",
+        `DSPOBJD OBJ(${object.library}/${object.object}) OBJTYPE(${object.type})`,
+      );
+    },
+  );
+  if (routed) return routed;
+  return undefined;
 }
 
 export function handleWorkLinkServersInput(
