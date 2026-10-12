@@ -127,7 +127,7 @@ export function updateUserProfile(
   userName: string,
   updates: {
     status?: string;
-    password?: string;
+    password?: string | null;
     userClass?: string;
     text?: string;
     specialAuthorities?: string;
@@ -145,7 +145,7 @@ export function updateUserProfile(
     .prepare(
       `UPDATE user_profiles
        SET status = COALESCE(?, status),
-           password = COALESCE(?, password),
+           password = CASE WHEN ? = 1 THEN ? ELSE password END,
            user_class = COALESCE(?, user_class),
            text_description = COALESCE(?, text_description),
            special_authorities = COALESCE(?, special_authorities),
@@ -154,6 +154,7 @@ export function updateUserProfile(
     )
     .run(
       updates.status ?? null,
+      updates.password !== undefined ? 1 : 0,
       updates.password ?? null,
       updates.userClass ?? null,
       updates.text ?? null,
