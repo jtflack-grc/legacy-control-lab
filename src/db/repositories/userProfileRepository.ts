@@ -7,6 +7,7 @@ export type UserProfileRow = {
   userClass: string;
   text: string;
   password: string | null;
+  passwordConfigured: boolean;
   groupProfile: string | null;
   specialAuthorities: string | null;
   initialMenu: string | null;
@@ -22,6 +23,7 @@ export function listUserProfiles(systemName: string): UserProfileRow[] {
     .prepare(
       `SELECT user_name AS userName, status, user_class AS userClass,
               text_description AS text, password,
+              password_configured AS passwordConfigured,
               group_profile AS groupProfile, special_authorities AS specialAuthorities,
               initial_menu AS initialMenu, last_signon AS lastSignon,
               limit_capabilities AS limitCapabilities,
@@ -36,6 +38,7 @@ export function listUserProfiles(systemName: string): UserProfileRow[] {
   return rows.map((row) => ({
     ...row,
     activityProfileExempt: Boolean(row.activityProfileExempt),
+    passwordConfigured: Boolean(row.passwordConfigured),
   }));
 }
 
@@ -48,6 +51,7 @@ export function getUserProfile(
     .prepare(
       `SELECT user_name AS userName, status, user_class AS userClass,
               text_description AS text, password,
+              password_configured AS passwordConfigured,
               group_profile AS groupProfile, special_authorities AS specialAuthorities,
               initial_menu AS initialMenu, last_signon AS lastSignon,
               limit_capabilities AS limitCapabilities,
@@ -103,8 +107,8 @@ export function createUserProfile(
     .prepare(
       `INSERT INTO user_profiles (
         id, system_id, user_name, status, user_class, text_description,
-        group_profile, special_authorities, initial_menu, password
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        group_profile, special_authorities, initial_menu, password, password_configured
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .run(
       `usr-${userName.toLowerCase()}`,
@@ -117,6 +121,7 @@ export function createUserProfile(
       profile.specialAuthorities ?? "*NONE",
       profile.initialMenu ?? "AUDIT",
       profile.password ?? null,
+      profile.password ? 1 : 0,
     );
 
   return { ok: true };
@@ -146,6 +151,7 @@ export function updateUserProfile(
       `UPDATE user_profiles
        SET status = COALESCE(?, status),
            password = CASE WHEN ? = 1 THEN ? ELSE password END,
+           password_configured = CASE WHEN ? = 1 THEN ? ELSE password_configured END,
            user_class = COALESCE(?, user_class),
            text_description = COALESCE(?, text_description),
            special_authorities = COALESCE(?, special_authorities),
@@ -156,6 +162,8 @@ export function updateUserProfile(
       updates.status ?? null,
       updates.password !== undefined ? 1 : 0,
       updates.password ?? null,
+      updates.password !== undefined ? 1 : 0,
+      updates.password !== undefined && updates.password !== null ? 1 : 0,
       updates.userClass ?? null,
       updates.text ?? null,
       updates.specialAuthorities ?? null,
