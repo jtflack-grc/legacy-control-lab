@@ -62,7 +62,11 @@ export function getUserProfile(
     )
     .get(systemId, userName.trim().toUpperCase()) as UserProfileRow | undefined;
   if (!row) return undefined;
-  return { ...row, activityProfileExempt: Boolean(row.activityProfileExempt) };
+  return {
+    ...row,
+    activityProfileExempt: Boolean(row.activityProfileExempt),
+    passwordConfigured: Boolean(row.passwordConfigured),
+  };
 }
 
 export function setActivityProfileExempt(
