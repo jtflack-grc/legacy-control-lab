@@ -1,3 +1,6 @@
+{"entryTime":"2026-05-19 16:42:07","userName":"PAYADMIN","entryType":"CP","objectRef":"QSYSOPR","message":"User profile QSYSOPR changed; interactive sign-on state established during legacy operator transition"}
+{"entryTime":"2026-06-01 09:12:44","userName":"PAYADMIN","entryType":"CP","objectRef":"QCLMSADM","message":"User profile QCLMSADM created for claims subsystem administration"}
+{"entryTime":"2026-06-07 21:05:18","userName":"QCLMSADM","entryType":"CP","objectRef":"CLAIMS400","message":"Privileged claims maintenance performed by QCLMSADM"}
 {"entryTime":"2026-06-08 07:42:11","userName":"BACKUPADM","entryType":"PW","objectRef":"BACKUPADM","message":"Invalid password attempt for BACKUPADM"}
 {"entryTime":"2026-06-08 09:15:33","userName":"OLDVENDOR","entryType":"AF","objectRef":"CLAIMS400/CLMMAINT","message":"Authority failure for OLDVENDOR"}
 {"entryTime":"2026-06-08 10:02:07","userName":"OLDVENDOR","entryType":"CP","objectRef":"WRKACTJOB","message":"Command WRKACTJOB run by OLDVENDOR"}
