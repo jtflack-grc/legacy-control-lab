@@ -150,7 +150,7 @@ function insertSystemSeed(db: SqliteDatabase, systemId: string, seed: Claims400S
         profile.specialAuthorities ?? null,
         profile.initialMenu ?? "AUDIT",
         profile.password ?? null,
-        profile.passwordConfigured ?? Boolean(profile.password) ? 1 : 0,
+        (profile.passwordConfigured ?? Boolean(profile.password)) ? 1 : 0,
         profile.lastSignon ?? null,
         profile.businessOwner ?? null,
         profile.limitCapabilities ?? "*NO",
