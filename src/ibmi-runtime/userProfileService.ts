@@ -87,6 +87,7 @@ function toSummary(profile: {
   activityProfileExempt?: boolean;
   businessOwner?: string | null;
   password?: string | null;
+  passwordConfigured?: boolean;
 }): UserProfileSummary {
   return {
     userName: profile.userName,
@@ -100,6 +101,6 @@ function toSummary(profile: {
     limitCapabilities: profile.limitCapabilities ?? "*NO",
     activityProfileExempt: Boolean(profile.activityProfileExempt),
     businessOwner: profile.businessOwner ?? "*NONE",
-    passwordSet: Boolean(profile.password),
+    passwordSet: Boolean(profile.passwordConfigured),
   };
 }
