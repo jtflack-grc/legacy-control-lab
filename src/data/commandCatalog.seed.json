@@ -43,7 +43,13 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "goMenu",
-    "parameters": [{ "name": "MENU", "type": "menuName", "required": false }]
+    "parameters": [
+      {
+        "name": "MENU",
+        "type": "menuName",
+        "required": false
+      }
+    ]
   },
   {
     "name": "WRKUSRPRF",
@@ -51,7 +57,10 @@
     "category": "user_profile",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM", "*AUDITVIEW"],
+    "requiresAuthority": [
+      "*SECADM",
+      "*AUDITVIEW"
+    ],
     "handler": "workWithUserProfiles",
     "parameters": [
       {
@@ -59,7 +68,9 @@
         "type": "profileName",
         "default": "*ALL",
         "required": false,
-        "supportsSpecialValues": ["*ALL"]
+        "supportsSpecialValues": [
+          "*ALL"
+        ]
       }
     ]
   },
@@ -68,10 +79,16 @@
     "displayName": "Display User Profile",
     "category": "user_profile",
     "status": "implemented",
-    "allowLimitedUser": true,
+    "allowLimitedUser": false,
     "requiresAuthority": [],
     "handler": "displayUserProfile",
-    "parameters": [{ "name": "USRPRF", "type": "profileName", "required": true }]
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "DSPSYSVAL",
@@ -81,7 +98,13 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "displaySystemValues",
-    "parameters": [{ "name": "SYSVAL", "type": "systemValueName", "required": false }]
+    "parameters": [
+      {
+        "name": "SYSVAL",
+        "type": "systemValueName",
+        "required": false
+      }
+    ]
   },
   {
     "name": "WRKOBJ",
@@ -92,8 +115,19 @@
     "requiresAuthority": [],
     "handler": "workWithObjects",
     "parameters": [
-      { "name": "OBJ", "type": "qualifiedName", "required": false },
-      { "name": "OBJTYPE", "type": "objectType", "required": false, "supportsSpecialValues": ["*ALL"] }
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": false
+      },
+      {
+        "name": "OBJTYPE",
+        "type": "objectType",
+        "required": false,
+        "supportsSpecialValues": [
+          "*ALL"
+        ]
+      }
     ]
   },
   {
@@ -185,7 +219,13 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "addLibraryEntry",
-    "parameters": [{ "name": "LIB", "type": "libraryName", "required": true }]
+    "parameters": [
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "RMVLIBLE",
@@ -195,7 +235,13 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "removeLibraryEntry",
-    "parameters": [{ "name": "LIB", "type": "libraryName", "required": true }]
+    "parameters": [
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "EDTLIBL",
@@ -214,7 +260,13 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "displayObjectDescription",
-    "parameters": [{ "name": "OBJ", "type": "qualifiedName", "required": true }]
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "DSPOBJAUT",
@@ -222,11 +274,21 @@
     "category": "authority",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*OBJEXIST"],
+    "requiresAuthority": [
+      "*OBJEXIST"
+    ],
     "handler": "displayObjectAuthority",
     "parameters": [
-      { "name": "OBJ", "type": "qualifiedName", "required": true },
-      { "name": "USER", "type": "profileName", "required": false }
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      },
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": false
+      }
     ]
   },
   {
@@ -235,12 +297,26 @@
     "category": "authority",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*OBJMGT"],
+    "requiresAuthority": [
+      "*OBJMGT"
+    ],
     "handler": "grantObjectAuthority",
     "parameters": [
-      { "name": "OBJ", "type": "qualifiedName", "required": true },
-      { "name": "USER", "type": "profileName", "required": true },
-      { "name": "AUT", "type": "authorityValue", "required": true }
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      },
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": true
+      },
+      {
+        "name": "AUT",
+        "type": "authorityValue",
+        "required": true
+      }
     ]
   },
   {
@@ -249,11 +325,21 @@
     "category": "authority",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*OBJMGT"],
+    "requiresAuthority": [
+      "*OBJMGT"
+    ],
     "handler": "revokeObjectAuthority",
     "parameters": [
-      { "name": "OBJ", "type": "qualifiedName", "required": true },
-      { "name": "USER", "type": "profileName", "required": true }
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      },
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": true
+      }
     ]
   },
   {
@@ -262,9 +348,17 @@
     "category": "authority",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*OBJMGT"],
+    "requiresAuthority": [
+      "*OBJMGT"
+    ],
     "handler": "editObjectAuthority",
-    "parameters": [{ "name": "OBJ", "type": "qualifiedName", "required": true }]
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "qualifiedName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "DSPAUT",
@@ -272,9 +366,17 @@
     "category": "authority",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*AUDITVIEW"],
+    "requiresAuthority": [
+      "*AUDITVIEW"
+    ],
     "handler": "displayAuthority",
-    "parameters": [{ "name": "USER", "type": "profileName", "required": false }]
+    "parameters": [
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": false
+      }
+    ]
   },
   {
     "name": "WRKAUT",
@@ -282,7 +384,9 @@
     "category": "authority",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"],
+    "requiresAuthority": [
+      "*SECADM"
+    ],
     "handler": "workWithAuthority"
   },
   {
@@ -291,7 +395,10 @@
     "category": "system_value",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM", "*AUDIT"],
+    "requiresAuthority": [
+      "*SECADM",
+      "*AUDIT"
+    ],
     "handler": "workWithSystemValues"
   },
   {
@@ -309,11 +416,21 @@
     "category": "system_value",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"],
+    "requiresAuthority": [
+      "*SECADM"
+    ],
     "handler": "changeSystemValue",
     "parameters": [
-      { "name": "SYSVAL", "type": "systemValueName", "required": true },
-      { "name": "VALUE", "type": "systemValueValue", "required": true }
+      {
+        "name": "SYSVAL",
+        "type": "systemValueName",
+        "required": true
+      },
+      {
+        "name": "VALUE",
+        "type": "systemValueValue",
+        "required": true
+      }
     ]
   },
   {
@@ -322,12 +439,26 @@
     "category": "user_profile",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"],
+    "requiresAuthority": [
+      "*SECADM"
+    ],
     "handler": "changeUserProfile",
     "parameters": [
-      { "name": "USRPRF", "type": "profileName", "required": true },
-      { "name": "STATUS", "type": "profileStatus", "required": false },
-      { "name": "PASSWORD", "type": "password", "required": false }
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": true
+      },
+      {
+        "name": "STATUS",
+        "type": "profileStatus",
+        "required": false
+      },
+      {
+        "name": "PASSWORD",
+        "type": "password",
+        "required": false
+      }
     ]
   },
   {
@@ -336,11 +467,21 @@
     "category": "user_profile",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"],
+    "requiresAuthority": [
+      "*SECADM"
+    ],
     "handler": "createUserProfileHandler",
     "parameters": [
-      { "name": "USRPRF", "type": "profileName", "required": true },
-      { "name": "PASSWORD", "type": "password", "required": false }
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": true
+      },
+      {
+        "name": "PASSWORD",
+        "type": "password",
+        "required": false
+      }
     ]
   },
   {
@@ -349,9 +490,17 @@
     "category": "user_profile",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"],
+    "requiresAuthority": [
+      "*SECADM"
+    ],
     "handler": "deleteUserProfileHandler",
-    "parameters": [{ "name": "USRPRF", "type": "profileName", "required": true }]
+    "parameters": [
+      {
+        "name": "USRPRF",
+        "type": "profileName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "ANZDFTPWD",
@@ -359,7 +508,9 @@
     "category": "security",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"],
+    "requiresAuthority": [
+      "*SECADM"
+    ],
     "handler": "analyzeDefaultPasswords"
   },
   {
@@ -368,8 +519,21 @@
     "category": "security",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"],
+    "requiresAuthority": [
+      "*SECADM"
+    ],
     "handler": "analyzeProfileAttributes"
+  },
+  {
+    "name": "ANZSHPRF",
+    "displayName": "Analyze Shipped Profiles",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*AUDIT"
+    ],
+    "handler": "analyzeShippedProfiles"
   },
   {
     "name": "DSPSECA",
@@ -377,7 +541,9 @@
     "category": "security",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"],
+    "requiresAuthority": [
+      "*SECADM"
+    ],
     "handler": "displaySecurityAttributes"
   },
   {
@@ -386,7 +552,9 @@
     "category": "journal_audit",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*AUDITVIEW"],
+    "requiresAuthority": [
+      "*AUDITVIEW"
+    ],
     "handler": "displaySecurityAudit"
   },
   {
@@ -398,8 +566,19 @@
     "requiresAuthority": [],
     "handler": "displayAuditJournalEntries",
     "parameters": [
-      { "name": "ENTTYP", "type": "auditEntryType", "required": false },
-      { "name": "USER", "type": "profileName", "required": false, "supportsSpecialValues": ["*ALL"] }
+      {
+        "name": "ENTTYP",
+        "type": "auditEntryType",
+        "required": false
+      },
+      {
+        "name": "USER",
+        "type": "profileName",
+        "required": false,
+        "supportsSpecialValues": [
+          "*ALL"
+        ]
+      }
     ]
   },
   {
@@ -428,7 +607,14 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "displayMessages",
-    "parameters": [{ "name": "MSGQ", "type": "messageQueueName", "required": false, "default": "QSYSOPR" }]
+    "parameters": [
+      {
+        "name": "MSGQ",
+        "type": "messageQueueName",
+        "required": false,
+        "default": "QSYSOPR"
+      }
+    ]
   },
   {
     "name": "DSPLOG",
@@ -492,7 +678,13 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "displayFileDescription",
-    "parameters": [{ "name": "FILE", "type": "qualifiedName", "required": true }]
+    "parameters": [
+      {
+        "name": "FILE",
+        "type": "qualifiedName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "DSPFFD",
@@ -502,7 +694,13 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "displayFileFieldDescription",
-    "parameters": [{ "name": "FILE", "type": "qualifiedName", "required": true }]
+    "parameters": [
+      {
+        "name": "FILE",
+        "type": "qualifiedName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "WRKLNK",
@@ -512,7 +710,14 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "workWithObjectLinks",
-    "parameters": [{ "name": "OBJ", "type": "ifsPath", "required": false, "default": "/" }]
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "ifsPath",
+        "required": false,
+        "default": "/"
+      }
+    ]
   },
   {
     "name": "DSPLNK",
@@ -522,7 +727,13 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "displayObjectLink",
-    "parameters": [{ "name": "OBJ", "type": "ifsPath", "required": true }]
+    "parameters": [
+      {
+        "name": "OBJ",
+        "type": "ifsPath",
+        "required": true
+      }
+    ]
   },
   {
     "name": "SAVLIB",
@@ -530,9 +741,17 @@
     "category": "backup_restore",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SAVSYS"],
+    "requiresAuthority": [
+      "*SAVSYS"
+    ],
     "handler": "saveLibrary",
-    "parameters": [{ "name": "LIB", "type": "libraryName", "required": true }]
+    "parameters": [
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "RSTLIB",
@@ -540,9 +759,17 @@
     "category": "backup_restore",
     "status": "implemented",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SAVSYS"],
+    "requiresAuthority": [
+      "*SAVSYS"
+    ],
     "handler": "restoreLibrary",
-    "parameters": [{ "name": "LIB", "type": "libraryName", "required": true }]
+    "parameters": [
+      {
+        "name": "LIB",
+        "type": "libraryName",
+        "required": true
+      }
+    ]
   },
   {
     "name": "WRKPRD",
@@ -605,7 +832,13 @@
     "allowLimitedUser": true,
     "requiresAuthority": [],
     "handler": "runSql",
-    "parameters": [{ "name": "SQL", "type": "sqlStatement", "required": true }]
+    "parameters": [
+      {
+        "name": "SQL",
+        "type": "sqlStatement",
+        "required": true
+      }
+    ]
   },
   {
     "name": "CPYF",
@@ -645,7 +878,9 @@
     "category": "authority",
     "status": "cataloged",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"]
+    "requiresAuthority": [
+      "*SECADM"
+    ]
   },
   {
     "name": "CHGSECAUD",
@@ -653,7 +888,9 @@
     "category": "journal_audit",
     "status": "cataloged",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*SECADM"]
+    "requiresAuthority": [
+      "*SECADM"
+    ]
   },
   {
     "name": "STRTCP",
@@ -661,7 +898,9 @@
     "category": "network_tcpip",
     "status": "out_of_scope",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*IOSYSCFG"]
+    "requiresAuthority": [
+      "*IOSYSCFG"
+    ]
   },
   {
     "name": "ENDTCP",
@@ -669,6 +908,8 @@
     "category": "network_tcpip",
     "status": "out_of_scope",
     "allowLimitedUser": false,
-    "requiresAuthority": ["*IOSYSCFG"]
+    "requiresAuthority": [
+      "*IOSYSCFG"
+    ]
   }
 ]
