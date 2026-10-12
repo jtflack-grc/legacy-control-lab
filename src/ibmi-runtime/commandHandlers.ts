@@ -1129,6 +1129,12 @@ const handlers: Record<string, CommandHandler> = {
       session.systemName,
       session.userName!,
       analyzeShippedProfiles(session.systemName),
+      [
+        "Scope . . . . . . . . . . . . : CLAIMS400 declared IBM-supplied baseline",
+        "Rule  . . . . . . . . . . . . : supplied profiles except QSECOFR expected noninteractive",
+        "Training note . . . . . . . . : QSECOFR lab credential excluded from findings",
+        "",
+      ],
     ),
   }),
 
