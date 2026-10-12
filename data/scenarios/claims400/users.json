@@ -100,5 +100,83 @@
     "specialAuthorities": "*JOBCTL",
     "initialMenu": "AUDIT",
     "lastSignon": "08/14/22"
+  },
+  {
+    "userName": "QSYS",
+    "status": "*DISABLED",
+    "userClass": "*SECOFR",
+    "text": "IBM-supplied system owner profile — noninteractive baseline",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*ALLOBJ *AUDIT *IOSYSCFG *JOBCTL *SAVSYS *SECADM *SERVICE *SPLCTL",
+    "initialMenu": "SECURITY",
+    "passwordConfigured": false,
+    "lastSignon": "*NONE",
+    "businessOwner": "PLATFORM",
+    "limitCapabilities": "*NO"
+  },
+  {
+    "userName": "QSYSOPR",
+    "status": "*ENABLED",
+    "userClass": "*SYSOPR",
+    "text": "IBM-supplied system operator profile — deliberate v1.1 interactive-password finding",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*JOBCTL *SAVSYS *SPLCTL",
+    "initialMenu": "SECURITY",
+    "passwordConfigured": true,
+    "lastSignon": "05/19/26",
+    "businessOwner": "PLATFORM",
+    "limitCapabilities": "*NO"
+  },
+  {
+    "userName": "QUSER",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "IBM-supplied batch/background profile — noninteractive baseline",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*NONE",
+    "initialMenu": "*SIGNOFF",
+    "passwordConfigured": false,
+    "lastSignon": "*NONE",
+    "businessOwner": "PLATFORM",
+    "limitCapabilities": "*YES"
+  },
+  {
+    "userName": "QSRV",
+    "status": "*DISABLED",
+    "userClass": "*SECOFR",
+    "text": "IBM-supplied service profile — noninteractive baseline",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*SERVICE",
+    "initialMenu": "*SIGNOFF",
+    "passwordConfigured": false,
+    "lastSignon": "*NONE",
+    "businessOwner": "PLATFORM",
+    "limitCapabilities": "*YES"
+  },
+  {
+    "userName": "QTMHHTTP",
+    "status": "*ENABLED",
+    "userClass": "*USER",
+    "text": "IBM-supplied HTTP server runtime profile — noninteractive baseline",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*NONE",
+    "initialMenu": "*SIGNOFF",
+    "passwordConfigured": false,
+    "lastSignon": "*NONE",
+    "businessOwner": "PLATFORM",
+    "limitCapabilities": "*YES"
+  },
+  {
+    "userName": "QCLMSADM",
+    "status": "*ENABLED",
+    "userClass": "*SECOFR",
+    "text": "Claims subsystem administration — locally created Q-prefixed profile",
+    "groupProfile": "*NONE",
+    "specialAuthorities": "*ALLOBJ *SECADM",
+    "initialMenu": "SECURITY",
+    "passwordConfigured": true,
+    "lastSignon": "06/07/26",
+    "businessOwner": "CLAIMS-OPS",
+    "limitCapabilities": "*NO"
   }
 ]
