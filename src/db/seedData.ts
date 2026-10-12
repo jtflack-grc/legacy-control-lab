@@ -358,7 +358,7 @@ export function seedClaims400(db: SqliteDatabase, seed: Claims400Seed = loadClai
   seedScenarioPack(db, "claims400", seed);
 }
 
-export const SCENARIO_VERSION = "0.5.3";
+export const SCENARIO_VERSION = "0.6.0";
 const SCENARIO_VERSION_KEY = "scenario_version";
 const RANGE_VERSION_KEY = "range_version";
 
