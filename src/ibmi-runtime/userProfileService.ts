@@ -21,6 +21,8 @@ export type UserProfileSummary = {
   limitCapabilities?: string;
   activityProfileExempt?: boolean;
   businessOwner?: string | null;
+  /** True when an interactive password is present; the password itself is never exposed. */
+  passwordSet: boolean;
 };
 
 export function listUserProfiles(systemName = "CLAIMS400"): UserProfileSummary[] {
@@ -48,7 +50,7 @@ export function changeUserProfile(
   userName: string,
   updates: {
     status?: string;
-    password?: string;
+    password?: string | null;
     specialAuthorities?: string;
     initialMenu?: string;
     text?: string;
@@ -84,6 +86,7 @@ function toSummary(profile: {
   limitCapabilities?: string | null;
   activityProfileExempt?: boolean;
   businessOwner?: string | null;
+  password?: string | null;
 }): UserProfileSummary {
   return {
     userName: profile.userName,
@@ -97,5 +100,6 @@ function toSummary(profile: {
     limitCapabilities: profile.limitCapabilities ?? "*NO",
     activityProfileExempt: Boolean(profile.activityProfileExempt),
     businessOwner: profile.businessOwner ?? "*NONE",
+    passwordSet: Boolean(profile.password),
   };
 }
