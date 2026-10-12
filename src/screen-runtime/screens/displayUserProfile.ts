@@ -54,10 +54,11 @@ export function createDisplayUserProfileScreen(
     ...ibmDetailFields(13, "JOBD", "Job description", "QDFTJOBD/QGPL"),
     ...ibmDetailFields(14, "OWNER", "Owner", profileOwner(profile.userName)),
     ...ibmDetailFields(15, "DATAOWN", "Data owner", dataOwner),
-    ...ibmDetailFields(16, "PWDEXP", "Password expired", passwordExpired(profile.status)),
-    ...ibmDetailFields(17, "ACTEX", "Activity list exempt", exempt),
-    ...ibmDetailFields(18, "SIGNON", "Previous sign-on", profile.lastSignon),
-    ...ibmDetailFields(19, "TXT", "Text description", profile.text),
+    ...ibmDetailFields(16, "PWDSET", "Sign-on password", profile.passwordSet ? "*SET" : "*NONE"),
+    ...ibmDetailFields(17, "PWDEXP", "Password expired", passwordExpired(profile.status)),
+    ...ibmDetailFields(18, "ACTEX", "Activity list exempt", exempt),
+    ...ibmDetailFields(19, "SIGNON", "Previous sign-on", profile.lastSignon),
+    ...ibmDetailFields(20, "TXT", "Text description", profile.text),
     outputField("FKEYS", 23, 1, "F3=Exit   F12=Cancel".padEnd(80)),
   ];
 
