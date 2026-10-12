@@ -28,6 +28,11 @@ export function captureAttemptBaseline(
       groupProfile: profile.groupProfile,
       specialAuthorities: profile.specialAuthorities,
       initialMenu: profile.initialMenu,
+      lastSignon: profile.lastSignon,
+      businessOwner: profile.businessOwner,
+      limitCapabilities: profile.limitCapabilities ?? "*NO",
+      activityProfileExempt: Boolean(profile.activityProfileExempt),
+      passwordConfigured: Boolean(profile.passwordConfigured),
     })),
     systemValues: listSystemValues(systemName).map((row) => ({
       name: row.name,
@@ -91,10 +96,42 @@ export function restoreAttemptBaseline(
   const restoreUsers = db.prepare(
     `UPDATE user_profiles
      SET status = ?, user_class = ?, text_description = ?, group_profile = ?,
-         special_authorities = ?, initial_menu = ?
+         special_authorities = ?, initial_menu = ?, last_signon = ?,
+         business_owner = ?, limit_capabilities = ?, activity_profile_exempt = ?,
+         password_configured = ?
      WHERE system_id = ? AND user_name = ?`,
   );
+  const insertMissingUser = db.prepare(
+    `INSERT INTO user_profiles (
+       id, system_id, user_name, status, user_class, text_description,
+       group_profile, special_authorities, initial_menu, password, password_configured,
+       last_signon, business_owner, limit_capabilities, activity_profile_exempt
+     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?)`,
+  );
+  const userExists = db.prepare(
+    "SELECT 1 AS found FROM user_profiles WHERE system_id = ? AND user_name = ?",
+  );
   for (const profile of snapshot.userProfiles) {
+    const exists = userExists.get(systemId, profile.userName);
+    if (!exists) {
+      insertMissingUser.run(
+        `usr-${systemId}-${profile.userName.toLowerCase()}`,
+        systemId,
+        profile.userName,
+        profile.status,
+        profile.userClass,
+        profile.text,
+        profile.groupProfile,
+        profile.specialAuthorities,
+        profile.initialMenu,
+        profile.passwordConfigured ? 1 : 0,
+        profile.lastSignon,
+        profile.businessOwner,
+        profile.limitCapabilities,
+        profile.activityProfileExempt ? 1 : 0,
+      );
+      continue;
+    }
     restoreUsers.run(
       profile.status,
       profile.userClass,
@@ -102,6 +139,11 @@ export function restoreAttemptBaseline(
       profile.groupProfile,
       profile.specialAuthorities,
       profile.initialMenu,
+      profile.lastSignon,
+      profile.businessOwner,
+      profile.limitCapabilities,
+      profile.activityProfileExempt ? 1 : 0,
+      profile.passwordConfigured ? 1 : 0,
       systemId,
       profile.userName,
     );
