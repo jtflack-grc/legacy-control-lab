@@ -44,6 +44,24 @@
     "realismLimits": "Synthetic IBM i runtime with SQLite-backed state, audit journal, and job log side effects."
   },
   {
+    "name": "ANZSHPRF",
+    "displayName": "Analyze Shipped Profiles",
+    "category": "security",
+    "status": "implemented",
+    "allowLimitedUser": false,
+    "requiresAuthority": [
+      "*AUDIT"
+    ],
+    "handler": "analyzeShippedProfiles",
+    "helpText": "Lab-only assurance helper. Reviews Q-prefixed profiles against CLAIMS400's declared IBM-supplied baseline, flags interactive passwords where PASSWORD(*NONE) is expected, and surfaces Q-prefixed identities that require provenance review.",
+    "examples": [
+      "ANZSHPRF"
+    ],
+    "groupMenu": "CMDSEC",
+    "implementationLevel": "display_implemented",
+    "realismLimits": "LCL analysis helper, not an IBM CL command. The supplied-profile list is scenario-bounded and should not be treated as an exhaustive cross-release IBM inventory."
+  },
+  {
     "name": "CHGACTPRFL",
     "displayName": "Change Activity Profile List",
     "category": "security",
