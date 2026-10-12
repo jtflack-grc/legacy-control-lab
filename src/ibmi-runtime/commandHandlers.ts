@@ -188,6 +188,7 @@ import {
   analyzeDefaultPasswords,
   analyzeInactiveProfiles,
   analyzeProfileAttributes,
+  analyzeShippedProfiles,
 } from "./securityAnalysisService.js";
 import {
   changeUserProfile,
@@ -973,22 +974,32 @@ const handlers: Record<string, CommandHandler> = {
     const spcaut = getParameter(command, "SPCAUT");
     const inlmnu = getParameter(command, "INLMNU");
     const text = getParameter(command, "TEXT");
+    const passwordParam = getParameter(command, "PASSWORD");
+    const passwordUpdate =
+      passwordParam === undefined
+        ? {}
+        : { password: passwordParam.trim().toUpperCase() === "*NONE" ? null : passwordParam };
     const updates = {
       status,
-      password: getParameter(command, "PASSWORD"),
+      ...passwordUpdate,
       specialAuthorities: spcaut && spcaut !== "*SAME" ? spcaut : undefined,
       initialMenu: inlmnu && inlmnu !== "*SAME" ? inlmnu : undefined,
       text,
     };
     const evidenceTags = ["user_profile_changed"];
     if (status === "*DISABLED" && normalized === "OLDVENDOR") evidenceTags.push("vendor_access_disabled");
-    if (status === "*DISABLED" || spcaut === "*NONE") evidenceTags.push("privileged_access_remediated");
+    if (status === "*DISABLED" || spcaut === "*NONE" || passwordParam === "*NONE") {
+      evidenceTags.push("privileged_access_remediated");
+    }
+    if (passwordParam === "*NONE") evidenceTags.push("interactive_password_removed");
     const afterProfile = {
       ...beforeProfile,
       status: updates.status ?? beforeProfile.status,
       specialAuthorities: updates.specialAuthorities ?? beforeProfile.specialAuthorities,
       initialMenu: updates.initialMenu ?? beforeProfile.initialMenu,
       text: updates.text ?? beforeProfile.text,
+      passwordSet:
+        passwordParam === undefined ? beforeProfile.passwordSet : passwordParam.trim().toUpperCase() !== "*NONE",
     };
     const result = applyMutation(
       session,
@@ -997,8 +1008,8 @@ const handlers: Record<string, CommandHandler> = {
         mutationType: "CHGUSRPRF",
         entityType: "user_profile",
         entityId: normalized,
-        before: { ...beforeProfile },
-        after: afterProfile,
+        before: { ...beforeProfile, passwordState: beforeProfile.passwordSet ? "*SET" : "*NONE" },
+        after: { ...afterProfile, passwordState: afterProfile.passwordSet ? "*SET" : "*NONE" },
         evidenceTags,
         auditEntryType: "CP",
         auditObjectRef: normalized,
@@ -1107,6 +1118,17 @@ const handlers: Record<string, CommandHandler> = {
       session.systemName,
       session.userName!,
       analyzeDefaultPasswords(session.systemName),
+    ),
+  }),
+
+  analyzeShippedProfiles: (session) => ({
+    kind: "screen",
+    screen: createSecurityAnalysisScreen(
+      "ANZSHPRF",
+      "Shipped Profile Assurance",
+      session.systemName,
+      session.userName!,
+      analyzeShippedProfiles(session.systemName),
     ),
   }),
 
