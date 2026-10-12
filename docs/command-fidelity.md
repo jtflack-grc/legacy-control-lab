@@ -23,8 +23,10 @@ drift as the catalog grows).
 - After the Five-Minute Demo, practitioners should poke those familiar verbs first.
   That is the credibility check: inquiry patterns and evidence trails on synthetic
   data — not bit-identical IBM behavior.
-- Lab-only verbs such as **`WRKFINDING`**, **`SUBMITMSN`**, and **`STRMSN`** are
-  deliberately invented for GRC workflow. Treat them as coach/mission tooling.
+- Lab-only verbs such as **`WRKFINDING`**, **`SUBMITMSN`**, **`STRMSN`**, and
+  **`ANZSHPRF`** are deliberately invented for GRC workflow. Treat them as
+  coach/mission or assurance tooling. `ANZSHPRF` is specifically a scenario-bounded
+  shipped-profile check over CLAIMS400, not an IBM CL command.
 - Menus and help text may cover a wider surface than the deeply simulated core.
 
 ## Honesty rule
