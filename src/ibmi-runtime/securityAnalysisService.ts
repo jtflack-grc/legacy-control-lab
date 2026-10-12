@@ -25,19 +25,69 @@ export function daysSinceSignon(lastSignon: string | null, reference = new Date(
   return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
 }
 
+const PUBLIC_TRAINING_IDENTITIES = new Set(["QSECOFR", "DEMO", "AUDIT", "IONGRC"]);
+
+/**
+ * CLAIMS400's declared IBM-supplied profile baseline for the v1.1 exercise.
+ * This is deliberately scenario-bounded, not a claim to enumerate every Q*
+ * profile IBM has ever shipped across releases or licensed products.
+ */
+export const CLAIMS400_IBM_SUPPLIED_PROFILE_BASELINE = new Set([
+  "QSECOFR",
+  "QSYS",
+  "QSYSOPR",
+  "QPGMR",
+  "QUSER",
+  "QSRV",
+  "QTMHHTTP",
+]);
+
 export function analyzeDefaultPasswords(systemName = "CLAIMS400"): SecurityFinding[] {
   const findings: SecurityFinding[] = [];
   for (const profile of listUserProfileRows(systemName)) {
     if (profile.status === "*DISABLED") continue;
-    if (!profile.password) {
-      findings.push({ userName: profile.userName, finding: "Password not set (*DEFAULT risk)" });
-      continue;
-    }
-    if (profile.password === profile.userName) {
+    if (PUBLIC_TRAINING_IDENTITIES.has(profile.userName)) continue;
+
+    // A missing password represents PASSWORD(*NONE) in this synthetic runtime.
+    // That is noninteractive state, not a "default password" finding.
+    if (!profile.password) continue;
+
+    if (profile.password.toUpperCase() === profile.userName.toUpperCase()) {
       findings.push({ userName: profile.userName, finding: "Password matches user profile name" });
     }
-    if (profile.password === "TRAIN" || profile.password === "TRAINING" || profile.password === "PASSWORD") {
+    if (["TRAIN", "TRAINING", "PASSWORD"].includes(profile.password.toUpperCase())) {
       findings.push({ userName: profile.userName, finding: "Known weak training password in use" });
+    }
+  }
+  return findings;
+}
+
+export function analyzeShippedProfiles(systemName = "CLAIMS400"): SecurityFinding[] {
+  const findings: SecurityFinding[] = [];
+  for (const profile of listUserProfileRows(systemName)) {
+    const name = profile.userName.toUpperCase();
+    if (!name.startsWith("Q")) continue;
+
+    if (!CLAIMS400_IBM_SUPPLIED_PROFILE_BASELINE.has(name)) {
+      findings.push({
+        userName: name,
+        finding:
+          "Q-prefixed profile is not in CLAIMS400's declared IBM-supplied baseline — investigate creation provenance before treating it as a trusted system identity",
+      });
+      continue;
+    }
+
+    // QSECOFR is the exception to IBM's shipped *NONE convention, and LCL uses
+    // a public training password for it. Do not turn instructional plumbing
+    // into synthetic production evidence.
+    if (name === "QSECOFR") continue;
+
+    if (profile.password) {
+      findings.push({
+        userName: name,
+        finding:
+          "IBM-supplied profile has an interactive password in the synthetic state — this assurance check expects PASSWORD(*NONE)",
+      });
     }
   }
   return findings;
