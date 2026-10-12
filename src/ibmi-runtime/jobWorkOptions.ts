@@ -93,6 +93,9 @@ export function routeWorkWithJobMenuOption(
     session.jobLogShowAll = false;
     return { kind: "screen", screen: createDisplayJobLogForSession(session) };
   }
+  if (selection === "13") {
+    return executeCatalogCommand(session, "DSPLIBL", "DSPLIBL");
+  }
   if (selection === "4") {
     return executeCatalogCommand(session, "WRKSPLF", "WRKSPLF");
   }
