@@ -533,7 +533,9 @@
     "requiresAuthority": [
       "*AUDIT"
     ],
-    "handler": "analyzeShippedProfiles"
+    "handler": "analyzeShippedProfiles",
+    "implementationLevel": "lab_native",
+    "realismLimits": "LCL analysis helper, not an IBM CL command."
   },
   {
     "name": "DSPSECA",
