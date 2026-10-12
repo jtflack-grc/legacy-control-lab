@@ -91,9 +91,21 @@ Honest labels: [docs/command-fidelity.md](docs/command-fidelity.md). This is a *
 
 ## Community Edition
 
-This repository is **Community Edition 1.0.0**: a Docker-first **local training artifact** you can clone, run, and revisit. It is not a SaaS product, shared hosted demo, or “GRC platform.”
+This repository is **Community Edition 1.1.0**: a Docker-first **local training artifact** you can clone, run, and revisit. It is not a SaaS product, shared hosted demo, or “GRC platform.”
 
 See [docs/community-edition.md](docs/community-edition.md).
+
+### What changed in 1.1
+
+**Shipped Profile Assurance** adds a new evidence path around identity provenance and control effectiveness:
+
+- `ANZSHPRF` is an explicitly **lab-only** assurance helper that compares Q-prefixed identities to CLAIMS400's declared IBM-supplied baseline.
+- `CLAIMS-011 — The Profile That Shouldn't Exist` asks the learner to distinguish a compliant noninteractive supplied profile, an interactive supplied-profile misconfiguration, and a locally created Q-prefixed identity.
+- `CLAIMS-007` now demonstrates that **command restriction is not the same thing as information restriction**: a limited user can follow `DSPJOB → 13 → QSYS → *USRPRF` while authority-changing commands remain denied.
+- `PASSWORD(*NONE)` is modeled as noninteractive state rather than a default-password defect.
+- Profile remediation produces state-change, audit, and reassessment evidence; mission reset restores the synthetic baseline without storing password secrets.
+
+The supplied-profile list is deliberately **scenario-bounded**. It is not a claim to enumerate every Q profile IBM may ship across every release or licensed product.
 
 ## Requirements
 
