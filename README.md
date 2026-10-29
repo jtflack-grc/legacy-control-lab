@@ -89,6 +89,10 @@ After the demo, poke commands you already know. Training depth varies by design:
 
 Honest labels: [docs/command-fidelity.md](docs/command-fidelity.md). This is a **synthetic training partition**, not a substitute for a live system.
 
+### Synthetic PASE file-evidence lab
+
+The default QSH mode now supports isolated file operations, virtual permissions, safe text filtering, and bounded pipes. Students can inspect permissions, change a synthetic file, and test whether another profile still has access—without starting any host processes. The synthetic implementation is intentionally smaller than real IBM i PASE. See [the PASE lab guide](docs/synthetic-pase.md) for commands, exercises, and limitations.
+
 ## Community Edition
 
 This repository is **Community Edition 1.0.0**: a Docker-first **local training artifact** you can clone, run, and revisit. It is not a SaaS product, shared hosted demo, or “GRC platform.”

@@ -1,128 +1,500 @@
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { join, resolve, sep } from "node:path";
+/**
+ * Synthetic QSH filesystem. Original LCL implementation: no POSIX subprocesses.
+ *
+ * The only physical IO is confined to QOPENSYS_ROOT. Virtual permissions are
+ * checked independently of the service account's operating-system privileges.
+ * Deliberately limited: no symlinks, process execution, or host paths.
+ */
 import {
-  defaultQshellHome,
-  getQOpenSysRoot,
-  normalizePasePath,
-  toHostPath,
-  toPasePath,
-} from "./qshellPaths.js";
+  existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync,
+  renameSync, unlinkSync, writeFileSync,
+} from "node:fs";
+import { posix, relative, resolve, sep } from "node:path";
+import { defaultQshellHome, getQOpenSysRoot } from "./qshellPaths.js";
 import type { QshellExecResult } from "./qshellTypes.js";
 
-const SYNTHETIC_ALLOWED = new Set(["pwd", "cd", "ls", "cat", "echo", "which"]);
+type State = { cwd: string; env: Record<string, string> };
+type Entry = { owner: string; mode: number };
+type Entries = Record<string, Entry>;
 
-function resolveSyntheticCwd(stateCwd: string, home: string): string {
-  return normalizePasePath(stateCwd, home);
+const META_FILE = ".lcl-synthetic-permissions.json";
+const MAX_FILE_BYTES = 128 * 1024;
+const COMMANDS = new Set([
+  "pwd", "pwdx", "cd", "ls", "cat", "echo", "which",
+  "mkdir", "touch", "chmod", "cp", "mv", "rm", "id",
+  "grep", "head", "tail", "wc",
+]);
+
+function success(lines: string[] = []): QshellExecResult {
+  return { lines, exitCode: 0 };
+}
+function fail(verb: string, detail: string): QshellExecResult {
+  return { lines: [verb + ": " + detail], exitCode: 1 };
+}
+function userOf(state: State): string {
+  return (state.env.USER || "audit").toLowerCase();
+}
+function isOfficer(state: State): boolean {
+  return userOf(state) === "qsecofr";
 }
 
-function hostPathForSynthetic(pasePath: string, home: string): string | undefined {
-  const normalized = normalizePasePath(pasePath, home);
-  const lower = normalized.toLowerCase();
-  if (
-    lower.startsWith("/usr/") ||
-    lower === "/usr" ||
-    lower.startsWith("/bin") ||
-    lower.startsWith("/etc") ||
-    lower.startsWith("/sbin")
-  ) {
-    return undefined;
-  }
-  return toHostPath(normalized, home);
+function rootPath(): string {
+  const root = getQOpenSysRoot();
+  mkdirSync(root, { recursive: true });
+  return realpathSync(root);
 }
 
-function assertWithinRoot(hostPath: string): boolean {
-  const root = resolve(getQOpenSysRoot());
-  const resolved = resolve(hostPath);
-  return resolved === root || resolved.startsWith(`${root}${sep}`);
-}
+/** The virtual root is NOT the operating-system root. */
+function filePath(raw: string, state: State, root: string): string | undefined {
+  if (!raw || raw.includes("\0") || raw.includes("\\") || raw.length > 1024) return undefined;
+  const token = raw === "~" ? (state.env.HOME || defaultQshellHome(userOf(state)))
+    : raw.startsWith("~/") ? (state.env.HOME || defaultQshellHome(userOf(state))) + raw.slice(1)
+    : raw;
+  let virtual = posix.normalize(token.startsWith("/") ? token : posix.join(state.cwd, token));
+  virtual = virtual.replace(/^\/qopensys(?=\/|$)/i, "/QOpenSys");
+  let suffix: string;
+  if (virtual === "/" || virtual === "/QOpenSys") suffix = "";
+  else if (virtual.startsWith("/QOpenSys/")) suffix = virtual.slice("/QOpenSys/".length);
+  else if (virtual === "/home" || virtual.startsWith("/home/") ||
+           virtual === "/tmp" || virtual.startsWith("/tmp/")) suffix = virtual.slice(1);
+  else return undefined;
 
-export function runSyntheticShell(
-  commandLine: string,
-  state: { cwd: string; env: Record<string, string> },
-): QshellExecResult {
-  const home = state.env.HOME ?? defaultQshellHome("audit");
-  const line = commandLine.trim();
-  if (!line) return { lines: [], exitCode: 0 };
+  if (suffix.split("/").includes(META_FILE)) return undefined;
+  const physical = resolve(root, suffix);
+  if (physical !== root && !physical.startsWith(root + sep)) return undefined;
 
-  const parts = line.split(/\s+/);
-  const verb = parts[0]?.toLowerCase() ?? "";
-
-  if (!SYNTHETIC_ALLOWED.has(verb)) {
-    return {
-      lines: [
-        `qsh: ${verb}: not available in synthetic QSH mode.`,
-        "Set LCL_QSH_MODE=host for local POSIX passthrough (local dev only).",
-      ],
-      exitCode: 127,
-    };
-  }
-
-  if (verb === "pwd" || verb === "pwdx") {
-    return { lines: [state.cwd], exitCode: 0 };
-  }
-
-  if (verb === "echo") {
-    return { lines: [line.replace(/^echo\s+/i, "")], exitCode: 0 };
-  }
-
-  if (verb === "which") {
-    const name = parts[1];
-    if (!name) return { lines: [], exitCode: 1 };
-    const stub = toHostPath(`/QOpenSys/usr/bin/${name}`, home);
-    if (existsSync(stub)) {
-      return { lines: [`/qopensys/usr/bin/${name}`], exitCode: 0 };
-    }
-    return { lines: [], exitCode: 1 };
-  }
-
-  if (verb === "cd") {
-    const target = line.replace(/^cd\s+/i, "").trim() || home;
-    const host = hostPathForSynthetic(target, home);
-    if (!host || !assertWithinRoot(host)) {
-      return { lines: [`cd: ${target}: No such file or directory`], exitCode: 1 };
-    }
-    if (!existsSync(host)) {
-      return { lines: [`cd: ${target}: No such file or directory`], exitCode: 1 };
-    }
-    state.cwd = toPasePath(host, home);
-    return { lines: [], exitCode: 0 };
-  }
-
-  if (verb === "ls") {
-    const target = parts.slice(1).find((part) => !part.startsWith("-")) ?? state.cwd;
-    const host = hostPathForSynthetic(target, home);
-    if (!host || !assertWithinRoot(host)) {
-      return { lines: [`ls: cannot access '${target}': No such file or directory`], exitCode: 1 };
-    }
-    if (!existsSync(host)) {
-      return { lines: [`ls: cannot access '${target}': No such file or directory`], exitCode: 1 };
-    }
-    const stat = statSync(host);
-    if (!stat.isDirectory()) {
-      return { lines: [target.split("/").pop() ?? target], exitCode: 0 };
-    }
-    const entries = readdirSync(host).sort();
-    return { lines: entries.length ? entries : ["."], exitCode: 0 };
-  }
-
-  if (verb === "cat") {
-    const target = parts[1];
-    if (!target) {
-      return { lines: ["cat: missing operand"], exitCode: 1 };
-    }
-    const host = hostPathForSynthetic(target, home);
-    if (!host || !assertWithinRoot(host) || !existsSync(host)) {
-      return { lines: [`cat: ${target}: No such file or directory`], exitCode: 1 };
-    }
+  // Never follow a symlink, even in an intermediate component. A dangling link
+  // is unsafe as well; existsSync alone does not detect dangling symlinks.
+  const parts = relative(root, physical).split(sep).filter(Boolean);
+  let cursor = root;
+  for (const part of parts) {
+    cursor = resolve(cursor, part);
     try {
-      const content = readFileSync(host, "utf8");
-      return { lines: content.replace(/\r/g, "").split("\n").filter((row, i, arr) => i < arr.length - 1 || row.length > 0), exitCode: 0 };
-    } catch {
-      return { lines: [`cat: ${target}: cannot read`], exitCode: 1 };
+      if (lstatSync(cursor).isSymbolicLink()) return undefined;
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code === "ENOENT") break;
+      return undefined;
     }
   }
+  return physical;
+}
 
-  return { lines: [`qsh: ${verb}: not implemented`], exitCode: 127 };
+function displayPath(root: string, physical: string): string {
+  const rel = relative(root, physical).replace(/\\/g, "/");
+  if (!rel) return "/QOpenSys";
+  if (rel === "home" || rel.startsWith("home/") || rel === "tmp" || rel.startsWith("tmp/"))
+    return "/" + rel;
+  return "/QOpenSys/" + rel;
+}
+
+function safeMetadataPath(root: string): string {
+  const target = resolve(root, META_FILE);
+  try {
+    const stat = lstatSync(target);
+    if (!stat.isFile() || stat.isSymbolicLink()) throw new Error("Unsafe synthetic metadata file");
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
+  }
+  return target;
+}
+
+function loadEntries(root: string): Entries {
+  const metadataPath = safeMetadataPath(root);
+  try {
+    const raw = JSON.parse(readFileSync(metadataPath, "utf8")) as unknown;
+    if (!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
+    const entries: Entries = {};
+    for (const [key, value] of Object.entries(raw)) {
+      if (!value || typeof value !== "object") continue;
+      const row = value as Partial<Entry>;
+      if (typeof row.owner !== "string" || typeof row.mode !== "number" ||
+          !Number.isInteger(row.mode) || row.mode < 0 || row.mode > 0o777) continue;
+      entries[key] = { owner: row.owner.toLowerCase(), mode: row.mode };
+    }
+    return entries;
+  } catch {
+    return {};
+  }
+}
+
+function saveEntries(root: string, entries: Entries): void {
+  writeFileSync(safeMetadataPath(root), JSON.stringify(entries, null, 2) + "\n", { mode: 0o600 });
+}
+function key(root: string, physical: string): string {
+  return relative(root, physical).replace(/\\/g, "/") || ".";
+}
+function entryFor(root: string, physical: string, entries: Entries): Entry {
+  const item = entries[key(root, physical)];
+  if (item) return item;
+  const rel = key(root, physical);
+  const homeMatch = /^home\/([^/]+)(\/|$)/.exec(rel);
+  return {
+    owner: homeMatch ? homeMatch[1]!.toLowerCase() : "qsecofr",
+    mode: existsSync(physical) && lstatSync(physical).isDirectory() ? 0o755 : 0o644,
+  };
+}
+
+/** Only owner and other bits are modeled; group membership is out of scope. */
+function allowed(root: string, physical: string, entries: Entries, state: State, bit: number): boolean {
+  if (isOfficer(state)) return true;
+  const entry = entryFor(root, physical, entries);
+  const effective = entry.owner === userOf(state) ? (entry.mode >> 6) & 7 : entry.mode & 7;
+  return (effective & bit) === bit;
+}
+function traversable(root: string, physical: string, entries: Entries, state: State): boolean {
+  let current = physical;
+  while (current !== root) {
+    current = resolve(current, "..");
+    if (!existsSync(current) || !lstatSync(current).isDirectory() ||
+        !allowed(root, current, entries, state, 1)) return false;
+  }
+  return allowed(root, root, entries, state, 1);
+}
+function canRead(root: string, physical: string, entries: Entries, state: State): boolean {
+  return traversable(root, physical, entries, state) &&
+    allowed(root, physical, entries, state, 4);
+}
+function canWrite(root: string, physical: string, entries: Entries, state: State): boolean {
+  return traversable(root, physical, entries, state) &&
+    allowed(root, physical, entries, state, 2);
+}
+function canCreate(root: string, physical: string, entries: Entries, state: State): boolean {
+  const parent = resolve(physical, "..");
+  return existsSync(parent) && lstatSync(parent).isDirectory() &&
+    traversable(root, parent, entries, state) &&
+    allowed(root, parent, entries, state, 3);
+}
+function setCreated(root: string, physical: string, entries: Entries, state: State, dir: boolean): void {
+  entries[key(root, physical)] = { owner: userOf(state), mode: dir ? 0o755 : 0o644 };
+  saveEntries(root, entries);
+}
+
+/** Whitespace and quotes only. Metacharacters are NOT executed. */
+function tokenize(input: string): string[] | undefined {
+  const tokens: string[] = [];
+  let part = "";
+  let active = false;
+  let quote: "'" | '"' | undefined;
+  for (let i = 0; i < input.length; i++) {
+    const ch = input[i]!;
+    if (quote) {
+      if (ch === quote) quote = undefined;
+      else if (ch === "\\" && quote === '"' && i + 1 < input.length) part += input[++i]!;
+      else part += ch;
+      continue;
+    }
+    if (ch === "'" || ch === '"') { quote = ch; active = true; continue; }
+    if (ch === "\\") { if (i + 1 >= input.length) return undefined; part += input[++i]!; active = true; continue; }
+    if (/\s/.test(ch)) {
+      if (active) { tokens.push(part); part = ""; active = false; }
+    } else { part += ch; active = true; }
+  }
+  if (quote) return undefined;
+  if (active) tokens.push(part);
+  return tokens;
+}
+
+/**
+ * Split a bounded pipeline without invoking a host shell. A quoted or escaped
+ * vertical bar is literal, and shell OR (||) is intentionally unsupported.
+ */
+function pipelineParts(line: string): string[] | undefined {
+  const result: string[] = [];
+  let current = "";
+  let quote: "'" | '"' | undefined;
+  let escaped = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i]!;
+    if (escaped) { current += ch; escaped = false; continue; }
+    if (ch === "\\" && quote !== "'") { current += ch; escaped = true; continue; }
+    if (ch === "'" || ch === '"') {
+      if (!quote) quote = ch;
+      else if (quote === ch) quote = undefined;
+      current += ch;
+      continue;
+    }
+    if (!quote && (ch === "&" || ch === "<")) return undefined;
+    if (ch === "|" && !quote) {
+      if (line[i + 1] === "|" || line[i - 1] === "|" || !current.trim()) return undefined;
+      result.push(current.trim());
+      current = "";
+    } else current += ch;
+  }
+  if (quote || escaped || !current.trim()) return undefined;
+  result.push(current.trim());
+  return result.length <= 8 ? result : undefined;
+}
+
+export function runSyntheticShell(commandLine: string, state: State, pipedInput?: string[]): QshellExecResult {
+  const line = commandLine.trim();
+  if (!line) return success();
+  const pipeline = pipelineParts(line);
+  if (!pipeline) return fail("qsh", "unsupported or malformed pipeline");
+  if (pipeline.length > 1) {
+    let input = pipedInput;
+    let last = success();
+    for (const part of pipeline) {
+      last = runSyntheticShell(part, state, input);
+      if (last.exitCode !== 0) return last;
+      input = last.lines;
+      if (input.length > 2000 || Buffer.byteLength(input.join("\n")) > MAX_FILE_BYTES)
+        return fail("qsh", "pipeline output limit exceeded");
+    }
+    return last;
+  }
+  const tokens = tokenize(line);
+  if (!tokens || tokens.length === 0) return fail("qsh", "unbalanced quotes or escape");
+  const [rawVerb, ...args] = tokens;
+  const verb = rawVerb!.toLowerCase();
+  if (verb !== "echo" && args.some(arg => arg === ">" || arg === ">>"))
+    return fail("qsh", "redirection is only supported by echo");
+  if (!COMMANDS.has(verb)) {
+    return { lines: ["qsh: " + verb + ": not available in synthetic QSH mode."], exitCode: 127 };
+  }
+
+  try {
+    const root = rootPath();
+    const entries = loadEntries(root);
+    const locate = (item: string) => filePath(item, state, root);
+    const denied = (item: string) => fail(verb, item + ": Permission denied or outside synthetic filesystem");
+    const missing = (item: string) => fail(verb, item + ": No such file or directory");
+
+    if (verb === "pwd" || verb === "pwdx") return success([state.cwd]);
+    if (verb === "id") return success(["user=" + userOf(state) + " (synthetic PASE)"]);
+    if (verb === "which") {
+      const target = args[0]?.toLowerCase();
+      return target && COMMANDS.has(target) ? success(["/QOpenSys/usr/bin/" + target]) : fail(verb, target || "command required");
+    }
+
+    if (verb === "echo") {
+      const i = args.findIndex(item => item === ">" || item === ">>");
+      if (i < 0) return success([args.join(" ")]);
+      if (i !== args.length - 2) return fail(verb, "expected > or >> followed by one path");
+      const destination = locate(args[i + 1]!);
+      if (!destination) return denied(args[i + 1]!);
+      if (existsSync(destination) && (!lstatSync(destination).isFile() || !canWrite(root, destination, entries, state)))
+        return denied(args[i + 1]!);
+      if (!existsSync(destination) && !canCreate(root, destination, entries, state)) return denied(args[i + 1]!);
+      const existing = args[i] === ">>" && existsSync(destination) ? readFileSync(destination, "utf8") : "";
+      const next = existing + args.slice(0, i).join(" ") + "\n";
+      if (Buffer.byteLength(next) > MAX_FILE_BYTES) return fail(verb, "synthetic file size limit exceeded");
+      const created = !existsSync(destination);
+      writeFileSync(destination, next);
+      if (created) setCreated(root, destination, entries, state, false);
+      return success();
+    }
+
+    if (verb === "cd") {
+      const name = args[0] || state.env.HOME || defaultQshellHome(userOf(state));
+      const target = locate(name);
+      if (!target) return denied(name);
+      if (!existsSync(target) || !lstatSync(target).isDirectory()) return missing(name);
+      if (!traversable(root, target, entries, state) || !allowed(root, target, entries, state, 1)) return denied(name);
+      state.cwd = displayPath(root, target);
+      return success();
+    }
+
+    if (verb === "ls") {
+      const long = args.includes("-l");
+      const name = args.find(item => !item.startsWith("-")) || state.cwd;
+      const target = locate(name);
+      if (!target) return denied(name);
+      if (!existsSync(target)) return missing(name);
+      if (!canRead(root, target, entries, state)) return denied(name);
+      if (!lstatSync(target).isDirectory()) return success([posix.basename(name)]);
+      if (!allowed(root, target, entries, state, 1)) return denied(name);
+      const files = readdirSync(target).filter(item => item !== META_FILE && !item.startsWith(".")).sort();
+      return success(files.map(item => {
+        if (!long) return item;
+        const p = resolve(target, item);
+        if (!locate(displayPath(root, p))) return item + " (inaccessible)";
+        const e = entryFor(root, p, entries);
+        return (lstatSync(p).isDirectory() ? "d" : "-") + e.mode.toString(8).padStart(3, "0") + " " + e.owner + " " + item;
+      }));
+    }
+
+    if (verb === "cat") {
+      if (args.length === 0) return fail(verb, "file required");
+      const lines: string[] = [];
+      for (const name of args) {
+        const target = locate(name);
+        if (!target) return denied(name);
+        if (!existsSync(target)) return missing(name);
+        if (!lstatSync(target).isFile() || !canRead(root, target, entries, state)) return denied(name);
+        if (lstatSync(target).size > MAX_FILE_BYTES) return fail(verb, "synthetic file size limit exceeded");
+        const content = readFileSync(target, "utf8").replace(/\r/g, "");
+        lines.push(...content.split("\n").filter((row, i, arr) => i < arr.length - 1 || row !== ""));
+      }
+      return success(lines);
+    }
+
+    // Text inspections are read-only and consume either files or the previous
+    // synthetic pipeline stage. Grep intentionally uses literal matching.
+    const readText = (names: string[]): QshellExecResult => {
+      if (names.length === 0 || (names.length === 1 && names[0] === "-"))
+        return success(pipedInput ?? []);
+      const lines: string[] = [];
+      for (const name of names) {
+        if (name === "-") { lines.push(...(pipedInput ?? [])); continue; }
+        const target = locate(name);
+        if (!target) return denied(name);
+        if (!existsSync(target)) return missing(name);
+        if (!lstatSync(target).isFile() || !canRead(root, target, entries, state)) return denied(name);
+        if (lstatSync(target).size > MAX_FILE_BYTES) return fail(verb, "synthetic file size limit exceeded");
+        const content = readFileSync(target, "utf8").replace(/\r/g, "");
+        lines.push(...content.split("\n").filter((row, i, arr) => i < arr.length - 1 || row !== ""));
+        if (lines.length > 2000) return fail(verb, "synthetic input line limit exceeded");
+      }
+      return success(lines);
+    };
+
+    if (verb === "grep") {
+      let i = 0, ignoreCase = false, invert = false, numbered = false;
+      while (i < args.length && args[i]!.startsWith("-") && args[i] !== "-") {
+        const flag = args[i]!;
+        if (flag === "-i") ignoreCase = true;
+        else if (flag === "-v") invert = true;
+        else if (flag === "-n") numbered = true;
+        else if (flag !== "-F") return fail(verb, "supported flags: -F -i -v -n");
+        i++;
+      }
+      if (i >= args.length) return fail(verb, "pattern required");
+      const pattern = args[i++]!;
+      const read = readText(args.slice(i));
+      if (read.exitCode !== 0) return read;
+      const needle = ignoreCase ? pattern.toLowerCase() : pattern;
+      const matches = read.lines.flatMap((line, index) => {
+        const hay = ignoreCase ? line.toLowerCase() : line;
+        const match = hay.includes(needle);
+        if (match === invert) return [];
+        return [numbered ? String(index + 1) + ":" + line : line];
+      });
+      return { lines: matches, exitCode: matches.length ? 0 : 1 };
+    }
+
+    if (verb === "head" || verb === "tail" || verb === "wc") {
+      let count = 10, i = 0;
+      if (verb === "wc") {
+        if (args[0] === "-l") i = 1;
+        else if (args[0]?.startsWith("-")) return fail(verb, "only -l is supported");
+      } else if (args[0] === "-n") {
+        if (!/^\d+$/.test(args[1] ?? "")) return fail(verb, "invalid line count");
+        count = Math.min(2000, Number(args[1]));
+        i = 2;
+      } else if (args[0]?.startsWith("-")) return fail(verb, "only -n N is supported");
+      const read = readText(args.slice(i));
+      if (read.exitCode !== 0) return read;
+      if (verb === "wc") return success([String(read.lines.length)]);
+      return success(verb === "head" ? read.lines.slice(0, count) :
+        count === 0 ? [] : read.lines.slice(-count));
+    }
+
+    if (verb === "mkdir") {
+      const recursive = args.includes("-p");
+      const names = args.filter(a => a !== "-p");
+      if (names.length === 0) return fail(verb, "directory required");
+      for (const name of names) {
+        const target = locate(name);
+        if (!target) return denied(name);
+        if (existsSync(target)) {
+          if (recursive && lstatSync(target).isDirectory()) continue;
+          return fail(verb, name + ": File exists");
+        }
+        const pending: string[] = [];
+        let cursor = target;
+        while (!existsSync(cursor) && cursor !== root) { pending.unshift(cursor); cursor = resolve(cursor, ".."); }
+        if (!recursive && pending.length !== 1) return missing(name);
+        for (const dir of pending) {
+          if (!canCreate(root, dir, entries, state)) return denied(name);
+          mkdirSync(dir);
+          setCreated(root, dir, entries, state, true);
+        }
+      }
+      return success();
+    }
+
+    if (verb === "touch") {
+      if (args.length === 0) return fail(verb, "file required");
+      for (const name of args) {
+        const target = locate(name);
+        if (!target) return denied(name);
+        if (existsSync(target)) {
+          if (!lstatSync(target).isFile() || !canWrite(root, target, entries, state)) return denied(name);
+        } else {
+          if (!canCreate(root, target, entries, state)) return denied(name);
+          writeFileSync(target, "");
+          setCreated(root, target, entries, state, false);
+        }
+      }
+      return success();
+    }
+
+    if (verb === "chmod") {
+      if (args.length !== 2 || !/^[0-7]{3}$/.test(args[0]!)) return fail(verb, "usage: chmod MODE(000-777) FILE");
+      const name = args[1]!;
+      const target = locate(name);
+      if (!target) return denied(name);
+      if (!existsSync(target)) return missing(name);
+      if (!isOfficer(state) && entryFor(root, target, entries).owner !== userOf(state)) return denied(name);
+      entries[key(root, target)] = { ...entryFor(root, target, entries), mode: Number.parseInt(args[0]!, 8) };
+      saveEntries(root, entries);
+      return success();
+    }
+
+    if (verb === "cp" || verb === "mv") {
+      if (args.length !== 2) return fail(verb, "usage: " + verb + " SOURCE DESTINATION");
+      const src = locate(args[0]!);
+      let dst = locate(args[1]!);
+      if (!src || !dst) return denied(!src ? args[0]! : args[1]!);
+      if (!existsSync(src)) return missing(args[0]!);
+      if (!lstatSync(src).isFile()) return fail(verb, "only regular files are supported");
+      if (existsSync(dst) && lstatSync(dst).isDirectory()) dst = resolve(dst, posix.basename(src));
+      if (!locate(displayPath(root, dst))) return denied(args[1]!);
+      if (src === dst) return success();
+      if (verb === "cp" && !canRead(root, src, entries, state)) return denied(args[0]!);
+      if (verb === "mv" && !canCreate(root, src, entries, state)) return denied(args[0]!);
+      if (existsSync(dst)) {
+        if (!lstatSync(dst).isFile()) return denied(args[1]!);
+        if (verb === "cp" && !canWrite(root, dst, entries, state)) return denied(args[1]!);
+      }
+      if (!canCreate(root, dst, entries, state)) return denied(args[1]!);
+      if (lstatSync(src).size > MAX_FILE_BYTES) return fail(verb, "synthetic file size limit exceeded");
+      const created = !existsSync(dst);
+      if (verb === "cp") {
+        writeFileSync(dst, readFileSync(src));
+        if (created) setCreated(root, dst, entries, state, false);
+      } else {
+        renameSync(src, dst);
+        const sourceEntry = entryFor(root, src, entries);
+        delete entries[key(root, src)];
+        entries[key(root, dst)] = sourceEntry;
+        saveEntries(root, entries);
+      }
+      return success();
+    }
+
+    if (verb === "rm") {
+      const force = args.includes("-f");
+      const names = args.filter(item => item !== "-f");
+      if (names.length === 0) return fail(verb, "file required (-r not yet supported)");
+      for (const name of names) {
+        const target = locate(name);
+        if (!target) return denied(name);
+        if (!existsSync(target)) { if (force) continue; return missing(name); }
+        if (!lstatSync(target).isFile() || !canCreate(root, target, entries, state)) return denied(name);
+        unlinkSync(target);
+        delete entries[key(root, target)];
+        saveEntries(root, entries);
+      }
+      return success();
+    }
+
+    return fail("qsh", verb + ": not implemented");
+  } catch (error) {
+    // Never leak host filesystem paths in a lab message.
+    const code = (error as NodeJS.ErrnoException).code;
+    return fail(verb, code ? "synthetic filesystem error (" + code + ")" : "synthetic filesystem error");
+  }
 }
 
 export function syntheticQshAvailable(): boolean {
