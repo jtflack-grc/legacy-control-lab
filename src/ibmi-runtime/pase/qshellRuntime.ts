@@ -261,6 +261,33 @@ function executeSegment(commandLine: string, session: IbmiSession, state: Qshell
   return result;
 }
 
+/** Semicolons separate statements only outside quotes; quotes pass to the command. */
+function splitQshellStatements(line: string): string[] | undefined {
+  const segments: string[] = [];
+  let current = "";
+  let quote: "'" | '"' | undefined;
+  let escaped = false;
+  for (const ch of line) {
+    if (escaped) { current += ch; escaped = false; continue; }
+    if (ch === "\\" && quote !== "'") { current += ch; escaped = true; continue; }
+    if (ch === "'" || ch === '"') {
+      if (!quote) quote = ch;
+      else if (quote === ch) quote = undefined;
+      current += ch;
+      continue;
+    }
+    if (ch === ";" && !quote) {
+      if (current.trim()) segments.push(current.trim());
+      current = "";
+    } else {
+      current += ch;
+    }
+  }
+  if (quote || escaped) return undefined;
+  if (current.trim()) segments.push(current.trim());
+  return segments;
+}
+
 export function executeQshellLine(session: IbmiSession, rawLine: string): QshellExecResult {
   const state = ensureQshellSession(session);
   const line = rawLine.trimEnd();
@@ -268,7 +295,12 @@ export function executeQshellLine(session: IbmiSession, rawLine: string): Qshell
 
   appendLines(state, [`$ ${line.trim()}`]);
 
-  const segments = line.split(";").map((part) => part.trim()).filter(Boolean);
+  const segments = splitQshellStatements(line);
+  if (!segments) {
+    const failure = { lines: ["qsh: unmatched quote or trailing escape"], exitCode: 2 };
+    appendLines(state, failure.lines);
+    return failure;
+  }
   let last: QshellExecResult = { lines: [], exitCode: 0 };
   for (const segment of segments) {
     last = executeSegment(segment, session, state);
