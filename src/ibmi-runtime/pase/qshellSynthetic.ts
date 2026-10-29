@@ -86,9 +86,21 @@ function displayPath(root: string, physical: string): string {
   return "/QOpenSys/" + rel;
 }
 
-function loadEntries(root: string): Entries {
+function safeMetadataPath(root: string): string {
+  const target = resolve(root, META_FILE);
   try {
-    const raw = JSON.parse(readFileSync(resolve(root, META_FILE), "utf8")) as unknown;
+    const stat = lstatSync(target);
+    if (!stat.isFile() || stat.isSymbolicLink()) throw new Error("Unsafe synthetic metadata file");
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
+  }
+  return target;
+}
+
+function loadEntries(root: string): Entries {
+  const metadataPath = safeMetadataPath(root);
+  try {
+    const raw = JSON.parse(readFileSync(metadataPath, "utf8")) as unknown;
     if (!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
     const entries: Entries = {};
     for (const [key, value] of Object.entries(raw)) {
@@ -105,7 +117,7 @@ function loadEntries(root: string): Entries {
 }
 
 function saveEntries(root: string, entries: Entries): void {
-  writeFileSync(resolve(root, META_FILE), JSON.stringify(entries, null, 2) + "\n", { mode: 0o600 });
+  writeFileSync(safeMetadataPath(root), JSON.stringify(entries, null, 2) + "\n", { mode: 0o600 });
 }
 function key(root: string, physical: string): string {
   return relative(root, physical).replace(/\\/g, "/") || ".";
