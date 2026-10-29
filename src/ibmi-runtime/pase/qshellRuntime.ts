@@ -70,7 +70,7 @@ export function ensureQshellSession(session: IbmiSession): QshellSessionState {
     } else if (mode === "host") {
       bootLines.push(qshShellUnavailableMessage());
     } else if (mode === "synthetic") {
-      bootLines.push("POSIX tools (ls, pwd, cat, cd) use the partition /qopensys mirror only.");
+      bootLines.push("Synthetic PASE: virtual file permissions; no host processes. See docs/synthetic-pase.md.");
     }
 
     session.qshellContext = {
