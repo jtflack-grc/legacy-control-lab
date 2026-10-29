@@ -213,6 +213,7 @@ function pipelineParts(line: string): string[] | undefined {
       current += ch;
       continue;
     }
+    if (!quote && (ch === "&" || ch === "<")) return undefined;
     if (ch === "|" && !quote) {
       if (line[i + 1] === "|" || line[i - 1] === "|" || !current.trim()) return undefined;
       result.push(current.trim());
@@ -245,6 +246,8 @@ export function runSyntheticShell(commandLine: string, state: State, pipedInput?
   if (!tokens || tokens.length === 0) return fail("qsh", "unbalanced quotes or escape");
   const [rawVerb, ...args] = tokens;
   const verb = rawVerb!.toLowerCase();
+  if (verb !== "echo" && args.some(arg => arg === ">" || arg === ">>"))
+    return fail("qsh", "redirection is only supported by echo");
   if (!COMMANDS.has(verb)) {
     return { lines: ["qsh: " + verb + ": not available in synthetic QSH mode."], exitCode: 127 };
   }
