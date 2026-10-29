@@ -91,6 +91,20 @@ describe("synthetic PASE filesystem", () => {
     expect(readFileSync(join(root, ".lcl-synthetic-permissions.json"), "utf8")).toContain("report.txt");
   });
 
+  it("does not follow a symlink disguised as the private permission database", () => {
+    const outside = join(tmpdir(), "lcl-permissions-target-" + Date.now());
+    mkdirSync(outside, { recursive: true });
+    try {
+      const target = join(outside, "outside.json");
+      symlinkSync(target, join(root, ".lcl-synthetic-permissions.json"));
+      expect(run("touch escaped.txt").exitCode).toBe(1);
+      expect(existsSync(join(root, "home", "audit", "escaped.txt"))).toBe(false);
+      expect(existsSync(target)).toBe(false);
+    } finally {
+      rmSync(outside, { recursive: true, force: true });
+    }
+  });
+
   it("refuses unsupported process execution in synthetic mode", () => {
     expect(run("sh -c id").exitCode).toBe(127);
     expect(run("python3 -c print(1)").exitCode).toBe(127);
