@@ -91,6 +91,20 @@ describe("synthetic PASE filesystem", () => {
     expect(readFileSync(join(root, ".lcl-synthetic-permissions.json"), "utf8")).toContain("report.txt");
   });
 
+  it("supports bounded text searches and pipelines without process execution", () => {
+    expect(run('echo "paid" > records.txt').exitCode).toBe(0);
+    expect(run('echo "OPEN" >> records.txt').exitCode).toBe(0);
+    expect(run('echo "paid" >> records.txt').exitCode).toBe(0);
+    expect(run("grep -i paid records.txt").lines).toEqual(["paid", "paid"]);
+    expect(run("cat records.txt | grep -i paid | wc -l").lines).toEqual(["2"]);
+    expect(run("cat records.txt | head -n 2").lines).toEqual(["paid", "OPEN"]);
+    expect(run("cat records.txt | tail -n 1").lines).toEqual(["paid"]);
+    expect(run('echo "literal | symbol" | grep -F " | "').lines).toEqual(["literal | symbol"]);
+    expect(run("echo a | sh -c id").exitCode).toBe(127);
+    expect(run("echo a || echo b").exitCode).toBe(1);
+    expect(run('echo "safe; semicolon"').lines).toEqual(["safe; semicolon"]);
+  });
+
   it("does not follow a symlink disguised as the private permission database", () => {
     const outside = join(tmpdir(), "lcl-permissions-target-" + Date.now());
     mkdirSync(outside, { recursive: true });
