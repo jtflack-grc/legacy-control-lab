@@ -102,6 +102,8 @@ describe("synthetic PASE filesystem", () => {
     expect(run('echo "literal | symbol" | grep -F " | "').lines).toEqual(["literal | symbol"]);
     expect(run("echo a | sh -c id").exitCode).toBe(127);
     expect(run("echo a || echo b").exitCode).toBe(1);
+    expect(run("touch should-not-exist && echo danger").exitCode).toBe(1);
+    expect(existsSync(join(root, "home", "audit", "should-not-exist"))).toBe(false);
     expect(run('echo "safe; semicolon"').lines).toEqual(["safe; semicolon"]);
   });
 
