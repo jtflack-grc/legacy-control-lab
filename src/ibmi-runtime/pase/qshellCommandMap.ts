@@ -1,6 +1,7 @@
 /**
  * IBM i PASE / Qshell command catalog (IBM 7.4 rzalf + rzahz).
- * The command index documents available verbs. The default synthetic runtime only\n * implements a safe subset; developer-only host mode passes most POSIX verbs to /bin/sh.
+ * The command index documents available verbs. The default synthetic runtime only
+ * implements a safe subset; developer-only host mode passes most POSIX verbs to /bin/sh.
  */
 
 export type QshellBindingKind = "shell" | "builtin" | "unsupported";
