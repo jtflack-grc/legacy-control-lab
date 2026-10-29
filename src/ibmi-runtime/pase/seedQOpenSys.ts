@@ -87,7 +87,7 @@ export function seedQOpenSysLayout(): void {
     root,
     "usr/bin/README.txt",
     "IBM i PASE utilities in /QOpenSys/usr/bin are handled by the lab QSH bridge.\n" +
-      "POSIX tools (ls, cat, grep) run on the host shell; IBM i tools (system, getjobid,\n" +
+      "POSIX tools use an isolated synthetic runtime by default; IBM i tools (system, getjobid,\n" +
       "setccsid, dspcat, dspmsg, attr, clrtmp) are emulated in the runtime.\n",
   );
 }
