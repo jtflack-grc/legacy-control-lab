@@ -3,7 +3,7 @@
  *
  * The only physical IO is confined to QOPENSYS_ROOT. Virtual permissions are
  * checked independently of the service account's operating-system privileges.
- * Deliberately limited: no symlinks, pipelines, execution, or host paths.
+ * Deliberately limited: no symlinks, process execution, or host paths.
  */
 import {
   existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync,
@@ -22,6 +22,7 @@ const MAX_FILE_BYTES = 128 * 1024;
 const COMMANDS = new Set([
   "pwd", "pwdx", "cd", "ls", "cat", "echo", "which",
   "mkdir", "touch", "chmod", "cp", "mv", "rm", "id",
+  "grep", "head", "tail", "wc",
 ]);
 
 function success(lines: string[] = []): QshellExecResult {
@@ -193,9 +194,53 @@ function tokenize(input: string): string[] | undefined {
   return tokens;
 }
 
-export function runSyntheticShell(commandLine: string, state: State): QshellExecResult {
+/**
+ * Split a bounded pipeline without invoking a host shell. A quoted or escaped
+ * vertical bar is literal, and shell OR (||) is intentionally unsupported.
+ */
+function pipelineParts(line: string): string[] | undefined {
+  const result: string[] = [];
+  let current = "";
+  let quote: "'" | '"' | undefined;
+  let escaped = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i]!;
+    if (escaped) { current += ch; escaped = false; continue; }
+    if (ch === "\\" && quote !== "'") { current += ch; escaped = true; continue; }
+    if (ch === "'" || ch === '"') {
+      if (!quote) quote = ch;
+      else if (quote === ch) quote = undefined;
+      current += ch;
+      continue;
+    }
+    if (ch === "|" && !quote) {
+      if (line[i + 1] === "|" || line[i - 1] === "|" || !current.trim()) return undefined;
+      result.push(current.trim());
+      current = "";
+    } else current += ch;
+  }
+  if (quote || escaped || !current.trim()) return undefined;
+  result.push(current.trim());
+  return result.length <= 8 ? result : undefined;
+}
+
+export function runSyntheticShell(commandLine: string, state: State, pipedInput?: string[]): QshellExecResult {
   const line = commandLine.trim();
   if (!line) return success();
+  const pipeline = pipelineParts(line);
+  if (!pipeline) return fail("qsh", "unsupported or malformed pipeline");
+  if (pipeline.length > 1) {
+    let input = pipedInput;
+    let last = success();
+    for (const part of pipeline) {
+      last = runSyntheticShell(part, state, input);
+      if (last.exitCode !== 0) return last;
+      input = last.lines;
+      if (input.length > 2000 || Buffer.byteLength(input.join("\n")) > MAX_FILE_BYTES)
+        return fail("qsh", "pipeline output limit exceeded");
+    }
+    return last;
+  }
   const tokens = tokenize(line);
   if (!tokens || tokens.length === 0) return fail("qsh", "unbalanced quotes or escape");
   const [rawVerb, ...args] = tokens;
@@ -278,6 +323,67 @@ export function runSyntheticShell(commandLine: string, state: State): QshellExec
         lines.push(...content.split("\n").filter((row, i, arr) => i < arr.length - 1 || row !== ""));
       }
       return success(lines);
+    }
+
+    // Text inspections are read-only and consume either files or the previous
+    // synthetic pipeline stage. Grep intentionally uses literal matching.
+    const readText = (names: string[]): QshellExecResult => {
+      if (names.length === 0 || (names.length === 1 && names[0] === "-"))
+        return success(pipedInput ?? []);
+      const lines: string[] = [];
+      for (const name of names) {
+        if (name === "-") { lines.push(...(pipedInput ?? [])); continue; }
+        const target = locate(name);
+        if (!target) return denied(name);
+        if (!existsSync(target)) return missing(name);
+        if (!lstatSync(target).isFile() || !canRead(root, target, entries, state)) return denied(name);
+        if (lstatSync(target).size > MAX_FILE_BYTES) return fail(verb, "synthetic file size limit exceeded");
+        const content = readFileSync(target, "utf8").replace(/\r/g, "");
+        lines.push(...content.split("\n").filter((row, i, arr) => i < arr.length - 1 || row !== ""));
+        if (lines.length > 2000) return fail(verb, "synthetic input line limit exceeded");
+      }
+      return success(lines);
+    };
+
+    if (verb === "grep") {
+      let i = 0, ignoreCase = false, invert = false, numbered = false;
+      while (i < args.length && args[i]!.startsWith("-") && args[i] !== "-") {
+        const flag = args[i]!;
+        if (flag === "-i") ignoreCase = true;
+        else if (flag === "-v") invert = true;
+        else if (flag === "-n") numbered = true;
+        else if (flag !== "-F") return fail(verb, "supported flags: -F -i -v -n");
+        i++;
+      }
+      if (i >= args.length) return fail(verb, "pattern required");
+      const pattern = args[i++]!;
+      const read = readText(args.slice(i));
+      if (read.exitCode !== 0) return read;
+      const needle = ignoreCase ? pattern.toLowerCase() : pattern;
+      const matches = read.lines.flatMap((line, index) => {
+        const hay = ignoreCase ? line.toLowerCase() : line;
+        const match = hay.includes(needle);
+        if (match === invert) return [];
+        return [numbered ? String(index + 1) + ":" + line : line];
+      });
+      return { lines: matches, exitCode: matches.length ? 0 : 1 };
+    }
+
+    if (verb === "head" || verb === "tail" || verb === "wc") {
+      let count = 10, i = 0;
+      if (verb === "wc") {
+        if (args[0] === "-l") i = 1;
+        else if (args[0]?.startsWith("-")) return fail(verb, "only -l is supported");
+      } else if (args[0] === "-n") {
+        if (!/^\d+$/.test(args[1] ?? "")) return fail(verb, "invalid line count");
+        count = Math.min(2000, Number(args[1]));
+        i = 2;
+      } else if (args[0]?.startsWith("-")) return fail(verb, "only -n N is supported");
+      const read = readText(args.slice(i));
+      if (read.exitCode !== 0) return read;
+      if (verb === "wc") return success([String(read.lines.length)]);
+      return success(verb === "head" ? read.lines.slice(0, count) :
+        count === 0 ? [] : read.lines.slice(-count));
     }
 
     if (verb === "mkdir") {
