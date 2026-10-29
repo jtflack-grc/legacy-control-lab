@@ -15,6 +15,8 @@ In a normal lab session, enter QSH and use the synthetic commands. The filesyste
 | Inspect | `cat`, `which`, `id`, `echo` |
 | Make files | `mkdir`, `mkdir -p`, `touch`, `echo text > file`, `echo text >> file` |
 | Change files | `cp`, `mv`, `rm` (regular files), `chmod 000-777` |
+| Inspect evidence | `grep` (literal matching; `-F`, `-i`, `-v`, `-n`), `head -n`, `tail -n`, `wc -l` |
+| Bounded pipelines | Up to eight `|`-connected synthetic commands, with no host process execution |
 | Paths | `/QOpenSys`, `/home`, `/tmp`, user-relative paths, and `~` |
 | Permissions | Owner and public read/write/traverse checks, with `QSECOFR` as privileged simulated profile |
 
@@ -27,6 +29,7 @@ mkdir -p control-check
 echo "access reviewed" > control-check/evidence.txt
 ls -l control-check
 cat control-check/evidence.txt
+cat control-check/evidence.txt | grep -i reviewed | wc -l
 chmod 600 control-check/evidence.txt
 cp control-check/evidence.txt control-check/evidence-copy.txt
 mv control-check/evidence-copy.txt control-check/verified.txt
@@ -40,8 +43,8 @@ Sign on with another lab profile and attempt to read `/home/audit/control-check/
 - All filesystem paths are normalized into the designated lab mirror. Unsupported absolute paths, traversals out of that namespace, and symbolic links (including dangling links) are rejected.
 - Privileges are **simulated**, not inherited from the OS account. A small private metadata file inside the mirror holds owner and permission state across lab restarts; it cannot be read or edited through this shell.
 - Existing seeded content is owned by the synthetic security officer unless inside a user's home. Newly created content is owned by the signed-on profile. Group membership, POSIX ACLs, SUID/SGID, sticky bits and hard links are not modeled.
-- Files are capped at 128 KiB. No binary data support, directory copying/removal, pipelines, general scripting, wildcard expansion, redirection of commands other than `echo`, or arbitrary executables yet.
-- Quoted arguments and escaped spaces are supported. Shell metacharacters that have not been explicitly implemented must not be treated as real shell features.
+- Files are capped at 128 KiB. No binary data support, directory copying/removal, general scripting, wildcard expansion, redirection of commands other than `echo`, or arbitrary executables yet.
+- Quoted arguments and escaped spaces are supported. A limited, bounded pipeline connects synthetic command output to the next synthetic text filter. There is no host shell, regular-expression `grep`, `||` or `&&` control flow, stderr piping, or subprocess launch. Other shell metacharacters have no POSIX semantics.
 - The host shell bridge and IBM i CL bridges remain separate. This module does not alter IBM i object-authority semantics.
 - This is an educational simulator, not an IBM PASE emulator. The full command *catalog* contains far more commands than synthetic mode implements.
 
